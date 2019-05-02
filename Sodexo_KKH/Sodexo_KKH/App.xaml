@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
+             x:Class="Sodexo_KKH.App">
+	<Application.Resources>
+
+		<!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <Color x:Key="My_Header_Color">#2a295c</Color>
+            <Color x:Key="My_Button_Color">#2a295c</Color>
+            <Color x:Key="My_Button_Foreground">#f8f2f2</Color>
+            <Color x:Key="brush">#000000</Color>
+            <Color x:Key="green">#008000</Color>
+            <Color x:Key="Red">#FF0000</Color>
+
+            <Color x:Key="My_Gridview_Background">#65676A</Color>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>

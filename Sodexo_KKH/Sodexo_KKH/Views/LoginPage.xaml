@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Sodexo_KKH.Views.LoginPage"
+             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:suave="clr-namespace:SuaveControls.MaterialForms;assembly=SuaveControls.MaterialForms"
+             Padding="10"
+             NavigationPage.HasNavigationBar="False"
+             IsEnabled="{Binding IsPageEnabled}"
+             >
+    <AbsoluteLayout
+    <ScrollView>
+        <StackLayout >
+            <StackLayout Orientation="Horizontal">
+                <Image HeightRequest="69"
+                   Aspect="AspectFit"
+                Source="Assets/logoinnertouch2order.png"  
+                VerticalOptions="Center" 
+                       HorizontalOptions="StartAndExpand"
+                />
+                <Image HorizontalOptions="EndAndExpand"
+                   Aspect="AspectFit"
+                   Source="Assets/sodexologo.png"  
+                   VerticalOptions="Center"
+                   HeightRequest="69" />
+            </StackLayout>
+
+            <Image 
+                   Aspect="Fill"
+                   HeightRequest="441"
+                   Source="Assets/loginimg.png"/>
+
+            <Label Text="{lEx:Translate txtlogin}" TextColor="White" 
+                   Margin="0,-10,0,0"
+                   HeightRequest="40"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"
+                   BackgroundColor="{StaticResource My_Header_Color}"
+                    FontFamily="Sansa Pro Normal"/>
+
+            <StackLayout Margin="30,0,0,30" Orientation="Horizontal">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="40*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="40*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Uid="sl" IsVisible="False"  VerticalOptions="Center" FontSize="30" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="{lEx:Translate slText}" Grid.Column="0"/>
+                    <!--<TextBlock  FontSize="30" FontWeight="Bold" TextAlignment="Center" x:Name="txtlang" Text=""/>-->
+                    <StackLayout IsVisible="False"  HorizontalOptions="Center" Margin="20,0,0,20" HeightRequest="100" Orientation="Horizontal"  Grid.Column="1">
+
+
+                        <!--<Frame    OutlineColor="Black" BorderColor="Black" WidthRequest="420" CornerRadius="10" Margin="0,10"   >-->
+                        <!--<syncfusion:SfPicker x:Name="cmbremark" HeightRequest="40" WidthRequest="400" HorizontalOptions="Center" ItemsSource="{Binding LANG}"  VerticalOptions="Center" HeaderText="Select Language" PickerMode="Default" />-->
+
+
+                        <!--<Picker  TextColor="Black" x:Name="cmbremark" HeightRequest="40" WidthRequest="400" HorizontalOptions="Center"  VerticalOptions="Center"  SelectedIndexChanged="cmbremark_SelectionChanged" Margin="-18.8,0.2,-4.8,0.6" >
+                                           
+                                            <Picker.Items>
+                                                <x:String>English</x:String>
+                                                <x:String>Thai</x:String>
+                                            </Picker.Items>
+                                        </Picker>-->
+
+                        <combobox:SfComboBox    
+                                           WidthRequest="200"
+                                  x:Name="cmbremark">
+                            <!--   <combobox:SfComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid >
+                                     
+                                            <Label Margin="10,0,0,0" Text="{Binding language}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </combobox:SfComboBox.ItemTemplate>-->
+                        </combobox:SfComboBox>
+
+                        <!--</Frame>-->
+
+                        <!--<RadioButton x:Name="radeng"  FontSize="30" Content="English" Checked="RadioButton_Checked" Style="{StaticResource RadioButtonStyle1}"/>
+                            <RadioButton x:Name="radth"   Margin="20,0,0,0" Style="{StaticResource RadioButtonStyle1}" Checked="RadioButton_Checked" FontSize="30" Content="Thai"/>-->
+
+                    </StackLayout>
+
+                    <Label x:Name="sr" IsVisible="False" VerticalOptions="Center" FontSize="30" FontAttributes="Bold" VerticalTextAlignment="Center"  HorizontalTextAlignment="Center" HorizontalOptions="Center" Text="{lEx:Translate srText}" Grid.Column="2"/>
+                    <!--<TextBlock  FontSize="30" FontWeight="Bold" TextAlignment="Center" x:Name="txtlang" Text=""/>-->
+                    <StackLayout x:Name="src" IsVisible="False" HorizontalOptions="Center" Margin="20,0,0,20"  HeightRequest="100" Orientation="Horizontal" Grid.Column="3">
+
+
+                        <!--<Frame    OutlineColor="Black" BorderColor="Black" WidthRequest="420" CornerRadius="10" Margin="0,10"   >-->
+                        <!--<syncfusion:SfPicker x:Name="cmbremark" HeightRequest="40" WidthRequest="400" HorizontalOptions="Center" ItemsSource="{Binding LANG}"  VerticalOptions="Center" HeaderText="Select Language" PickerMode="Default" />-->
+
+
+                        <!--<Picker  TextColor="Black" x:Name="cmbremark" HeightRequest="40" WidthRequest="400" HorizontalOptions="Center"  VerticalOptions="Center"  SelectedIndexChanged="cmbremark_SelectionChanged" Margin="-18.8,0.2,-4.8,0.6" >
+                                           
+                                            <Picker.Items>
+                                                <x:String>English</x:String>
+                                                <x:String>Thai</x:String>
+                                            </Picker.Items>
+                                        </Picker>-->
+
+                        <combobox:SfComboBox
+                                           WidthRequest="200"
+                                  x:Name="cmbrole">
+                        </combobox:SfComboBox>
+
+                        <!--</Frame>-->
+                        <!--<RadioButton x:Name="radeng"  FontSize="30" Content="English" Checked="RadioButton_Checked" Style="{StaticResource RadioButtonStyle1}"/>
+                            <RadioButton x:Name="radth"   Margin="20,0,0,0" Style="{StaticResource RadioButtonStyle1}" Checked="RadioButton_Checked" FontSize="30" Content="Thai"/>-->
+
+                    </StackLayout>
+                </Grid>
+
+
+
+
+
+
+            </StackLayout>
+
+
+            <suave:MaterialEntry  x:Name="txtusername" x:Uid="txtusername"
+                                  Text="{Binding }"
+                                  Margin="0,10,0,0"
+                                  Placeholder="User Name"
+                                  AccentColor="Black" 
+                                  EntryUnfocused="txtusername_EntryUnfocused"
+                                  />
+
+            <suave:MaterialEntry x:Uid="txtpass"  x:Name="txtpass"  
+                                 Margin="0,10,0,0"
+                                 IsPassword="True"  
+                                 Placeholder="Password"
+                                 AccentColor="Black"/>
+
+            <Label x:Name="tblkmessage" LineBreakMode="WordWrap" 
+                   TextColor="Red" FontSize="28" Margin="20,0,0,20" />
+
+            <Button Text="{lEx:Translate btnloginContent}"
+                    BackgroundColor="{StaticResource My_Header_Color}"
+                    CornerRadius="30"
+                    FontSize="Medium"
+                    Command="{Binding LoginCommand}"
+                    TextColor="{StaticResource My_Button_Foreground}"
+                    />
+            <syncfusion:SfBusyIndicator 
+                x:Name="pbar" 
+                IsVisible="False" 
+                IsBusy="False"  
+                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" Title="Loading..."  TextColor="Black" />
+
+        </StackLayout>
+        </ScrollView>
+    </AbsoluteLayout>
+
+</ContentPage>
