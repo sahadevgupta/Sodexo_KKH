@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sodexo_KKH.Models
 {
-    class mstr_therapeutic_condition
+    public class mstr_therapeutic_condition
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]

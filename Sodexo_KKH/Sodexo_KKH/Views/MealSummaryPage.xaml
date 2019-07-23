@@ -1,0 +1,620 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:staticfn="clr-namespace:Sodexo_KKH.Helpers"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+              xmlns:behaviors="clr-namespace:Sodexo_KKH.Behaviors"
+             xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
+             x:Class="Sodexo_KKH.Views.MealSummaryPage"
+             Padding="10">
+
+    <NavigationPage.TitleView>
+        <Label Text="Meal Summary" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
+             BackgroundColor="{StaticResource My_Header_Color}" 
+             FontSize="17"
+             FontAttributes="Bold"
+             TextColor="White" HorizontalTextAlignment="Center" />
+    </NavigationPage.TitleView>
+
+    <ContentPage.Resources>
+        <lEx:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
+    </ContentPage.Resources>
+    
+    <AbsoluteLayout>
+
+      
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All">
+            <local:ConnectionView Grid.Row="0"/>
+            <StackLayout Orientation="Horizontal" Grid.Row="1">
+                <Image x:Name="sss"   Source="{lEx:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="StartAndExpand" HeightRequest="60" />
+                    <Label Text="{Binding MealTime.meal_name}"
+                       FontAttributes="Bold"
+                       FontSize="20"
+                       Grid.Row="2"
+                       TextColor="{StaticResource My_Header_Color}"
+                       VerticalOptions="Center"
+                           HorizontalOptions="CenterAndExpand"
+                       />
+                    <Image  HorizontalOptions="EndAndExpand" Source="{lEx:PlatformImage SourceImage='sodexologo'}" HeightRequest="60" />
+            </StackLayout>
+            
+
+
+            <!--<FlexLayout Direction="Row" Wrap="Wrap"  FlexLayout.Grow="1">
+                <FlexLayout.Resources>
+                    <Style x:Key="labelStyle" TargetType="Label">
+                        <Setter Property="FontAttributes" Value="Bold"/>
+                        <Setter Property="LineHeight" Value="2.5"/>
+                    </Style>
+                </FlexLayout.Resources>
+
+                <Label Text="{lEx:Translate pnText}" 
+                            VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                           FlexLayout.Basis="25%" />
+                <Label  Text="{Binding Patient.Patientname}" 
+                             VerticalOptions="Center" 
+                            FlexLayout.Basis="20%" />
+
+                <Label x:Uid="txtWardbeds" 
+                           Style="{StaticResource labelStyle}"
+                           Text="Ward No.-Bed No.:" 
+                           VerticalOptions="Center" 
+                           FlexLayout.Basis="25%" 
+                           />
+
+                <Label x:Name="ward_bed" Text="{Binding Patient.ward_bed}" 
+                           VerticalOptions="Center" 
+                          FlexLayout.Basis="25%" 
+                           />
+
+                <Label x:Uid="mc" Text="{lEx:Translate mcText}" 
+                           VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                           FlexLayout.Basis="25%" />
+
+                <Label x:Name="mealclass" 
+                           VerticalOptions="Center" 
+                           FlexLayout.Basis="20%"
+                           >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Patient.Bed_Class_Name,Mode=OneWay}"/>
+                            <Span Text=" Menu"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Text="{lEx:Translate vnText}"  
+                           VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                          FlexLayout.Basis="25%" />
+
+                <Label VerticalOptions="Center" 
+                           Text="{Binding Patient.isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
+                           FlexLayout.Basis="25%" />
+
+                <Label  Text="{lEx:Translate hlnlText}" 
+                            Style="{StaticResource labelStyle}"
+                            VerticalOptions="Center" 
+                            FlexLayout.Basis="25%"
+                            />
+
+                <Label  VerticalOptions="Center" 
+                            FlexLayout.Basis="20%" 
+                            Text="{Binding Patient.ishalal_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=HNH}"/>
+
+
+
+                <Label Text="{lEx:Translate DTText}" 
+                           VerticalOptions="Center"
+                           Style="{StaticResource labelStyle}"
+                           FlexLayout.Basis="25%" />
+
+                <Label  VerticalOptions="Center" 
+                            FlexLayout.Basis="25%"
+                            Text="{Binding Source={x:Static staticfn:Library.IsDisposableEnable},Converter={StaticResource BoolToObjectConverter},ConverterParameter=Disposable}"/>
+
+                <Label  
+                        Text="Food Allergies" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                        FlexLayout.Basis="25%" 
+                       />
+                <Editor 
+                      Text="{Binding AllergiesName}"
+                        HeightRequest="60"
+                      VerticalOptions="Center"
+                      IsReadOnly="True"
+                      FlexLayout.Basis="20%"
+                       />
+
+
+
+                <Label  
+                        Text="{lEx:Translate datText}" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                        FlexLayout.Basis="25%" 
+                       />
+                <Label  
+                        Text="{Binding DietType.diet_name}" 
+                        VerticalOptions="Center" 
+                        FlexLayout.Basis="25%"
+                       />
+
+                <Label  
+                        Text="{lEx:Translate mosText}" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                        FlexLayout.Basis="25%"
+                       />
+
+                <Label  
+                        Text="{Binding MealOption.meal_option_name}" 
+                        VerticalOptions="Center" 
+                        FlexLayout.Basis="20%"
+                       />
+                <Label  
+                        Text="{lEx:Translate rmsText}" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                        FlexLayout.Basis="25%"
+                       />
+                <Editor
+                      VerticalOptions="Center"
+                        HeightRequest="60"
+                        MinimumHeightRequest="40"
+                  Text="{Binding Remarks}"
+                    IsReadOnly="True"
+                      FlexLayout.Basis="25%"
+                       />
+
+                <Label  
+                        Text="{lEx:Translate odtText}" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                        FlexLayout.Basis="25%"
+                       />
+                <Label  
+                        Text="{Binding Source={x:Static staticfn:Library.KEY_CHECK_ORDER_DATE}}" 
+                        VerticalOptions="Center" 
+                        FlexLayout.Basis="20%"
+                       />
+            </FlexLayout>-->
+
+
+            <!--<StackLayout>
+                <StackLayout.Resources>
+                    <Style x:Key="labelStyle" TargetType="Label">
+                        <Setter Property="FontAttributes" Value="Bold"/>
+                        <Setter Property="LineHeight" Value="1.8"/>
+                    </Style>
+                </StackLayout.Resources>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    
+                    <Label Text="{lEx:Translate pnText}" 
+                            VerticalOptions="Center" 
+                           HorizontalOptions="FillAndExpand"
+                           Style="{StaticResource labelStyle}"
+                            />
+                    <Label  Text="{Binding Patient.Patientname}" 
+                             VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand"
+                            />
+
+                    <Label x:Uid="txtWardbeds" 
+                           Style="{StaticResource labelStyle}"
+                           Text="Ward No.-Bed No.:" 
+                           VerticalOptions="Center" 
+                           HorizontalOptions="FillAndExpand"
+                           />
+
+                    <Label x:Name="ward_bed" Text="{Binding Patient.ward_bed}" 
+                           VerticalOptions="Center" 
+                          HorizontalOptions="FillAndExpand"
+                           />
+                </StackLayout>
+
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+
+                    <Label x:Uid="mc" Text="{lEx:Translate mcText}" 
+                           VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                           HorizontalOptions="FillAndExpand" />
+
+                    <Label x:Name="mealclass" 
+                           VerticalOptions="Center" 
+                           HorizontalOptions="FillAndExpand"
+                           >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding Patient.Bed_Class_Name,Mode=OneWay}"/>
+                                <Span Text=" Menu"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Text="{lEx:Translate vnText}"  
+                           VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                          HorizontalOptions="FillAndExpand" />
+
+                    <Label VerticalOptions="Center" 
+                           Text="{Binding Patient.isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
+                           HorizontalOptions="FillAndExpand"/>
+
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label  Text="{lEx:Translate hlnlText}" 
+                            Style="{StaticResource labelStyle}"
+                            VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand"
+                            />
+
+                    <Label  VerticalOptions="Center" 
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding Patient.ishalal_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=HNH}"/>
+
+
+
+                    <Label Text="{lEx:Translate DTText}" 
+                           VerticalOptions="Center"
+                           Style="{StaticResource labelStyle}"
+                           HorizontalOptions="FillAndExpand" />
+
+                    <Label  VerticalOptions="Center" 
+                           HorizontalOptions="FillAndExpand"
+                            Text="{Binding Source={x:Static staticfn:Library.IsDisposableEnable},Converter={StaticResource BoolToObjectConverter},ConverterParameter=Disposable}"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label  
+                        Text="Food Allergies" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                      HorizontalOptions="FillAndExpand"
+                       />
+
+
+
+                    <Editor Text="{Binding AllergiesName}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" 
+                            IsReadOnly="True" WidthRequest="100"  HeightRequest="50"/>
+
+                    <Label  
+                        Text="{lEx:Translate datText}" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                        HorizontalOptions="FillAndExpand" 
+                       />
+                    <Label  
+                        Text="{Binding DietType.diet_name}" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="FillAndExpand" 
+                       />
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label  
+                        Text="{lEx:Translate mosText}" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource labelStyle}"
+                       />
+
+                    <Label  
+                        Text="{Binding MealOption.meal_option_name}" 
+                        VerticalOptions="Center" 
+                    HorizontalOptions="FillAndExpand"
+                       />
+
+
+                    <Label  
+                        Text="{lEx:Translate rmsText}" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource labelStyle}"
+                       />
+
+
+                    <Editor HorizontalOptions="FillAndExpand"
+                      VerticalOptions="Center"
+                        WidthRequest="100"
+                        HeightRequest="60"
+                  Text="{Binding Remarks}"
+                    IsReadOnly="True"
+                       />
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label  
+                        Text="{lEx:Translate odtText}" 
+                        VerticalOptions="Center" 
+                       />
+                    <Label  
+                        Text="{Binding Source={x:Static staticfn:Library.KEY_CHECK_ORDER_DATE}}" 
+                        VerticalOptions="Center" 
+                       />
+                </StackLayout>
+                
+                
+            </StackLayout>-->   
+                
+                
+                
+                
+                
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <Style x:Key="labelStyle" TargetType="Label">
+                        <Setter Property="FontAttributes" Value="Bold"/>
+                        <Setter Property="LineHeight" Value="1.8"/>
+                    </Style>
+                </Grid.Resources>
+
+                <Label Text="{lEx:Translate pnText}" 
+                            VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                           Grid.Row="0" Grid.Column="0" />
+                <Label  Text="{Binding Patient.Patientname}" 
+                             VerticalOptions="Center" 
+                            Grid.Row="0" Grid.Column="1" />
+
+                <Label x:Uid="txtWardbeds" 
+                           Style="{StaticResource labelStyle}"
+                           Text="Ward No.-Bed No.:" 
+                           VerticalOptions="Center" 
+                           Grid.Row="0" Grid.Column="2" 
+                           />
+
+                <Label x:Name="ward_bed" Text="{Binding Patient.ward_bed}" 
+                           VerticalOptions="Center" 
+                          Grid.Row="0" Grid.Column="3"
+                           />
+
+                <Label x:Uid="mc" Text="{lEx:Translate mcText}" 
+                           VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                           Grid.Row="1" Grid.Column="0" />
+
+                <Label x:Name="mealclass" 
+                           VerticalOptions="Center" 
+                           Grid.Row="1" Grid.Column="1"
+                           >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Patient.Bed_Class_Name,Mode=OneWay}"/>
+                            <Span Text=" Menu"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Text="{lEx:Translate vnText}"  
+                           VerticalOptions="Center" 
+                           Style="{StaticResource labelStyle}"
+                          Grid.Row="1" Grid.Column="2" />
+
+                <Label VerticalOptions="Center" 
+                           Text="{Binding Patient.isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
+                           Grid.Row="1" Grid.Column="3"/>
+
+                <Label  Text="{lEx:Translate hlnlText}" 
+                            Style="{StaticResource labelStyle}"
+                            VerticalOptions="Center" 
+                            Grid.Row="2" Grid.Column="0"
+                            />
+
+                <Label  VerticalOptions="Center" 
+                            Grid.Row="2" Grid.Column="1" 
+                            Text="{Binding Patient.ishalal_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=HNH}"/>
+
+
+
+                <Label Text="{lEx:Translate DTText}" 
+                           VerticalOptions="Center"
+                           Style="{StaticResource labelStyle}"
+                           Grid.Row="2" Grid.Column="2" />
+
+                <Label  VerticalOptions="Center" 
+                            Grid.Row="2" Grid.Column="3"
+                            Text="{Binding Source={x:Static staticfn:Library.IsDisposableEnable},Converter={StaticResource BoolToObjectConverter},ConverterParameter=Disposable}"/>
+
+
+
+                <Label  
+                        Text="{lEx:Translate mosText}" 
+                    Style="{StaticResource labelStyle}"
+                        VerticalOptions="Center" 
+                        Grid.Row="3" Grid.Column="0"
+                       />
+
+                <Label  
+                        Text="{Binding MealOption.meal_option_name}" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="FillAndExpand"
+                        Grid.Row="3" Grid.Column="1" 
+                       />
+
+                <Label  
+                        Text="{lEx:Translate datText}" 
+                        VerticalOptions="Center" 
+                        Style="{StaticResource labelStyle}"
+                        Grid.Row="3" Grid.Column="2" 
+                       />
+                <Label  
+                        Text="{Binding DietType.diet_name}" 
+                        VerticalOptions="Center" 
+                        Grid.Row="3" Grid.Column="3" 
+                       />
+
+            </Grid>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+
+                <Label  
+                        Text="Food Allergies" 
+                        VerticalOptions="Center" 
+                        FontAttributes="Bold"
+                       HorizontalOptions="FillAndExpand"
+                       />
+
+                <Editor Margin="-30,0,0,0"
+                      Text="{Binding AllergiesName}"
+                      HeightRequest="60"
+                    WidthRequest="100"
+                      VerticalOptions="Center"
+                      IsReadOnly="True"
+                    HorizontalOptions="FillAndExpand"
+                       />
+
+
+
+                <Label  
+                        Text="{lEx:Translate rmsText}" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="FillAndExpand"
+                        FontAttributes="Bold"
+                       />
+
+
+                <Editor HorizontalOptions="FillAndExpand"
+                      VerticalOptions="Center"
+                        WidthRequest="100"
+                        HeightRequest="60"
+                  Text="{Binding Remarks}"
+                    IsReadOnly="True"
+                        
+                       />
+            </StackLayout>
+
+            <Label VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{lEx:Translate odtText}" FontAttributes="Bold"/>
+                        <Span Text=" "/>
+                        <Span Text="{Binding Source={x:Static staticfn:Library.KEY_CHECK_ORDER_DATE},Mode=OneWay}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            
+
+
+
+
+            <Grid BackgroundColor="{StaticResource My_Header_Color}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Label  Grid.Column="0" TextColor="White" HorizontalOptions="Center" Text="Therapeutic Option" VerticalOptions="Center"/>
+                <Label Grid.Column="1" TextColor="White" HorizontalOptions="Center" Text="Ingredients (Exclude)" VerticalOptions="Center"/>
+                <Label Grid.Column="2" TextColor="White" HorizontalOptions="Center" Text="Others" VerticalOptions="Center"/>
+                <Label Grid.Column="3" TextColor="White" HorizontalOptions="Center" Text="{Binding MealTime.meal_name}" VerticalOptions="Center"/>
+
+
+            </Grid>
+
+            <ListView ItemsSource="{Binding MealSummaryDetails}" SelectionMode="None"
+                      CachingStrategy="RecycleElement"
+                          HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="1"/>
+                                </Grid.RowDefinitions>
+                                <Grid.Resources>
+                                    <Style TargetType="Label">
+                                        <Setter Property="VerticalOptions" Value="Center"/>
+                                        <Setter Property="HorizontalOptions" Value="Center"/>
+                                        <Setter Property="LineBreakMode" Value="WordWrap"/>
+                                        <Setter Property="LineHeight" Value="1.8"/>
+                                    </Style>
+                                </Grid.Resources>
+                                <Label Grid.Column="0"  Text="{Binding Therapeutic}" />
+                                <Label Grid.Column="1"   Text="{Binding Ingrident}" />
+                                <Label Grid.Column="2"   Text="{Binding Other}" />
+                                <Label Grid.Column="3"  Text="{Binding MealTime}"/>
+                                <BoxView Grid.Row="1" Grid.ColumnSpan="4" BackgroundColor="LightGray" HeightRequest="1"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                <Button Text="{lEx:Translate cnContent}" BackgroundColor="Red" TextColor="White"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Command="{Binding CancelCommand}"
+                            ImageSource="{lEx:PlatformImage SourceImage='cancel_mealsummary'}"/>
+
+                <Button Text="{lEx:Translate cnfeContent}" BackgroundColor="Green" TextColor="White"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                        Command="{Binding ConfirmCommand}"
+                            ImageSource="{lEx:PlatformImage SourceImage='confirm_mealsummary'}"/>
+            </StackLayout>
+
+
+        </StackLayout>
+
+       
+        <syncfusion:SfBusyIndicator 
+                x:Name="pbar" 
+                IsVisible="False" 
+                IsBusy="False"  
+            TextSize="24"
+                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" Title="Loading..."  TextColor="Black" 
+            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+            AbsoluteLayout.LayoutFlags="All">
+            <syncfusion:SfBusyIndicator.Triggers>
+                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+                             Binding="{Binding IsPageEnabled}"
+                             Value="true">
+                    <Setter Property="IsVisible" Value="True"/>
+                    <Setter Property="IsBusy" Value="True"/>
+                    <Setter Property="Opacity" Value="0.7"/>
+                </DataTrigger>
+            </syncfusion:SfBusyIndicator.Triggers>
+        </syncfusion:SfBusyIndicator>
+    </AbsoluteLayout>
+
+</ContentPage>

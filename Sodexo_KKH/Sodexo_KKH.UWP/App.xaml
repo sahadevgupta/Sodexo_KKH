@@ -5,4 +5,8 @@
     xmlns:local="using:Sodexo_KKH.UWP"
     RequestedTheme="Light">
 
+    <Application.Resources>
+       
+    </Application.Resources>
+    
 </Application>

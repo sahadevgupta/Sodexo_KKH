@@ -2,11 +2,20 @@
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
-             x:Class="Sodexo_KKH.App">
+             x:Class="Sodexo_KKH.App"
+                        xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                        xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+                        >
 	<Application.Resources>
 
 		<!-- Application resource dictionary -->
-        <ResourceDictionary>
+        <ResourceDictionary x:Name="dictionary">
+
+            <Color x:Key="Primary">#6200EE</Color>
+            <Color x:Key="Secondary">#3700B3</Color>
+            <Color x:Key="Accent">#03DAC6</Color>
+            <Color x:Key="Light">White</Color>
+
             <Color x:Key="My_Header_Color">#2a295c</Color>
             <Color x:Key="My_Button_Color">#2a295c</Color>
             <Color x:Key="My_Button_Foreground">#f8f2f2</Color>
@@ -15,6 +24,87 @@
             <Color x:Key="Red">#FF0000</Color>
 
             <Color x:Key="My_Gridview_Background">#65676A</Color>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="#2a295c" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+
+
+            <Style TargetType="Entry">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Sansation-Regular" />
+                            <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
+                        </OnPlatform>
+
+                       
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style TargetType="Picker">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Sansation-Regular" />
+                            <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+           
+            <Style TargetType="Button">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Sansation-Regular" />
+                            <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="autocomplete:SfAutoComplete">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Sansation-Regular" />
+                            <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style TargetType="Label">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Sansation-Regular" />
+                            <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Sansation-Regular" />
+                            <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
 
         </ResourceDictionary>
     </Application.Resources>

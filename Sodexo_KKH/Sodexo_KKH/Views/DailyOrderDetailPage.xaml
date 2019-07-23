@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:syncfusion1="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
+             xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
+             x:Class="Sodexo_KKH.Views.DailyOrderDetailPage"
+             Padding="10">
+
+    <NavigationPage.TitleView>
+        <Label Text="Daily Order Detail" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
+             BackgroundColor="{StaticResource My_Header_Color}" 
+             FontSize="17"
+             FontAttributes="Bold"
+             TextColor="White" HorizontalTextAlignment="Center" />
+    </NavigationPage.TitleView>
+
+
+    <ContentPage.Resources>
+        <lEx:BoolToStringConverter x:Key="BoolToStringConverter"/>
+        <lEx:BoolToImageConverter x:Key="BoolToImageConverter"/>
+        <lEx:CheckBoxConverter x:Key="CheckBoxConverter"/>
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+        <StackLayout  AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Opacity="1">
+            <local:ConnectionView/>
+            <StackLayout Orientation="Horizontal">
+                <Image x:Name="sss"   Source="Assets/logoinnertouch2order.png" HorizontalOptions="Start" HeightRequest="60" />
+                <Image  HorizontalOptions="EndAndExpand" Source="Assets/sodexologo.png" HeightRequest="60" />
+            </StackLayout>
+            <StackLayout BackgroundColor="White" Orientation="Horizontal">
+                <Label x:Name="txt_date" Text="{lEx:Translate dteText}" 
+                               VerticalOptions="Center" HorizontalOptions="Start" 
+                               TextColor="Black" Font="22" />
+                <DatePicker x:Name="dt_picker" VerticalOptions="Center" Date="{Binding SelectedDate}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" >
+
+                <Label x:Name="lbl_selectward" Text="{lEx:Translate cmbsearchbywardPlaceholderText}" 
+                   VerticalOptions="Center" FontSize="Small"/>
+                <Picker x:Name="pkr_ward"  
+                    WidthRequest="120"
+                    ItemsSource="{Binding WardData}"
+                    SelectedItem="{Binding SelectedWard}"
+                        Title="Select Ward"
+                    ItemDisplayBinding="{Binding ward_name}"
+                    HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
+                <Label x:Name="lbl_Bed" Text="{lEx:Translate cmbsearchbypatientPlaceholderText}" 
+                   VerticalOptions="Center" FontSize="Small" />
+                <Picker x:Name="pkr_bed" 
+                    WidthRequest="120"
+                    ItemsSource="{Binding BedDetails}"
+                    ItemDisplayBinding="{Binding bed_no}"
+                    SelectedItem="{Binding SelectedBed}"
+                        Title="Select Bed"
+                    HorizontalOptions="StartAndExpand"  VerticalOptions="Center" />
+                <Label x:Name="lbl_selectmealtime" Text="{lEx:Translate mteText}" 
+                   VerticalOptions="Center" FontSize="Small" />
+                <Picker x:Name="pkr_mealtime" 
+                    ItemsSource="{Binding MealTimeList}"
+                    SelectedItem="{Binding SelectedMealTime}"
+                    WidthRequest="120"
+                        Title="Select Meal"
+                    ItemDisplayBinding="{Binding meal_name}"
+                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            </StackLayout>
+            <syncfusion1:SfCheckBox  IsVisible="True" 
+                            x:Uid="chk_care"   
+                            FontSize="18" x:Name="chkcare_giver"  
+                            Text="{lEx:Translate cgContent}"
+                            IsChecked="{Binding IsCareGiver}"
+                            WidthRequest="20" />
+            <Button  x:Name="searchButton" 
+                Command="{Binding SearchCommand}"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="FillAndExpand"
+                 Text="{lEx:Translate btnsearch1Content}" 
+                Font="24" BackgroundColor="{StaticResource My_Header_Color}" 
+                TextColor="White"/>
+
+            <Grid BackgroundColor="Gray" HeightRequest="40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lbl0" Grid.Row="0" Grid.Column="0" />
+                <Label x:Name="lbl1" Grid.Row="0" Grid.Column="1" Text="{lEx:Translate dteText}" HorizontalOptions="Start" VerticalOptions="Center" FontSize="Small" Font="16" TextColor="White" />
+                <Label x:Name="lbl2" Grid.Row="0" Grid.Column="2" Text="{lEx:Translate wdText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl3" Grid.Row="0" Grid.Column="3" Text="{lEx:Translate bdText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl4" Grid.Row="0" Grid.Column="4" Text="{lEx:Translate pneText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl5" Grid.Row="0" Grid.Column="5" Text="{lEx:Translate mteText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl6" Grid.Row="0" Grid.Column="6" Text="{lEx:Translate obyText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl7" Grid.Row="0" Grid.Column="7" Text="{lEx:Translate verify}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+            </Grid>
+
+           
+                <ListView  x:Name="mylist" ItemsSource="{Binding MealDeliveredCollection}" HasUnevenRows="True" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                               
+                                    <Grid  BackgroundColor="White" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="1"/>
+                                </Grid.RowDefinitions>
+                                        
+                                        <syncfusion1:SfCheckBox IsVisible="{Binding status,Converter={StaticResource CheckBoxConverter}}"  
+                                                                x:Uid="chk_select"  x:Name="chk_select"    
+                                                                VerticalOptions="Center" 
+                                                            HorizontalOptions="Center" IsChecked="{Binding is_checked}"  />
+                                        <!--lEx:Tags.Tag="{Binding OrderedID}"-->
+                                        <Label TextColor="Black" Grid.Row="0" Grid.Column="1" x:Name="tbldate" Text="{Binding date}" VerticalOptions="Center" HorizontalTextAlignment="Start" />
+
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="2" x:Name="tblward" Text="{Binding Ward}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="3" x:Name="tblbed" Text="{Binding Bed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="4" x:Name="tblpname" Text="{Binding Name}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="5" x:Name="tblmealtime" Text="{Binding MealTime}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="6" x:Name="tblorderedby" Text="{Binding OrderBy}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+
+                                        <Image x:Name="imgbtn_scan" IsEnabled="{Binding is_verifed,Converter={StaticResource BoolToStringConverter}}" Grid.Row="0" Grid.Column="7"
+                                           WidthRequest="40" HeightRequest="40" Source="{Binding is_verifed,Converter={StaticResource BoolToImageConverter}}" VerticalOptions="Center">
+                                            <!--lEx:Tags.Tag="{Binding OrderedID}"-->
+                                            <Image.GestureRecognizers >
+                                                <TapGestureRecognizer Tapped="ScanImageTapped"  NumberOfTapsRequired="1"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                <BoxView HeightRequest="1" Grid.Row="1" Grid.ColumnSpan="8" BackgroundColor="LightGray"/>
+
+                            </Grid>
+                                
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            <Button x:Name="btn_update" HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                Text="{lEx:Translate btnupdateContent}" Font="24"  Command="{Binding UpdateCommand}"
+                BackgroundColor="{StaticResource My_Header_Color}" 
+                TextColor="White"  >
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding MealDeliveredCollection.Count}" Value="0">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </StackLayout>
+        <syncfusion:SfBusyIndicator x:Name="pbar"  IsEnabled="{Binding pbarBools}"
+                                    IsBusy="{Binding pbarBools}"  ViewBoxWidth="100" 
+                                    ViewBoxHeight="100"   AnimationType="DoubleCircle" 
+                                    Title="Loading..."  TextColor="Black" 
+                                    TextSize="24"
+                                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                                    AbsoluteLayout.LayoutFlags="All" />
+    </AbsoluteLayout>
+</ContentPage>

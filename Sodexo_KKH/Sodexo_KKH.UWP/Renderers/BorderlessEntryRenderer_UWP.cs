@@ -18,7 +18,7 @@ namespace Sodexo_KKH.UWP.Renderers
 
             if (Control != null)
             {
-                //Control.FontSize  = ;
+                Control.FontSize  = 20;
                 Control.BorderThickness = new Windows.UI.Xaml.Thickness(0);
             }
         }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sodexo_KKH", "Sodexo_KKH\Sodexo_KKH\Sodexo_KKH.csproj", "{5E40C0ED-0919-4ECE-AF7B-4BF5D3616E21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sodexo_KKH", "Sodexo_KKH\Sodexo_KKH\Sodexo_KKH.csproj", "{5E40C0ED-0919-4ECE-AF7B-4BF5D3616E21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sodexo_KKH.Android", "Sodexo_KKH\Sodexo_KKH.Android\Sodexo_KKH.Android.csproj", "{9F6F58B1-3CDF-4113-8C1D-4B385304F622}"
 EndProject
@@ -183,6 +183,7 @@ Global
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|x64.ActiveCfg = Debug|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|x86.ActiveCfg = Debug|iPhone
+		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|x86.Build.0 = Debug|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Release|Any CPU.ActiveCfg = Release|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Release|ARM.ActiveCfg = Release|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Release|iPhone.ActiveCfg = Release|iPhone

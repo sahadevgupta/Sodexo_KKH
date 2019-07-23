@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
-    class mstr_meal_history
+    public class mstr_meal_history
     {
         public string beveragesid { get; set; }
         public string dessertid { get; set; }
         public string entreeid { get; set; }
+        public string addonid { get; set; }
         public string juiceid { get; set; }
         public string orderdate { get; set; }
         public string remarkid { get; set; }

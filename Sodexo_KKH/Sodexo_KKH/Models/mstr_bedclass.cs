@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
-    class mstr_bedclass
+    public class mstr_bedclass
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
@@ -35,7 +35,7 @@ namespace Sodexo_KKH.Models
 
 
 
-    class mstr_DisplayPaymentModeDetails
+    public class mstr_DisplayPaymentModeDetails
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]

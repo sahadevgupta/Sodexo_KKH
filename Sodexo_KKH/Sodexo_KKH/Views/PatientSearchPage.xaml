@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Sodexo_KKH.Views.PatientSearchPage"
+             Padding="10"
+             xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
+             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms">
+
+    <NavigationPage.TitleView>
+
+      <Label Text="Search Patient" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
+             BackgroundColor="{StaticResource My_Header_Color}" 
+             FontSize="17"
+             FontAttributes="Bold"
+             TextColor="White" HorizontalTextAlignment="Center" />
+
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <lEx:AllergytextConverter x:Key="AllergytextConverter"/>
+            <lEx:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
+            <lEx:ImageConverter x:Key="ImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All" Opacity="1">
+
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout" Binding="{Binding IsPageEnabled}"
+                             Value="true">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </DataTrigger>
+            </StackLayout.Triggers>
+            
+            <local:ConnectionView/>
+            <StackLayout Orientation="Horizontal">
+                <Image x:Name="sss"   Source="Assets/logoinnertouch2order.png" HorizontalOptions="Start" HeightRequest="60" />
+                <Image  HorizontalOptions="EndAndExpand" Source="Assets/sodexologo.png" HeightRequest="60" />
+            </StackLayout>
+
+            <StackLayout  Orientation="Horizontal">
+                <Label x:Uid="txtDate"  TextColor="Black" FontSize="22" Text="Date:" VerticalOptions="Center" HorizontalOptions="Start"   />
+
+                <DatePicker Date="{Binding SelectedDate}"
+                        Format="dd-MMMM-yyyy"  
+                        BackgroundColor="White"  
+                        x:Name="orderdtpicker"  
+                        MinimumWidthRequest="150"  
+                        FontSize="17" 
+                        MaximumDate="{Binding MaxDate}"
+                            MinimumDate="{Binding MinDate}"
+                        VerticalOptions="Center"   />
+
+            </StackLayout>
+
+
+            <StackLayout  Margin="0,10,0,0"  Orientation="Horizontal">
+                <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="ByWard"
+                NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                    
+                    <Label x:Name="sbyward" Text="{lEx:Translate sbwText}"/>
+                    <BoxView x:Name="sbywardboxview" IsVisible="False" HeightRequest="5" BackgroundColor="BlueViolet">
+                        <BoxView.Triggers>
+                            <DataTrigger TargetType="BoxView"
+                                         Binding="{Binding IsWardVisible}"
+                                         Value="true">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </BoxView.Triggers>
+                    </BoxView>
+
+                </StackLayout>
+                
+                <StackLayout Margin="10,0,0,0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped" CommandParameter="ByPatient"
+                NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                    <Label  x:Name="sbypatient" Text="{lEx:Translate sbpText}" />
+                    <BoxView IsVisible="False" 
+                             x:Name="sbypatientboxview" HeightRequest="5" BackgroundColor="BlueViolet">
+                        <BoxView.Triggers>
+                            <DataTrigger Binding="{Binding IsWardVisible}"
+                                         TargetType="BoxView"
+                                         Value="false">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </BoxView.Triggers>
+                    </BoxView>
+
+
+                </StackLayout>
+
+
+
+
+
+
+            </StackLayout>
+            <StackLayout Margin="0,10,0,0" Orientation="Horizontal" IsVisible="True" x:Name="WardStack">
+                <StackLayout.Triggers>
+                    <DataTrigger TargetType="StackLayout"
+                                 Binding="{Binding Source={x:Reference sbywardboxview},Path=IsVisible}"
+                                 Value="false">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+
+                </StackLayout.Triggers>
+                <Label  Text="{lEx:Translate txtWardText}" VerticalOptions="Center"   
+                        FontSize="17"  />
+
+                <Picker ItemDisplayBinding="{Binding ward_name}"
+                        x:Name="cmbsearchbyward"
+                    HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"
+                    ItemsSource="{Binding MstrWards}"
+                    SelectedItem="{Binding SelectedWard}"
+                        Title="Select Ward no."
+                        />
+
+                <Label  Text="{lEx:Translate txtbedText}" VerticalOptions="Center"  FontSize="17" />
+
+                <Picker ItemDisplayBinding="{Binding bed_no}"  
+                        x:Name="cmbsearchbypatient"
+                    HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center"
+                    SelectedItem="{Binding SelectedBed}"
+                    ItemsSource="{Binding BedDetails}"
+                         Title="Select Bed no."
+                        />
+                <Button Image="Assets/searchbtn.png" Text="Search" 
+                        BackgroundColor="{StaticResource My_Button_Color}" TextColor="{StaticResource My_Button_Foreground}"
+                    Command="{Binding SearchBtnCommand}"
+                        CommandParameter="WardNo"/>
+            </StackLayout>
+
+
+            <StackLayout IsVisible="False" x:Name="stcksearcbyname" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+
+                <StackLayout.Triggers>
+                    <DataTrigger TargetType="StackLayout"
+                                 Binding="{Binding Source={x:Reference WardStack},Path=IsVisible}"
+                                 Value="false">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </StackLayout.Triggers>
+
+                <autocomplete:SfAutoComplete  ValueChanged="SfAutoComplete_ValueChanged"
+                                              DataSource="{Binding PatientDatas}"
+                                              Watermark="{lEx:Translate txtAutoSuggestBoxPlaceholderText}" 
+                                              HorizontalOptions="FillAndExpand"
+                                              />
+                
+                
+                    <Button Image="Assets/searchbtn.png" 
+                            x:Uid="btnsearch1" x:Name="btnsearch2" 
+                            BackgroundColor="{StaticResource My_Button_Color}" 
+                            TextColor="White" 
+                            WidthRequest="100"
+                            Command="{Binding SearchBtnCommand}" 
+                            CommandParameter="PatientName"
+                            Text="{lEx:Translate btnsearch1Content}"  
+                            />
+               
+            </StackLayout>
+
+
+            <Grid BackgroundColor="#65676A" Margin="-10,0,-10,0" Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <!--220-->
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="TextColor" Value="{StaticResource My_Button_Foreground}"/>
+                       
+                    </Style>
+                </Grid.Resources>
+
+                <Label  Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Text="Category"   />
+
+                <Label  Grid.Column="1" Grid.RowSpan="2" Grid.Row="0" Text="{lEx:Translate txtWardbedText}"  />
+
+                <Label Grid.Column="2" Grid.RowSpan="2" Grid.Row="0"  Text="{lEx:Translate pnameText}" />
+
+
+                <Label Grid.Row="0"  Grid.Column="3" HorizontalOptions="Center" Text="{lEx:Translate allgeyText}"  />
+
+
+                <Label  Grid.Row="0" Grid.RowSpan="2" Grid.Column="4" Text="Therapeutic Condition"   HorizontalOptions="Center"/>
+                <Label HorizontalOptions="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="5" Text="{lEx:Translate tblkH_NHText}" />
+
+                <Label Grid.RowSpan="2"  HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" Text="{lEx:Translate tblkgenderText}" />
+
+                <Label   Text="{lEx:Translate tblkorderText}" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="7"  HorizontalOptions="Center"/>
+
+                <Label HorizontalTextAlignment="Center" 
+                   Grid.Row="1" Grid.Column="7"
+                   
+                   BackgroundColor="#e23278" 
+                   VerticalOptions="Center" 
+                   Text="BF" 
+                   FontSize="13" />
+
+                <Label HorizontalTextAlignment="Center" 
+                   Grid.Row="1" Grid.Column="8"
+                   BackgroundColor="#c3ac13" 
+                   
+                   VerticalOptions="Center" 
+                   Text="LH" 
+                   FontSize="13" />
+
+                <Label VerticalOptions="Center" 
+                   Grid.Row="1" Grid.Column="9"
+                   
+                   BackgroundColor="Green"
+                   HorizontalTextAlignment="Center" 
+                   Text="DN" FontSize="13"/>
+
+                <Label Grid.Row="0" 
+                   Grid.RowSpan="2"  Grid.Column="10"  
+                   HorizontalOptions="Center"
+                   Text="{lEx:Translate tblklastmodifiedText}" 
+                      />
+                <Label  Grid.Row="0" Grid.Column="11" 
+                    Grid.RowSpan="2" 
+                    HorizontalOptions="Center"
+                    Text="{lEx:Translate codText}" 
+                     />
+            </Grid>
+
+            <syncfusions:SfListView AutoFitMode="Height"
+                                    SelectionMode="None"
+                                ItemHolding="SfListView_ItemHolding"
+                                ItemTapped="SfListView_ItemTapped"
+                                ItemsSource="{Binding Patients}">
+                <syncfusions:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
+
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="1"/>
+                                </Grid.RowDefinitions>
+
+                                <Label VerticalOptions="Center" HorizontalOptions="Start" Margin="5,0,0,0"  Text="{Binding category}" LineBreakMode="WordWrap" />
+
+                                <Label VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1" x:Name="tblid" Text="{Binding ward_bed}" LineBreakMode="WordWrap"  />
+
+                                <Label VerticalOptions="Center"  HorizontalOptions="Start"  Grid.Column="2" x:Name="tblpid" Text="{Binding Patientname}"  LineBreakMode="WordWrap"  />
+
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" x:Name="tblname" Text="{Binding Allergies,Converter={StaticResource AllergytextConverter}}" LineBreakMode="WordWrap"  />
+
+                                <Label VerticalOptions="Center" MaxLines="4"   Grid.Column="4"  Text="{Binding Therapeutic_Condition}" LineBreakMode="TailTruncation"  />
+
+                                <Label VerticalOptions="Center" HorizontalOptions="Center"  Grid.Column="5" x:Name="tblage" Text="{Binding ishalal,Converter={StaticResource BoolToObjectConverter}}" LineBreakMode="WordWrap"  />
+
+                                <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="6" x:Name="tblwardid" Text="{Binding gender}" LineBreakMode="WordWrap"  />
+
+                                <ImageButton BackgroundColor="Transparent" Source="{Binding BF,Converter={StaticResource ImageConverter}}"
+                                         Grid.Column="7" HeightRequest="20"
+                                             Clicked="ImageButton_Clicked"
+                                             CommandParameter="BF"
+                                             HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
+
+                                <ImageButton BackgroundColor="Transparent" Source="{Binding LH,Converter={StaticResource ImageConverter}}"
+                                         Grid.Column="8" HeightRequest="20"
+                                             Clicked="ImageButton_Clicked"
+                                             CommandParameter="LH"
+                                              HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
+
+                                <ImageButton BackgroundColor="Transparent" Source="{Binding DN,Converter={StaticResource ImageConverter}}"
+                                         Grid.Column="9" HeightRequest="20"
+                                             Clicked="ImageButton_Clicked"
+                                             CommandParameter="DN"
+                                              HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
+
+                                <Label  HorizontalOptions="Center"  Grid.Column="10"  VerticalOptions="Center"  LineBreakMode="WordWrap" Text="{Binding Last_Order_by}" FontSize="13"   />
+
+                                <ImageButton BackgroundColor="Transparent" Source="Assets/cancel.png"
+                                         Grid.Column="11" HeightRequest="35" 
+                                             x:Name="DeleteOrder"
+                                             Margin="0,0,5,0"
+                                             Clicked="DeleteOrder_Clicked"
+                                         VerticalOptions="Center"/>
+
+                              
+                                <BoxView VerticalOptions="End" Grid.ColumnSpan="12" Grid.Row="1" HeightRequest="1" BackgroundColor="Black"/>
+
+
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </syncfusions:SfListView.ItemTemplate>
+            </syncfusions:SfListView>
+
+           
+        </StackLayout>
+
+        <syncfusion:SfBusyIndicator 
+                x:Name="pbar" 
+                IsVisible="False" 
+                IsBusy="False"  
+            TextSize="24"
+                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" Title="Loading..."  TextColor="Black" 
+            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+            AbsoluteLayout.LayoutFlags="All">
+            <syncfusion:SfBusyIndicator.Triggers>
+                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+                             Binding="{Binding IsPageEnabled}"
+                             Value="true">
+                    <Setter Property="IsVisible" Value="True"/>
+                    <Setter Property="IsBusy" Value="True"/>
+                    <Setter Property="Opacity" Value="0.7"/>
+                </DataTrigger>
+            </syncfusion:SfBusyIndicator.Triggers>
+        </syncfusion:SfBusyIndicator>
+    </AbsoluteLayout>
+
+</ContentPage>

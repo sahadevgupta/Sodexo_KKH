@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
-    class meal_delivery_status
+    public class meal_delivery_status
     {
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int id { get; set; }
@@ -50,7 +50,7 @@ namespace Sodexo_KKH.Models
     }
 
 
-    class menuitems
+    public class menuitems
     {
        
         public int ID { get; set; }
@@ -62,7 +62,7 @@ namespace Sodexo_KKH.Models
     }
 
 
-    class mstr_caregiver_mealorder_details
+    public class mstr_caregiver_mealorder_details
     {
         public string menu_item_name { get; set; }
         public double amount { get; set; }

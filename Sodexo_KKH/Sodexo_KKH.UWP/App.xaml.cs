@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Plugin.Connectivity;
+using Sodexo_KKH.Helpers;
+using Syncfusion.ListView.XForms.UWP;
+using Syncfusion.XForms.UWP.Buttons;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Net.Http;
+using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Sodexo_KKH.UWP
@@ -31,7 +28,7 @@ namespace Sodexo_KKH.UWP
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
-
+        
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -52,13 +49,34 @@ namespace Sodexo_KKH.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                Xamarin.Forms.Forms.Init(e);
+               
+
+                List<Assembly> assembliesToInclude = new List<Assembly>();
+                assembliesToInclude.Add(typeof(Syncfusion.SfBusyIndicator.XForms.UWP.SfBusyIndicatorRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.ComboBox.SfComboBoxRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfListViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.SfAutoComplete.XForms.UWP.SfAutoCompleteRenderer).GetTypeInfo().Assembly);
+                // Replace the Xamarin.Forms.Forms.Init(e);      
+                assembliesToInclude.Add(typeof(SfRadioButtonRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfCheckBoxRenderer).GetTypeInfo().Assembly);
+
+
+
+                assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
+                assembliesToInclude.AddRange(Rg.Plugins.Popup.Popup.GetExtraAssemblies());
+
+                Rg.Plugins.Popup.Popup.Init();
+
+                //Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
+                Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
+                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
-
+                
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
@@ -73,6 +91,7 @@ namespace Sodexo_KKH.UWP
             // Ensure the current window is active
             Window.Current.Activate();
         }
+
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
@@ -91,11 +110,28 @@ namespace Sodexo_KKH.UWP
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+
+
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                if (!string.IsNullOrEmpty(Library.KEY_USER_ID))
+                {
+                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+                    using (var httpClient = new System.Net.Http.HttpClient())
+                    {
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogfalse/" + Library.KEY_USER_ID);
+                        await httpClient.SendAsync(request);
+                    }
+                    Library.KEY_USER_ID = string.Empty;
+                }
+            }
+
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
     }
 }

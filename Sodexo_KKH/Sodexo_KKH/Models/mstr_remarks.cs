@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
-    class mstr_remarks
+    public class mstr_remarks
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]

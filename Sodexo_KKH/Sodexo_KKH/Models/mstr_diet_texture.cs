@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Sodexo_KKH.Models
 {
-    class mstr_diet_texture
+    public class mstr_diet_texture : BindableBase
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
@@ -16,11 +19,15 @@ namespace Sodexo_KKH.Models
         public int status_id { get; set; }
         public string site_code { get; set; }
 
-
-
-        public mstr_diet_texture()
+        private bool _isChecked;
+        [Ignore]
+        [JsonIgnore]
+        public bool IsChecked
         {
-
+            get { return this._isChecked; }
+            set { SetProperty(ref _isChecked, value); }
         }
+
+       
     }
 }

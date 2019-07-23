@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
-    class mstr_patient_info
+    public class mstr_patient_info : BindableBase
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
@@ -29,10 +32,45 @@ namespace Sodexo_KKH.Models
         public string patientname_dup { get; set; }
         public string patient_race { get; set; }
         public string category { get; set; }
-        public bool is_halal { get; set; }
-        public string ishalal_tab { get; set; }
-        public string isveg_tab { get; set; }
-        public bool is_veg { get; set; }
+
+
+
+        private bool _is_halal;
+
+        public bool is_halal
+        {
+            get { return this._is_halal; }
+            set { SetProperty(ref _is_halal, value); }
+        }
+
+
+
+
+        private string _ishalal_tab;
+
+        public string ishalal_tab
+        {
+            get { return this._ishalal_tab; }
+            set { SetProperty(ref _ishalal_tab, value); }
+        }
+
+
+
+        private string _isveg_tab;
+
+        public string isveg_tab
+        {
+            get { return this._isveg_tab; }
+            set { SetProperty(ref _isveg_tab, value); }
+        }
+
+        private bool _is_veg;
+
+        public bool is_veg
+        {
+            get { return this._is_veg; }
+            set { SetProperty(ref _is_veg, value); }
+        }
         public string ward_name { get; set; }
         public int ward_no { get; set; }
         public string ward_bed { get; set; }
@@ -50,7 +88,15 @@ namespace Sodexo_KKH.Models
         public string sequenceno { get; set; }
 
         public string Therapeutic { get; set; }
-        public string FluidInfo { get; set; }
+
+
+        private string _fluidInfo;
+
+        public string FluidInfo
+        {
+            get { return this._fluidInfo; }
+            set { SetProperty(ref _fluidInfo, value); }
+        }
         public string Ingredient { get; set; }
 
 
@@ -77,13 +123,31 @@ namespace Sodexo_KKH.Models
 
         public string Site_Code { get; set; }
 
-        public string ishalal { get; set; }
-        public string isveg { get; set; }
 
-        public mstr_patient_info()
+        private string _ishalal;
+
+        public string ishalal
         {
-
+            get { return this._ishalal; }
+            set { SetProperty(ref _ishalal, value); }
         }
+
+        private string _isveg;
+
+        public string isveg
+        {
+            get { return this._isveg; }
+            set { SetProperty(ref _isveg, value); }
+        }
+        [JsonProperty("Therapeutic_Condition")]
+        public string Therapeutic_Condition { get; set; }
+       
+        [JsonProperty("Diet_Texture")]
+        public string Diet_Texture { get; set; }
+
+        [JsonProperty("Meal_Type")]
+        public string Meal_Type { get; set; }
+
         //public mstr_patient_info(string Para1, string Para2, string Para3, int Para4, string Para5, string Para6, string Para7, int Para8, string Para9, string Para10, string Para11, string Para12, string Para13, string Para14, bool Para15, bool Para16, string Para17, int Para18, string Para19, string Para20, string Para21,string Para22,string Para23,string Para24,string Para25,string Para26, string Para27, int Para28,string Para29,string Para30)
         //{
 

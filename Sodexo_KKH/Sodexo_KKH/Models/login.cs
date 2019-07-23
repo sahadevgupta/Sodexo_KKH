@@ -10,9 +10,6 @@ namespace Sodexo_KKH.Models
         public string Name { get; set; }
         public string pass { get; set; }
         public string roleType { get; set; }
-        public login()
-        {
-
-        }
+        public int isLDap { get; set; }
     }
 }

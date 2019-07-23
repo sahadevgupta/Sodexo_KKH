@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Sodexo_KKH.PopUpControl.MealInfoPopUp"
+    Padding="10"
+    xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+    xmlns:UiTemplates="clr-namespace:Sodexo_KKH.PopUpControl">
+
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+           
+            <lEx:ImageConverter x:Key="ImageConverter"/>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+
+
+   
+
+        <Frame Padding="3" BackgroundColor="White" BorderColor="Transparent" VerticalOptions="Center" HorizontalOptions="Center">
+
+            <Frame.Resources>
+                <Style x:Key="PopupView" TargetType="View">
+
+                    <Setter Property="BackgroundColor" Value="Transparent" />
+                    <Setter Property="VerticalOptions" Value="Center" />
+
+
+                    <Setter Property="HorizontalOptions">
+                        <Setter.Value>
+                            <OnIdiom
+                            x:TypeArguments="LayoutOptions"
+                            Desktop="Center"
+                            Phone="FillAndExpand"
+                            TV="Center"
+                            Tablet="CenterAndExpand"
+                            Watch="FillAndExpand" />
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Frame.Resources>
+
+
+            <StackLayout Style="{StaticResource PopupView}">
+
+                <UiTemplates:PopupTitleView x:Name="titlelbl" Text="lEx:Translate pmnameText"  Grid.ColumnSpan="2" Close="Titlelbl_Close"/>
+
+                <Grid BackgroundColor="#65676A" Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="40"/>
+                        
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                            <Setter Property="FontSize" Value="17"/>
+                            <Setter Property="TextColor" Value="White"/>
+                            <Setter Property="VerticalOptions" Value="Center"/>
+                            <Setter Property="HorizontalOptions" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Label Grid.Row="0"  LineBreakMode="WordWrap" Text="{lEx:Translate odateText}"/>
+                    <Label Grid.Row="0" Grid.Column="1"  LineBreakMode="WordWrap" Text="{lEx:Translate entreeText}"/>
+                    <Label Grid.Row="0" Grid.Column="2"  LineBreakMode="WordWrap" Text="{lEx:Translate spText}"/>
+                    <Label Grid.Row="0" Grid.Column="3"  LineBreakMode="WordWrap" Text="{lEx:Translate bevText}"/>
+                    <Label Grid.Row="0" Grid.Column="4"  LineBreakMode="WordWrap" Text="{lEx:Translate juiceText}"/>
+                    <Label Grid.Row="0" Grid.Column="5"  LineBreakMode="WordWrap" Text="{lEx:Translate dessText}"/>
+                    <Label Grid.Row="0" Grid.Column="6"  LineBreakMode="WordWrap" Text="AddOn"/>
+                    <Label Grid.Row="0" Grid.Column="7"  LineBreakMode="WordWrap" Text="{lEx:Translate remarkText}"/>
+
+
+                </Grid>
+
+
+                <ListView x:Name="meallist" SelectionMode="None" MinimumHeightRequest="80">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="40"/>
+
+                                </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="1"/>
+                                    </Grid.RowDefinitions>
+
+                                <Grid.Resources>
+                                    <Style TargetType="Label">
+                                        <Setter Property="VerticalOptions" Value="Center"/>
+                                        <Setter Property="HorizontalOptions" Value="Center"/>
+                                    </Style>
+                                </Grid.Resources>
+
+                                <Label  LineBreakMode="WordWrap" 
+                                        Text="{Binding orderdate}"/>
+                                    <Label  Grid.Column="1"  
+                                            LineBreakMode="WordWrap" 
+                                            Text="{Binding entreeid}"/>
+
+                                    <Label Grid.Column="2"   
+                                           LineBreakMode="WordWrap" 
+                                           Text="{Binding soupid}"/>
+                                    <Label  Grid.Column="3"  
+                                            LineBreakMode="WordWrap" 
+                                            Text="{Binding beveragesid}"/>
+                                    <Label  Grid.Column="4"  
+                                            LineBreakMode="WordWrap" 
+                                            Text="{Binding juiceid}"/>
+
+                                    <Label  Grid.Column="5"  
+                                            LineBreakMode="WordWrap" 
+                                            Text="{Binding dessertid}"/>
+                                <Label  Grid.Column="6"  
+                                            LineBreakMode="WordWrap" 
+                                            Text="{Binding addonid}"/>
+                                <Label  Grid.Column="7"  
+                                            LineBreakMode="WordWrap" 
+                                            Text="{Binding remarkid}"/>
+
+                                    <Image WidthRequest="75" 
+                                           Grid.Column="8" 
+                                           Margin="0,0,20,0"
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center" 
+                                           Source="{Binding status,Converter={StaticResource ImageConverter}}"/>
+
+                                    <BoxView HeightRequest="1" BackgroundColor="LightGray" Grid.Row="1" Grid.ColumnSpan="9"/>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
+            </StackLayout>
+
+        </Frame>
+
+   
+
+</pages:PopupPage>

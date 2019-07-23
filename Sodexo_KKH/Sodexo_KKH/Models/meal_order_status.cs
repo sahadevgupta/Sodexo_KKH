@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sodexo_KKH.Models
 {
-    class meal_order_status
+    public class meal_order_status
     {
         public int SrNo { get; set; }
         public string OrderStatus { get; set; }

@@ -13,5 +13,7 @@ namespace Sodexo_KKH.Interfaces
         void ChangeLocale(string sLanguageCode);
 
         string GetIpAddress();
+
+        string GetDeviceName();
     }
 }

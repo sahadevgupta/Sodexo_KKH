@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
-    class mstr_menu_item_category
+    public class mstr_menu_item_category : BindableBase
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
@@ -22,7 +23,17 @@ namespace Sodexo_KKH.Models
         public string selimgname { get; set; }
         public string fcolor { get; set; }
         public string selcolor { get; set; }
-        public bool ss { get; set; }
+
+
+        private bool _categoryVisibility;
+
+        public bool CategoryVisibility
+        {
+            get { return this._categoryVisibility; }
+            set { SetProperty(ref _categoryVisibility, value); }
+        }
+
+       
 
 
 

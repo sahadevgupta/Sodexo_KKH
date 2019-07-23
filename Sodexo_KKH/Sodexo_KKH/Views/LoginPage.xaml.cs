@@ -1,5 +1,6 @@
-﻿using Sodexo_KKH.ViewModels;
-using System;
+﻿using Sodexo_KKH.Interfaces;
+using Sodexo_KKH.ViewModels;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Views
@@ -12,11 +13,59 @@ namespace Sodexo_KKH.Views
             InitializeComponent();
             _viewModel = BindingContext as LoginPageViewModel;
         }
-        private async void txtusername_EntryUnfocused(object sender, TextChangedEventArgs e)
+        protected override void OnAppearing()
         {
-           await _viewModel.BindRole();
+            base.OnAppearing();
         }
 
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            this.txtusername.EntryUnfocused -= Txtusername_EntryUnfocused;
+            
+        }
        
+        private async void Txtusername_EntryUnfocused(object sender, FocusEventArgs e)
+        {
+
+            var result = await _viewModel.BindRole();
+            if (result == null)
+            {
+                return;
+            }
+            else if (result.Any())
+            {
+                _viewModel.EnableSubmitButton = true;
+                if (result.Count == 1)
+                {
+                    _viewModel.SelectedRole = result.First();
+                    DependencyService.Get<INotify>().ShowToast($"You are logging in as {_viewModel.SelectedRole}");
+                }
+            }
+            else
+            {
+                await App.pageDialog.DisplayAlertAsync("Alert.!", $"Please check username you have entered",  "OK");
+                _viewModel.EnableSubmitButton = false;
+            }
+            
+        }
+        private void Txtusername_EntryFocused(object sender, FocusEventArgs e)
+        {
+            _viewModel.EnableSubmitButton = false;
+        }
+
+        private async void Button_Clicked(object sender, System.EventArgs e)
+        {
+            var btn = ((Button)sender).CommandParameter.ToString();
+            if (btn == "LDAP")
+            {
+               await _viewModel.Login(true);
+            }
+            else
+               await _viewModel.Login();
+
+            this.txtusername.Unfocus();
+
+        }
     }
 }

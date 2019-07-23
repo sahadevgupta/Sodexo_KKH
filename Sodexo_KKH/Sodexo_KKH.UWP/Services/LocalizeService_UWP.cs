@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
+using Windows.Security.ExchangeActiveSyncProvisioning;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(LocalizeService_UWP))]
@@ -64,6 +65,12 @@ namespace Sodexo_KKH.UWP.Services
             }
 
             return string.Empty;
+        }
+
+        public string GetDeviceName()
+        {
+           var deviceInfo = new EasClientDeviceInformation();
+           return  deviceInfo.FriendlyName;
         }
     }
 }

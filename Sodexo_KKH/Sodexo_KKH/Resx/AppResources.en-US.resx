@@ -398,8 +398,8 @@
     <comment>Therapeutic:</comment>
   </data>
   <data name="txtWardbedsText" xml:space="preserve">
-    <value>Ward-Bed</value>
-    <comment>Ward-Bed</comment>
+    <value>Ward-Bed:</value>
+    <comment>Ward-Bed:</comment>
   </data>
   <data name="vegText" xml:space="preserve">
     <value>Vegeterian:</value>
@@ -458,7 +458,7 @@
     <comment>Meal Prefrence Changed!</comment>
   </data>
   <data name="ml2" xml:space="preserve">
-    <value>Do you want to Change the (Veg/Nonveg)/(Halal/Non-Halal)/(Allergy) Status.</value>
+    <value>Do you want to Change the (Veg/Nonveg)/(Halal/Non-Halal)/ Status.</value>
     <comment>Do you want to Change the (Veg/Nonveg)/(Halal/Non-Halal)/(Allergy) Status.</comment>
   </data>
   <data name="nmText" xml:space="preserve">
@@ -478,8 +478,8 @@
     <comment>Patient Preference</comment>
   </data>
   <data name="rcText" xml:space="preserve">
-    <value>Race</value>
-    <comment>Race</comment>
+    <value>Race:</value>
+    <comment>Race:</comment>
   </data>
   <data name="sd" xml:space="preserve">
     <value>Sync done successfully.</value>
@@ -932,5 +932,9 @@
   <data name="msg0" xml:space="preserve">
     <value>Master data synced successfully.</value>
     <comment>Master data synced successfully.</comment>
+  </data>
+  <data name="patsearch" xml:space="preserve">
+    <value>Patient Search</value>
+    <comment>Patient Search</comment>
   </data>
 </root>

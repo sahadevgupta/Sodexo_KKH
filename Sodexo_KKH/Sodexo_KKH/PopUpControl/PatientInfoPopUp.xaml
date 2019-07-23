@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:UiTemplates="clr-namespace:Sodexo_KKH.PopUpControl"
+    xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+    x:Class="Sodexo_KKH.PopUpControl.PatientInfoPopUp">
+
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ScrollView">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="VerticalOptions" Value="Center" />
+
+                <Setter Property="HorizontalOptions">
+                    <Setter.Value>
+                        <OnIdiom
+                            x:TypeArguments="LayoutOptions"
+                            Desktop="Center"
+                            Phone="FillAndExpand"
+                            TV="Center"
+                            Tablet="CenterAndExpand"
+                            Watch="FillAndExpand" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Orientation">
+                    <Setter.Value>
+                        <OnIdiom
+                            x:TypeArguments="ScrollOrientation"
+                            Desktop="Vertical"
+                            Phone="Vertical"
+                            TV="Both"
+                            Tablet="Vertical"
+                            Watch="Vertical" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <lEx:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+
+    <ScrollView>
+        <ScrollView.Resources>
+            <Style x:Key="PopupView" TargetType="View">
+
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="VerticalOptions" Value="Center" />
+
+
+                <Setter Property="HorizontalOptions">
+                    <Setter.Value>
+                        <OnIdiom
+                            x:TypeArguments="LayoutOptions"
+                            Desktop="Center"
+                            Phone="FillAndExpand"
+                            TV="Center"
+                            Tablet="CenterAndExpand"
+                            Watch="FillAndExpand" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ScrollView.Resources>
+
+        <Frame Padding="3" BackgroundColor="WhiteSmoke" BorderColor="Transparent" WidthRequest="550">
+            <StackLayout Style="{StaticResource PopupView}">
+                <StackLayout.Resources>
+                    <Style x:Key="Titlelbl" TargetType="Label">
+                        <Setter Property="LineHeight" Value="1.8"/>
+                        <Setter Property="VerticalTextAlignment" Value="Center" />
+                        <Setter Property="Margin" Value="10,2" />
+                    </Style>
+                    <Style BasedOn="{StaticResource Titlelbl}" TargetType="Label">
+                        <Setter Property="FontAttributes" Value="Bold" />
+                    </Style>
+                </StackLayout.Resources>
+
+                
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                       
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="Auto" />
+                         <RowDefinition Height="1" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <UiTemplates:PopupTitleView Text="Patient Information"  Close="PopupTitleView_Close" Grid.ColumnSpan="2"/>
+
+                    <Label x:Uid="pname" 
+                           x:Name="txtp_name" 
+                           Text="{lEx:Translate pnameText}" 
+                           Grid.Row="1" Grid.Column="0" 
+                           Style="{StaticResource Titlelbl}"
+                            />
+
+                    <Label x:Uid="bclass" x:Name="txtp_bedclass" Text="{lEx:Translate bclassText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="2" Grid.Column="0"  />
+                    <Label x:Uid="page" x:Name="txtp_age" Text="{lEx:Translate pageText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="3" Grid.Column="0"  />
+                    <Label x:Uid="txtWardbeds" x:Name="txtp_ward_bed" Text="{lEx:Translate txtWardbedsText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="4" Grid.Column="0"  />
+                    <Label x:Uid="adch" x:Name="txtp_adult" Text="{lEx:Translate adchText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="5" Grid.Column="0"  />
+
+                    <Label x:Name="txtp_race" x:Uid="parace"  Text="{lEx:Translate paraceText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="6" Grid.Column="0"  />
+
+                    <Label x:Name="txtp_admissiondate" x:Uid="adate" Text="{lEx:Translate adateText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="7" Grid.Column="0"  />
+
+                    <Label x:Name="txtp_dischargedate" x:Uid="ddate" Text="{lEx:Translate ddateText}"
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="8" Grid.Column="0"  />
+
+                    <Label x:Name="txtp_dob" x:Uid="dobtxt" Text="{lEx:Translate dobtxtText}"
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="9" Grid.Column="0"  />
+
+                    <Label x:Name="txtp_gender" x:Uid="gender" Text="{lEx:Translate genderText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="10" Grid.Column="0"  />
+                    <Label x:Name="txtp_religion" x:Uid="rel" Text="{lEx:Translate relText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="11" Grid.Column="0"  />
+
+                    <Label x:Name="txtp_prefered_server" x:Uid="ps" Text="{lEx:Translate psText}"
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="12" Grid.Column="0"  />
+
+                    <Label x:Name="txtp_NRIC"  Text="NRIC/ID(HN):" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="13" Grid.Column="0"  />
+
+                    <Label x:Uid="veg"   Text="{lEx:Translate vnText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="14" Grid.Column="0"  />
+
+                    <Label x:Uid="hl"  Text="{lEx:Translate hlnlText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="15" Grid.Column="0"  />
+
+                    <Label x:Uid="alge" Text="{lEx:Translate algeText}" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Row="17" Grid.Column="0"  />
+                    <Label x:Uid="ther" Text="{lEx:Translate therText}" Grid.Row="19" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Column="0"  />
+
+                    <Label  Text="Therapeutic Condition :" Grid.Row="21" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Column="0"  />
+
+                    <Label x:Uid="case"  Text="{lEx:Translate caseText}" Grid.Row="23" 
+                           Style="{StaticResource Titlelbl}"
+                           Grid.Column="0"  />
+                    
+                    <Label Text="{Binding Patientname}"  
+                           Grid.Row="1" Grid.Column="1" />
+                    <Label x:Name="txtp_bedclass1" Text="{Binding Bed_Class_Name}"  Grid.Row="2" Grid.Column="1" />
+                    <Label x:Name="txtp_age1" Text="{Binding Patient_Age}"   Grid.Row="3" Grid.Column="1"/>
+                    <Label x:Name="txtp_ward_bed1"    Grid.Row="4" Grid.Column="1">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ward_name,Mode=OneWay}"/>
+                                <Span Text="-"/>
+                                <Span Text="{Binding bed_name,Mode=OneWay}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label x:Name="txtp_adult1" Text="{Binding Age_Name}"   Grid.Row="5" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_race1" Text="{Binding patient_race}"    Grid.Row="6" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_admissiondate1" Text="{Binding admission_date}"    Grid.Row="7" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_dischargedate1" Text="{Binding Discharge_Date}"   Grid.Row="8" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_dob1" Text="{Binding Birthdate}"   Grid.Row="9" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_gender1" Text="{Binding gender}"   Grid.Row="10" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_religion1" Text="{Binding Religion}"   Grid.Row="11" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_prefered_server1" Text="{Binding Preferredserver}"   Grid.Row="12" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_NRIC1"    Grid.Row="13" Grid.Column="1"/>
+                    <StackLayout Grid.Row="14" Grid.Column="1" Orientation="Horizontal">
+                        <Label x:Name="txtveg" VerticalOptions="Center"  Grid.Row="15" 
+                               Text="{Binding isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
+                               Grid.Column="1"  
+                               FontSize="18"/>
+                        <Image Source="{lEx:PlatformImage SourceImage='Veg_symbol'}" VerticalOptions="Center" HeightRequest="30" >
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding Source={x:Reference txtveg},Path=Text}"
+                                             Value="Non-Veg">
+                                    <Setter Property="Source" Value="{lEx:PlatformImage SourceImage='non-veg'}"/>
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </StackLayout>
+                    <Label x:Name="txthalal" Text="{Binding isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=HNH}"  Grid.Row="15" Grid.Column="1"  ></Label>
+                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="16" Grid.ColumnSpan="2"/>
+                    <Label x:Name="txtallergies"
+                               LineBreakMode="WordWrap" Grid.Row="17" Grid.Column="1"    />
+                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="18" Grid.ColumnSpan="2"/>
+
+                    <Label x:Name="txtther" 
+                               Grid.Row="19" Grid.Column="1"
+                               Text="{Binding Therapeutic}"
+                                  />
+
+                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="20" Grid.ColumnSpan="2"/>
+
+                    <Label 
+                               Grid.Row="21" Grid.Column="1"
+                               Text="{Binding Therapeutic_Condition}"
+                                  />
+                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="22" Grid.ColumnSpan="2"/>
+                    <Label x:Name="txtcase" Text="{Binding sequenceno}" Grid.Row="23" Grid.Column="1"   />
+
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </ScrollView>
+
+
+
+</pages:PopupPage>
