@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class meal_order_status
     {
@@ -14,7 +10,7 @@ namespace Sodexo_KKH.Models
 
         public meal_order_status()
         {
-                
+
         }
     }
 }

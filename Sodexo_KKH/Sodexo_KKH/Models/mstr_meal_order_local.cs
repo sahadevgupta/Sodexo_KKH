@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
@@ -45,7 +41,7 @@ namespace Sodexo_KKH.Models
         public int meal_desert_id { get; set; }
         public int remark_id { get; set; }
         public string meal_remark { get; set; }
-        
+
         public int ID { get; set; }
         public string adult_child { get; set; }
         public int bedclass_id { get; set; }//optional
@@ -90,6 +86,6 @@ namespace Sodexo_KKH.Models
         public string Meal_Type { get; set; }
 
         public int meal_addon_id { get; set; }
-         
+
     }
 }

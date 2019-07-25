@@ -18,7 +18,7 @@ using DependencyService = Xamarin.Forms.DependencyService;
 namespace Sodexo_KKH.ViewModels
 {
     public class MealOrderStatusPageViewModel : ViewModelBase
-	{
+    {
         private mstr_ward_details _selectedWard;
         public mstr_ward_details SelectedWard
         {
@@ -62,7 +62,7 @@ namespace Sodexo_KKH.ViewModels
             set { SetProperty(ref _statusList, value); }
         }
         private DateTime _selectedDate = DateTime.UtcNow;
-        public DateTime SelectedDate 
+        public DateTime SelectedDate
         {
             get { return _selectedDate; }
             set { SetProperty(ref _selectedDate, value); }
@@ -99,14 +99,14 @@ namespace Sodexo_KKH.ViewModels
                     {
                         MealOrderStatusCollection = new ObservableCollection<meal_order_status>();
                         pbarBools = true;
-                      
+
                         HttpClient httpClient = new System.Net.Http.HttpClient();
 
                         DateTime dt = SelectedDate;
 
                         string format_date = dt.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
-                        var SelectedMealStatusIndex = StatusList.IndexOf(StatusList.First(x=> x == SelectedMealStatus));
-                        
+                        var SelectedMealStatusIndex = StatusList.IndexOf(StatusList.First(x => x == SelectedMealStatus));
+
                         HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETMEALORDERSTATUS + "/" + SelectedWard.ID + "/" + format_date + "/" + SelectedMealTime.ID + "/" + SelectedMealStatusIndex.ToString() + "/" + Library.KEY_USER_SiteCode);
                         HttpResponseMessage response = await httpClient.SendAsync(request);
                         var data = await response.Content.ReadAsStringAsync();
@@ -133,7 +133,7 @@ namespace Sodexo_KKH.ViewModels
                 else
                 {
                     pbarBools = false;
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture),  "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                 }
             }
             catch (Exception excp)
@@ -159,7 +159,7 @@ namespace Sodexo_KKH.ViewModels
         }
         private void FillStatus()
         {
-            StatusList = new List<string> { "All","Ordered","Not Ordered","NBM","Home Leave","Delivered" };
+            StatusList = new List<string> { "All", "Ordered", "Not Ordered", "NBM", "Home Leave", "Delivered" };
             SelectedMealStatus = "All";
         }
         private void FillMealTime()
@@ -167,7 +167,7 @@ namespace Sodexo_KKH.ViewModels
             try
             {
                 var db = DependencyService.Get<IDBInterface>().GetConnection();
-                MealTimeList =new List<mstr_meal_time>(db.Query<mstr_meal_time>("Select * From mstr_meal_time where status_id ='1' order by ID"));
+                MealTimeList = new List<mstr_meal_time>(db.Query<mstr_meal_time>("Select * From mstr_meal_time where status_id ='1' order by ID"));
                 SelectedMealTime = MealTimeList.FirstOrDefault();
             }
             catch (Exception exp)

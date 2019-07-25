@@ -1,18 +1,16 @@
-﻿using SQLite;
-using System;
+﻿using Sodexo_KKH.Interfaces;
+using SQLite;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
-using Sodexo_KKH.Interfaces;
 
 namespace Sodexo_KKH.Repos
 {
     public class GenericRepo<T> : IGenericRepo<T> where T : new()
     {
-        
+
         public GenericRepo()
         {
-            
+
         }
         public void Insert(T a)
         {

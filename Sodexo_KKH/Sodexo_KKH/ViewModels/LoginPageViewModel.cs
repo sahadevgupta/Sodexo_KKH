@@ -3,7 +3,9 @@ using Newtonsoft.Json.Linq;
 using Plugin.Connectivity;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using Sodexo_KKH.Helpers;
+using Sodexo_KKH.Models;
 using Sodexo_KKH.Resx;
 using System;
 using System.Collections.Generic;
@@ -11,18 +13,16 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Sodexo_KKH.Models;
-using System.Security.Cryptography;
-using System.Reflection;
-using Prism.Services;
 
 namespace Sodexo_KKH.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
-	{
+    {
         private string _userName;
         public string UserName
         {
@@ -41,7 +41,7 @@ namespace Sodexo_KKH.ViewModels
             get { return _errorText; }
             set { SetProperty(ref _errorText, value); }
         }
-        
+
         private List<string> _roleList;
         public List<string> RoleList
         {
@@ -102,22 +102,22 @@ namespace Sodexo_KKH.ViewModels
         ColorTypeConverter _colorConverter;
         #endregion
 
-        
+
 
         public DelegateCommand ReloadCommand => new DelegateCommand(ReloadCAPTCHA);
 
 
-        public LoginPageViewModel(INavigationService navigationService,IPageDialogService pageDialog) : base(navigationService, pageDialog)
+        public LoginPageViewModel(INavigationService navigationService, IPageDialogService pageDialog) : base(navigationService, pageDialog)
         {
             App.pageDialog = pageDialog;
 
-            RoleList = new List<string> {"Select Role"};
+            RoleList = new List<string> { "Select Role" };
             _colorConverter = new ColorTypeConverter();
             _random = new Random();
             GetColorList();
             ChangeBackgroundColor();
             Captcha = GetUniqueKey(6);
-           
+
         }
         private void ReloadCAPTCHA()
         {
@@ -149,21 +149,21 @@ namespace Sodexo_KKH.ViewModels
             var temp = new List<string>();
             foreach (var field in typeof(Color).GetFields(BindingFlags.Static | BindingFlags.Public))
             {
-               
-                if (field != null && !String.IsNullOrEmpty(field.Name) && !field.Name.Contains("White") )
+
+                if (field != null && !String.IsNullOrEmpty(field.Name) && !field.Name.Contains("White"))
                     temp.Add(field.Name);
             }
             for (int i = 0; i < temp.Count; i++)
             {
                 var ranColor = (Color)_colorConverter.ConvertFromInvariantString(temp[i]);
-                var sum = (ranColor.R + ranColor.G + ranColor.B)*255;
+                var sum = (ranColor.R + ranColor.G + ranColor.B) * 255;
                 if (sum < 382)
                 {
                     _colors.Add(temp[i]);
                 }
             }
-            
-            
+
+
         }
         void ChangeBackgroundColor()
         {
@@ -179,8 +179,8 @@ namespace Sodexo_KKH.ViewModels
             string hex = red.ToString("X2") + green.ToString("X2") + blue.ToString("X2");
             return hex;
         }
-       
-       
+
+
         internal async Task<List<string>> BindRole()
         {
             if (!string.IsNullOrEmpty(UserName))
@@ -188,81 +188,93 @@ namespace Sodexo_KKH.ViewModels
                 if (CrossConnectivity.Current.IsConnected)
                 {
 
-
-                    RoleList = new List<string>();
-                    // string URL = Library.KEY_http + library.LoadSetting(Library.KEY_SERVER_IP) + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-
-                    //start progessring
-                    IsPageEnabled = true;
-                    //var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-                    //JArray jarray;
-
-                    JArray jarray = new JArray();
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETUSERROLEBYUSERNAMEMOBILE + "/" + UserName);
-                    using (HttpClient httpClient = new System.Net.Http.HttpClient())
+                    try
                     {
+
+
+                        RoleList = new List<string>();
+                        // string URL = Library.KEY_http + library.LoadSetting(Library.KEY_SERVER_IP) + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+                        string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+
+                        //start progessring
+                        IsPageEnabled = true;
+                        //var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                        //JArray jarray;
+
+
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETUSERROLEBYUSERNAMEMOBILE + "/" + UserName);
+
+                        HttpClient httpClient = new System.Net.Http.HttpClient();
                         HttpResponseMessage response = await httpClient.SendAsync(request);
 
                         var data = await response.Content.ReadAsStringAsync();
-                        jarray = JArray.Parse(data);
-                    }
+                        JArray jarray = JArray.Parse(data);
 
-                    //HttpClient httpClient = new System.Net.Http.HttpClient();
-                    //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETUSERROLEBYUSERNAMEMOBILE + "/" + UserName);
 
-                    //HttpResponseMessage response = await httpClient.SendAsync(request);
+                        //HttpClient httpClient = new System.Net.Http.HttpClient();
+                        //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETUSERROLEBYUSERNAMEMOBILE + "/" + UserName);
 
-                    //var data = await response.Content.ReadAsStringAsync();
-                    //var db = DependencyService.Get<IDBInterface>().GetConnection();
+                        //HttpResponseMessage response = await httpClient.SendAsync(request);
 
-                    
-                    
-                    if (jarray.Count > 0)
-                    {
-                        bool isLogin = Convert.ToBoolean(jarray[0].Value<string>("is_log_in"));
-                        if (isLogin)
+                        //var data = await response.Content.ReadAsStringAsync();
+                        //var db = DependencyService.Get<IDBInterface>().GetConnection();
+
+
+
+                        if (jarray.Count > 0)
                         {
+                            bool isLogin = Convert.ToBoolean(jarray[0].Value<string>("is_log_in"));
+                            if (isLogin)
+                            {
+                                IsPageEnabled = false;
+                                EnableSubmitButton = false;
+                                IsRolePickerVisible = false;
+                                await PageDialog.DisplayAlertAsync("Locked!!", "User already logged in different device.!!", "Ok");
+
+                                return null;
+                            }
+
+                            List<string> templist = new List<string>();
+                            for (int i = 0; i < jarray.Count; i++)
+                            {
+                                JObject row = JObject.Parse(jarray[i].ToString());
+                                templist.Add(row["role"].ToString());
+                            }
+                            if (templist.Count > 1)
+                                IsRolePickerVisible = true;
+                            else
+                                IsRolePickerVisible = false;
+
+
                             IsPageEnabled = false;
-                            EnableSubmitButton = false;
-                            IsRolePickerVisible = false;
-                            await PageDialog.DisplayAlertAsync("Locked!!", "User already logged in different device.!!", "Ok");
-
-                            return null;
+                            RoleList = new List<string>(templist);
+                            SelectedRole = RoleList.First();
+                            return RoleList;
+                            //   comboBox.SetBinding(Label.da, binding);
+                            //cmbsearchbyward.DataSource = Mylist;                         
                         }
-
-                        List<string> templist = new List<string>();
-                        for (int i = 0; i < jarray.Count; i++)
-                        {
-                            JObject row = JObject.Parse(jarray[i].ToString());
-                            templist.Add(row["role"].ToString());
-                        }
-                        if (templist.Count > 1)
-                            IsRolePickerVisible = true;
                         else
+                        {
                             IsRolePickerVisible = false;
+                            IsPageEnabled = false;
+                            return RoleList;
+                        }
 
-
-                        IsPageEnabled = false;
-                        RoleList = new List<string>(templist);
-                        SelectedRole = RoleList.First();
-                        return RoleList;
-                        //   comboBox.SetBinding(Label.da, binding);
-                        //cmbsearchbyward.DataSource = Mylist;                         
                     }
-                    else
+                    catch (Exception)
                     {
-                        IsRolePickerVisible = false;
                         IsPageEnabled = false;
-                        return RoleList;
+                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                        return null;
+
                     }
                 }
                 else
                 {
-                   await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                     return null;
                 }
-                
+
             }
             else
             {
@@ -270,10 +282,10 @@ namespace Sodexo_KKH.ViewModels
                 return null;
             }
         }
-       
+
         public async Task Login(bool isLDap = false)
         {
-           
+
             bool isInternetConnected = NetworkInterface.GetIsNetworkAvailable();
             var str = Captcha.Replace(" ", string.Empty);
             // checking if user name and password are not blank      
@@ -283,14 +295,14 @@ namespace Sodexo_KKH.ViewModels
                 {
                     if (CrossConnectivity.Current.IsConnected)
                     {
-                        
-                       await checkLogin(isLDap);
+
+                        await checkLogin(isLDap);
 
 
                     }
                     else
                     {
-                        await PageDialog.DisplayAlertAsync( AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "Alert!!", "OK");
+                        await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "Alert!!", "OK");
                     }
 
 
@@ -312,7 +324,7 @@ namespace Sodexo_KKH.ViewModels
                 else
                     ErrorText = AppResources.ResourceManager.GetString("plss");
             }
-          
+
         }
 
         public async Task checkLogin(bool isLDap)
@@ -321,10 +333,10 @@ namespace Sodexo_KKH.ViewModels
             {
                 // string URL = Library.KEY_http + library.LoadSetting(Library.KEY_SERVER_IP) + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                 string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-               // string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + "t2O_cac_services" + "/sodexo.svc";
+                // string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + "t2O_cac_services" + "/sodexo.svc";
 
                 string userType = string.Empty;
-               
+
                 //Toast.makeText(LoginActivity.this,"Selection changed",Toast.LENGTH_LONG).show();
                 if (SelectedRole.Equals("Select Role"))
                 {
@@ -379,7 +391,7 @@ namespace Sodexo_KKH.ViewModels
                     // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url
                     var response = await httpClient.PostAsync(URL + "/" + Library.METHODE_USERLOGIN, httpContent);
 
-                    
+
                     // display a message jason conversion
                     //var message2 = new MessageDialog(httpResponse.ToString());
                     //await message2.ShowAsync();
@@ -408,12 +420,12 @@ namespace Sodexo_KKH.ViewModels
                         JArray jarray = JArray.Parse(data);
                         string status = jarray[0].Value<string>("status");
                         string expireday = jarray[0].Value<string>("expireday");
-                        bool isLogin = Convert.ToBoolean( jarray[0].Value<string>("is_login"));
+                        bool isLogin = Convert.ToBoolean(jarray[0].Value<string>("is_login"));
                         if (status == "Lock" || expireday == "700")
                         {
                             IsPageEnabled = false;
                             EnableSubmitButton = false;
-                            await PageDialog.DisplayAlertAsync("Locked!!", "Due to Five Times Consecutive Attempts, Your Account has been locked.!!",  "Ok");
+                            await PageDialog.DisplayAlertAsync("Locked!!", "Due to Five Times Consecutive Attempts, Your Account has been locked.!!", "Ok");
                             return;
                         }
                         if (isLogin)
@@ -421,7 +433,7 @@ namespace Sodexo_KKH.ViewModels
                             IsPageEnabled = false;
                             EnableSubmitButton = false;
                             await PageDialog.DisplayAlertAsync("Locked!!", "User already logged in different device.!!", "Ok");
-                           
+
                             return;
                         }
 
@@ -466,7 +478,7 @@ namespace Sodexo_KKH.ViewModels
                                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
 
 
-                                httpClient.SendAsync(request);
+                                await httpClient.SendAsync(request);
 
                                 if (Library.KEY_USER_ROLE == "FSA" || Library.KEY_USER_ROLE == "Nurse" || Library.KEY_USER_ROLE == "Nurse+FSA")
                                 {
@@ -479,16 +491,16 @@ namespace Sodexo_KKH.ViewModels
                                         //var message = new MessageDialog("Password will expire in one day");
                                         //await message.ShowAsync();
                                     }
-                                   else if (expireday == "100")
+                                    else if (expireday == "100")
                                     {
                                         await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in one day", "ok");
 
 
                                         await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
-                                       
+
 
                                     }
-                                   else if (expireday == "200")
+                                    else if (expireday == "200")
                                     {
 
                                         await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in two days", "");
@@ -531,12 +543,12 @@ namespace Sodexo_KKH.ViewModels
                                 //var dialog = new MessageDialog("Invailid user name or password.");
                                 //await dialog.ShowAsync();
                             }
-                            
+
                         }
-                       
+
                     }
                 }
-                
+
                 //-----------------------------------
 
                 //HttpResponseMessage response = await httpClient.SendAsync(request);
@@ -556,7 +568,7 @@ namespace Sodexo_KKH.ViewModels
             {
                 //stop progessring
                 IsPageEnabled = false;
-               // await Navigation.PushAsync(new PatientSearch());
+                // await Navigation.PushAsync(new PatientSearch());
 
                 // await DisplayAlert("", excp.Message, "ok");
 

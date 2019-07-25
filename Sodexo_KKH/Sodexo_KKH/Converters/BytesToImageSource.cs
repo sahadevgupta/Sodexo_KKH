@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Converters
@@ -24,7 +22,7 @@ namespace Sodexo_KKH.Converters
             else
             {
 
-                imgSource = (FileImageSource) PlatFromImage.GetImage("no_image.png");
+                imgSource = (FileImageSource)PlatFromImage.GetImage("no_image.png");
                 return imgSource;
             }
         }

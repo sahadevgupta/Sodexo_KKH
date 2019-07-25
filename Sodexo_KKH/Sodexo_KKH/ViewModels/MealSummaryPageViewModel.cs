@@ -22,7 +22,7 @@ using DependencyService = Xamarin.Forms.DependencyService;
 namespace Sodexo_KKH.ViewModels
 {
     public class MealSummaryPageViewModel : ViewModelBase
-	{
+    {
 
         private mstr_patient_info _patient;
 
@@ -85,7 +85,7 @@ namespace Sodexo_KKH.ViewModels
             get { return this._allergiesName; }
             set { SetProperty(ref _allergiesName, value); }
         }
-        public DelegateCommand CancelCommand => new DelegateCommand(async() => await CancelOrder());
+        public DelegateCommand CancelCommand => new DelegateCommand(async () => await CancelOrder());
 
         public DelegateCommand ConfirmCommand => new DelegateCommand(async () => await ConfirmPlaceOrder());
 
@@ -94,55 +94,55 @@ namespace Sodexo_KKH.ViewModels
         public List<mstr_others_master> OthersList { get; private set; }
 
 
-        
+
         public MealSummaryPageViewModel(INavigationService navigationService, IPageDialogService pageDialog) : base(navigationService, pageDialog)
         {
         }
 
         private async Task CancelOrder()
         {
-                var response = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("mo", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("canc", CultureInfo.CurrentCulture),   AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
-                if (response)
-                {
-                    
-                        var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("ycn", CultureInfo.CurrentCulture),  AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
-                        if (action)
-                          await NavigationService.GoBackAsync();
-                        else
-                          await NavigationService.NavigateAsync("../../../");
-                }
-               
+            var response = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("mo", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("canc", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+            if (response)
+            {
+
+                var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("ycn", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                if (action)
+                    await NavigationService.GoBackAsync();
+                else
+                    await NavigationService.NavigateAsync("../../../");
+            }
+
         }
 
         private async Task ConfirmPlaceOrder()
         {
-            var action = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("mlc", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("mlc2", CultureInfo.CurrentCulture),  AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+            var action = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("mlc", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("mlc2", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
             if (action)
             {
                 IsPageEnabled = true;
                 await InsertIntoMealOrder();
                 IsPageEnabled = false;
             }
-           
+
         }
 
         public async Task InsertIntoMealOrder()
         {
             try
             {
-                
+
 
                 int mtype1 = 0;
                 int mtype2 = 0;
                 int mtype3 = 0;
 
-               
+
                 int mymeal_time_id = MealTime.ID;
-               
+
 
                 if (MealTime.meal_name == "Breakfast")
                 {
-                    if (Others.ID == 1 || Others.others_name.Contains("TC") )
+                    if (Others.ID == 1 || Others.others_name.Contains("TC"))
                     {
                         mtype1 = 3;
                         //meal_time_id = 4;
@@ -207,7 +207,7 @@ namespace Sodexo_KKH.ViewModels
                 int _meal_beverage_id = 0;
                 int _meal_desert_id = 0;
 
-                
+
 
                 var entreecount = carts.Where(item => item.mealtimename.ToLower().Contains("entree".ToLower()) || item.mealtimename.ToLower().Contains("entrée".ToLower())).FirstOrDefault();
                 var soupcount = carts.Where(item => item.mealtimename.ToLower().Contains("soup".ToLower())).FirstOrDefault();
@@ -219,7 +219,7 @@ namespace Sodexo_KKH.ViewModels
                     _meal_soup_id = Convert.ToInt32(soupcount.mealitemid.ToString() == null ? "1" : soupcount.mealitemid.ToString());
                 if (juicecount != null)
                     _meal_menu_juice_item_id = Convert.ToInt32(juicecount.mealitemid.ToString() == null ? "1" : juicecount.mealitemid.ToString());
-               
+
                 if (entreecount != null)
                     _meal_entree_id = Convert.ToInt32(entreecount.mealitemid.ToString() == null ? "1" : entreecount.mealitemid.ToString());
                 if (bevcount != null)
@@ -231,12 +231,12 @@ namespace Sodexo_KKH.ViewModels
 
 
 
-                
+
                 string _Therapeutic_ids;
-                string _ingredeint_ids ; //optional
+                string _ingredeint_ids; //optional
                 string _allergies_ids; //optional
                 string _diet_ids = ""; //optional
-                string _other_ids = "" ; //optional
+                string _other_ids = ""; //optional
                 string _cusinie_ids = "";
 
                 var theraArray = Therapeutics.Select(x => x.ID).ToArray();
@@ -268,28 +268,28 @@ namespace Sodexo_KKH.ViewModels
                 p.ward_type_id = Library.KEY_PATIENT_WARD_TYPE_ID;
 
                 p.bed_id = Convert.ToInt32(Patient.Bed_ID);
-                
+
 
                 p.is_vegitarian = Convert.ToBoolean(Patient.isveg_tab);
                 p.is_halal = Convert.ToBoolean(Patient.ishalal_tab);
 
-                
+
 
                 p.disposable_tray = Library.IsDisposableEnable;
 
 
-                
+
                 p.order_id = Convert.ToInt32(Library.KEY_ORDER_ID);
                 p.order_date = Library.KEY_ORDER_DATE;
-               
+
                 p.order_no = "1";
 
 
 
                 p.site_code = Patient.Site_Code;
-               
+
                 p.createdby = Convert.ToInt32(Library.KEY_USER_ID);
-                
+
                 p.meal_option_id = MealOption.ID;
                 p.meal_diet_id = DietType.ID;
                 p.meal_soup_id = _meal_soup_id;
@@ -303,11 +303,11 @@ namespace Sodexo_KKH.ViewModels
                 p.BF = mtype1;
                 p.LH = mtype2;
                 p.DN = mtype3;
-               
+
                 p.Therapeutic_ids = _Therapeutic_ids;
                 p.Meal_Type = _cusinie_ids;
                 p.ingredeint_ids = _ingredeint_ids;
-                
+
                 if (_other_ids == "NA" || _other_ids == "0")
                 {
                     p.other_ids = "";
@@ -324,7 +324,7 @@ namespace Sodexo_KKH.ViewModels
 
                 if (carts.Any())
                 {
-                   var data = carts.Where(x => x.addonid != 0).FirstOrDefault();
+                    var data = carts.Where(x => x.addonid != 0).FirstOrDefault();
                     if (data == null)
                         p.meal_addon_id = 0;
                     else
@@ -332,18 +332,18 @@ namespace Sodexo_KKH.ViewModels
                 }
                 else
                     p.meal_addon_id = 0;
-                
+
 
                 p.meal_time_id = mymeal_time_id;
                 p.meal_type_id = 0;
                 p.remark_id = 0;
-                
+
                 p.meal_remark = Remarks;
-                
+
 
                 p.ID = 10;
                 p.adult_child = Patient.category;
-                p.bedclass_id = Convert.ToInt32( Patient.Bed_Class_ID );
+                p.bedclass_id = Convert.ToInt32(Patient.Bed_Class_ID);
                 p.bedclass_name = Patient.Bed_Class_Name;
                 p.doctor_comment = Patient.Doctorcomment;
                 p.general_comment = Patient.Generalcomment;
@@ -369,12 +369,12 @@ namespace Sodexo_KKH.ViewModels
 
                 }
 
-               
+
                 p.is_care_giver = false;
                 p.mode_of_payment = 0;
                 p.payment_remark = "";
 
-               
+
                 //p.Fluid_Consistency = Library.KEY_FLUID_INFO;
                 p.fluid = Patient.FluidInfo == "NA" ? 0 : 1;        // temporary need to fix(20/6/819)
                 p.role_Id = Convert.ToInt32(Library.KEY_USER_roleid);
@@ -428,14 +428,14 @@ namespace Sodexo_KKH.ViewModels
                                 var responseContent = await httpResponse.Content.ReadAsStringAsync();
                                 if (responseContent == "true")
                                 {
-                                    var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yo", CultureInfo.CurrentCulture),  AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                                    var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yo", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
                                     if (action)
                                     {
 
-                                       
+
                                         MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "NewOrder", "order");
 
-                                        await NavigationService.GoBackAsync(new NavigationParameters { {"NewOrder","order" } });
+                                        await NavigationService.GoBackAsync(new NavigationParameters { { "NewOrder", "order" } });
                                     }
                                     else
                                     {
@@ -444,7 +444,7 @@ namespace Sodexo_KKH.ViewModels
                                     }
                                 }
                                 else
-                                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yon", CultureInfo.CurrentCulture),  "OK");
+                                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yon", CultureInfo.CurrentCulture), "OK");
 
                             }
                         }
@@ -461,7 +461,7 @@ namespace Sodexo_KKH.ViewModels
             }
             catch (Exception excp)
             {
-                await PageDialog.DisplayAlertAsync("Alert!!", excp.Message,  "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", excp.Message, "OK");
             }
 
         }
@@ -479,7 +479,7 @@ namespace Sodexo_KKH.ViewModels
                 });
                 MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "LocalOrder", "lorder");
 
-                var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yoff", CultureInfo.CurrentCulture),  AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yoff", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
                 if (action)
                     await NavigationService.GoBackAsync(new NavigationParameters { { "NewOrder", "order" } });
                 else
@@ -500,7 +500,7 @@ namespace Sodexo_KKH.ViewModels
             Patient = parameters["Patient"] as mstr_patient_info;
             MealOption = parameters["mealOption"] as mstr_meal_option;
             DietType = parameters["dietType"] as mstr_diet_type;
-            Remarks =  string.IsNullOrEmpty(parameters["remark"].ToString()) ? "NA" : parameters["remark"].ToString();
+            Remarks = string.IsNullOrEmpty(parameters["remark"].ToString()) ? "NA" : parameters["remark"].ToString();
             MealTime = parameters["MealTime"] as mstr_meal_time;
 
             Therapeutics = parameters["Therapeutics"] as List<mstr_therapeutic>;
@@ -518,16 +518,16 @@ namespace Sodexo_KKH.ViewModels
             if (allergyNames.Count() > 0)
                 AllergiesName = string.Join(",", allergyNames);
             else
-                AllergiesName = "NA" ;
+                AllergiesName = "NA";
 
-            int[] maxCountArray = { Therapeutics.Count, Ingredients.Count, carts.Count , OthersList.Count };
+            int[] maxCountArray = { Therapeutics.Count, Ingredients.Count, carts.Count, OthersList.Count };
             int maxCount = maxCountArray.Max();
 
 
-            LoadData(maxCount, Therapeutics, Ingredients,carts, OthersList);
+            LoadData(maxCount, Therapeutics, Ingredients, carts, OthersList);
         }
 
-        private void LoadData(int maxCount, List<mstr_therapeutic> _Therapeutics, List<mstr_ingredient> _Ingredients,List<Cart> carts,List<mstr_others_master>  others_Masters )
+        private void LoadData(int maxCount, List<mstr_therapeutic> _Therapeutics, List<mstr_ingredient> _Ingredients, List<Cart> carts, List<mstr_others_master> others_Masters)
         {
             for (int i = 0; i < maxCount; i++)
             {
@@ -549,7 +549,7 @@ namespace Sodexo_KKH.ViewModels
                         obj.Other = others_Masters[i].others_name;
                     }
                     else
-                        obj.Other  = "--";
+                        obj.Other = "--";
 
                 }
                 else
@@ -565,7 +565,7 @@ namespace Sodexo_KKH.ViewModels
         }
     }
 
-    public class MealSummary :BindableBase
+    public class MealSummary : BindableBase
     {
 
 

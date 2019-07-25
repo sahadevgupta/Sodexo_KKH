@@ -1,22 +1,19 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sodexo_KKH.Helpers
 {
     public class Library
     {
 
-        
-        //Patient's information
-        public static string KEY_SERVER_IP = "www.touch2orderqaws.sodexonet.com";  //For QA Server
-        //public static string KEY_SERVER_IP = "epinetuat/";                           //For Local Server
-                                                                                    //  public static string KEY_SERVER_IP = "172.25.1.29/";
 
-        //public static string ServerName = "UAT";
-        public static string ServerName = "QA";
+        //Patient's information
+        //public static string KEY_SERVER_IP = "www.touch2orderqaws.sodexonet.com";  //For QA Server
+        public static string KEY_SERVER_IP = "epinetuat/";                           //For Local Server
+                                                                                     //  public static string KEY_SERVER_IP = "172.25.1.29/";
+
+        public static string ServerName = "UAT";
+        //public static string ServerName = "QA";
 
         // public static string KEY_SERVER_LOCATION = "Sodexo_Service_prasad";
         //  public static string KEY_SERVER_LOCATION = "sodexo_test_services"; //check  
@@ -24,8 +21,8 @@ namespace Sodexo_KKH.Helpers
         public static string KEY_SERVER_LOCATION = "t2o_kkh_service"; //"t2O_cac_services";
                                                                       // public static string KEY_SERVER_LOCATION = "SodexoService";
 
-       public static string KEY_http = "https://";      //For QA Server
-       // public static string KEY_http = "http://";          //For Local Server
+        //public static string KEY_http = "https://";      //For QA Server
+        public static string KEY_http = "http://";          //For Local Server
         //sodexo wcf service touch2orderuat.sodexonet.com  //
 
         //http://touch2orderuat.sodexonet.com
@@ -141,7 +138,7 @@ namespace Sodexo_KKH.Helpers
         }
 
 
-        
+
 
         private const string USER_ID_KEY = "KEY_USER_ID";
 
@@ -173,8 +170,8 @@ namespace Sodexo_KKH.Helpers
             }
         }
         // KEY_SYNC_NOTIFICATION end
-        
-        
+
+
         // last_mastersynctime
         private const string last_mastersynctime_key = "last_mastersynctime_key";
 
@@ -210,6 +207,6 @@ namespace Sodexo_KKH.Helpers
 
         private static ISettings AppSettings => CrossSettings.Current;
 
-        
+
     }
 }

@@ -1,6 +1,4 @@
-﻿using Plugin.Connectivity;
-using Rg.Plugins.Popup.Extensions;
-using Sodexo_KKH.Effects;
+﻿using Rg.Plugins.Popup.Extensions;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.PopUpControl;
 using Sodexo_KKH.ViewModels;
@@ -69,7 +67,7 @@ namespace Sodexo_KKH.Views
             {
                 _viewModel.GetPatientInfo(e.Value);
             }
-           
+
         }
 
         private void DeleteOrder_Clicked(object sender, EventArgs e)
@@ -80,10 +78,10 @@ namespace Sodexo_KKH.Views
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
             var imagebtn = ((ImageButton)sender);
-           var selectedPatient = imagebtn.BindingContext as mstr_patient_info;
+            var selectedPatient = imagebtn.BindingContext as mstr_patient_info;
             var mealtype = imagebtn.CommandParameter.ToString();
 
-           await _viewModel.NavigateToMealPopUp(selectedPatient, mealtype);
+            await _viewModel.NavigateToMealPopUp(selectedPatient, mealtype);
         }
 
         private async void ItemholdingEffect_ItemLongPressed(object sender, EventArgs e)

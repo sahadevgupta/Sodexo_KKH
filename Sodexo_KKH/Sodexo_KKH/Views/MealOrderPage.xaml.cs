@@ -12,10 +12,10 @@ namespace Sodexo_KKH.Views
             _viewModel = BindingContext as MealOrderPageViewModel;
         }
 
-       
+
         private async void Addremovebtn_Clicked(object sender, System.EventArgs e)
         {
-           await _viewModel.AddOrRemoveMenuItem(((Button)sender).BindingContext as MenuItemClass);
+            await _viewModel.AddOrRemoveMenuItem(((Button)sender).BindingContext as MenuItemClass);
         }
     }
 }

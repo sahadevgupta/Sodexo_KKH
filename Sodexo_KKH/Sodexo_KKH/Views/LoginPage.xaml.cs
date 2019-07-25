@@ -22,9 +22,9 @@ namespace Sodexo_KKH.Views
         {
             base.OnDisappearing();
             this.txtusername.EntryUnfocused -= Txtusername_EntryUnfocused;
-            
+
         }
-       
+
         private async void Txtusername_EntryUnfocused(object sender, FocusEventArgs e)
         {
 
@@ -44,10 +44,10 @@ namespace Sodexo_KKH.Views
             }
             else
             {
-                await App.pageDialog.DisplayAlertAsync("Alert.!", $"Please check username you have entered",  "OK");
+                await App.pageDialog.DisplayAlertAsync("Alert.!", $"Please check username you have entered", "OK");
                 _viewModel.EnableSubmitButton = false;
             }
-            
+
         }
         private void Txtusername_EntryFocused(object sender, FocusEventArgs e)
         {
@@ -59,10 +59,10 @@ namespace Sodexo_KKH.Views
             var btn = ((Button)sender).CommandParameter.ToString();
             if (btn == "LDAP")
             {
-               await _viewModel.Login(true);
+                await _viewModel.Login(true);
             }
             else
-               await _viewModel.Login();
+                await _viewModel.Login();
 
             this.txtusername.Unfocus();
 

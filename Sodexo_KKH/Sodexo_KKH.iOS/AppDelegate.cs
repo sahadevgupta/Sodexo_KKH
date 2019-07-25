@@ -21,8 +21,19 @@ namespace Sodexo_KKH.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+
+            var pushSettings = UIUserNotificationSettings.GetSettingsForTypes(
+                               UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound,
+                               new NSSet());
+
+            UIApplication.SharedApplication.RegisterUserNotificationSettings(pushSettings);
+
+            Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App(new iOSInitializer()));
+
+            
+
 
             return base.FinishedLaunching(app, options);
         }

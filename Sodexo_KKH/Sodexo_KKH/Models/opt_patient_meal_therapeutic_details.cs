@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
@@ -15,7 +11,7 @@ namespace Sodexo_KKH.Models
         public int therapeutic_id { get; set; }
         public int status_id { get; set; }
         public String site_code { get; set; }
-  
+
 
         public opt_patient_meal_therapeutic_details()
         {
@@ -26,7 +22,7 @@ namespace Sodexo_KKH.Models
             patient_id = Patient_id;
             therapeutic_id = Therapeutic_id;
             status_id = Status_id;
-                site_code = Site_code;
+            site_code = Site_code;
 
 
         }

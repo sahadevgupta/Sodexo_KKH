@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Converters
@@ -12,7 +10,7 @@ namespace Sodexo_KKH.Converters
         {
             ImageSource One = null;
 
-           
+
 
             if (value.ToString() == "NA" || value.ToString() == "0" || value.ToString() == null)
             {

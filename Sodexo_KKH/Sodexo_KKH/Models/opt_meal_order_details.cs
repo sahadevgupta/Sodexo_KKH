@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
@@ -29,9 +25,9 @@ namespace Sodexo_KKH.Models
         {
 
         }
-        public opt_meal_order_details(int P1, int P2,int P3, int P4, int P5, int P6, int P7, int P8, int P9, String Remark, int Status_id, String Site_code)
+        public opt_meal_order_details(int P1, int P2, int P3, int P4, int P5, int P6, int P7, int P8, int P9, String Remark, int Status_id, String Site_code)
         {
-           
+
             meal_time_id = P1;
             meal_type_id = P2;
             meal_option_id = P3;

@@ -1,26 +1,24 @@
-﻿using Prism.Commands;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Plugin.Connectivity;
+using Prism.Commands;
+using Prism.Navigation;
+using Prism.Services;
+using Sodexo_KKH.Helpers;
+using Sodexo_KKH.Interfaces;
+using Sodexo_KKH.Models;
+using Sodexo_KKH.Repos;
+using Sodexo_KKH.Resx;
+using Sodexo_KKH.Views;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using Sodexo_KKH.Models;
-using Prism.Navigation;
-using Sodexo_KKH.Repos;
-using Sodexo_KKH.Views;
-using Newtonsoft.Json.Linq;
-using Sodexo_KKH.Helpers;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Globalization;
-using Sodexo_KKH.Resx;
-using Plugin.Connectivity;
-using Sodexo_KKH.Interfaces;
-using Prism.Services;
-using DependencyService = Xamarin.Forms.DependencyService;
 using Xamarin.Forms;
-using Sodexo_KKH.PopUpControl;
-using Rg.Plugins.Popup.Extensions;
+using DependencyService = Xamarin.Forms.DependencyService;
 
 namespace Sodexo_KKH.ViewModels
 {
@@ -140,7 +138,7 @@ namespace Sodexo_KKH.ViewModels
             set
             {
                 SetProperty(ref _isFAGeneral, value);
-               
+
             }
         }
 
@@ -151,7 +149,7 @@ namespace Sodexo_KKH.ViewModels
             get { return this._isNoMealEnable; }
             set { SetProperty(ref _isNoMealEnable, value); }
         }
-        
+
         public List<string> RadioButtonList { get; set; }
 
         public DelegateCommand<string> NextCommand { get; set; }
@@ -178,9 +176,9 @@ namespace Sodexo_KKH.ViewModels
             FluidList = new List<string> { "NA", "Thin" };
             HnHList = new List<string> { "Halal", "Non Halal" };
             VegNVegList = new List<string> { "Veg", "Non-Veg" };
-            
+
             RadioButtonList = new List<string> { "Yes", "No" };
-           
+
 
             NextCommand = new DelegateCommand<string>(NavigateToOrderPage);
         }
@@ -196,7 +194,7 @@ namespace Sodexo_KKH.ViewModels
             {
                 IsPageEnabled = true;
 
-                if (!Library.KEY_PATIENT_IS_VEG.ToLower().Equals(SelectedPatient.isveg.ToLower()) ||    !Library.KEY_PATIENT_IS_HALAL.ToLower().Equals(SelectedPatient.ishalal.ToLower()))
+                if (!Library.KEY_PATIENT_IS_VEG.ToLower().Equals(SelectedPatient.isveg.ToLower()) || !Library.KEY_PATIENT_IS_HALAL.ToLower().Equals(SelectedPatient.ishalal.ToLower()))
                 {
                     var response = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("ml", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("ml2", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
                     if (response)
@@ -209,7 +207,7 @@ namespace Sodexo_KKH.ViewModels
                         IsPageEnabled = false;
                         return;
                     }
-                       
+
                 }
 
 
@@ -288,7 +286,7 @@ namespace Sodexo_KKH.ViewModels
                                 if (!string.IsNullOrEmpty(contents))
                                     await PageDialog.DisplayAlertAsync("Delete", $"Total Orders deleted : {contents}", "OK");
 
-                               
+
                             }
                             else if (result == "Cancel")
                             {
@@ -299,7 +297,7 @@ namespace Sodexo_KKH.ViewModels
 
 
                         }
-                       
+
                     }
                     else
                     {
@@ -310,7 +308,7 @@ namespace Sodexo_KKH.ViewModels
 
                     }
                 }
-                
+
 
                 var navParam = new NavigationParameters();
                 navParam.Add("Patient", SelectedPatient);
@@ -331,30 +329,30 @@ namespace Sodexo_KKH.ViewModels
 
         private async Task CheckFutureOrder()
         {
-            
 
-                bool isChangeTher = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Therapeutic) ? string.Empty : SelectedPatient.Therapeutic, Therapeutics.Where(x => x.IsChecked).Select(x => x.TH_code).ToList());
-                bool isChangeAllergy = CompareStrings(SelectedPatient.Allergies == "0" ? string.Empty : SelectedPatient.Allergies, Allergies.Where(x => x.IsChecked).Select(x => x.ID.ToString()).ToList());
-                bool isChangeIngredient = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Ingredient) ? string.Empty : SelectedPatient.Ingredient, Ingredients.Where(x => x.IsChecked).Select(x => x.ingredient_name).ToList());
-                bool isChangeDietTexture = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Diet_Texture) ? string.Empty : SelectedPatient.Diet_Texture, DietTextures.Where(x => x.IsChecked).Select(x => x.diet_texture_name).ToList());
-                bool isChangeMealType = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Meal_Type)?string.Empty : SelectedPatient.Meal_Type, Cuisines.Where(x => x.IsChecked).Select(x => x.meal_type_name).ToList());
 
-                bool isChange = (isChangeTher || isChangeAllergy || isChangeIngredient || isChangeDietTexture|| isChangeMealType);
+            bool isChangeTher = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Therapeutic) ? string.Empty : SelectedPatient.Therapeutic, Therapeutics.Where(x => x.IsChecked).Select(x => x.TH_code).ToList());
+            bool isChangeAllergy = CompareStrings(SelectedPatient.Allergies == "0" ? string.Empty : SelectedPatient.Allergies, Allergies.Where(x => x.IsChecked).Select(x => x.ID.ToString()).ToList());
+            bool isChangeIngredient = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Ingredient) ? string.Empty : SelectedPatient.Ingredient, Ingredients.Where(x => x.IsChecked).Select(x => x.ingredient_name).ToList());
+            bool isChangeDietTexture = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Diet_Texture) ? string.Empty : SelectedPatient.Diet_Texture, DietTextures.Where(x => x.IsChecked).Select(x => x.diet_texture_name).ToList());
+            bool isChangeMealType = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Meal_Type) ? string.Empty : SelectedPatient.Meal_Type, Cuisines.Where(x => x.IsChecked).Select(x => x.meal_type_name).ToList());
 
-                if (isChange)
+            bool isChange = (isChangeTher || isChangeAllergy || isChangeIngredient || isChangeDietTexture || isChangeMealType);
+
+            if (isChange)
+            {
+                if (CrossConnectivity.Current.IsConnected)
                 {
-                    if (CrossConnectivity.Current.IsConnected)
-                    {
-                      
-                        string check_order_date = Library.KEY_CHECK_ORDER_DATE;
 
-                        string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+                    string check_order_date = Library.KEY_CHECK_ORDER_DATE;
 
-                        HttpClient httpClientGet = new System.Net.Http.HttpClient();
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
-                        HttpResponseMessage response = await httpClientGet.SendAsync(request);
-                        // jarray= await response.Content.ReadAsStringAsync();
-                        var data = await response.Content.ReadAsStringAsync();
+                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+
+                    HttpClient httpClientGet = new System.Net.Http.HttpClient();
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
+                    HttpResponseMessage response = await httpClientGet.SendAsync(request);
+                    // jarray= await response.Content.ReadAsStringAsync();
+                    var data = await response.Content.ReadAsStringAsync();
                     if (data != "\"NULL\"" && data != string.Empty)
                     {
 
@@ -406,33 +404,33 @@ namespace Sodexo_KKH.ViewModels
                             if (!string.IsNullOrEmpty(contents))
                                 await PageDialog.DisplayAlertAsync("Delete", $"Total records deleted - {contents}", "OK");
 
-                           
+
                         }
                         else if (result == "Cancel")
                         {
-                           
+
                         }
 
 
 
                     }
-                    
-                    }
-                    else
-                    {
-                        IsPageEnabled = false;
-                        await PageDialog.DisplayAlertAsync("Error!!", AppResources.ResourceManager.GetString("msg9", CultureInfo.CurrentCulture),  "OK");
-                        return ;
 
-                       
-                    }
                 }
                 else
-                   return ;
-            
+                {
+                    IsPageEnabled = false;
+                    await PageDialog.DisplayAlertAsync("Error!!", AppResources.ResourceManager.GetString("msg9", CultureInfo.CurrentCulture), "OK");
+                    return;
+
+
+                }
+            }
+            else
+                return;
+
         }
 
-        
+
 
         private bool CompareStrings(string strOld, List<string> listNew)
         {
@@ -477,7 +475,7 @@ namespace Sodexo_KKH.ViewModels
             isAllergy = isAllergy.TrimEnd(',');
 
             dynamic p = new JObject();
-            p.halal = SelectedPatient.ishalal == "True" ? 1 : 0 ;
+            p.halal = SelectedPatient.ishalal == "True" ? 1 : 0;
             p.isallergies = isAllergy;
             p.isdiabetic = 1;
             p.isveg = SelectedPatient.isveg == "True" ? 1 : 0;
@@ -509,7 +507,7 @@ namespace Sodexo_KKH.ViewModels
                     var responseContent = await httpResponse.Content.ReadAsStringAsync();
                     if (responseContent == "true")
                     {
-                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pio", CultureInfo.CurrentCulture),  "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pio", CultureInfo.CurrentCulture), "OK");
                         await NavigationService.GoBackAsync();
                     }
                 }
@@ -531,7 +529,7 @@ namespace Sodexo_KKH.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
-            
+
             if (parameters.ContainsKey("PatientInfo"))
             {
 
@@ -676,7 +674,7 @@ namespace Sodexo_KKH.ViewModels
 
                     var checkedQuery = OthersRadio.Where(x => x.IsChecked == true && x.others_name != checkedData.others_name);
                     if (checkedQuery.Any())
-                     {
+                    {
                         checkedQuery.First().IsChecked = false;
                     }
                 }
@@ -699,7 +697,7 @@ namespace Sodexo_KKH.ViewModels
                     {
                         var str1 = $"You have already selected {checkedQuery.First().TH_Condition} option , Do you want to remove {checkedQuery.FirstOrDefault().TH_code} option.";
 
-                        var response = await PageDialog.DisplayAlertAsync("Alert!!", str1,  "YES", "NO");
+                        var response = await PageDialog.DisplayAlertAsync("Alert!!", str1, "YES", "NO");
                         if (response)
                         {
 

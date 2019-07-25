@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Prism.Mvvm;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sodexo_KKH.Models
 {
@@ -28,6 +25,6 @@ namespace Sodexo_KKH.Models
             set { SetProperty(ref _isChecked, value); }
         }
 
-       
+
     }
 }

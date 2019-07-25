@@ -3,23 +3,20 @@ using Rg.Plugins.Popup.Pages;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Sodexo_KKH.PopUpControl
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PatientInfoPopUp : PopupPage
-	{
-		public PatientInfoPopUp ()
-		{
-			InitializeComponent ();
-		}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PatientInfoPopUp : PopupPage
+    {
+        public PatientInfoPopUp()
+        {
+            InitializeComponent();
+        }
         protected override void OnBindingContextChanged()
         {
             base.OnBindingContextChanged();
@@ -61,7 +58,7 @@ namespace Sodexo_KKH.PopUpControl
 
         private async void PopupTitleView_Close(object sender, EventArgs e)
         {
-           await Navigation.PopPopupAsync();
+            await Navigation.PopPopupAsync();
         }
     }
 }

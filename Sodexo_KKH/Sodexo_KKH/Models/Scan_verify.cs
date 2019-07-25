@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class Scan_verify
     {

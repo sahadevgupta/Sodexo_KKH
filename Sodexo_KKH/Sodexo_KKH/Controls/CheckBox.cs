@@ -1,8 +1,6 @@
 ﻿using Sodexo_KKH.Converters;
 using Sodexo_KKH.Events;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Controls

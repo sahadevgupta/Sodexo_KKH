@@ -1,10 +1,6 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Essentials;
 
 namespace Sodexo_KKH.ViewModels
@@ -36,7 +32,7 @@ namespace Sodexo_KKH.ViewModels
             set { SetProperty(ref _isNotConnected, value); }
         }
 
-        public ViewModelBase(INavigationService navigationService,IPageDialogService pageDialog)
+        public ViewModelBase(INavigationService navigationService, IPageDialogService pageDialog)
         {
             NavigationService = navigationService;
             PageDialog = pageDialog;
@@ -54,22 +50,22 @@ namespace Sodexo_KKH.ViewModels
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
-            
+
         }
 
         public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
-            
+
         }
 
         public virtual void OnNavigatingTo(INavigationParameters parameters)
         {
-            
+
         }
 
         public virtual void Destroy()
         {
-            
+
         }
     }
 }

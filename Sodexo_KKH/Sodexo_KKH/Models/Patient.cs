@@ -1,13 +1,6 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
-   public class Patient
+    public class Patient
     {
         private string v1;
         private string v2;
@@ -17,7 +10,7 @@ namespace Sodexo_KKH.Models
 
 
         //Creating table
-        [SQLite.PrimaryKey,SQLite.AutoIncrement]
+        [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Age { get; set; }
@@ -52,7 +45,7 @@ namespace Sodexo_KKH.Models
         ////    {
 
         ////    }
-           
+
         ////}
     }
 }

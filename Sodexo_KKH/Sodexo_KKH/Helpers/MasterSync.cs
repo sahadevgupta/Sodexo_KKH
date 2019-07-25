@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -14,7 +12,7 @@ namespace Sodexo_KKH.Helpers
 {
     public static class MasterSync
     {
-       private static string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+        private static string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
         public async static Task SyncMaster()
         {
             await Sync_mstr_mealclass();
@@ -37,9 +35,9 @@ namespace Sodexo_KKH.Helpers
             await Sync_mstr_others_master();
             await Sync_mstr_meal_option();
             await Sync_mstr_flag();
-           // await Sync_mstr_patient_info();
+            // await Sync_mstr_patient_info();
             await Sync_mstr_therapeutic_condition();
-            
+
         }
 
         private async static Task Sync_mstr_therapeutic_condition()

@@ -26,7 +26,7 @@ using DependencyService = Xamarin.Forms.DependencyService;
 namespace Sodexo_KKH.ViewModels
 {
     public class MealOrderPageViewModel : ViewModelBase
-	{
+    {
 
 
         private List<mstr_meal_time> _mstrMeals;
@@ -74,21 +74,21 @@ namespace Sodexo_KKH.ViewModels
                 }
                 else
                 {
-                    
-                        if (_selectedMeal.meal_name != value.meal_name)
-                        {
-                            SetProperty(ref _selectedMeal, value);
-                            if (value != null)
-                            {
-                                SetCutOffTime(value);
-                            }
-                        }
-                    
 
-                    
+                    if (_selectedMeal.meal_name != value.meal_name)
+                    {
+                        SetProperty(ref _selectedMeal, value);
+                        if (value != null)
+                        {
+                            SetCutOffTime(value);
+                        }
+                    }
+
+
+
                 }
-               
-                    
+
+
             }
         }
 
@@ -104,7 +104,7 @@ namespace Sodexo_KKH.ViewModels
                 SetProperty(ref _selectedMenuCategory, value);
                 if (value != null)
                 {
-                   
+
                     SetMenuCategories(value);
                 }
             }
@@ -117,7 +117,7 @@ namespace Sodexo_KKH.ViewModels
             get { return this._bedClassName; }
             set { SetProperty(ref _bedClassName, value); }
         }
-       
+
         private bool _isMenuEnable;
 
         public bool IsMenuEnable
@@ -179,17 +179,17 @@ namespace Sodexo_KKH.ViewModels
             set
             {
                 SetProperty(ref _selectedRemark, value);
-                if (value !=null)
+                if (value != null)
                 {
 
                     SetOrderRemark(value.Name);
                 }
-                
-               
+
+
             }
         }
 
-       
+
 
         private string _orderRemarks = string.Empty;
 
@@ -208,14 +208,14 @@ namespace Sodexo_KKH.ViewModels
             set
             {
                 SetProperty(ref _searchTextt, value);
-                if (value !=null)
+                if (value != null)
                 {
                     SearchMenu(value);
                 }
             }
         }
 
-        
+
 
         public bool isallacartebreakfast { get; private set; }
 
@@ -306,7 +306,7 @@ namespace Sodexo_KKH.ViewModels
                 if (obj.ameContent == AppResources.ResourceManager.GetString("am", CultureInfo.CurrentCulture))
                 {
                     if (Carts.Where(o => string.Equals(SelectedMenuCategory.ID.ToString(), o.mealtimeid.ToString(), StringComparison.OrdinalIgnoreCase)).Any())
-                        await  PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
                     else
                     {
                         Cart ob = new Cart();
@@ -340,7 +340,7 @@ namespace Sodexo_KKH.ViewModels
 
         private void SetOrderRemark(string value)
         {
-           if (!OrderRemarks.Contains(value))
+            if (!OrderRemarks.Contains(value))
             {
                 if (value != "No")
                 {
@@ -356,8 +356,8 @@ namespace Sodexo_KKH.ViewModels
                         OrderRemarks = cText;
                     }
                 }
-           }
-           
+            }
+
         }
         private async void PlaceOrder(string param)
         {
@@ -370,51 +370,51 @@ namespace Sodexo_KKH.ViewModels
                 else
                     SelectedMenuCategory = MenuCategories.FirstOrDefault();
             }
-               
+
             else
             {
                 try
                 {
                     IsPageEnabled = true;
-                   
-                    OrderRemarks = OrderRemarks.Replace("\r","");
-                    
-                        bool isentreeselected = false;
 
-                        var newList = Carts.Where(item => item.mealtimename.ToLower().Contains("entree".ToLower()) || item.mealtimename.ToLower().Contains("entrée".ToLower())).ToList();
+                    OrderRemarks = OrderRemarks.Replace("\r", "");
 
-                        int count = newList.Count;
+                    bool isentreeselected = false;
 
-                        if (count > 0)
-                            isentreeselected = true;
-                        else
-                            isentreeselected = false;
+                    var newList = Carts.Where(item => item.mealtimename.ToLower().Contains("entree".ToLower()) || item.mealtimename.ToLower().Contains("entrée".ToLower())).ToList();
 
-                        if (SelectedMealOption.ID == 0 && isentreeselected == false)
+                    int count = newList.Count;
+
+                    if (count > 0)
+                        isentreeselected = true;
+                    else
+                        isentreeselected = false;
+
+                    if (SelectedMealOption.ID == 0 && isentreeselected == false)
+                    {
+                        if (others.ID == 1 || others.others_name.Contains("TC") || others.ID == 8 || others.ID == 5 || others.others_name.Contains("NM"))
                         {
-                            if (others.ID == 1 || others.others_name.Contains("TC")  || others.ID == 8 || others.ID == 5 || others.others_name.Contains("NM"))
-                            {
 
-                            }
-                            else
-                            {
-                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pls", CultureInfo.CurrentCulture),  "OK");
-                            IsPageEnabled = false;
-                                return;
-                            }
-                           
                         }
-                        
-                        var localOrders = _orderlocalRepo.QueryTable().Where(x => x.P_id == PatientInfo.ID && x.meal_time_id == SelectedMealTime.ID);
-
-                        if (localOrders.Count() > 0)
+                        else
                         {
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("offl", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture),  "OK");
-
+                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pls", CultureInfo.CurrentCulture), "OK");
+                            IsPageEnabled = false;
                             return;
                         }
 
-                    
+                    }
+
+                    var localOrders = _orderlocalRepo.QueryTable().Where(x => x.P_id == PatientInfo.ID && x.meal_time_id == SelectedMealTime.ID);
+
+                    if (localOrders.Count() > 0)
+                    {
+                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("offl", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture), "OK");
+
+                        return;
+                    }
+
+
                     bool Check_order_result = await Check_Order_Taken(Library.KEY_CHECK_ORDER_DATE, PatientInfo.ID, SelectedMealTime.meal_name, Convert.ToInt32(Library.KEY_ORDER_ID));
                     if (others.ID != 1 || others.ID == 8)
                     {
@@ -427,17 +427,17 @@ namespace Sodexo_KKH.ViewModels
                             }
                             else
                             {
-                                await PageDialog.DisplayAlertAsync("Alert!!", $"{SelectedMealTime.meal_name} meal Order is already placed." ,  "OK");
+                                await PageDialog.DisplayAlertAsync("Alert!!", $"{SelectedMealTime.meal_name} meal Order is already placed.", "OK");
                             }
 
                         }
                         else
                         {
                             if (Check_order_result == true)
-                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture),  "OK");
+                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture), "OK");
                             else
                             {
-                                 Library.KEY_langchangedfrommealpage = "no";
+                                Library.KEY_langchangedfrommealpage = "no";
                                 await NavigateToMealSummary();
                             }
                         }
@@ -445,7 +445,7 @@ namespace Sodexo_KKH.ViewModels
                     else
                     {
                         if (Check_order_result == true)
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture),  "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture), "OK");
                         else
                             await NavigateToMealSummary();
                     }
@@ -502,7 +502,7 @@ namespace Sodexo_KKH.ViewModels
                 {
                     string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                     HttpClient httpClient = new System.Net.Http.HttpClient();
-                   
+
                     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_CHECKORDERTAKEN + "/" + order_date + "/" + p_id + "/" + meal_time + "/" + order_id);
                     HttpResponseMessage response = await httpClient.SendAsync(request);
                     // jarray= await response.Content.ReadAsStringAsync();
@@ -516,13 +516,13 @@ namespace Sodexo_KKH.ViewModels
                     {
                         return false;
                     }
-                    
+
                 }
                 else
                 {
                     if (meal_time == "BF")
                     {
-                        var order =  _orderlocalRepo.QueryTable().Where(x => x.patient_id == PatientInfo.ID && x.BF == 1 && x.order_date == Library.KEY_ORDER_DATE);
+                        var order = _orderlocalRepo.QueryTable().Where(x => x.patient_id == PatientInfo.ID && x.BF == 1 && x.order_date == Library.KEY_ORDER_DATE);
                         if (order.Any())
                         {
                             return true;
@@ -623,7 +623,7 @@ namespace Sodexo_KKH.ViewModels
                 if (ss.ToLower().Contains("entrée") || ss.ToLower().Contains("entree"))
                 {
                     item.imgname = PlatFromImage.GetImage("entreebtn.png");
-                    item.selimgname = PlatFromImage.GetImage("entreebtnover.png"); 
+                    item.selimgname = PlatFromImage.GetImage("entreebtnover.png");
                     item.fcolor = "Transparent";
                     item.selcolor = "#FF2a295c";
                 }
@@ -676,7 +676,7 @@ namespace Sodexo_KKH.ViewModels
                 else
                     MenuCategories.Add(item);
             }
-           
+
         }
 
         private async Task CheckOrder()
@@ -730,7 +730,7 @@ namespace Sodexo_KKH.ViewModels
                     GetsetMenuItems(menuitem);
             }
             else
-               await GetMenuItems(menuitem);
+                await GetMenuItems(menuitem);
 
             TempList = new ObservableCollection<MenuItemClass>(MenuItems);
 
@@ -744,7 +744,7 @@ namespace Sodexo_KKH.ViewModels
         {
             try
             {
-               
+
                 string diet_code = "";
                 List<string> th_strings = new List<string>();
                 List<string> diet_strings = new List<string>();
@@ -772,7 +772,7 @@ namespace Sodexo_KKH.ViewModels
                 string query = "";
 
 
-                string query2 = "select meal_class_id,Is_A_la_carte from mstr_bed_meal_class_mapping where bed_class_id = '" +  Convert.ToInt32(PatientInfo.Bed_Class_ID) + "' and status_id=1";
+                string query2 = "select meal_class_id,Is_A_la_carte from mstr_bed_meal_class_mapping where bed_class_id = '" + Convert.ToInt32(PatientInfo.Bed_Class_ID) + "' and status_id=1";
                 var mealid = db.Query<mstr_bed_meal_class_mapping>(query2).FirstOrDefault();
                 int id = mealid.meal_class_id;
 
@@ -835,7 +835,7 @@ namespace Sodexo_KKH.ViewModels
                 string thString = "";
                 string cuisinea = string.Empty;
 
-                FilterItems(ref ingredients, ref allergies, ref diets, ref thString,ref cuisinea);
+                FilterItems(ref ingredients, ref allergies, ref diets, ref thString, ref cuisinea);
 
                 int halal = 1;
                 int veg = 1;
@@ -899,7 +899,7 @@ namespace Sodexo_KKH.ViewModels
                             if (!String.IsNullOrEmpty(cy1))
                             {
 
-                                if (cy1==mealclassName)
+                                if (cy1 == mealclassName)
                                 {
                                     classcounter++;
                                 }
@@ -1029,7 +1029,7 @@ namespace Sodexo_KKH.ViewModels
             }
         }
 
-        private void FilterItems(ref string ingredients, ref string allergies, ref string diets, ref string thString,ref string cuisinea)
+        private void FilterItems(ref string ingredients, ref string allergies, ref string diets, ref string thString, ref string cuisinea)
         {
             for (int i = 0; i < SelectedTherapeutics.Count; i++)
             {
@@ -1099,13 +1099,13 @@ namespace Sodexo_KKH.ViewModels
 
             if (halal == 1 && veg == 1)
                 query = "Select * From mstr_menu_item where meal_item_name='" + meal_item_name + "' and meal_class_name like '%" + mealclassName + "%' and ward_type_name like '%" + PatientInfo.wardtypename + "%' and mealTime_names like '%" + Meal_Time + "%' and is_halal=" + halal + " and is_vegitarian=" + veg;
-            else if (halal == 1)                                                                                
+            else if (halal == 1)
                 query = "Select * From mstr_menu_item where meal_item_name='" + meal_item_name + "' and meal_class_name like '%" + mealclassName + "%' and ward_type_name like '%" + PatientInfo.wardtypename + "%' and mealTime_names like '%" + Meal_Time + "%' and is_halal=" + halal;
-            else if (veg == 1)                                                                                   
+            else if (veg == 1)
                 query = "Select * From mstr_menu_item where meal_item_name='" + meal_item_name + "' and meal_class_name like '%" + mealclassName + "%' and ward_type_name like '%" + PatientInfo.wardtypename + "%' and mealTime_names like '%" + Meal_Time + "%' and is_vegitarian=" + veg;
-            else                                                                                                
+            else
                 query = "Select * From mstr_menu_item where meal_item_name='" + meal_item_name + "' and meal_class_name like '%" + mealclassName + "%' and ward_type_name like '%" + PatientInfo.wardtypename + "%' and mealTime_names like '%" + Meal_Time + "%'";
-                                                                                                 
+
 
             if (Library.IsFAGeneralEnable == null || Library.IsFAGeneralEnable == true)
             {
@@ -1114,9 +1114,9 @@ namespace Sodexo_KKH.ViewModels
 
                     query += " and allergies not in (Select allergies From mstr_menu_item where " + allergies + ")";
                 }
-               
+
             }
-            
+
 
             if (SelectedIngredients.Count > 0)
             {
@@ -1148,8 +1148,8 @@ namespace Sodexo_KKH.ViewModels
                 int cntallergies = 0;
                 int cntdiets = 0;
                 bool istheraCount = false;
-                
-                
+
+
                 foreach (var itemdetail in item.menu_item_ides.Split(','))
                 {
                     if (!String.IsNullOrEmpty(itemdetail))
@@ -1163,7 +1163,7 @@ namespace Sodexo_KKH.ViewModels
                         else
                             cntingredients = 0;
 
-                        if (Library.IsFAGeneralEnable == null || Library.IsFAGeneralEnable== true)
+                        if (Library.IsFAGeneralEnable == null || Library.IsFAGeneralEnable == true)
                         {
                             if (!string.IsNullOrEmpty(allergies))
                             {
@@ -1210,7 +1210,7 @@ namespace Sodexo_KKH.ViewModels
 
 
                         }
-                        
+
                     }
 
                 }
@@ -1283,10 +1283,10 @@ namespace Sodexo_KKH.ViewModels
                 if (item.Confinement)
                     isconfinementpresent = true;
                 else
-                   isconfinementpresent = false;
+                    isconfinementpresent = false;
             }
             else
-              isconfinementpresent = true;
+                isconfinementpresent = true;
 
 
             //
@@ -1356,7 +1356,7 @@ namespace Sodexo_KKH.ViewModels
 
         private async void SetCutOffTime(mstr_meal_time mealTime)
         {
-            if (SelectedMenuCategory!=null)
+            if (SelectedMenuCategory != null)
             {
                 SelectedMenuCategory = null;
                 MenuItems = new ObservableCollection<MenuItemClass>();
@@ -1367,19 +1367,19 @@ namespace Sodexo_KKH.ViewModels
             }
 
             string time = DateTime.Now.ToString("HH:mm", CultureInfo.InvariantCulture);
-            
+
             DateTime lateformat = Convert.ToDateTime(mealTime.late_cut_off_start_time, CultureInfo.InvariantCulture);
 
-            DateTime dtFromDate = DateTime.ParseExact(mealTime.cut_off_start_time, "HH:mm",CultureInfo.InvariantCulture);
+            DateTime dtFromDate = DateTime.ParseExact(mealTime.cut_off_start_time, "HH:mm", CultureInfo.InvariantCulture);
             DateTime dtToDate = DateTime.ParseExact(time, "HH:mm", CultureInfo.InvariantCulture);
 
 
             if (dtToDate > lateformat && DateTime.Now.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) == Library.KEY_ORDER_DATE)
             {
-                  Title = $"{mealTime.meal_name} {AppResources.ResourceManager.GetString("le", CultureInfo.CurrentCulture)}";
-                  IsMenuEnable = false;
-                 await PageDialog.DisplayAlertAsync("Alert!!", Title,  "OK");
-                
+                Title = $"{mealTime.meal_name} {AppResources.ResourceManager.GetString("le", CultureInfo.CurrentCulture)}";
+                IsMenuEnable = false;
+                await PageDialog.DisplayAlertAsync("Alert!!", Title, "OK");
+
             }
             else
             {
@@ -1389,7 +1389,7 @@ namespace Sodexo_KKH.ViewModels
                     IsBtnVisible = true;
                 }
             }
-               
+
 
 
             TimeSpan difference = dtFromDate - dtToDate;
@@ -1409,7 +1409,7 @@ namespace Sodexo_KKH.ViewModels
                 {
                     MenuItems = new ObservableCollection<MenuItemClass>();
                 }
- 
+
                 Library.KEY_IS_LATE_ORDERED = "1";
             }
             else
@@ -1420,7 +1420,7 @@ namespace Sodexo_KKH.ViewModels
 
             CheckNBM();
 
-            await  CheckOrder();
+            await CheckOrder();
             if (Library.KEY_ORDER_ID != "0")
             {
                 bool Check_order_result = await Check_Order_Taken(Library.KEY_CHECK_ORDER_DATE, PatientInfo.ID, SelectedMealTime.meal_name, Convert.ToInt32(Library.KEY_ORDER_ID));
@@ -1432,9 +1432,9 @@ namespace Sodexo_KKH.ViewModels
                     {
                         IsBtnVisible = false;
                     }
-                    await PageDialog.DisplayAlertAsync("Alert!!", $"{SelectedMealTime.meal_name} {AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture)}",  "OK");
-                    
-                   
+                    await PageDialog.DisplayAlertAsync("Alert!!", $"{SelectedMealTime.meal_name} {AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture)}", "OK");
+
+
                 }
             }
 
@@ -1445,7 +1445,7 @@ namespace Sodexo_KKH.ViewModels
             if (others.ID == 1 || others.others_name.Contains("TC") || others.ID == 8)
             {
                 IsMenuEnable = false;
-                
+
             }
         }
 
@@ -1470,10 +1470,11 @@ namespace Sodexo_KKH.ViewModels
         private void GetMenuOnSearch(string s_word)
         {
 
-            Device.BeginInvokeOnMainThread(() => {
+            Device.BeginInvokeOnMainThread(() =>
+            {
                 if (!string.IsNullOrEmpty(s_word))
                 {
-                    if (TempList!=null)
+                    if (TempList != null)
                     {
                         MenuItems = new ObservableCollection<MenuItemClass>(TempList.Where(x => x.menu_item_name.ToLower().Contains(s_word.ToLower())
                                                                                          || x.menu_item_description.ToLower().Contains(s_word.ToLower())));
@@ -1527,7 +1528,7 @@ namespace Sodexo_KKH.ViewModels
                 Carts = new List<Cart>();
             }
         }
-        
+
     }
 
     public class MenuItemClass : BindableBase

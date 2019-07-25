@@ -22,7 +22,7 @@ using DependencyService = Xamarin.Forms.DependencyService;
 namespace Sodexo_KKH.ViewModels
 {
     public class HomeMasterDetailPageViewModel : ViewModelBase
-	{
+    {
         private string _user = Library.KEY_USER_FIRST_NAME;
         public string User
         {
@@ -73,8 +73,8 @@ namespace Sodexo_KKH.ViewModels
 
         IGenericRepo<mstr_meal_order_local> _orderlocalRepo;
         IGenericRepo<mstr_meal_time> _mealtimeRepo;
-        public HomeMasterDetailPageViewModel(INavigationService navigationService,IGenericRepo<mstr_meal_order_local> orderlocalRepo, 
-            IGenericRepo<mstr_meal_time> mealtimeRepo,IPageDialogService pageDialog) : base(navigationService,pageDialog)
+        public HomeMasterDetailPageViewModel(INavigationService navigationService, IGenericRepo<mstr_meal_order_local> orderlocalRepo,
+            IGenericRepo<mstr_meal_time> mealtimeRepo, IPageDialogService pageDialog) : base(navigationService, pageDialog)
         {
             _orderlocalRepo = orderlocalRepo;
             _mealtimeRepo = mealtimeRepo;
@@ -95,7 +95,7 @@ namespace Sodexo_KKH.ViewModels
 
             GetUpdateNotification();
         }
-        private  void GetUpdateNotification()
+        private void GetUpdateNotification()
         {
             System.Timers.Timer timer = new System.Timers.Timer(10000);
             timer.AutoReset = true; // the key is here so it repeats
@@ -103,7 +103,7 @@ namespace Sodexo_KKH.ViewModels
             timer.Start();
 
 
-           
+
 
             //var timer = new System.Threading.Timer((e) =>
             //{
@@ -117,16 +117,16 @@ namespace Sodexo_KKH.ViewModels
             //    }
             //}, null, startTimeSpan, periodTimeSpan);
 
-           
+
 
 
             //Device.StartTimer(TimeSpan.FromSeconds(10), callback: () =>
             //{
-                
+
 
             //    return true;
             //});
-           
+
         }
 
         private void timer_elapsed(object sender, ElapsedEventArgs e)
@@ -143,9 +143,9 @@ namespace Sodexo_KKH.ViewModels
 
         void OfflineOrderCount()
         {
-             var localOrder = _orderlocalRepo.QueryTable();
-             OrderCount = localOrder.Count();
-           
+            var localOrder = _orderlocalRepo.QueryTable();
+            OrderCount = localOrder.Count();
+
         }
 
         async Task MasterUpdateNotify()
@@ -202,7 +202,7 @@ namespace Sodexo_KKH.ViewModels
                     }
 
                 }
-                
+
             }
             catch (Exception)
             {
@@ -220,7 +220,7 @@ namespace Sodexo_KKH.ViewModels
                 {
                     string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
 
-                    
+
                     dynamic p = new ExpandoObject();
                     p.country_id = Library.KEY_USER_ccode;
                     string dt = Library.last_mealssynctime;
@@ -282,7 +282,7 @@ namespace Sodexo_KKH.ViewModels
         {
             if (isMenuNotificationAvailable || isMstrNotificationAvailable)
                 DependencyService.Get<INotify>().ShowLocalNotification(title, body);
-            
+
         }
 
         public async void DrawerSelected(string obj)
@@ -307,10 +307,10 @@ namespace Sodexo_KKH.ViewModels
 
                                 await navigation.PopPopupAsync();
 
-                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg7", CultureInfo.CurrentCulture),  "OK");
+                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg7", CultureInfo.CurrentCulture), "OK");
                             }
                             else
-                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture),  "OK");
+                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                         }
                         catch (Exception)
                         {
@@ -331,18 +331,18 @@ namespace Sodexo_KKH.ViewModels
 
                             Library.last_mastersynctime = tm;
 
-                            await  MasterSync.SyncMaster();
-                           
-                            
+                            await MasterSync.SyncMaster();
+
+
                             await navigation.PopPopupAsync();
 
                             MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", "Master");
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg0", CultureInfo.CurrentCulture),  "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg0", CultureInfo.CurrentCulture), "OK");
 
-                            
+
                         }
                         else
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture),  "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                         IsPageEnabled = false;
 
                     }
@@ -362,32 +362,32 @@ namespace Sodexo_KKH.ViewModels
                             Library.last_mealssynctime = tm;
 
                             await MasterSync.Sync_mstr_menu_master();
-                             await  MasterSync.Sync_mstr_menu_item();
-                          
+                            await MasterSync.Sync_mstr_menu_item();
 
-                            
+
+
 
                             await navigation.PopPopupAsync();
 
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg8", CultureInfo.CurrentCulture),  "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg8", CultureInfo.CurrentCulture), "OK");
                         }
                         else
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture),  "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                         IsPageEnabled = false;
                     }
                     break;
                 case "Order":
-                    await NavigationService.NavigateAsync("NavigationPage/DailyOrderDetailPage",new NavigationParameters { {"Create", "Create" } });
+                    await NavigationService.NavigateAsync("NavigationPage/DailyOrderDetailPage", new NavigationParameters { { "Create", "Create" } });
                     break;
                 case "OrderStatus":
-                        await NavigationService.NavigateAsync("NavigationPage/MealOrderStatusPage");
+                    await NavigationService.NavigateAsync("NavigationPage/MealOrderStatusPage");
                     break;
                 case "Feed":
                     {
                         if (Library.KEY_USER_feedback_link.Contains("http"))
                             await NavigationService.NavigateAsync("NavigationPage/FeedBackPage");
                         else
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("flna", CultureInfo.CurrentCulture),  "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("flna", CultureInfo.CurrentCulture), "OK");
                     }
                     break;
                 case "Offline":
@@ -397,7 +397,7 @@ namespace Sodexo_KKH.ViewModels
                         {
                             if (OrderCount == 0)
                             {
-                                await PageDialog.DisplayAlertAsync("No Data", "There is no offline order to be sync.",  "OK");
+                                await PageDialog.DisplayAlertAsync("No Data", "There is no offline order to be sync.", "OK");
 
                                 return;
                             }
@@ -406,14 +406,14 @@ namespace Sodexo_KKH.ViewModels
                                 var ui = new LoadingViewPopup();
                                 await navigation.PushPopupAsync(ui);
 
-                                 await ConfirmOrderSync.SyncNow(_orderlocalRepo, _mealtimeRepo,PageDialog);
+                                await ConfirmOrderSync.SyncNow(_orderlocalRepo, _mealtimeRepo, PageDialog);
 
                                 OfflineOrderCount();
 
-                                
+
                                 await navigation.PopPopupAsync();
 
-                               
+
 
                                 if (OrderCount == 0)
                                 {
@@ -426,18 +426,18 @@ namespace Sodexo_KKH.ViewModels
                             }
                         }
                         else
-                            await PageDialog.DisplayAlertAsync("Error!!", "Please check your internet connection.",  "OK");
+                            await PageDialog.DisplayAlertAsync("Error!!", "Please check your internet connection.", "OK");
                     }
                     catch (Exception ex)
                     {
 
 
                     }
-                    
+
                     break;
                 case "LogOut":
                     {
-                        var response = await PageDialog.DisplayAlertAsync("Log Out",AppResources.ResourceManager.GetString("logsure", CultureInfo.CurrentCulture),  AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                        var response = await PageDialog.DisplayAlertAsync("Log Out", AppResources.ResourceManager.GetString("logsure", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
                         if (response)
                         {
                             if (CrossConnectivity.Current.IsConnected)
@@ -449,12 +449,12 @@ namespace Sodexo_KKH.ViewModels
 
                                     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogfalse/" + Library.KEY_USER_ID);
 
-                                   await httpClient.SendAsync(request);
+                                    await httpClient.SendAsync(request);
                                 }
                                 Library.KEY_USER_ID = string.Empty;
                             }
                             SessionManager.Instance.EndTrackSession();
-                           await NavigationService.NavigateAsync("app:///LoginPage");
+                            await NavigationService.NavigateAsync("app:///LoginPage");
                         }
                     }
                     break;

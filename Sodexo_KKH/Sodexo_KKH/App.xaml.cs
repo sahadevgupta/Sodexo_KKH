@@ -18,7 +18,7 @@ namespace Sodexo_KKH
 {
     public partial class App
     {
-        
+
         public static string CultureCode { get; set; }
         public static IPageDialogService pageDialog;
         /* 
@@ -65,7 +65,7 @@ namespace Sodexo_KKH
             SessionManager.Instance.SessionDuration = TimeSpan.FromMinutes(20);
             SessionManager.Instance.OnSessionExpired = HandleSessionExpired;
         }
-       
+
         protected override void OnSleep()
         {
             base.OnSleep();
@@ -83,14 +83,14 @@ namespace Sodexo_KKH
 
                         HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogfalse/" + Library.KEY_USER_ID);
 
-                       await httpClient.SendAsync(request);
+                        await httpClient.SendAsync(request);
                     }
                     Library.KEY_USER_ID = string.Empty;
                 }
             }
             SessionManager.Instance.EndTrackSession();
 
-            await pageDialog.DisplayAlertAsync("Alert !!", "Your session has expired. Please login again.",  "OK");
+            await pageDialog.DisplayAlertAsync("Alert !!", "Your session has expired. Please login again.", "OK");
 
             await NavigationService.NavigateAsync("app:///LoginPage");
         }
@@ -101,7 +101,7 @@ namespace Sodexo_KKH
             containerRegistry.RegisterSingleton<IPatientManager, PatientManager>();
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_meal_order_local>, GenericRepo<mstr_meal_order_local>>();
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_ward_details>, GenericRepo<mstr_ward_details>>();
-            containerRegistry.RegisterSingleton <IGenericRepo<mstr_bed_details>, GenericRepo<mstr_bed_details>>();
+            containerRegistry.RegisterSingleton<IGenericRepo<mstr_bed_details>, GenericRepo<mstr_bed_details>>();
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_others_master>, GenericRepo<mstr_others_master>>();
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_allergies_master>, GenericRepo<mstr_allergies_master>>();
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_ingredient>, GenericRepo<mstr_ingredient>>();

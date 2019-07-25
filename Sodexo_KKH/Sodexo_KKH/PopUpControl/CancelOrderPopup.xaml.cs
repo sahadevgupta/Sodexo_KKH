@@ -27,7 +27,7 @@ namespace Sodexo_KKH.PopUpControl
 
         List<mstr_meal_history> PatientMealHistoryList;
         public bool IsChanged { get; set; }
-        public CancelOrderPopup(List<mstr_meal_history> _PatientMealHistoryList,IPageDialogService pageDialog)
+        public CancelOrderPopup(List<mstr_meal_history> _PatientMealHistoryList, IPageDialogService pageDialog)
         {
             InitializeComponent();
 
@@ -51,7 +51,7 @@ namespace Sodexo_KKH.PopUpControl
             var selectedRecord = (sender as Button).BindingContext as mstr_meal_history;
             if (string.IsNullOrEmpty(selectedRecord.remarks))
             {
-                await PageDialog.DisplayAlertAsync("Error!!","Please Enter Remarks", "OK");
+                await PageDialog.DisplayAlertAsync("Error!!", "Please Enter Remarks", "OK");
                 return;
             }
             else
@@ -80,7 +80,7 @@ namespace Sodexo_KKH.PopUpControl
 
                 if (contents == "true")
                 {
-                   await PageDialog.DisplayAlertAsync("Alertt!!", AppResources.ResourceManager.GetString("ml1", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alertt!!", AppResources.ResourceManager.GetString("ml1", CultureInfo.CurrentCulture), "OK");
                     HistoryList.ItemsSource = new List<mstr_meal_history>();
                     PatientMealHistoryList.Remove(selectedRecord);
                     HistoryList.ItemsSource = PatientMealHistoryList;
@@ -91,7 +91,7 @@ namespace Sodexo_KKH.PopUpControl
 
                 if (!PatientMealHistoryList.Any())
                 {
-                   await Navigation.PopAllPopupAsync();
+                    await Navigation.PopAllPopupAsync();
                 }
             }
         }

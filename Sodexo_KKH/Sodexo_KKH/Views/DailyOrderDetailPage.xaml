@@ -35,18 +35,25 @@
                 <Image x:Name="sss"   Source="Assets/logoinnertouch2order.png" HorizontalOptions="Start" HeightRequest="60" />
                 <Image  HorizontalOptions="EndAndExpand" Source="Assets/sodexologo.png" HeightRequest="60" />
             </StackLayout>
-            <StackLayout BackgroundColor="White" Orientation="Horizontal">
-                <Label x:Name="txt_date" Text="{lEx:Translate dteText}" 
-                               VerticalOptions="Center" HorizontalOptions="Start" 
-                               TextColor="Black" Font="22" />
-                <DatePicker x:Name="dt_picker" VerticalOptions="Center" Date="{Binding SelectedDate}"/>
-            </StackLayout>
+
+            <Label  VerticalOptions="Center" HorizontalOptions="Start" 
+                               Font="22" >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{lEx:Translate dteText}" FontSize="22" TextColor="Black"/>
+                        <Span Text=": "/>
+                        <Span Text="{Binding SelectedDate,Mode=OneWay,StringFormat='{}{0:dd-MM-yyyy}'}" FontSize="Medium"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+           
+           
             <StackLayout Orientation="Horizontal" >
 
                 <Label x:Name="lbl_selectward" Text="{lEx:Translate cmbsearchbywardPlaceholderText}" 
                    VerticalOptions="Center" FontSize="Small"/>
                 <Picker x:Name="pkr_ward"  
-                    WidthRequest="120"
+                    WidthRequest="200"
                     ItemsSource="{Binding WardData}"
                     SelectedItem="{Binding SelectedWard}"
                         Title="Select Ward"
@@ -55,7 +62,7 @@
                 <Label x:Name="lbl_Bed" Text="{lEx:Translate cmbsearchbypatientPlaceholderText}" 
                    VerticalOptions="Center" FontSize="Small" />
                 <Picker x:Name="pkr_bed" 
-                    WidthRequest="120"
+                    WidthRequest="200"
                     ItemsSource="{Binding BedDetails}"
                     ItemDisplayBinding="{Binding bed_no}"
                     SelectedItem="{Binding SelectedBed}"
@@ -66,7 +73,7 @@
                 <Picker x:Name="pkr_mealtime" 
                     ItemsSource="{Binding MealTimeList}"
                     SelectedItem="{Binding SelectedMealTime}"
-                    WidthRequest="120"
+                    WidthRequest="200"
                         Title="Select Meal"
                     ItemDisplayBinding="{Binding meal_name}"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
@@ -167,7 +174,9 @@
 
             <Button x:Name="btn_update" HorizontalOptions="FillAndExpand"
                     VerticalOptions="CenterAndExpand"
-                Text="{lEx:Translate btnupdateContent}" Font="24"  Command="{Binding UpdateCommand}"
+                    CornerRadius="5"
+                Text="{lEx:Translate btnupdateContent}" FontSize="Medium"
+                        HeightRequest="60"  Command="{Binding UpdateCommand}"
                 BackgroundColor="{StaticResource My_Header_Color}" 
                 TextColor="White"  >
                 <Button.Triggers>

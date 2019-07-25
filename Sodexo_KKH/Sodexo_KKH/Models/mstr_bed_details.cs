@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
-  public  class mstr_bed_details
+    public class mstr_bed_details
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         public int ID { get; set; }
-     //   public int tableid { get; set; }
+        //   public int tableid { get; set; }
         public string bed_no { get; set; }
         public int ward_id { get; set; }
         public int bedclass_id { get; set; }
         public int status_id { get; set; }
-      //  public string site_code { get; set; }
+        //  public string site_code { get; set; }
         public int site_id { get; set; }
         public string country_id { get; set; }
         public string region_id { get; set; }

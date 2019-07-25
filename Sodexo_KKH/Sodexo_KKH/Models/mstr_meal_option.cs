@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class mstr_meal_option
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
-        public int ID{ get; set; }
-      //  public int tableid { get; set; }
+        public int ID { get; set; }
+        //  public int tableid { get; set; }
         public string meal_option_name { get; set; }
         public string meal_option_description { get; set; }
         public int status_id { get; set; }
@@ -20,7 +14,7 @@ namespace Sodexo_KKH.Models
 
 
 
-        
+
         //public mstr_meal_option(int Para1, string Para2, string Para3, int Para4, string Para5)
         //{
         //    tableid = Para1;

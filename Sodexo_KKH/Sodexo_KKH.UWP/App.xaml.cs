@@ -26,7 +26,8 @@ namespace Sodexo_KKH.UWP
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
+           // this.Suspending += OnSuspending;
+            
         }
         
         /// <summary>
@@ -110,6 +111,8 @@ namespace Sodexo_KKH.UWP
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
+        
+
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
@@ -119,6 +122,10 @@ namespace Sodexo_KKH.UWP
             {
                 if (!string.IsNullOrEmpty(Library.KEY_USER_ID))
                 {
+                    var a = new Sodexo_KKH.UWP.Services.Notification_UWP();
+
+                    await a.ShowAlert("Alert !!", "OnSuspending");
+
                     string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                     using (var httpClient = new System.Net.Http.HttpClient())
                     {

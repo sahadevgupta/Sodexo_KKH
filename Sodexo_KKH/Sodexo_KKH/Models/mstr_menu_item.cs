@@ -1,23 +1,18 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Sodexo_KKH.Models
 {
     class mstr_menu_item
     {
-       
+
 
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         [JsonProperty("ID")]
         public int ID { get; set; }
-       // public int tableid { get; set; }
+        // public int tableid { get; set; }
         public string menu_item_code { get; set; }
         public string menu_item_name { get; set; }
         public string menu_item_description { get; set; }
@@ -42,17 +37,17 @@ namespace Sodexo_KKH.Models
 
         public string amount { get; set; }
 
-        public string is_visitor { get; set; }  
+        public string is_visitor { get; set; }
         public string menu_item_name_local_language { get; set; }
 
         public string btnname { get; set; }
-        public string  btncolor { get; set; }
+        public string btncolor { get; set; }
         [JsonProperty("meal_type_name")]
         public string meal_type_name { get; set; }
         public int country_id { get; set; }
         public int region_id { get; set; }
         public int site_id { get; set; }
-      public string Therapeutic_ids { get; set; }
+        public string Therapeutic_ids { get; set; }
 
         public string diet_texture_ids { get; set; }
         public string texture_names { get; set; }
@@ -66,9 +61,9 @@ namespace Sodexo_KKH.Models
         [JsonProperty("is_InfantDiet")]
         public bool is_InfantDiet { get; set; }
 
-        
+
         [JsonProperty("meal_type_ids")]
         public string meal_type_ids { get; set; }
-       
+
     }
 }

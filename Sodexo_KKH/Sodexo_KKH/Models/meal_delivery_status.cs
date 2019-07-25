@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class meal_delivery_status
     {
@@ -20,7 +14,7 @@ namespace Sodexo_KKH.Models
         public string OrderBy { get; set; }
         public string pateint_id { get; set; }
         public string orderedID { get; set; }
-       
+
         public string is_verifed { get; set; }
 
         public string iscaregiver { get; set; }
@@ -45,14 +39,14 @@ namespace Sodexo_KKH.Models
         //    is_verifed = Para9;
         //    iscaregiver = Para10;
         //    status = Para11;
-           
+
         //}
     }
 
 
     public class menuitems
     {
-       
+
         public int ID { get; set; }
         public string ImageData { get; set; }
         public string menu_item_name { get; set; }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class mstr_bed_meal_class_mapping
     {
@@ -13,7 +7,7 @@ namespace Sodexo_KKH.Models
         public int UID { get; set; }
 
         public int ID { get; set; }
-       // public int tableid { get; set; }
+        // public int tableid { get; set; }
         public int bed_class_id { get; set; }
         public string bed_class_Name { get; set; }
         public int meal_class_id { get; set; }
@@ -23,7 +17,7 @@ namespace Sodexo_KKH.Models
         public int site_id { get; set; }
         public string country_id { get; set; }
         public string region_id { get; set; }
-      
+
 
 
         public mstr_bed_meal_class_mapping()
@@ -31,16 +25,16 @@ namespace Sodexo_KKH.Models
 
         }
 
-    //    public mstr_bed_meal_class_mapping(int Para1, int Para2, string Para3, int Para4, string Para5, bool Para6, int Para7, int Para8)
-    //    {
-    //        tableid = Para1;
-    //            bed_class_id = Para2;
-    //        bedclass_name = Para3;
-    //        meal_class_id = Para4;
-    //        mealclass_name = Para5;
-    //        Is_A_la_carte = Para6;
-    //        status_id = Para7;
-    //        site_id = Para8;
-    //    }
+        //    public mstr_bed_meal_class_mapping(int Para1, int Para2, string Para3, int Para4, string Para5, bool Para6, int Para7, int Para8)
+        //    {
+        //        tableid = Para1;
+        //            bed_class_id = Para2;
+        //        bedclass_name = Para3;
+        //        meal_class_id = Para4;
+        //        mealclass_name = Para5;
+        //        Is_A_la_carte = Para6;
+        //        status_id = Para7;
+        //        site_id = Para8;
+        //    }
     }
 }

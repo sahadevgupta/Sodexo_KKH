@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -304,7 +300,7 @@ namespace Sodexo_KKH.Controls
                      );
                     EntryField.Placeholder = null;
                 }
-               
+
             };
             EntryField.Unfocused += async (s, a) =>
             {
@@ -318,7 +314,7 @@ namespace Sodexo_KKH.Controls
                      );
                     EntryField.Placeholder = Placeholder;
                 }
-                
+
                 EntryUnfocused?.Invoke(this, a);
             };
         }

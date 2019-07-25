@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class mstr_meal_history
     {
@@ -32,19 +26,19 @@ namespace Sodexo_KKH.Models
         public mstr_meal_history()
         {
 
-        } 
+        }
 
-        public mstr_meal_history(string Para1, string Para2, string Para3, string Para4, string Para5, string Para6, string Para7,string Para8)
+        public mstr_meal_history(string Para1, string Para2, string Para3, string Para4, string Para5, string Para6, string Para7, string Para8)
         {
             beveragesid = Para1;
-                dessertid = Para2;
+            dessertid = Para2;
             entreeid = Para3;
             juiceid = Para4;
             orderdate = Para5;
             remarkid = Para6;
             soupid = Para7;
             status = Para8;
-        } 
+        }
 
     }
 }

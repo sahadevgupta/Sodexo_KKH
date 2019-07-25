@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Converters
@@ -11,15 +9,15 @@ namespace Sodexo_KKH.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
-            
+
 
             if (parameter != null)
             {
                 switch (parameter)
                 {
                     case "VegNVeg":
-                        { 
-                            if(System.Convert.ToBoolean(value))
+                        {
+                            if (System.Convert.ToBoolean(value))
                             {
                                 return "Veg";
                             }
@@ -49,16 +47,16 @@ namespace Sodexo_KKH.Converters
                         }
                 }
             }
-            
-                if (value.ToString() == "True")
-                {
-                    return "H";
-                }
-                else
-                {
-                    return "NH";
-                }
-            
+
+            if (value.ToString() == "True")
+            {
+                return "H";
+            }
+            else
+            {
+                return "NH";
+            }
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

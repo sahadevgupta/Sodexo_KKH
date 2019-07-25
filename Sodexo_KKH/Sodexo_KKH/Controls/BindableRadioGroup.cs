@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 
@@ -38,7 +37,7 @@ namespace Sodexo_KKH.Controls
             propertyChanged: OnSelectedIndexChanged
             );
 
-       
+
         public IEnumerable ItemsSource
         {
             get { return (IEnumerable)GetValue(ItemsSourceProperty); }
@@ -68,7 +67,7 @@ namespace Sodexo_KKH.Controls
                     rad.Text = item.ToString();
                     rad.Id = radIndex;
 
-                   rad.CheckedChanged += radButtons.OnCheckedChanged;
+                    rad.CheckedChanged += radButtons.OnCheckedChanged;
 
                     radButtons.rads.Add(rad);
 

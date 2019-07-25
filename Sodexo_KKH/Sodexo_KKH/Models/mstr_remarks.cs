@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class mstr_remarks
     {
@@ -12,7 +6,7 @@ namespace Sodexo_KKH.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         public int ID { get; set; }
-       // public int tableid { get; set; }
+        // public int tableid { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Status_id { get; set; }
@@ -33,10 +27,10 @@ namespace Sodexo_KKH.Models
         //    remark_description = Para3;
         //    status_id = Para4;
         //    site_code = Para5;
-           
+
 
         //}
         // Inserting into mstr_diet_type
-      
+
     }
 }

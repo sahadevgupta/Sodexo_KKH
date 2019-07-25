@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
@@ -31,11 +27,11 @@ namespace Sodexo_KKH.Models
         {
 
         }
-        public opt_patient_meal_details(int Patient_id, int Bed_class_id, int Bed_id, int Ward_type_id, int Ward_id, bool Is_veg, bool Is_halal, int Allergies_id, bool Is_disposable_tray,int bf,int lh,int dn, int Status_id, String Site_code)
+        public opt_patient_meal_details(int Patient_id, int Bed_class_id, int Bed_id, int Ward_type_id, int Ward_id, bool Is_veg, bool Is_halal, int Allergies_id, bool Is_disposable_tray, int bf, int lh, int dn, int Status_id, String Site_code)
         {
-           
-           
-            patient_id = Patient_id;     
+
+
+            patient_id = Patient_id;
             bed_class_id = Bed_class_id;
             bed_id = Bed_id;
             ward_type_id = Ward_type_id;

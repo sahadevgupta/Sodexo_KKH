@@ -3,11 +3,12 @@ using Newtonsoft.Json.Linq;
 using Plugin.Connectivity;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using Rg.Plugins.Popup.Extensions;
+using Sodexo_KKH.Controls;
 using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
-using Sodexo_KKH.Controls;
 using Sodexo_KKH.Repos;
 using Sodexo_KKH.Resx;
 using System;
@@ -19,7 +20,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Prism.Services;
 using DependencyService = Xamarin.Forms.DependencyService;
 
 namespace Sodexo_KKH.ViewModels
@@ -57,13 +57,13 @@ namespace Sodexo_KKH.ViewModels
             set
             {
                 SetProperty(ref _selectedWard, value);
-                if (value!=null)
+                if (value != null)
                 {
                     PopulateBedData(value);
                 }
-                
-                    
-                
+
+
+
             }
         }
 
@@ -73,9 +73,9 @@ namespace Sodexo_KKH.ViewModels
             get { return _selectedMealTime; }
             set
             {
-               
-                    SetProperty(ref _selectedMealTime, value);
-               
+
+                SetProperty(ref _selectedMealTime, value);
+
             }
         }
         private List<mstr_ward_details> _wardData;
@@ -115,7 +115,24 @@ namespace Sodexo_KKH.ViewModels
         public mstr_bed_details SelectedBed
         {
             get { return this._selectedBed; }
-            set { SetProperty(ref _selectedBed, value); }
+            set
+            {
+                if (_selectedBed == null)
+                {
+                    SetProperty(ref _selectedBed, value);
+                }
+                else
+                {
+                    if (value != null)
+                    {
+                        if (_selectedBed.bed_no != value.bed_no)
+                        {
+                            SetProperty(ref _selectedBed, value);
+                        }
+                    }
+                }
+
+            }
         }
         private ObservableCollection<mstr_caregiver_mealorder_details> _caregiver_details;
         public ObservableCollection<mstr_caregiver_mealorder_details> caregiver_details
@@ -163,7 +180,7 @@ namespace Sodexo_KKH.ViewModels
             {
                 if (MealDeliveredCollection.Where(x => x.is_checked).Count() == 0)
                 {
-                   await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
                     return;
                 }
 
@@ -215,7 +232,7 @@ namespace Sodexo_KKH.ViewModels
                     await GetMealDeliveredData();
 
 
-                   
+
 
                     //await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("delivered_message", CultureInfo.CurrentCulture), "OK");
 
@@ -280,7 +297,7 @@ namespace Sodexo_KKH.ViewModels
                 {
 
 
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture),  "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                     pbarBools = false;
                 }
             }
@@ -345,7 +362,7 @@ namespace Sodexo_KKH.ViewModels
                     if (httpResponse.Content != null)
                     {
                         var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                       
+
                     }
                 }
             }
@@ -414,7 +431,7 @@ namespace Sodexo_KKH.ViewModels
                             {
                                 var responseContent = await httpResponse.Content.ReadAsStringAsync();
                                 success = true;
-                                
+
                             }
                         }
 
@@ -440,7 +457,7 @@ namespace Sodexo_KKH.ViewModels
         {
             if (SelectedBed == null || SelectedMealTime == null)
             {
-                await PageDialog.DisplayAlertAsync("Alert!!","Please select Bed & MealTime to continue..","OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", "Please select Bed & MealTime to continue..", "OK");
                 return;
             }
 
@@ -540,7 +557,7 @@ namespace Sodexo_KKH.ViewModels
                 {
 
 
-                    await PageDialog.DisplayAlertAsync("Alert!!",AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture),  "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                     pbarBools = false;
                 }
             }
@@ -604,7 +621,7 @@ namespace Sodexo_KKH.ViewModels
                 FillWard();
                 FillMealTime();
             }
-            
+
         }
         private async void FillWard()
         {

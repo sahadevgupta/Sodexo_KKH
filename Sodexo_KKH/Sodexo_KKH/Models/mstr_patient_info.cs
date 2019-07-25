@@ -1,11 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Prism.Mvvm;
-using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sodexo_KKH.Models
 {
@@ -25,7 +19,7 @@ namespace Sodexo_KKH.Models
         public string admission_date { get; set; }
         public int ID { get; set; }
         public string gender { get; set; }
-      //  public int tableid { get; set; }//P_Id
+        //  public int tableid { get; set; }//P_Id
         public string LH { get; set; }
         public string ModifiedDate { get; set; }
         public string Patientname { get; set; }
@@ -82,7 +76,7 @@ namespace Sodexo_KKH.Models
         public string Religion { get; set; }
         public string Birthdate { get; set; }
 
-      
+
         public string Preferredserver { get; set; }
 
         public string sequenceno { get; set; }
@@ -117,7 +111,7 @@ namespace Sodexo_KKH.Models
         public string Bed_Class_ID { get; set; }
         public string Age_ID { get; set; }
         public string Doctorcomment { get; set; }
-       public string Generalcomment { get; set; }
+        public string Generalcomment { get; set; }
 
         public string Ward_ID { get; set; }
 
@@ -141,7 +135,7 @@ namespace Sodexo_KKH.Models
         }
         [JsonProperty("Therapeutic_Condition")]
         public string Therapeutic_Condition { get; set; }
-       
+
         [JsonProperty("Diet_Texture")]
         public string Diet_Texture { get; set; }
 

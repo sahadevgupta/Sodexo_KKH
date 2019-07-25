@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class mstr_ward_details
     {
@@ -12,11 +6,11 @@ namespace Sodexo_KKH.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         public int ID { get; set; }
-      //  public int tableid { get; set; }
+        //  public int tableid { get; set; }
         public string ward_name { get; set; }
         public string ward_description { get; set; }
         public int ward_type { get; set; }
-       
+
         public int status_id { get; set; }
         public string site_code { get; set; }
         public string ward_type_name { get; set; }

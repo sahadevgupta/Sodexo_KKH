@@ -1,8 +1,5 @@
-﻿using Sodexo_KKH.Controls;
-using Sodexo_KKH.Helpers;
+﻿using Sodexo_KKH.Helpers;
 using Sodexo_KKH.ViewModels;
-using System;
-using System.Linq;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Views

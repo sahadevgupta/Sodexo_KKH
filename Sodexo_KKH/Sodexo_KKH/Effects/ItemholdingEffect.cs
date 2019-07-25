@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Effects
 {
-   public class ItemholdingEffect : RoutingEffect
+    public class ItemholdingEffect : RoutingEffect
     {
         public const string EffectGroupName = "MyApp";
         public const string EffectName = "LongPressedEffect";

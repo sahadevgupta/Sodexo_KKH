@@ -78,13 +78,13 @@ namespace Sodexo_KKH.ViewModels
             set
             {
                 SetProperty(ref _selectedDate, value);
-                if (IsWardVisible )
+                if (IsWardVisible)
                 {
                     if (SelectedWard != null)
                     {
                         GetPatientsList("WardNo");
                     }
-                    
+
                 }
                 else
                     GetPatientsList("PatientName");
@@ -100,7 +100,7 @@ namespace Sodexo_KKH.ViewModels
             set { SetProperty(ref _patients, value); }
         }
 
-       
+
 
         private List<mstr_bed_details> _bedDetails;
 
@@ -148,7 +148,7 @@ namespace Sodexo_KKH.ViewModels
             set
             {
                 SetProperty(ref _isWardVisible, value);
-                if (value && SelectedWard !=null)
+                if (value && SelectedWard != null)
                 {
                     GetPatientsList("WardNo");
                 }
@@ -207,10 +207,10 @@ namespace Sodexo_KKH.ViewModels
             {
                 IsPageEnabled = true;
 
-               await GenerateMealHistory(selectedPatient.ID, mealtype);
+                await GenerateMealHistory(selectedPatient.ID, mealtype);
             }
             else
-              await  PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg12", CultureInfo.CurrentCulture),  "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg12", CultureInfo.CurrentCulture), "OK");
         }
 
         private async Task GenerateMealHistory(int ID, string mealtype)
@@ -230,9 +230,9 @@ namespace Sodexo_KKH.ViewModels
 
                 var data = await response.Content.ReadAsStringAsync();
                 JArray jarray = JArray.Parse(data);
-                if (jarray.Count==0)
+                if (jarray.Count == 0)
                 {
-                   await PageDialog.DisplayAlertAsync("Alert!!","There is no meal history for this patient.","OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", "There is no meal history for this patient.", "OK");
                     IsPageEnabled = false;
                     return;
                 }
@@ -345,8 +345,8 @@ namespace Sodexo_KKH.ViewModels
             else if (dataList.Count == 0)
             {
 
-               await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("nit2", CultureInfo.CurrentCulture), "OK");
-               
+                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("nit2", CultureInfo.CurrentCulture), "OK");
+
 
                 return;
             }
@@ -359,7 +359,7 @@ namespace Sodexo_KKH.ViewModels
 
 
             var a = PatientMealHistoryList;
-            var ui = new CancelOrderPopup(PatientMealHistoryList,PageDialog);
+            var ui = new CancelOrderPopup(PatientMealHistoryList, PageDialog);
             ui.Disappearing += Ui_Disappearing;
             ui.BindingContext = patient;
             await navigation.PushPopupAsync(ui, false);
@@ -398,7 +398,7 @@ namespace Sodexo_KKH.ViewModels
                         string name = item.Patient_Name;
                         PatientDatas.Add(name);
                     }
-                   
+
                 }
                 catch (Exception)
                 {
@@ -407,7 +407,7 @@ namespace Sodexo_KKH.ViewModels
             }
             else
             {
-              var data =  _patientRepo.QueryTable().Where(x => x.Patientname.ToLower().Contains(value.ToLower()));
+                var data = _patientRepo.QueryTable().Where(x => x.Patientname.ToLower().Contains(value.ToLower()));
                 foreach (var item in data)
                 {
                     PatientDatas.Add(item.Patientname);
@@ -426,7 +426,7 @@ namespace Sodexo_KKH.ViewModels
             var MasterMenuInfo = sqlite.Table<mstr_menu_master>();
             if (!MasterMenuInfo.Any())
             {
-                await PageDialog.DisplayAlertAsync("Alert!!", "Please sync 'Sync Menu Items' from drawer menu to proceed further.",  "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", "Please sync 'Sync Menu Items' from drawer menu to proceed further.", "OK");
                 Library.KEY_SYNC_NOTIFICATION = "1";
                 return;
             }
@@ -435,6 +435,7 @@ namespace Sodexo_KKH.ViewModels
             {
                 return;
             }
+
 
             if (Library.KEY_USER_ROLE == "FSA")
             {
@@ -453,7 +454,7 @@ namespace Sodexo_KKH.ViewModels
         {
             Library.KEY_PATIENT_IS_HALAL = patient.ishalal_tab;
             Library.KEY_PATIENT_IS_VEG = patient.isveg_tab;
-            Library.KEY_ORDER_DATE  = SelectedDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            Library.KEY_ORDER_DATE = SelectedDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             Library.KEY_CHECK_ORDER_DATE = SelectedDate.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
 
             var id = Convert.ToInt32(patient.Ward_ID);
@@ -490,28 +491,28 @@ namespace Sodexo_KKH.ViewModels
 
         private void SearchOfflineOrder(string param)
         {
-           
-                string order_date = SelectedDate.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
-                if (param.Equals("WardNo"))
+
+            string order_date = SelectedDate.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
+            if (param.Equals("WardNo"))
+            {
+                var wbed = SelectedBed != null ? (SelectedBed.bed_no == "All" ? "0" : SelectedBed.bed_no) : "0";
+                var patientlist = new List<mstr_patient_info>();
+                if (wbed == "0")
                 {
-                   var wbed = SelectedBed != null ? (SelectedBed.bed_no == "All" ? "0" : SelectedBed.bed_no)  : "0";
-                   var patientlist = new List<mstr_patient_info>();
-                    if (wbed == "0")
-                    {
-                       patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.meal_order_date == order_date).ToList();
-                    }
-                    else
-
-                      patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.bed_name == wbed && x.meal_order_date == order_date).ToList();
-                   
-
-                    Patients = new ObservableCollection<mstr_patient_info>(patientlist);
+                    patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.meal_order_date == order_date).ToList();
                 }
                 else
-                {
-                    DisplayPatientListOnPatientsearch();
-                }
-               
+
+                    patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.bed_name == wbed && x.meal_order_date == order_date).ToList();
+
+
+                Patients = new ObservableCollection<mstr_patient_info>(patientlist);
+            }
+            else
+            {
+                DisplayPatientListOnPatientsearch();
+            }
+
         }
 
         public async void DisplayPatientListOnPatientsearch()
@@ -535,7 +536,7 @@ namespace Sodexo_KKH.ViewModels
                         var data = await response.Content.ReadAsStringAsync();
                         // JArray jarray = JArray.Parse(data);
 
-                       var  pdataList = JsonConvert.DeserializeObject<ObservableCollection<mstr_patient_info>>(data);
+                        var pdataList = JsonConvert.DeserializeObject<ObservableCollection<mstr_patient_info>>(data);
 
                         foreach (var item in pdataList)
                         {
@@ -547,9 +548,9 @@ namespace Sodexo_KKH.ViewModels
                             }
                         }
 
-                        Patients = new ObservableCollection<mstr_patient_info>( pdataList);
+                        Patients = new ObservableCollection<mstr_patient_info>(pdataList);
                         IsPageEnabled = false;
-                        
+
                     }
                     catch (Exception excp)
                     {
@@ -557,13 +558,13 @@ namespace Sodexo_KKH.ViewModels
                         IsPageEnabled = false;
 
                     }
-                    
+
 
                 }
                 else
                 {
 
-                   var data = _patientRepo.QueryTable().Where(x => x.Patientname == PatientName && x.meal_order_date == format).OrderBy(y => y.Patientname);
+                    var data = _patientRepo.QueryTable().Where(x => x.Patientname == PatientName && x.meal_order_date == format).OrderBy(y => y.Patientname);
                     Patients = new ObservableCollection<mstr_patient_info>(data);
 
                 }
@@ -605,14 +606,15 @@ namespace Sodexo_KKH.ViewModels
                 }
                 else
                 {
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pls11", CultureInfo.CurrentCulture),  "OK");
                     IsPageEnabled = false;
+                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pls11", CultureInfo.CurrentCulture), "OK");
+
                 }
             }
             catch (Exception ex)
             {
-                await PageDialog.DisplayAlertAsync("Alert!!", ex.Message,  "OK");
                 IsPageEnabled = false;
+                await PageDialog.DisplayAlertAsync("Alert!!", ex.Message, "OK");
             }
         }
 
@@ -624,7 +626,7 @@ namespace Sodexo_KKH.ViewModels
 
             if (string.IsNullOrEmpty(Library.KEY_SYNC_NOTIFICATION))
             {
-                PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg4", CultureInfo.CurrentCulture),  "OK");
+                PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg4", CultureInfo.CurrentCulture), "OK");
                 Library.KEY_SYNC_NOTIFICATION = "1";
             }
         }

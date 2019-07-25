@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Behaviors
@@ -45,8 +42,8 @@ namespace Sodexo_KKH.Behaviors
                 return;
             }
             string Reg = $"[!@#$%^&*(),.?\":|<>]";
-            bool isValid = Regex.IsMatch(e.NewTextValue,Reg);
-            
+            bool isValid = Regex.IsMatch(e.NewTextValue, Reg);
+
             if (isValid)
             {
                 ((Entry)sender).Text = e.OldTextValue;

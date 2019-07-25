@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Prism.Services;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.Repos;
 using System;
@@ -7,7 +8,6 @@ using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Prism.Services;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Helpers
@@ -16,7 +16,7 @@ namespace Sodexo_KKH.Helpers
     {
         static string rid;
 
-        public async static Task SyncNow(IGenericRepo<mstr_meal_order_local> orderlocalRepo,IGenericRepo<mstr_meal_time> mealtimeRepo,IPageDialogService pageDialog)
+        public async static Task SyncNow(IGenericRepo<mstr_meal_order_local> orderlocalRepo, IGenericRepo<mstr_meal_time> mealtimeRepo, IPageDialogService pageDialog)
         {
 
             Library library = new Library();
@@ -44,7 +44,7 @@ namespace Sodexo_KKH.Helpers
                 else
                 {
                     bool Check_order_result = await getfirstorder(item.P_id);
-                    if (Check_order_result|| Library.KEY_USER_ROLE == "Nurse" || Library.KEY_USER_ROLE == "Nurse+FSA")
+                    if (Check_order_result || Library.KEY_USER_ROLE == "Nurse" || Library.KEY_USER_ROLE == "Nurse+FSA")
                     {
                         await CheckOrder(item.order_date, item.P_id);
                         if (!string.IsNullOrEmpty(rid))// delete it if it is blank
@@ -73,17 +73,17 @@ namespace Sodexo_KKH.Helpers
                                     // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url
                                     httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_UPDATE_ORDER, httpContent);
 
-                                    
+
 
                                     // If the response contains content we want to read it!
-                                   await CheckOrderReaponse(orderlocalRepo, item, httpResponse,pageDialog);
-                                   
+                                    await CheckOrderReaponse(orderlocalRepo, item, httpResponse, pageDialog);
+
                                 }
                             }
                             else
                             {
                                 orderlocalRepo.Delete(item.autoid.ToString());
-                               
+
                             }
 
                         }
@@ -109,27 +109,27 @@ namespace Sodexo_KKH.Helpers
                                     httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_SAVEORDER, httpContent);
 
 
-                                   var orderResponse = await CheckOrderReaponse(orderlocalRepo, item, httpResponse,pageDialog);
-                                    
+                                    var orderResponse = await CheckOrderReaponse(orderlocalRepo, item, httpResponse, pageDialog);
+
                                 }
                             }
                             else
                             {
                                 orderlocalRepo.Delete(item.autoid.ToString());
-                                
+
                             }
-                              
+
                         }
                     }
-                   
+
                 }
-                    
+
             }
-           
-            
+
+
         }
 
-        private static async Task<bool> CheckOrderReaponse(IGenericRepo<mstr_meal_order_local> orderlocalRepo, mstr_meal_order_local item, HttpResponseMessage httpResponse,IPageDialogService pageDialog)
+        private static async Task<bool> CheckOrderReaponse(IGenericRepo<mstr_meal_order_local> orderlocalRepo, mstr_meal_order_local item, HttpResponseMessage httpResponse, IPageDialogService pageDialog)
         {
             if (httpResponse.Content != null)
             {
@@ -138,13 +138,13 @@ namespace Sodexo_KKH.Helpers
                 {
                     MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "NewOrder", "order");
                     orderlocalRepo.Delete(item.autoid.ToString());
-                    
+
                     return true;
                 }
                 else
                 {
                     orderlocalRepo.Delete(item.autoid.ToString());
-                    await pageDialog.DisplayAlertAsync("Error!!", "Your order is not confirmed or already placed, there is some problem to process your request. Please check your internet connection.",  "OK");
+                    await pageDialog.DisplayAlertAsync("Error!!", "Your order is not confirmed or already placed, there is some problem to process your request. Please check your internet connection.", "OK");
                     return false;
                 }
 
@@ -152,7 +152,7 @@ namespace Sodexo_KKH.Helpers
             else
                 return false;
         }
-        
+
         public static async Task<bool> getfirstorder(int p_id)
         {
 
@@ -185,7 +185,7 @@ namespace Sodexo_KKH.Helpers
             }
 
         }
-        
+
         public static async Task<bool> Check_Order_Taken(string order_date, int p_id, string meal_time, int order_id)
         {
 

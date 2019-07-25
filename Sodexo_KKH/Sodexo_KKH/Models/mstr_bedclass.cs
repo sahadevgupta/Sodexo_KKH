@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class mstr_bedclass
     {
@@ -41,15 +35,15 @@ namespace Sodexo_KKH.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         public int ID { get; set; }
-      //  public int tableid { get; set; }
+        //  public int tableid { get; set; }
         public string payment_mode_name { get; set; }
-   
+
         public bool status_id { get; set; }
-      
+
 
         public mstr_DisplayPaymentModeDetails()
         {
-        
+
         }
 
         //public mstr_DisplayPaymentModeDetails(int Para2, string Para3,  bool Para5)
@@ -57,7 +51,7 @@ namespace Sodexo_KKH.Models
         //    tableid = Para2;
         //    payment_mode_name = Para3;
         //    status_id = Para5;
-        
+
         //}
     }
 
@@ -70,7 +64,7 @@ namespace Sodexo_KKH.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         public int ID { get; set; }
-      //  public int tableid { get; set; }
+        //  public int tableid { get; set; }
         public byte[] country_flag { get; set; }
 
         public int country_id { get; set; }
@@ -91,7 +85,7 @@ namespace Sodexo_KKH.Models
         //    country_name = P1;
         //    language_name = lname;
         //    status_id = stid;
-            
+
 
         //}
     }

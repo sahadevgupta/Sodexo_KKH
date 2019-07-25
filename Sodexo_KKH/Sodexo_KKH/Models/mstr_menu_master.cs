@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Sodexo_KKH.Models
@@ -14,10 +9,10 @@ namespace Sodexo_KKH.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         public int ID { get; set; }
-      //  public int tableid { get; set; }
+        //  public int tableid { get; set; }
         public string menu_code { get; set; }
         public string menu_name { get; set; }
-     
+
         public string menu_description { get; set; }
         public int meal_class_id { get; set; }
         public string meal_class_ids { get; set; }
@@ -60,8 +55,8 @@ namespace Sodexo_KKH.Models
 
         //public string MealType { get; set; }
 
-        public bool is_veg{ get; set; }
-        public bool is_halal{ get; set; }
+        public bool is_veg { get; set; }
+        public bool is_halal { get; set; }
 
         [JsonProperty("isInfantDiet")]
         public bool is_InfantDiet { get; set; }
@@ -70,6 +65,6 @@ namespace Sodexo_KKH.Models
         public string meal_type_name { get; set; }
         [JsonProperty("Meal_Type_Ids")]
         public string Meal_Type_Ids { get; set; }
-       
+
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sodexo_KKH.Models
+﻿namespace Sodexo_KKH.Models
 {
     public class mstr_meal_time
     {
@@ -12,7 +6,7 @@ namespace Sodexo_KKH.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int UID { get; set; }
         public int ID { get; set; }
-       // public int tableid { get; set; }
+        // public int tableid { get; set; }
         public string meal_name { get; set; }
         public string normal_start_time { get; set; }
         public string normal_end_time { get; set; }

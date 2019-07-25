@@ -116,6 +116,8 @@
                     <Button Text="{lEx:Translate btnloginContent}"
                     BackgroundColor="{StaticResource My_Header_Color}"
                     CornerRadius="5"
+                            
+                            HeightRequest="60"
                     FontSize="Medium"
                             Clicked="Button_Clicked"
                    CommandParameter="submit"
@@ -126,6 +128,7 @@
                     <Button Text="LDAP"
                     BackgroundColor="{StaticResource My_Header_Color}"
                     CornerRadius="5"
+                             HeightRequest="60"
                     FontSize="Medium"
                             Clicked="Button_Clicked"
                      CommandParameter="LDAP"
