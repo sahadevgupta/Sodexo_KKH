@@ -306,8 +306,9 @@ namespace Sodexo_KKH.Helpers
                         string rgn_id = item.region_id.ToString();
                         string st_id = item.site_id.ToString();
 
-                        if (Library.KEY_USER_ccode == cont_id && Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id && Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id)
-                            dbConn.Insert(item);
+                        if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
+                             && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
+                              dbConn.Insert(item);
                     }
                 };
             }
@@ -364,7 +365,8 @@ namespace Sodexo_KKH.Helpers
 
                         // Filtering data based on
                         //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
-                        if (Library.KEY_USER_ccode == cont_id && Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id && Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id)
+                        if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
+                            && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
                         {
                             item.formattedto = formattedto;
                             item.formattedfrom = formatedfrom;
@@ -567,7 +569,8 @@ namespace Sodexo_KKH.Helpers
                         // Filtering data based on
 
                         //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
-                        if (Library.KEY_USER_ccode == cont_id && Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id && Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id)
+                        if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
+                            && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
                         {
                             dbConn.Insert(item);
                             // dbhelper.Insert_INTO_Mstr_bed_details(new mstr_bed_details(Convert.ToInt32(row["ID"].ToString()), row["bed_no"].ToString(), Convert.ToInt32(row["ward_id"].ToString()), Convert.ToInt32(row["bedclass_id"].ToString()), Convert.ToInt32(row["status_id"].ToString()), row["site_code"].ToString()));
@@ -628,8 +631,9 @@ namespace Sodexo_KKH.Helpers
 
                         // Filtering data based on
                         //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
-                        if (Library.KEY_USER_ccode == cont_id && Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id && Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id)
-                        {
+                        if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
+                            && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
+                        { 
                             dbConn.Insert(item);
                             // dbhelper.Insert_INTO_mstr_bed_meal_class_mapping(new mstr_bed_meal_class_mapping(Convert.ToInt32(row["ID"].ToString()), Convert.ToInt32(row["bed_class_id"].ToString()), row["bed_class_Name"].ToString(), Convert.ToInt32(row["meal_class_id"].ToString()), row["meal_class_Name"].ToString(), false, Convert.ToInt32(row["status_id"].ToString()), 1));
                         }
@@ -665,7 +669,8 @@ namespace Sodexo_KKH.Helpers
 
                         // Filtering data based on
                         //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
-                        if (Library.KEY_USER_ccode == cont_id && Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id && Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id)
+                        if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
+                            && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
                             dbConn.Insert(item);
                     }
                     dbConn.Commit();
@@ -691,34 +696,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.CreateTable<mstr_menu_item>();
                     dbConn.BeginTransaction();
 
-                    foreach (var item in jarray)
-                    {
-                        ///  byte[] toBytes = item.ImageData;
-                        string cont_id = item.country_id.ToString();
-                        string rgn_id = item.region_id.ToString();
-                        string st_id = item.site_id.ToString();
-
-                        // Filtering data based on
-
-                        //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
-                        if (Library.KEY_USER_ccode == cont_id && Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id && Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id)
-                        {
-                            // item.ImageData = toBytes;
-                            // item.meal_item_name = ss;
-                            dbConn.Insert(item);
-                            //var byteItems = row["ImageData"].ToString().Split(',').Select(z => byte.Parse(row["ImageData"].ToString()).ToArray();
-                            //  dbhelper.Insert_INTO_mstr_menu_item(new mstr_menu_item(Convert.ToInt32(row["ID"].ToString()), row["menu_item_code"].ToString(), row["menu_item_name"].ToString(), row["menu_item_description"].ToString(), Convert.ToInt32(row["meal_type_id"].ToString()), ss, row["menu_image"].ToString(), toBytes, Convert.ToBoolean(row["is_vegitarian"].ToString()), Convert.ToBoolean(row["is_halal"].ToString()), Convert.ToInt32(row["menu_item_category_id"].ToString()), Convert.ToInt32(row["status_id"].ToString()), row["sitecode"].ToString(), row["TH_Code"].ToString(), row["ingredient_name"].ToString(), row["mealTime_names"].ToString(), row["allergies"].ToString(), row["meal_class_name"].ToString(), row["ward_type_name"].ToString(), row["amount"].ToString(), row["is_visitor"].ToString(), row["menu_item_name_local_language"].ToString(), row["meal_type_name"].ToString()));
-                        }
-                    }
+                    dbConn.InsertAll(jarray);
                     dbConn.Commit();
-                    // Loading menu items in listview after sync
-                    //fillMenu_items();
-                    // stop progressring
-                    //var message = new MessageDialog(loader.GetString("msg8").ToString());
-                    //await message.ShowAsync();
-                    //menuvis.Visibility = Visibility.Collapsed;
-                    //myring.IsActive = false;
-                    //myring.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    
                 };
             }
             catch (Exception excp)
@@ -741,27 +721,10 @@ namespace Sodexo_KKH.Helpers
                     dbConn.CreateTable<mstr_menu_master>();
                     dbConn.BeginTransaction();
 
-                    foreach (var item in jarray)
-                    {
-                        //  byte[] toBytes = item.ImageData;
-                        //var toBytes = (item.ImageData == null ? null : aa.ToObject<byte[]>());
-                        string cont_id = item.country_id.ToString();
-                        string rgn_id = item.region_id.ToString();
-                        string st_id = item.site_id.ToString();
-
-                        // Filtering data based on
-
-                        //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
-                        if (Library.KEY_USER_ccode == cont_id && Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id && Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id)
-                        {
-                            dbConn.Insert(item);
-                            // dbhelper.Insert_INTO_mstr_menu_master(new mstr_menu_master(Convert.ToInt32(row["ID"].ToString()), row["menu_code"].ToString(), row["menu_name"].ToString(), row["menu_description"].ToString(), Convert.ToInt32(row["meal_class_id"].ToString()), Convert.ToInt32(row["age_id"].ToString()), row["menu_days"].ToString(), Convert.ToBoolean(row["Confinement"].ToString()), Convert.ToInt32(row["diet_id"].ToString()), row["menu_image"].ToString(), toBytes, Convert.ToInt32(row["status_id"].ToString()), row["site_code"].ToString(), "", "", row["menu_time_name"].ToString(), row["MealType"].ToString(), row["menu_item_name"].ToString(), row["wardtypename"].ToString(), row["cycle_ides"].ToString(), row["cycle_name"].ToString(), row["menu_name_local_language"].ToString(), row["menu_item_name_local_language"].ToString()));
-                        }
-                    }
+                    dbConn.InsertAll(jarray);
+                       
                     dbConn.Commit();
-                    // stop progressring
-                    //myring.IsActive = false;
-                    //myring.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                  
 
                 };
             }

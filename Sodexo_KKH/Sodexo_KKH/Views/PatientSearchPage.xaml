@@ -256,6 +256,15 @@
                      />
             </Grid>
 
+
+            <!--<Image Source="Assets/oops.jpg" IsVisible="False" Aspect="AspectFill" >
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image" Binding="{Binding Patients.Count}" Value="0">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </Image.Triggers>
+            </Image>-->
+
             <syncfusions:SfListView AutoFitMode="Height"
                                     SelectionMode="None"
                                 ItemHolding="SfListView_ItemHolding"

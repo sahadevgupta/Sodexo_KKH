@@ -12,6 +12,7 @@ using Sodexo_KKH.Resx;
 using Sodexo_KKH.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -35,58 +36,58 @@ namespace Sodexo_KKH.ViewModels
         public List<string> FluidList { get; set; }
 
 
-        private List<mstr_others_master> _othersradio;
+        private ObservableCollection<mstr_others_master> _othersradio;
 
-        public List<mstr_others_master> OthersRadio
+        public ObservableCollection<mstr_others_master> OthersRadio
         {
             get { return this._othersradio; }
             set { SetProperty(ref _othersradio, value); }
         }
 
-        private List<mstr_others_master> _othersChecBox;
+        private ObservableCollection<mstr_others_master> _othersChecBox;
 
-        public List<mstr_others_master> OthersChecBox
+        public ObservableCollection<mstr_others_master> OthersChecBox
         {
             get { return this._othersChecBox; }
             set { SetProperty(ref _othersChecBox, value); }
         }
 
-        private List<mstr_allergies_master> _allergies;
+        private ObservableCollection<mstr_allergies_master> _allergies;
 
-        public List<mstr_allergies_master> Allergies
+        public ObservableCollection<mstr_allergies_master> Allergies
         {
             get { return this._allergies; }
             set { SetProperty(ref _allergies, value); }
         }
-        private List<mstr_ingredient> _ingredients;
+        private ObservableCollection<mstr_ingredient> _ingredients;
 
-        public List<mstr_ingredient> Ingredients
+        public ObservableCollection<mstr_ingredient> Ingredients
         {
             get { return this._ingredients; }
             set { SetProperty(ref _ingredients, value); }
         }
 
 
-        private List<mstr_therapeutic> _therapeutics;
+        private ObservableCollection<mstr_therapeutic> _therapeutics;
 
-        public List<mstr_therapeutic> Therapeutics
+        public ObservableCollection<mstr_therapeutic> Therapeutics
         {
             get { return this._therapeutics; }
             set { SetProperty(ref _therapeutics, value); }
         }
 
-        private List<mstr_diet_texture> _dietTextures;
+        private ObservableCollection<mstr_diet_texture> _dietTextures;
 
-        public List<mstr_diet_texture> DietTextures
+        public ObservableCollection<mstr_diet_texture> DietTextures
         {
             get { return this._dietTextures; }
             set { SetProperty(ref _dietTextures, value); }
         }
 
 
-        private List<mstr_meal_type> _cuisines;
+        private ObservableCollection<mstr_meal_type> _cuisines;
 
-        public List<mstr_meal_type> Cuisines
+        public ObservableCollection<mstr_meal_type> Cuisines
         {
             get { return this._cuisines; }
             set { SetProperty(ref _cuisines, value); }
@@ -193,6 +194,9 @@ namespace Sodexo_KKH.ViewModels
             else
             {
                 IsPageEnabled = true;
+
+               // SelectionNotify();
+
 
                 if (!Library.KEY_PATIENT_IS_VEG.ToLower().Equals(SelectedPatient.isveg.ToLower()) || !Library.KEY_PATIENT_IS_HALAL.ToLower().Equals(SelectedPatient.ishalal.ToLower()))
                 {
@@ -324,6 +328,39 @@ namespace Sodexo_KKH.ViewModels
                 await NavigationService.NavigateAsync(nameof(MealOrderPage), navParam);
 
                 IsPageEnabled = false;
+            }
+        }
+
+        private void SelectionNotify()
+        {
+            string msg = string.Empty;
+            msg = $"You have Selected {SelectedPatient.isveg} and {SelectedPatient.is_halal}";
+
+            var selectedOtherFromRadio = OthersRadio.Where(x => x.IsChecked).ToList();
+            var selectedOtherFromCheck = OthersChecBox.Where(x => x.IsChecked).ToList();
+            var selectedFA = Allergies.Where(x => x.IsChecked).ToList();
+            var selectedThera = Therapeutics.Where(x => x.IsChecked).ToList();
+            var selectedIng = Ingredients.Where(x => x.IsChecked).ToList();
+            var selectedCuisine = Cuisines.Where(x => x.IsChecked).ToList();
+            var selectedDT = DietTextures.Where(x => x.IsChecked).ToList();
+
+            if (selectedOtherFromRadio.Any())
+            {
+                for (int i = 0; i < selectedOtherFromRadio.Count; i++)
+                {
+
+                    msg += $" and {selectedOtherFromRadio[i].others_name}";
+                }
+               
+            }
+            if (selectedOtherFromCheck.Any())
+            {
+                for (int i = 0; i < selectedOtherFromCheck.Count; i++)
+                {
+
+                    msg += $" and {selectedOtherFromCheck[i].others_name}";
+                }
+
             }
         }
 
@@ -533,14 +570,14 @@ namespace Sodexo_KKH.ViewModels
             if (parameters.ContainsKey("PatientInfo"))
             {
 
-                OthersRadio = new List<mstr_others_master>();
-                OthersChecBox = new List<mstr_others_master>();
+                OthersRadio = new ObservableCollection<mstr_others_master>();
+                OthersChecBox = new ObservableCollection<mstr_others_master>();
 
-                Allergies = new List<mstr_allergies_master>();
-                Ingredients = new List<mstr_ingredient>();
-                Therapeutics = new List<mstr_therapeutic>();
-                DietTextures = new List<mstr_diet_texture>();
-                Cuisines = new List<mstr_meal_type>();
+                Allergies = new ObservableCollection<mstr_allergies_master>();
+                Ingredients = new ObservableCollection<mstr_ingredient>();
+                Therapeutics = new ObservableCollection<mstr_therapeutic>();
+                DietTextures = new ObservableCollection<mstr_diet_texture>();
+                Cuisines = new ObservableCollection<mstr_meal_type>();
 
 
                 SelectedPatient = parameters["PatientInfo"] as mstr_patient_info;

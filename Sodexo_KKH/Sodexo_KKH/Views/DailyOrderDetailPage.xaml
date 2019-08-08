@@ -46,14 +46,14 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-           
-           
-            <StackLayout Orientation="Horizontal" >
+
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 
                 <Label x:Name="lbl_selectward" Text="{lEx:Translate cmbsearchbywardPlaceholderText}" 
                    VerticalOptions="Center" FontSize="Small"/>
                 <Picker x:Name="pkr_ward"  
-                    WidthRequest="200"
+                    WidthRequest="150"
                     ItemsSource="{Binding WardData}"
                     SelectedItem="{Binding SelectedWard}"
                         Title="Select Ward"
@@ -62,7 +62,7 @@
                 <Label x:Name="lbl_Bed" Text="{lEx:Translate cmbsearchbypatientPlaceholderText}" 
                    VerticalOptions="Center" FontSize="Small" />
                 <Picker x:Name="pkr_bed" 
-                    WidthRequest="200"
+                    WidthRequest="150"
                     ItemsSource="{Binding BedDetails}"
                     ItemDisplayBinding="{Binding bed_no}"
                     SelectedItem="{Binding SelectedBed}"
@@ -73,11 +73,12 @@
                 <Picker x:Name="pkr_mealtime" 
                     ItemsSource="{Binding MealTimeList}"
                     SelectedItem="{Binding SelectedMealTime}"
-                    WidthRequest="200"
+                    WidthRequest="150"
                         Title="Select Meal"
                     ItemDisplayBinding="{Binding meal_name}"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
             </StackLayout>
+            
             <syncfusion1:SfCheckBox  IsVisible="True" 
                             x:Uid="chk_care"   
                             FontSize="18" x:Name="chkcare_giver"  
@@ -86,13 +87,15 @@
                             WidthRequest="20" />
             <Button  x:Name="searchButton" 
                 Command="{Binding SearchCommand}"
-                     VerticalOptions="CenterAndExpand"
                      HorizontalOptions="FillAndExpand"
+                     HeightRequest="40"
+                     CornerRadius="5"
+                     FontSize="Medium"
                  Text="{lEx:Translate btnsearch1Content}" 
-                Font="24" BackgroundColor="{StaticResource My_Header_Color}" 
+                BackgroundColor="{StaticResource My_Header_Color}" 
                 TextColor="White"/>
 
-            <Grid BackgroundColor="Gray" HeightRequest="40">
+            <Grid BackgroundColor="Gray" Margin="-10,0,-10,0" HeightRequest="50">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -121,8 +124,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                               
-                                    <Grid  BackgroundColor="White" >
+                                    <Grid >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="40"/>
                                             <ColumnDefinition Width="*"/>
@@ -144,17 +146,17 @@
                                                                 VerticalOptions="Center" 
                                                             HorizontalOptions="Center" IsChecked="{Binding is_checked}"  />
                                         <!--lEx:Tags.Tag="{Binding OrderedID}"-->
-                                        <Label TextColor="Black" Grid.Row="0" Grid.Column="1" x:Name="tbldate" Text="{Binding date}" VerticalOptions="Center" HorizontalTextAlignment="Start" />
+                                        <Label  Grid.Row="0" Grid.Column="1" x:Name="tbldate" Text="{Binding date}" VerticalOptions="Center" HorizontalTextAlignment="Start" />
 
-                                <Label TextColor="Black" Grid.Row="0" Grid.Column="2" x:Name="tblward" Text="{Binding Ward}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                <Label  Grid.Row="0" Grid.Column="2" x:Name="tblward" Text="{Binding Ward}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
 
-                                <Label TextColor="Black" Grid.Row="0" Grid.Column="3" x:Name="tblbed" Text="{Binding Bed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                <Label  Grid.Row="0" Grid.Column="3" x:Name="tblbed" Text="{Binding Bed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
 
-                                <Label TextColor="Black" Grid.Row="0" Grid.Column="4" x:Name="tblpname" Text="{Binding Name}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                <Label  Grid.Row="0" Grid.Column="4" x:Name="tblpname" Text="{Binding Name}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
 
-                                <Label TextColor="Black" Grid.Row="0" Grid.Column="5" x:Name="tblmealtime" Text="{Binding MealTime}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                                <Label  Grid.Row="0" Grid.Column="5" x:Name="tblmealtime" Text="{Binding MealTime}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
 
-                                <Label TextColor="Black" Grid.Row="0" Grid.Column="6" x:Name="tblorderedby" Text="{Binding OrderBy}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                                <Label  Grid.Row="0" Grid.Column="6" x:Name="tblorderedby" Text="{Binding OrderBy}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
 
                                         <Image x:Name="imgbtn_scan" IsEnabled="{Binding is_verifed,Converter={StaticResource BoolToStringConverter}}" Grid.Row="0" Grid.Column="7"
                                            WidthRequest="40" HeightRequest="40" Source="{Binding is_verifed,Converter={StaticResource BoolToImageConverter}}" VerticalOptions="Center">
@@ -187,12 +189,23 @@
                 </Button.Triggers>
             </Button>
         </StackLayout>
-        <syncfusion:SfBusyIndicator x:Name="pbar"  IsEnabled="{Binding pbarBools}"
-                                    IsBusy="{Binding pbarBools}"  ViewBoxWidth="100" 
-                                    ViewBoxHeight="100"   AnimationType="DoubleCircle" 
-                                    Title="Loading..."  TextColor="Black" 
-                                    TextSize="24"
-                                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-                                    AbsoluteLayout.LayoutFlags="All" />
+        
+        <syncfusion:SfBusyIndicator 
+                x:Name="pbar" 
+                IsVisible="False" 
+                IsBusy="False" 
+                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" TextSize="24" Title="Loading..."  TextColor="Black" 
+            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+            AbsoluteLayout.LayoutFlags="All">
+            <syncfusion:SfBusyIndicator.Triggers>
+                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+                             Binding="{Binding IsPageEnabled}"
+                             Value="true">
+                    <Setter Property="IsVisible" Value="True"/>
+                    <Setter Property="IsBusy" Value="True"/>
+                    <Setter Property="Opacity" Value="0.7"/>
+                </DataTrigger>
+            </syncfusion:SfBusyIndicator.Triggers>
+        </syncfusion:SfBusyIndicator>
     </AbsoluteLayout>
 </ContentPage>

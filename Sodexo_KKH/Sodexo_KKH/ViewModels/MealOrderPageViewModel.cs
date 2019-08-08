@@ -29,18 +29,18 @@ namespace Sodexo_KKH.ViewModels
     {
 
 
-        private List<mstr_meal_time> _mstrMeals;
+        private ObservableCollection<mstr_meal_time> _mstrMeals;
 
-        public List<mstr_meal_time> MstrMeals
+        public ObservableCollection<mstr_meal_time> MstrMeals
         {
             get { return this._mstrMeals; }
             set { SetProperty(ref _mstrMeals, value); }
         }
 
 
-        private List<mstr_menu_item_category> _menuCategories;
+        private ObservableCollection<mstr_menu_item_category> _menuCategories;
 
-        public List<mstr_menu_item_category> MenuCategories
+        public ObservableCollection<mstr_menu_item_category> MenuCategories
         {
             get { return this._menuCategories; }
             set { SetProperty(ref _menuCategories, value); }
@@ -127,26 +127,26 @@ namespace Sodexo_KKH.ViewModels
         }
 
 
-        private List<mstr_meal_option> _mealOptions;
+        private ObservableCollection<mstr_meal_option> _mealOptions;
 
-        public List<mstr_meal_option> MealOptions
+        public ObservableCollection<mstr_meal_option> MealOptions
         {
             get { return this._mealOptions; }
             set { SetProperty(ref _mealOptions, value); }
         }
 
 
-        private List<mstr_diet_type> _dietTypes;
+        private ObservableCollection<mstr_diet_type> _dietTypes;
 
-        public List<mstr_diet_type> DietTypes
+        public ObservableCollection<mstr_diet_type> DietTypes
         {
             get { return this._dietTypes; }
             set { SetProperty(ref _dietTypes, value); }
         }
 
-        private List<mstr_remarks> _remarks;
+        private ObservableCollection<mstr_remarks> _remarks;
 
-        public List<mstr_remarks> Remarks
+        public ObservableCollection<mstr_remarks> Remarks
         {
             get { return this._remarks; }
             set { SetProperty(ref _remarks, value); }
@@ -574,7 +574,7 @@ namespace Sodexo_KKH.ViewModels
 
             mealclassName = _mappingRepo.QueryTable().Where(x => x.bed_class_id == bedClassID).FirstOrDefault().meal_class_Name;
 
-            MealOptions = new List<mstr_meal_option>(_mealoptionsRepo.QueryTable().Where(x => x.status_id == 1));
+            MealOptions = new ObservableCollection<mstr_meal_option>(_mealoptionsRepo.QueryTable().Where(x => x.status_id == 1));
 
             mstr_meal_option option = new mstr_meal_option
             {
@@ -584,11 +584,11 @@ namespace Sodexo_KKH.ViewModels
             MealOptions.Insert(0, option);
             SelectedMealOption = MealOptions.FirstOrDefault();
 
-            DietTypes = new List<mstr_diet_type>(_dietTypeRepo.QueryTable().Where(x => x.status_id == 1));
+            DietTypes = new ObservableCollection<mstr_diet_type>(_dietTypeRepo.QueryTable().Where(x => x.status_id == 1));
             SelectedDietType = DietTypes.FirstOrDefault();
 
 
-            Remarks = new List<mstr_remarks>(_remarksRepo.QueryTable());
+            Remarks = new ObservableCollection<mstr_remarks>(_remarksRepo.QueryTable());
             var defaultRemark = new mstr_remarks
             {
                 ID = 0,
@@ -613,10 +613,10 @@ namespace Sodexo_KKH.ViewModels
             }
 
 
-            MstrMeals = new List<mstr_meal_time>(_mstrmealRepo.QueryTable().OrderBy(x => x.ID));
+            MstrMeals = new ObservableCollection<mstr_meal_time>(_mstrmealRepo.QueryTable().OrderBy(x => x.ID));
             SelectedMealTime = MstrMeals[0];
 
-            MenuCategories = new List<mstr_menu_item_category>();
+            MenuCategories = new ObservableCollection<mstr_menu_item_category>();
             foreach (var item in _categoryRepo.QueryTable())
             {
                 string ss = item.meal_item_name;
@@ -1504,6 +1504,7 @@ namespace Sodexo_KKH.ViewModels
 
             if (parameters.ContainsKey("Patient"))
             {
+                IsPageEnabled = true;
                 PatientInfo = parameters["Patient"] as mstr_patient_info;
                 SelectedAllergies = parameters["Allergies"] as List<mstr_allergies_master>;
                 SelectedIngredients = parameters["Ingredients"] as List<mstr_ingredient>;
@@ -1517,7 +1518,7 @@ namespace Sodexo_KKH.ViewModels
 
                 LoadData();
 
-
+                IsPageEnabled = false;
 
             }
             else if (parameters.ContainsKey("NewOrder"))

@@ -48,17 +48,14 @@ namespace Sodexo_KKH.ViewModels
                 SetProperty(ref _selectedWard, value);
                 if (value != null)
                 {
-                    _oldSelectedWard = value;
-                    var bedData = _mstrBedRepo.QueryTable().Where(x => x.ward_id == value.ID && x.status_id == 1).OrderBy(y => y.ID);
-                    BedDetails = new List<mstr_bed_details>(bedData);
-                    BedDetails.Insert(0, new mstr_bed_details { bed_no = "All" });
+                   
+                    BedDetails = new ObservableCollection<mstr_bed_details>(_mstrBedRepo.QueryTable().Where(x => x.ward_id == value.ID && x.status_id == 1));
+                    BedDetails.Insert(0,new mstr_bed_details { bed_no = "All" });
 
-                    SelectedBed = BedDetails[0];
+                    SelectedBed = BedDetails.First();
                 }
             }
         }
-
-        public mstr_ward_details _oldSelectedWard { get; set; }
 
 
         private mstr_bed_details _selectedBed;
@@ -66,7 +63,10 @@ namespace Sodexo_KKH.ViewModels
         public mstr_bed_details SelectedBed
         {
             get { return this._selectedBed; }
-            set { SetProperty(ref _selectedBed, value); }
+            set
+            {
+               SetProperty(ref _selectedBed, value);
+            }
         }
 
 
@@ -102,9 +102,9 @@ namespace Sodexo_KKH.ViewModels
 
 
 
-        private List<mstr_bed_details> _bedDetails;
+        private ObservableCollection<mstr_bed_details> _bedDetails;
 
-        public List<mstr_bed_details> BedDetails
+        public ObservableCollection<mstr_bed_details> BedDetails
         {
             get { return this._bedDetails; }
             set { SetProperty(ref _bedDetails, value); }
@@ -183,7 +183,7 @@ namespace Sodexo_KKH.ViewModels
 
             var currentDate = DateTime.UtcNow.Date;
 
-            MaxDate = new DateTime(currentDate.Year, currentDate.Month, currentDate.AddDays(1).Day, 0, 0, 0);
+            MaxDate = MinDate.AddDays(1);
 
             MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", OnSyncMasterTap);
             MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "offlineOrderSync", OnOfflineOrderSyncTap);
@@ -507,6 +507,12 @@ namespace Sodexo_KKH.ViewModels
 
 
                 Patients = new ObservableCollection<mstr_patient_info>(patientlist);
+
+                if (!Patients.Any())
+                {
+                    DependencyService.Get<INotify>().ShowToast("No patient found!!");
+                }
+
             }
             else
             {
@@ -583,13 +589,19 @@ namespace Sodexo_KKH.ViewModels
             var wbed = 0;
             try
             {
-                IsPageEnabled = true;
-                if (SelectedWard != null)
-                {
+                    IsPageEnabled = true;
                     string format = SelectedDate.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
                     wbed = SelectedBed != null ? SelectedBed.ID : 0;
                     var patientsData = await _patientManager.GetPatientsByWardBed(format, SelectedWard.ID, wbed);
-                    foreach (var patient in patientsData)
+
+                if (!patientsData.Any())
+                {
+                    IsPageEnabled = false;
+                    DependencyService.Get<INotify>().ShowToast("No patient found!!");
+                    return;
+                }
+
+                foreach (var patient in patientsData)
                     {
                         patient.ward_bed = $"{patient.ward_name}-{patient.bed_name}";
                         if (string.Equals(patient.is_care_giver, "true", StringComparison.CurrentCultureIgnoreCase))
@@ -603,13 +615,7 @@ namespace Sodexo_KKH.ViewModels
                     Patients = new ObservableCollection<mstr_patient_info>(list);
 
                     IsPageEnabled = false;
-                }
-                else
-                {
-                    IsPageEnabled = false;
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pls11", CultureInfo.CurrentCulture), "OK");
-
-                }
+                
             }
             catch (Exception ex)
             {
@@ -621,6 +627,7 @@ namespace Sodexo_KKH.ViewModels
         private void LoadData()
         {
             MstrWards = new List<mstr_ward_details>(_mstrWardRepo.QueryTable().Where(x => x.ward_type_name != "Staff" && x.status_id == 1).OrderBy(y => y.ID));
+           // BedDetails = new List<mstr_bed_details>();
 
             URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
 

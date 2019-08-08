@@ -187,11 +187,8 @@ namespace Sodexo_KKH.ViewModels
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-
                     try
                     {
-
-
                         RoleList = new List<string>();
                         // string URL = Library.KEY_http + library.LoadSetting(Library.KEY_SERVER_IP) + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                         string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
@@ -503,13 +500,13 @@ namespace Sodexo_KKH.ViewModels
                                     else if (expireday == "200")
                                     {
 
-                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in two days", "");
+                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in two days", "OK");
 
                                         await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
                                     }
                                     else if (expireday == "300")
                                     {
-                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in three days", "");
+                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in three days", "OK");
 
                                         await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
 
@@ -517,13 +514,13 @@ namespace Sodexo_KKH.ViewModels
                                     else if (expireday == "500")
                                     {
                                         //this.Frame.Navigate(typeof(PatientSearch), null);
-                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password is Expired.", "");
+                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password is Expired.", "OK");
 
                                     }
                                     else if (expireday == "600")
                                     {
                                         //this.Frame.Navigate(typeof(PatientSearch), null);
-                                        await PageDialog.DisplayAlertAsync("Alert!!", "This User Is Deactivated, Kindly Contact Admin.", "");
+                                        await PageDialog.DisplayAlertAsync("Alert!!", "This User Is Deactivated, Kindly Contact Admin.", "OK");
 
                                     }
 

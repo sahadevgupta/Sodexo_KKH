@@ -67,12 +67,7 @@ namespace Sodexo_KKH.ViewModels
             get { return _selectedDate; }
             set { SetProperty(ref _selectedDate, value); }
         }
-        private bool _pbarBools;
-        public bool pbarBools
-        {
-            get { return _pbarBools; }
-            set { SetProperty(ref _pbarBools, value); }
-        }
+       
         int mealtime_id = 0;
         int ward_id = 0;
 
@@ -98,7 +93,7 @@ namespace Sodexo_KKH.ViewModels
                     try
                     {
                         MealOrderStatusCollection = new ObservableCollection<meal_order_status>();
-                        pbarBools = true;
+                        IsPageEnabled = true;
 
                         HttpClient httpClient = new System.Net.Http.HttpClient();
 
@@ -112,6 +107,13 @@ namespace Sodexo_KKH.ViewModels
                         var data = await response.Content.ReadAsStringAsync();
 
                         MealOrderStatusCollection = JsonConvert.DeserializeObject<ObservableCollection<meal_order_status>>(data);
+                        if (!MealOrderStatusCollection.Any())
+                        {
+                            IsPageEnabled = false;
+                            DependencyService.Get<INotify>().ShowToast("No records found!!");
+                            return;
+                        }
+
                         int srNo = 1;
                         foreach (var item in MealOrderStatusCollection)
                         {
@@ -119,27 +121,27 @@ namespace Sodexo_KKH.ViewModels
                         }
 
                         // stop
-                        pbarBools = false;
+                        IsPageEnabled = false;
                     }
                     catch (Exception excp)
                     {
                         // stop progressring
-                        pbarBools = false;
+                        IsPageEnabled = false;
 
                     }
-                    pbarBools = false;
+                    IsPageEnabled = false;
 
                 }
                 else
                 {
-                    pbarBools = false;
+                    IsPageEnabled = false;
                     await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
                 }
             }
             catch (Exception excp)
             {
                 // stop progressring
-                pbarBools = false;
+                IsPageEnabled = false;
             }
         }
 

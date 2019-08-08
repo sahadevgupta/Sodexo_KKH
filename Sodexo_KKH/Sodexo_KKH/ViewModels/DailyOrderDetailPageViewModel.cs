@@ -44,12 +44,7 @@ namespace Sodexo_KKH.ViewModels
             get { return _SelectedOrderDetail; }
             set { SetProperty(ref _SelectedOrderDetail, value); }
         }
-        private bool _pbarBools;
-        public bool pbarBools
-        {
-            get { return _pbarBools; }
-            set { SetProperty(ref _pbarBools, value); }
-        }
+        
         private mstr_ward_details _selectedWard;
         public mstr_ward_details SelectedWard
         {
@@ -176,40 +171,40 @@ namespace Sodexo_KKH.ViewModels
         private async void UpdateOrder()
         {
             bool ischecked = false;
-            if (IsCareGiver)
-            {
-                if (MealDeliveredCollection.Where(x => x.is_checked).Count() == 0)
-                {
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
-                    return;
-                }
+            //if (IsCareGiver)
+            //{
+            //    if (MealDeliveredCollection.Where(x => x.is_checked).Count() == 0)
+            //    {
+            //        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
+            //        return;
+            //    }
 
-                if (MealDeliveredCollection.Where(x => x.is_checked).Count() > 1)
-                {
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
-                    return;
-                }
+            //    if (MealDeliveredCollection.Where(x => x.is_checked).Count() > 1)
+            //    {
+            //        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
+            //        return;
+            //    }
 
-                SelectedOrderDetail = MealDeliveredCollection.FirstOrDefault(x => x.is_checked);
-                SelectedOrderDetail.ward_bed = SelectedOrderDetail.Ward + "-" + SelectedOrderDetail.Bed;
+            //    SelectedOrderDetail = MealDeliveredCollection.FirstOrDefault(x => x.is_checked);
+            //    SelectedOrderDetail.ward_bed = SelectedOrderDetail.Ward + "-" + SelectedOrderDetail.Bed;
 
-                // displaying patient information on caregiver popup
+            //    // displaying patient information on caregiver popup
 
 
-                if (IsCareGiver)
-                {
-                    await GetCaregiverData();
-                    var ui = new CaregiverODPopup(caregiver_details.FirstOrDefault(), this);
-                    ui.BindingContext = SelectedOrderDetail;
-                    await _iNavigation.PushPopupAsync(ui, false);
-                }
-                else
-                {
-                    await PageDialog.DisplayAlertAsync("Alert", "Please select record first.", "Ok");
-                }
-            }
-            else
-            {
+            //    if (IsCareGiver)
+            //    {
+            //        //await GetCaregiverData();
+            //        var ui = new CaregiverODPopup(caregiver_details.FirstOrDefault(), this);
+            //        ui.BindingContext = SelectedOrderDetail;
+            //        await _iNavigation.PushPopupAsync(ui, false);
+            //    }
+            //    else
+            //    {
+            //        await PageDialog.DisplayAlertAsync("Alert", "Please select record first.", "Ok");
+            //    }
+           // }
+           // else
+           // {
                 for (int i = 0; i < MealDeliveredCollection.Count; i++)
                 {
                     mstr_mealdelivered mealdelivered = MealDeliveredCollection.ElementAt(i);
@@ -230,10 +225,6 @@ namespace Sodexo_KKH.ViewModels
                     }
 
                     await GetMealDeliveredData();
-
-
-
-
                     //await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("delivered_message", CultureInfo.CurrentCulture), "OK");
 
                     //await DisplayAlert(AppResources.ResourceManager.GetString("alert", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("delivered_message", CultureInfo.CurrentCulture), "OK");
@@ -244,7 +235,7 @@ namespace Sodexo_KKH.ViewModels
                     await PageDialog.DisplayAlertAsync("Alert", "Please select record first.", "Ok");
                 }
 
-            }
+            //}
 
         }
         public async Task GetCaregiverData()
@@ -257,7 +248,7 @@ namespace Sodexo_KKH.ViewModels
                     try
                     {
                         //start progessring
-                        pbarBools = true;
+                        IsPageEnabled = true;
                         caregiver_details = new ObservableCollection<mstr_caregiver_mealorder_details>();
 
                         HttpClient httpClient = new System.Net.Http.HttpClient();
@@ -283,28 +274,28 @@ namespace Sodexo_KKH.ViewModels
                             paymentmode = item.mode_of_payment;
                             PaymentModeName = item.paymentmodename;
                         }
-                        pbarBools = false;
+                        IsPageEnabled = false;
                     }
                     catch (Exception excp)
                     {
                         // stop progressring
-                        pbarBools = false;
+                        IsPageEnabled = false;
 
                     }
-                    pbarBools = false;
+                    IsPageEnabled = false;
                 }
                 else
                 {
 
 
                     await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
-                    pbarBools = false;
+                    IsPageEnabled = false;
                 }
             }
             catch (Exception excp)
             {
                 // stop progressring
-                pbarBools = false;
+                IsPageEnabled = false;
             }
         }
 
@@ -345,9 +336,9 @@ namespace Sodexo_KKH.ViewModels
                 dynamic jObj = new JObject();
                 jObj.MealTime = meal_time;
                 jObj.meal_time_id = SelectedMealTime.ID;
-                jObj.mode_of_payment = paymentmode;
+                jObj.mode_of_payment = 0;
                 jObj.orderId = SelectedOrderDetail.OrderedID;
-                jObj.payment_remark = ss;
+                jObj.payment_remark = string.Empty;
                 // var stringPayload = await Task.Run(() => JsonConvert.SerializeObject(p));
                 string stringPayload = JsonConvert.SerializeObject(jObj);
                 // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
@@ -472,7 +463,7 @@ namespace Sodexo_KKH.ViewModels
                     try
                     {
                         MealDeliveredCollection = new ObservableCollection<mstr_mealdelivered>();
-                        pbarBools = true;
+                        IsPageEnabled = true;
 
                         HttpClient httpClient = new System.Net.Http.HttpClient();
 
@@ -485,6 +476,15 @@ namespace Sodexo_KKH.ViewModels
 
                         var data = await response.Content.ReadAsStringAsync();
                         var orderData = JsonConvert.DeserializeObject<ObservableCollection<mstr_mealdelivered>>(data);
+
+                        if (!orderData.Any())
+                        {
+                            IsPageEnabled = false;
+                            DependencyService.Get<INotify>().ShowToast("No records found!!");
+                            return;
+                        }
+
+
                         foreach (var item in orderData)
                         {
                             item.istrue = false;
@@ -541,16 +541,16 @@ namespace Sodexo_KKH.ViewModels
 
 
                             // stop
-                            pbarBools = false;
+                            IsPageEnabled = false;
                         }
                     }
                     catch (Exception excp)
                     {
                         // stop progressring
-                        pbarBools = false;
+                        IsPageEnabled = false;
 
                     }
-                    pbarBools = false;
+                    IsPageEnabled = false;
 
                 }
                 else
@@ -558,13 +558,13 @@ namespace Sodexo_KKH.ViewModels
 
 
                     await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
-                    pbarBools = false;
+                    IsPageEnabled = false;
                 }
             }
             catch (Exception excp)
             {
                 // stop progressring
-                pbarBools = false;
+                IsPageEnabled = false;
             }
         }
         internal async void ScanDeliveredOD(string orderid, string orderedID)

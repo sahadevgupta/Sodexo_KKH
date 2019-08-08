@@ -41,7 +41,7 @@
             <Picker x:Name="pkr_ward"  ItemsSource="{Binding WardData}"
                     SelectedItem="{Binding SelectedWard}"
                     ItemDisplayBinding="{Binding ward_name}"
-                    WidthRequest="120"
+                    WidthRequest="150"
                     Title="Select Ward"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
             <Label x:Name="lbl_status" Text="{lEx:Translate statusText}" 
@@ -49,7 +49,7 @@
             <Picker x:Name="pkr_status" 
                     ItemsSource="{Binding StatusList}"
                     SelectedItem="{Binding SelectedMealStatus}"
-                    WidthRequest="120"
+                    WidthRequest="150"
                     Title="Select Meal Status"
                     HorizontalOptions="StartAndExpand"  VerticalOptions="Center" />
             <Label x:Name="lbl_selectmealtime" Text="{lEx:Translate mteText}" 
@@ -58,7 +58,7 @@
                     ItemsSource="{Binding MealTimeList}"
                     SelectedItem="{Binding SelectedMealTime}"
                     ItemDisplayBinding="{Binding meal_name}"
-                    WidthRequest="120"
+                    WidthRequest="150"
                     Title="Select Meal Time"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
         </StackLayout>
@@ -66,26 +66,27 @@
         <Button  x:Name="searchButton" 
                 Command="{Binding SearchCommand}"
                 HeightRequest="40" VerticalOptions="CenterAndExpand" 
+                 FontSize="Medium"
                 HorizontalOptions="FillAndExpand" Text="{lEx:Translate btnsearch1Content}" 
-                Font="24" BackgroundColor="{StaticResource My_Header_Color}" 
+                CornerRadius="5" BackgroundColor="{StaticResource My_Header_Color}" 
                 TextColor="White"/>
 
-        <Grid BackgroundColor="Gray" HeightRequest="40">
+        <Grid BackgroundColor="Gray" Margin="-10,0,-10,0" HeightRequest="50">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="{lEx:Translate srnText}" VerticalOptions="Center" TextColor="White" />
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="{lEx:Translate dteText}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White" />
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="{lEx:Translate txtWardbedsText}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="3" Text="{lEx:Translate pnameText}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="4" Text="{lEx:Translate statusText}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="{lEx:Translate srnText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White" />
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="{lEx:Translate dteText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White" />
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="Ward-Bed" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="3" Text="{lEx:Translate pnameText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="4" Text="{lEx:Translate statusText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
 
             </Grid>
 
@@ -93,9 +94,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell >
-                                <Grid>
+                                <Grid MinimumHeightRequest="50">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="60"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
@@ -106,15 +107,15 @@
                                     <RowDefinition Height="1"/>
                                 </Grid.RowDefinitions>
 
-                                    <Label TextColor="Black" Grid.Row="0" Grid.Column="0" x:Name="tbldate" Text="{Binding SrNo}" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Start" Margin="50,0,0,0" />
+                                    <Label TextColor="Black" Grid.Row="0" Grid.Column="0" x:Name="tbldate" Text="{Binding SrNo}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
 
-                                    <Label TextColor="Black" Grid.Row="0" Grid.Column="1" x:Name="tblward" Text="{Binding meal_order_date}" HorizontalTextAlignment="Center"  VerticalOptions="StartAndExpand" />
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="1" x:Name="tblward" Text="{Binding meal_order_date}" HorizontalTextAlignment="Center"  VerticalOptions="Center" />
 
-                                    <Label TextColor="Black" Grid.Row="0" Grid.Column="2" x:Name="tblbed" Text="{Binding WardBed}" HorizontalTextAlignment="Center" VerticalOptions="StartAndExpand" />
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="2" x:Name="tblbed" Text="{Binding WardBed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
 
-                                    <Label TextColor="Black" Grid.Row="0" Grid.Column="3" x:Name="tblpname" Text="{Binding patient_name}" HorizontalTextAlignment="Center" VerticalOptions="StartAndExpand" />
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="3" x:Name="tblpname" Text="{Binding patient_name}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
 
-                                    <Label TextColor="Black" Grid.Row="0" Grid.Column="4" x:Name="tblmealtime" Text="{Binding OrderStatus}" HorizontalTextAlignment="Center" VerticalOptions="StartAndExpand"/>
+                                <Label TextColor="Black" Grid.Row="0" Grid.Column="4" x:Name="tblmealtime" Text="{Binding OrderStatus}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
                                 <BoxView HeightRequest="1" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="LightGray"/>
                             </Grid>
                             
@@ -122,19 +123,31 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Triggers>
-                    <DataTrigger TargetType="ListView" Binding="{Binding pbarBools}" Value="True">
+                    <DataTrigger TargetType="ListView" Binding="{Binding IsPageEnabled}" Value="True">
                         <Setter Property="IsVisible" Value="False"/>
                     </DataTrigger>
                 </ListView.Triggers>
             </ListView>
            
         </StackLayout>
-        <syncfusion:SfBusyIndicator x:Name="pbar"  IsEnabled="{Binding pbarBools}"
-                                    TextSize="24"
-                                    IsBusy="{Binding pbarBools}"  ViewBoxWidth="100" 
-                                    ViewBoxHeight="100"   AnimationType="DoubleCircle" 
-                                    Title="Loading..."  TextColor="Black" 
-                                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-                                    AbsoluteLayout.LayoutFlags="All" />
+
+
+        <syncfusion:SfBusyIndicator 
+                x:Name="pbar" 
+                IsVisible="False" 
+                IsBusy="False" 
+                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" TextSize="24" Title="Loading..."  TextColor="Black" 
+            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+            AbsoluteLayout.LayoutFlags="All">
+            <syncfusion:SfBusyIndicator.Triggers>
+                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+                             Binding="{Binding IsPageEnabled}"
+                             Value="true">
+                    <Setter Property="IsVisible" Value="True"/>
+                    <Setter Property="IsBusy" Value="True"/>
+                    <Setter Property="Opacity" Value="0.7"/>
+                </DataTrigger>
+            </syncfusion:SfBusyIndicator.Triggers>
+        </syncfusion:SfBusyIndicator>
     </AbsoluteLayout>
 </ContentPage>
