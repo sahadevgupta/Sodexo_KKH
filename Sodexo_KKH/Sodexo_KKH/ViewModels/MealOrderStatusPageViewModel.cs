@@ -6,7 +6,6 @@ using Prism.Services;
 using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
-using Sodexo_KKH.Resx;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -135,7 +134,7 @@ namespace Sodexo_KKH.ViewModels
                 else
                 {
                     IsPageEnabled = false;
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                 }
             }
             catch (Exception excp)
@@ -156,7 +155,7 @@ namespace Sodexo_KKH.ViewModels
             }
             catch (Exception exp)
             {
-                PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString(exp.Message, CultureInfo.CurrentCulture), "OK");
+                PageDialog.DisplayAlertAsync("Alert!!", exp.Message, "OK");
             }
         }
         private void FillStatus()
@@ -174,7 +173,7 @@ namespace Sodexo_KKH.ViewModels
             }
             catch (Exception exp)
             {
-                PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString(exp.Message, CultureInfo.CurrentCulture), "OK");
+                PageDialog.DisplayAlertAsync("Alert!!", exp.Message, "OK");
             }
         }
         public override void OnNavigatedTo(INavigationParameters parameters)

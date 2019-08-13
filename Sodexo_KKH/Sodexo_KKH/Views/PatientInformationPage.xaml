@@ -4,7 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
              x:Class="Sodexo_KKH.Views.PatientInformationPage"
              xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
               xmlns:behaviors="clr-namespace:Sodexo_KKH.Behaviors"
@@ -14,7 +14,7 @@
              Padding="10"
              x:Name="patientinfopage">
     <NavigationPage.TitleView>
-        <Label Text="{lEx:Translate pinameText}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
+        <Label Text="Patient Information" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
              BackgroundColor="{StaticResource My_Header_Color}" 
              FontSize="17"
              FontAttributes="Bold"
@@ -24,7 +24,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <lEx:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
+            <converters:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
         </ResourceDictionary>
         
     </ContentPage.Resources>
@@ -68,33 +68,33 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <Label FontAttributes="Bold" Text="{lEx:Translate nmText}" Grid.Row="0" Grid.Column="0"/>
+                        <Label FontAttributes="Bold" Text="Name:" Grid.Row="0" Grid.Column="0"/>
                     <Label Text="{Binding SelectedPatient.Patientname}" Grid.Row="0" Grid.Column="1"/>
 
-                    <Label FontAttributes="Bold" Text="{lEx:Translate aeText}" Grid.Row="1" Grid.Column="0"/>
+                        <Label FontAttributes="Bold" Text="Age:" Grid.Row="1" Grid.Column="0"/>
                     <Label Text="{Binding SelectedPatient.Patient_Age}" Grid.Row="1" Grid.Column="1"/>
 
                     <Label FontAttributes="Bold" Text="NRIC/ID(HN)" Grid.Row="2" Grid.Column="0"/>
                     <Label Text="{Binding SelectedPatient.NRIC}" Grid.Row="2" Grid.Column="1"/>
 
-                    <Label FontAttributes="Bold " Text="{lEx:Translate anmText}" Grid.Row="3" Grid.Column="0"/>
+                        <Label FontAttributes="Bold " Text="Adult/Child:" Grid.Row="3" Grid.Column="0"/>
                     <Label Text="{Binding SelectedPatient.Age_Name}" Grid.Row="3" Grid.Column="1"/>
 
-                        <Label FontAttributes="Bold" Text="{lEx:Translate pserText}" VerticalOptions="Center" Grid.Row="4" Grid.Column="0"/>
+                        <Label FontAttributes="Bold" Text="Patient Preference: " VerticalOptions="Center" Grid.Row="4" Grid.Column="0"/>
                   <Entry Text="{Binding SelectedPatient.Preferredserver}" Grid.Row="4" MaxLength="50" Grid.Column="1">
                     <Entry.Behaviors>
                       <behaviors:SpecialCharValidationBehavior/>
                     </Entry.Behaviors>
                   </Entry>
 
-                        <Label FontAttributes="Bold" Text="{lEx:Translate gcmnText}" VerticalOptions="Center" Grid.Row="5" Grid.Column="0"/>
+                        <Label FontAttributes="Bold" Text="Gen Comment:" VerticalOptions="Center" Grid.Row="5" Grid.Column="0"/>
                   <Entry Text="{Binding SelectedPatient.Generalcomment}" Grid.Row="5" MaxLength="200" Grid.Column="1">
                     <Entry.Behaviors>
                       <behaviors:SpecialCharValidationBehavior/>
                     </Entry.Behaviors>
                   </Entry>
 
-                    <Label FontAttributes="Bold" VerticalOptions="Center" Text="{lEx:Translate vnText}" Grid.Row="6" Grid.Column="0"/>
+                        <Label FontAttributes="Bold" VerticalOptions="Center" Text="Veg/Non-Veg:" Grid.Row="6" Grid.Column="0"/>
                         <Picker Grid.Row="6" Grid.Column="1" 
                             SelectedItem="{Binding SelectedPatient.isveg,Converter={StaticResource BoolToObjectConverter}, ConverterParameter=VegNVeg}">
                             <Picker.Items>
@@ -121,7 +121,7 @@
                                                     x:Name="chkdiabetic" 
                                                     HorizontalOptions="Start"
                                                     FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
-                                                    Text="{lEx:Translate txtdiaContent}" >
+                                                    Text="Diabetic" >
                                 <syncfusion:SfCheckBox.Triggers>
                                     <DataTrigger TargetType="syncfusion:SfCheckBox"
                                              Binding="{Binding Source={x:Static staticFn:Library.KEY_USER_ROLE}}"
@@ -138,7 +138,7 @@
                                                    FlexLayout.Basis="39%"
                                                    HorizontalOptions="Start"
                                                    FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
-                                                   IsChecked="{Binding IsConfinement}"   Text="{lEx:Translate cnfContent}" />
+                                                   IsChecked="{Binding IsConfinement}"   Text="Confinement" />
 
                             <syncfusion:SfCheckBox x:Uid="cnf"  
                                                    FontSize="18"  
@@ -148,31 +148,31 @@
                                                    IsChecked="{Binding IsInfantEnabled}" Text="Infant Diet" />
                         </FlexLayout>
 
-                    <Label FontAttributes="Bold" Text="{lEx:Translate bclsText}" Grid.Row="0" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Bed Class:" Grid.Row="0" Grid.Column="2"/>
                     <Label Text="{Binding SelectedPatient.Bed_Class_Name}" Grid.Row="0" Grid.Column="3"/>
 
-                    <Label FontAttributes="Bold" Text="{lEx:Translate txtWardbedsText}" Grid.Row="1" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Ward-Bed:" Grid.Row="1" Grid.Column="2"/>
                     <Label Text="{Binding SelectedPatient.ward_bed}" Grid.Row="1" Grid.Column="3"/>
 
-                    <Label FontAttributes="Bold" Text="{lEx:Translate dosText}" Grid.Row="2" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Date Of Service:" Grid.Row="2" Grid.Column="2"/>
                     <Label Text="{Binding Source={x:Static staticFn:Library.KEY_ORDER_DATE}}" Grid.Row="2" Grid.Column="3"/>
 
-                    <Label FontAttributes="Bold" Text="{lEx:Translate rcText}" Grid.Row="3" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Race:" Grid.Row="3" Grid.Column="2"/>
                     <Label Text="{Binding SelectedPatient.patient_race}" Grid.Row="3" Grid.Column="3"/>
 
-                    <Label FontAttributes="Bold" Text="{lEx:Translate doccmnText}" Grid.Row="4" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Doc Comments:" Grid.Row="4" Grid.Column="2"/>
                   <Entry Text="{Binding SelectedPatient.Doctorcomment}" Grid.Row="4" MaxLength="200" Grid.Column="3">
                     <Entry.Behaviors>
                       <behaviors:SpecialCharValidationBehavior/>
                     </Entry.Behaviors>
                   </Entry>
 
-                        <Label FontAttributes="Bold" Text="{lEx:Translate fluidText}" VerticalOptions="Center" Grid.Row="5" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Fluid Consistency:" VerticalOptions="Center" Grid.Row="5" Grid.Column="2"/>
                     <Picker Grid.Row="5" Grid.Column="3"
                             SelectedItem="{Binding SelectedPatient.FluidInfo}"
                             ItemsSource="{Binding FluidList}"/>
 
-                        <Label FontAttributes="Bold" Text="{lEx:Translate hlnlText}" VerticalOptions="Center"  Grid.Row="6" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Halal/Non-Halal:" VerticalOptions="Center"  Grid.Row="6" Grid.Column="2"/>
                         <Picker Grid.Row="6" Grid.Column="3" SelectedItem="{Binding SelectedPatient.ishalal,Converter={StaticResource BoolToObjectConverter}, ConverterParameter=HNH}">
                         <Picker.Items>
                             <x:String>Halal</x:String>
@@ -188,7 +188,7 @@
                             </Picker.Triggers>
                         </Picker>
 
-                        <Label FontAttributes="Bold" Text="{lEx:Translate DTText}" VerticalOptions="Center" Grid.Row="7" Grid.Column="2"/>
+                        <Label FontAttributes="Bold" Text="Disposable Tray:" VerticalOptions="Center" Grid.Row="7" Grid.Column="2"/>
                         <Picker Grid.Row="7" Grid.Column="3" SelectedIndex="0" SelectedItem="{Binding IsDisposable,Converter={StaticResource BoolToObjectConverter}, ConverterParameter=Disposable}">
                             <Picker.Items>
                                 <x:String>No</x:String>
@@ -199,7 +199,7 @@
                 </Grid>
 
                     <Label x:Name="tblkothers" x:Uid="ot" Margin="0,10,0,0" 
-                  Text="{lEx:Translate oteText}" 
+                  Text="OTHERS" 
                   FontSize="18" 
                   
                   TextColor="White" 
@@ -287,7 +287,7 @@
 
 
                     <Label x:Name="fa" x:Uid="fa"  Margin="0,10,0,0" 
-                  Text="{lEx:Translate faText}" 
+                  Text="FOOD ALLERGIES" 
                   FontSize="18" 
                   
                   TextColor="White" 
@@ -317,7 +317,7 @@
                 
                 
                     <Label x:Name="tblkingredietns" x:Uid="ie"  Margin="0,10,0,0" 
-                  Text="{lEx:Translate ieText}" 
+                  Text="INGREDIENTS (Excludes)" 
                   FontSize="18" 
                   
                   TextColor="White" 
@@ -338,17 +338,17 @@
                     <FlexLayout Wrap="Wrap" Direction="Row" FlexLayout.Grow="1"
                     
                     BindableLayout.ItemsSource="{Binding Ingredients,Mode=OneWay}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Spacing="10"
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Spacing="10"
                             MinimumHeightRequest="40"
                             FlexLayout.Basis="25%" >
 
                                     <syncfusion:SfCheckBox FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation" CheckedColor="Green" Text="{Binding ingredient_name}" IsChecked="{Binding IsChecked}" />
 
-                            </StackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                         <FlexLayout.Triggers>
                             <DataTrigger TargetType="FlexLayout"
                                          Binding="{Binding Source={x:Reference chkdiabetic},Path=IsChecked}"
@@ -356,9 +356,10 @@
                                 <Setter Property="IsVisible" Value="False"/>
                             </DataTrigger>
                         </FlexLayout.Triggers>
-                </FlexLayout>
+                    </FlexLayout>
+                
                     <Label Margin="0,10,0,0" 
-                  Text="{lEx:Translate thText}" 
+                  Text="THERAPEUTIC" 
                   FontSize="18" 
                   
                   TextColor="White" 
@@ -402,7 +403,7 @@
                 </FlexLayout>
 
                     <Label   Margin="0,10,0,0" 
-                  Text="{lEx:Translate ctText}" 
+                  Text="CUISINE TYPE" 
                   FontSize="18" 
                   
                   TextColor="White" 
@@ -444,7 +445,7 @@
                         </FlexLayout.Triggers>
                 </FlexLayout>
                     <Label Margin="0,10,0,0" 
-                           Text="{lEx:Translate dietText}" 
+                           Text="DIET TEXTURE" 
                            FontSize="18" 
                            
                            TextColor="White" 
@@ -487,7 +488,7 @@
 
             </StackLayout>
             </ScrollView>
-            <Button Text="{lEx:Translate nxContent}" Margin="0,10,0,0"
+            <Button Text="Next" Margin="0,10,0,0"
                     CornerRadius="5"
                     HeightRequest="60"
                     x:Name="NxtBtn"

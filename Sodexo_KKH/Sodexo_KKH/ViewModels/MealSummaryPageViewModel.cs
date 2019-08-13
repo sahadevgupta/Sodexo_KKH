@@ -7,7 +7,6 @@ using Prism.Services;
 using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
-using Sodexo_KKH.Resx;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -101,11 +100,11 @@ namespace Sodexo_KKH.ViewModels
 
         private async Task CancelOrder()
         {
-            var response = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("mo", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("canc", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+            var response = await PageDialog.DisplayAlertAsync("Meal order cancellation!", "Do you want to cancel this order?", "Yes", "No");
             if (response)
             {
 
-                var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("ycn", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                var action = await PageDialog.DisplayAlertAsync("Alert!!", " Your order is cancelled. Do you want to place order for same patient?", "Yes", "No");
                 if (action)
                     await NavigationService.GoBackAsync();
                 else
@@ -116,7 +115,7 @@ namespace Sodexo_KKH.ViewModels
 
         private async Task ConfirmPlaceOrder()
         {
-            var action = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("mlc", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("mlc2", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+            var action = await PageDialog.DisplayAlertAsync("Meal confirmation!", "Do you want to confirm order?", "Yes", "No");
             if (action)
             {
                 IsPageEnabled = true;
@@ -428,7 +427,7 @@ namespace Sodexo_KKH.ViewModels
                                 var responseContent = await httpResponse.Content.ReadAsStringAsync();
                                 if (responseContent == "true")
                                 {
-                                    var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yo", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                                    var action = await PageDialog.DisplayAlertAsync("Alert!!", " Your order is confirmed. Do you want to place another order for same patient?", "Yes", "No");
                                     if (action)
                                     {
 
@@ -444,7 +443,7 @@ namespace Sodexo_KKH.ViewModels
                                     }
                                 }
                                 else
-                                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yon", CultureInfo.CurrentCulture), "OK");
+                                    await PageDialog.DisplayAlertAsync("Alert!!", "Your order is not confirmed, there is some problem to process your request. Please check your internet connection.", "OK");
 
                             }
                         }
@@ -479,7 +478,7 @@ namespace Sodexo_KKH.ViewModels
                 });
                 MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "LocalOrder", "lorder");
 
-                var action = await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yoff", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                var action = await PageDialog.DisplayAlertAsync("Alert!!", " Your order is Saved Locally ,it will be confirmed when Internet is available and syncing from menu bar. Do you want to place order for same patient?", "Yes", "No");
                 if (action)
                     await NavigationService.GoBackAsync(new NavigationParameters { { "NewOrder", "order" } });
                 else

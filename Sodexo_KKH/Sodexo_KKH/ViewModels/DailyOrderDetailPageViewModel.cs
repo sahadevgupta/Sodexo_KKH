@@ -10,7 +10,6 @@ using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.Repos;
-using Sodexo_KKH.Resx;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -220,7 +219,7 @@ namespace Sodexo_KKH.ViewModels
                     await SendDelivered_request();
                     if (success)
                     {
-                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("delivered_message", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", "Selected Meal order status changed as delivered", "OK");
 
                     }
 
@@ -288,7 +287,7 @@ namespace Sodexo_KKH.ViewModels
                 {
 
 
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                     IsPageEnabled = false;
                 }
             }
@@ -557,7 +556,7 @@ namespace Sodexo_KKH.ViewModels
                 {
 
 
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                     IsPageEnabled = false;
                 }
             }
@@ -610,7 +609,7 @@ namespace Sodexo_KKH.ViewModels
             }
             else
             {
-                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("scanned_orderid_not_match", CultureInfo.CurrentCulture), "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", "Scanned order id does not match", "OK");
             }
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -634,7 +633,7 @@ namespace Sodexo_KKH.ViewModels
             }
             catch (Exception exp)
             {
-                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString(exp.Message, CultureInfo.CurrentCulture), "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", exp.Message, "OK");
             }
         }
         private async void FillMealTime()
@@ -646,7 +645,7 @@ namespace Sodexo_KKH.ViewModels
             }
             catch (Exception exp)
             {
-                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString(exp.Message, CultureInfo.CurrentCulture), "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", exp.Message, "OK");
             }
         }
     }

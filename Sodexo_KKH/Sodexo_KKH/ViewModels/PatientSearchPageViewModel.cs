@@ -10,7 +10,6 @@ using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.PopUpControl;
 using Sodexo_KKH.Repos;
-using Sodexo_KKH.Resx;
 using Sodexo_KKH.Services;
 using Sodexo_KKH.Views;
 using System;
@@ -210,7 +209,7 @@ namespace Sodexo_KKH.ViewModels
                 await GenerateMealHistory(selectedPatient.ID, mealtype);
             }
             else
-                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg12", CultureInfo.CurrentCulture), "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", "History cannot be shown in offline mode.", "OK");
         }
 
         private async Task GenerateMealHistory(int ID, string mealtype)
@@ -345,7 +344,7 @@ namespace Sodexo_KKH.ViewModels
             else if (dataList.Count == 0)
             {
 
-                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("nit2", CultureInfo.CurrentCulture), "OK");
+                await PageDialog.DisplayAlertAsync("Alert!!", "No Item Available ", "OK");
 
 
                 return;
@@ -442,7 +441,7 @@ namespace Sodexo_KKH.ViewModels
                 if (!String.IsNullOrEmpty(patient.Last_Order_by))
                     AssignPatientInfo(patient);
                 else
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg6", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", "SORRY, You Are Not Authorised To Take First Order Of Patient", "OK");
             }
             else
                 AssignPatientInfo(patient);
@@ -475,7 +474,7 @@ namespace Sodexo_KKH.ViewModels
                 {
                     if (string.IsNullOrEmpty(PatientName))
                     {
-                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("mss1", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", "Please select patient name from suggestions first", "OK");
                     }
                     else
                     {
@@ -633,7 +632,7 @@ namespace Sodexo_KKH.ViewModels
 
             if (string.IsNullOrEmpty(Library.KEY_SYNC_NOTIFICATION))
             {
-                PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg4", CultureInfo.CurrentCulture), "OK");
+                PageDialog.DisplayAlertAsync("Alert!!", "Please sync 'Sync Masters' and 'Sync Menu Items' from drawer menu to proceed further.", "OK");
                 Library.KEY_SYNC_NOTIFICATION = "1";
             }
         }

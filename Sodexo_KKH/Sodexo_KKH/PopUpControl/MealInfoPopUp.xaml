@@ -4,13 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Sodexo_KKH.PopUpControl.MealInfoPopUp"
     Padding="10"
-    xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+    xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
     xmlns:UiTemplates="clr-namespace:Sodexo_KKH.PopUpControl">
 
     <pages:PopupPage.Resources>
         <ResourceDictionary>
-           
-            <lEx:ImageConverter x:Key="ImageConverter"/>
+            <converters:ImageConverter x:Key="ImageConverter"/>
         </ResourceDictionary>
     </pages:PopupPage.Resources>
 
@@ -43,7 +42,7 @@
 
             <StackLayout Style="{StaticResource PopupView}">
 
-                <UiTemplates:PopupTitleView x:Name="titlelbl" Text="lEx:Translate pmnameText"  Grid.ColumnSpan="2" Close="Titlelbl_Close"/>
+            <UiTemplates:PopupTitleView x:Name="titlelbl" Text="Patient Meal Information"  Grid.ColumnSpan="2" Close="Titlelbl_Close"/>
 
                 <Grid BackgroundColor="#65676A" Padding="10">
                     <Grid.ColumnDefinitions>
@@ -72,14 +71,14 @@
                         </Style>
                     </Grid.Resources>
 
-                    <Label Grid.Row="0"  LineBreakMode="WordWrap" Text="{lEx:Translate odateText}"/>
-                    <Label Grid.Row="0" Grid.Column="1"  LineBreakMode="WordWrap" Text="{lEx:Translate entreeText}"/>
-                    <Label Grid.Row="0" Grid.Column="2"  LineBreakMode="WordWrap" Text="{lEx:Translate spText}"/>
-                    <Label Grid.Row="0" Grid.Column="3"  LineBreakMode="WordWrap" Text="{lEx:Translate bevText}"/>
-                    <Label Grid.Row="0" Grid.Column="4"  LineBreakMode="WordWrap" Text="{lEx:Translate juiceText}"/>
-                    <Label Grid.Row="0" Grid.Column="5"  LineBreakMode="WordWrap" Text="{lEx:Translate dessText}"/>
+                <Label Grid.Row="0"  LineBreakMode="WordWrap" Text="Order Date"/>
+                <Label Grid.Row="0" Grid.Column="1"  LineBreakMode="WordWrap" Text="Entrée"/>
+                <Label Grid.Row="0" Grid.Column="2"  LineBreakMode="WordWrap" Text="Soup"/>
+                <Label Grid.Row="0" Grid.Column="3"  LineBreakMode="WordWrap" Text="Beverages"/>
+                <Label Grid.Row="0" Grid.Column="4"  LineBreakMode="WordWrap" Text="Juice"/>
+                <Label Grid.Row="0" Grid.Column="5"  LineBreakMode="WordWrap" Text="Dessert"/>
                     <Label Grid.Row="0" Grid.Column="6"  LineBreakMode="WordWrap" Text="AddOn"/>
-                    <Label Grid.Row="0" Grid.Column="7"  LineBreakMode="WordWrap" Text="{lEx:Translate remarkText}"/>
+                <Label Grid.Row="0" Grid.Column="7"  LineBreakMode="WordWrap" Text="Remark"/>
 
 
                 </Grid>

@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Sodexo_KKH</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.appname</string>
+	<string>com.epicenter.t2o.KKH</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleIconFiles</key>
@@ -53,6 +53,5 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	
 </dict>
 </plist>

@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resx\**" />
+    <EmbeddedResource Remove="Resx\**" />
+    <None Remove="Resx\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Converters\TranslateExtension.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialFormControls" Version="2018.2.22-pre1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />

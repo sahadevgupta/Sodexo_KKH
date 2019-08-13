@@ -19,8 +19,15 @@ namespace Sodexo_KKH.UWP.Renderers
             if (Control != null)
             {
                 Control.FontSize  = 20;
+               
+                Control.KeyDown += Control_KeyDown;
                 Control.BorderThickness = new Windows.UI.Xaml.Thickness(0);
             }
+        }
+
+        private void Control_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            Windows.ApplicationModel.DataTransfer.Clipboard.Clear();
         }
     }
 }

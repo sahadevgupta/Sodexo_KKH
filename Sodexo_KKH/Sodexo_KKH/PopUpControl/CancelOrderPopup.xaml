@@ -3,8 +3,7 @@
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Sodexo_KKH.PopUpControl.CancelOrderPopup"
-             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
-             xmlns:UiTemplates="clr-namespace:Sodexo_KKH.PopUpControl"
+                 xmlns:UiTemplates="clr-namespace:Sodexo_KKH.PopUpControl"
                  Padding="10">
    
     <Frame Padding="3" BackgroundColor="White" BorderColor="Transparent" 
@@ -34,7 +33,7 @@
 
         <StackLayout Style="{StaticResource PopupView}">
 
-                <UiTemplates:PopupTitleView x:Name="titlelbl" Text="{lEx:Translate codText}"  Grid.ColumnSpan="2" Close="Titlelbl_Close"/>
+            <UiTemplates:PopupTitleView x:Name="titlelbl" Text="Cancel Order"  Grid.ColumnSpan="2" Close="Titlelbl_Close"/>
 
             <Grid BackgroundColor="#65676A" Padding="10">
                 <Grid.ColumnDefinitions>
@@ -57,10 +56,10 @@
                     </Style>
                 </Grid.Resources>
 
-                <Label Grid.Column="0" HorizontalOptions="Center" Text="{lEx:Translate odateText}"/>
-                <Label Grid.Column="1" HorizontalOptions="Center" Text="{lEx:Translate mteText}"/>
-                <Label Grid.Column="2" HorizontalOptions="Center" Text="{lEx:Translate obyText}"/>
-                <Label Grid.Column="3" HorizontalOptions="Center" Text="{lEx:Translate remarkText}"/>
+                <Label Grid.Column="0" HorizontalOptions="Center" Text="Order Date"/>
+                <Label Grid.Column="1" HorizontalOptions="Center" Text="Meal Time"/>
+                <Label Grid.Column="2" HorizontalOptions="Center" Text="Order by"/>
+                <Label Grid.Column="3" HorizontalOptions="Center" Text="Remark"/>
                     
                 </Grid>
 
@@ -99,7 +98,7 @@
                                 <Entry Grid.Column="3"  
                                        Placeholder="Enter Remarks"
                                        Text="{Binding remarks}"/>
-                                <Button Text="{lEx:Translate can}" 
+                                <Button Text="Cancel" 
                                         VerticalOptions="Center" x:Name="CancelBtn"
                                         Clicked="CancelBtn_Clicked"
                                         BackgroundColor="IndianRed" TextColor="White" 

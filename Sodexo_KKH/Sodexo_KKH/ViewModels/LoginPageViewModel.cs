@@ -6,7 +6,6 @@ using Prism.Navigation;
 using Prism.Services;
 using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Models;
-using Sodexo_KKH.Resx;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -261,14 +260,14 @@ namespace Sodexo_KKH.ViewModels
                     catch (Exception)
                     {
                         IsPageEnabled = false;
-                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                         return null;
 
                     }
                 }
                 else
                 {
-                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                     return null;
                 }
 
@@ -299,7 +298,7 @@ namespace Sodexo_KKH.ViewModels
                     }
                     else
                     {
-                        await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "Alert!!", "OK");
+                        await PageDialog.DisplayAlertAsync("Server is not accessible, please check internet connection.", "Alert!!", "OK");
                     }
 
 
@@ -319,7 +318,7 @@ namespace Sodexo_KKH.ViewModels
                     CaptchaInput = string.Empty;
                 }
                 else
-                    ErrorText = AppResources.ResourceManager.GetString("plss");
+                    ErrorText = "Please enter user name and password.";
             }
 
         }
@@ -401,7 +400,7 @@ namespace Sodexo_KKH.ViewModels
                         if (response.ReasonPhrase == "Bad Request")
                         {
                             IsPageEnabled = false;
-                            ErrorText = AppResources.ResourceManager.GetString("msg2w");
+                            ErrorText = "Invalid user name or password.";
                             EnableSubmitButton = false;
                             return;
                         }
@@ -409,7 +408,7 @@ namespace Sodexo_KKH.ViewModels
                         if (response.ReasonPhrase == "Not Found")
                         {
                             IsPageEnabled = false;
-                            ErrorText = AppResources.ResourceManager.GetString("msg2w");
+                            ErrorText = "Invalid user name or password.";
                             EnableSubmitButton = false;
                             return;
                         }
@@ -472,16 +471,16 @@ namespace Sodexo_KKH.ViewModels
                                 //opening patient search page
                                 //opening patient search page
 
-                                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
-
-
-                                await httpClient.SendAsync(request);
+                               
 
                                 if (Library.KEY_USER_ROLE == "FSA" || Library.KEY_USER_ROLE == "Nurse" || Library.KEY_USER_ROLE == "Nurse+FSA")
                                 {
                                     CreateDB();
                                     if (expireday == "")
                                     {
+                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
+                                        await httpClient.SendAsync(request);
+
                                         await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
                                         await SessionManager.Instance.StartTrackSessionAsync();
 
@@ -490,8 +489,10 @@ namespace Sodexo_KKH.ViewModels
                                     }
                                     else if (expireday == "100")
                                     {
-                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in one day", "ok");
 
+                                        await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in one day", "ok");
+                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
+                                        await httpClient.SendAsync(request);
 
                                         await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
 
@@ -501,13 +502,15 @@ namespace Sodexo_KKH.ViewModels
                                     {
 
                                         await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in two days", "OK");
-
+                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
+                                        await httpClient.SendAsync(request);
                                         await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
                                     }
                                     else if (expireday == "300")
                                     {
                                         await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in three days", "OK");
-
+                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
+                                        await httpClient.SendAsync(request);
                                         await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
 
                                     }
@@ -528,7 +531,7 @@ namespace Sodexo_KKH.ViewModels
                                 }
                                 else
                                 {
-                                    ErrorText = AppResources.ResourceManager.GetString("msg22");
+                                    ErrorText = "Only FSA and Nurse can login in tablet.";
 
                                 }
 
@@ -536,7 +539,7 @@ namespace Sodexo_KKH.ViewModels
                             }
                             else
                             {
-                                ErrorText = AppResources.ResourceManager.GetString("msg2w");
+                                ErrorText = "Invalid user name or password.";
                                 //var dialog = new MessageDialog("Invailid user name or password.");
                                 //await dialog.ShowAsync();
                             }

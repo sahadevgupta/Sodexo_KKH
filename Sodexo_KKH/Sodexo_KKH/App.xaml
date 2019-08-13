@@ -37,7 +37,7 @@
 
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Sansation-Regular" />
-                            <On Platform="Android" Value="Assets/Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="Android" Value="Sansation-Regular.ttf#Sansation-Regular" />
                             <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
                         </OnPlatform>
 
@@ -51,7 +51,7 @@
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Sansation-Regular" />
-                            <On Platform="Android" Value="Assets/Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="Android" Value="Sansation-Regular.ttf#Sansation-Regular" />
                             <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
                         </OnPlatform>
                     </Setter.Value>
@@ -63,7 +63,7 @@
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Sansation-Regular" />
-                            <On Platform="Android" Value="Assets/Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="Android" Value="Sansation-Regular.ttf#Sansation-Regular" />
                             <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
                         </OnPlatform>
                     </Setter.Value>
@@ -75,7 +75,7 @@
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Sansation-Regular" />
-                            <On Platform="Android" Value="Assets/Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="Android" Value="Sansation-Regular.ttf#Sansation-Regular" />
                             <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
                         </OnPlatform>
                     </Setter.Value>
@@ -87,7 +87,7 @@
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Sansation-Regular" />
-                            <On Platform="Android" Value="Assets/Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="Android" Value="Sansation-Regular.ttf#Sansation-Regular" />
                             <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
                         </OnPlatform>
                     </Setter.Value>
@@ -98,7 +98,7 @@
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Sansation-Regular" />
-                            <On Platform="Android" Value="Assets/Lobster-Regular.ttf#Lobster-Regular" />
+                            <On Platform="Android" Value="Sansation-Regular.ttf#Sansation-Regular" />
                             <On Platform="UWP" Value="Assets/Fonts/Sansation-Regular.ttf#Sansation" />
                         </OnPlatform>
                     </Setter.Value>

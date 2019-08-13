@@ -8,7 +8,6 @@ using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.Repos;
-using Sodexo_KKH.Resx;
 using Sodexo_KKH.Views;
 using System;
 using System.Collections.Generic;
@@ -200,7 +199,7 @@ namespace Sodexo_KKH.ViewModels
 
                 if (!Library.KEY_PATIENT_IS_VEG.ToLower().Equals(SelectedPatient.isveg.ToLower()) || !Library.KEY_PATIENT_IS_HALAL.ToLower().Equals(SelectedPatient.ishalal.ToLower()))
                 {
-                    var response = await PageDialog.DisplayAlertAsync(AppResources.ResourceManager.GetString("ml", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("ml2", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                    var response = await PageDialog.DisplayAlertAsync("Meal Prefrence Changed!", "Do you want to Change the (Veg/Nonveg)/(Halal/Non-Halal) Status.", "Yes", "No");
                     if (response)
                     {
                         Library.KEY_PATIENT_IS_VEG = SelectedPatient.isveg;
@@ -306,7 +305,7 @@ namespace Sodexo_KKH.ViewModels
                     else
                     {
                         IsPageEnabled = false;
-                        await PageDialog.DisplayAlertAsync("Error!!", AppResources.ResourceManager.GetString("msg9", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Error!!", "Unable to change patient settings during offline mode. Please undo the changes and try again", "OK");
                         return;
 
 
@@ -456,7 +455,7 @@ namespace Sodexo_KKH.ViewModels
                 else
                 {
                     IsPageEnabled = false;
-                    await PageDialog.DisplayAlertAsync("Error!!", AppResources.ResourceManager.GetString("msg9", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Error!!", "Unable to change patient settings during offline mode. Please undo the changes and try again", "OK");
                     return;
 
 
@@ -544,7 +543,7 @@ namespace Sodexo_KKH.ViewModels
                     var responseContent = await httpResponse.Content.ReadAsStringAsync();
                     if (responseContent == "true")
                     {
-                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pio", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", "Updated Patient Information", "OK");
                         await NavigationService.GoBackAsync();
                     }
                 }

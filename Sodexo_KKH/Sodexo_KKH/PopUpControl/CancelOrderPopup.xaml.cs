@@ -6,7 +6,6 @@ using Rg.Plugins.Popup.Pages;
 using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
-using Sodexo_KKH.Resx;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -80,14 +79,14 @@ namespace Sodexo_KKH.PopUpControl
 
                 if (contents == "true")
                 {
-                    await PageDialog.DisplayAlertAsync("Alertt!!", AppResources.ResourceManager.GetString("ml1", CultureInfo.CurrentCulture), "OK");
+                    await PageDialog.DisplayAlertAsync("Alertt!!", "Meal Order Successfully Cancelled", "OK");
                     HistoryList.ItemsSource = new List<mstr_meal_history>();
                     PatientMealHistoryList.Remove(selectedRecord);
                     HistoryList.ItemsSource = PatientMealHistoryList;
                     IsChanged = true;
                 }
                 else
-                    await DisplayAlert("", AppResources.ResourceManager.GetString("ml12", CultureInfo.CurrentCulture), "OK");
+                    await DisplayAlert("", "Meal Order cancellation failed!!", "OK");
 
                 if (!PatientMealHistoryList.Any())
                 {

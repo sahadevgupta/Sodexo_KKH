@@ -8,7 +8,6 @@ using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.PopUpControl;
 using Sodexo_KKH.Repos;
-using Sodexo_KKH.Resx;
 using System;
 using System.Dynamic;
 using System.Globalization;
@@ -307,10 +306,10 @@ namespace Sodexo_KKH.ViewModels
 
                                 await navigation.PopPopupAsync();
 
-                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg7", CultureInfo.CurrentCulture), "OK");
+                                await PageDialog.DisplayAlertAsync("Alert!!", "Patient data synced successfully.", "OK");
                             }
                             else
-                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                                await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                         }
                         catch (Exception)
                         {
@@ -337,12 +336,12 @@ namespace Sodexo_KKH.ViewModels
                             await navigation.PopPopupAsync();
 
                             MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", "Master");
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg0", CultureInfo.CurrentCulture), "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", "Master data synced successfully.", "OK");
 
 
                         }
                         else
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                         IsPageEnabled = false;
 
                     }
@@ -369,10 +368,10 @@ namespace Sodexo_KKH.ViewModels
 
                             await navigation.PopPopupAsync();
 
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg8", CultureInfo.CurrentCulture), "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", "Menu Items synced succeesfully.", "OK");
                         }
                         else
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg10", CultureInfo.CurrentCulture), "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                         IsPageEnabled = false;
                     }
                     break;
@@ -387,7 +386,7 @@ namespace Sodexo_KKH.ViewModels
                         if (Library.KEY_USER_feedback_link.Contains("http"))
                             await NavigationService.NavigateAsync("NavigationPage/FeedBackPage");
                         else
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("flna", CultureInfo.CurrentCulture), "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", "Feedback link not available", "OK");
                     }
                     break;
                 case "Offline":
@@ -417,7 +416,7 @@ namespace Sodexo_KKH.ViewModels
 
                                 if (OrderCount == 0)
                                 {
-                                    await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("msg1", CultureInfo.CurrentCulture), "OK");
+                                    await PageDialog.DisplayAlertAsync("Alert!!", "Meal Orders Have been synced successfully", "OK");
                                 }
 
                                 MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "offlineOrderSync", "offlineOrder");
@@ -437,7 +436,7 @@ namespace Sodexo_KKH.ViewModels
                     break;
                 case "LogOut":
                     {
-                        var response = await PageDialog.DisplayAlertAsync("Log Out", AppResources.ResourceManager.GetString("logsure", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentyes", CultureInfo.CurrentCulture), AppResources.ResourceManager.GetString("contentno", CultureInfo.CurrentCulture));
+                        var response = await PageDialog.DisplayAlertAsync("Log Out", "Are you sure you want to logout?", "Yes", "No");
                         if (response)
                         {
                             if (CrossConnectivity.Current.IsConnected)

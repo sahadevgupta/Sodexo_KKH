@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
              xmlns:staticfn="clr-namespace:Sodexo_KKH.Helpers"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
               xmlns:behaviors="clr-namespace:Sodexo_KKH.Behaviors"
@@ -20,7 +20,7 @@
     </NavigationPage.TitleView>
 
     <ContentPage.Resources>
-        <lEx:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
+        <converters:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
     </ContentPage.Resources>
     
     <AbsoluteLayout>
@@ -30,7 +30,7 @@
                     AbsoluteLayout.LayoutFlags="All">
             <local:ConnectionView Grid.Row="0"/>
             <StackLayout Orientation="Horizontal" Grid.Row="1">
-                <Image x:Name="sss"   Source="{lEx:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="StartAndExpand" HeightRequest="60" />
+                <Image x:Name="sss"   Source="{converters:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="StartAndExpand" HeightRequest="60" />
                     <Label Text="{Binding MealTime.meal_name}"
                        FontAttributes="Bold"
                        FontSize="20"
@@ -39,7 +39,7 @@
                        VerticalOptions="Center"
                            HorizontalOptions="CenterAndExpand"
                        />
-                    <Image  HorizontalOptions="EndAndExpand" Source="{lEx:PlatformImage SourceImage='sodexologo'}" HeightRequest="60" />
+                    <Image  HorizontalOptions="EndAndExpand" Source="{converters:PlatformImage SourceImage='sodexologo'}" HeightRequest="60" />
             </StackLayout>
             
 
@@ -375,7 +375,7 @@
                     </Style>
                 </Grid.Resources>
 
-                <Label Text="{lEx:Translate pnText}" 
+                <Label Text="Patient Name:" 
                             VerticalOptions="Center" 
                            Style="{StaticResource labelStyle}"
                            Grid.Row="0" Grid.Column="0" />
@@ -395,7 +395,7 @@
                           Grid.Row="0" Grid.Column="3"
                            />
 
-                <Label x:Uid="mc" Text="{lEx:Translate mcText}" 
+                <Label x:Uid="mc" Text="Meal Class:" 
                            VerticalOptions="Center" 
                            Style="{StaticResource labelStyle}"
                            Grid.Row="1" Grid.Column="0" />
@@ -412,7 +412,7 @@
                     </Label.FormattedText>
                 </Label>
 
-                <Label Text="{lEx:Translate vnText}"  
+                <Label Text="Veg/Non-Veg:"  
                            VerticalOptions="Center" 
                            Style="{StaticResource labelStyle}"
                           Grid.Row="1" Grid.Column="2" />
@@ -421,7 +421,7 @@
                            Text="{Binding Patient.isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
                            Grid.Row="1" Grid.Column="3"/>
 
-                <Label  Text="{lEx:Translate hlnlText}" 
+                <Label  Text="Halal/Non-Halal:" 
                             Style="{StaticResource labelStyle}"
                             VerticalOptions="Center" 
                             Grid.Row="2" Grid.Column="0"
@@ -433,7 +433,7 @@
 
 
 
-                <Label Text="{lEx:Translate DTText}" 
+                <Label Text="Disposable Tray:" 
                            VerticalOptions="Center"
                            Style="{StaticResource labelStyle}"
                            Grid.Row="2" Grid.Column="2" />
@@ -445,7 +445,7 @@
 
 
                 <Label  
-                        Text="{lEx:Translate mosText}" 
+                        Text="Meal Option:" 
                     Style="{StaticResource labelStyle}"
                         VerticalOptions="Center" 
                         Grid.Row="3" Grid.Column="0"
@@ -459,7 +459,7 @@
                        />
 
                 <Label  
-                        Text="{lEx:Translate datText}" 
+                        Text="Diet Type:" 
                         VerticalOptions="Center" 
                         Style="{StaticResource labelStyle}"
                         Grid.Row="3" Grid.Column="2" 
@@ -493,7 +493,7 @@
 
 
                 <Label  
-                        Text="{lEx:Translate rmsText}" 
+                        Text="Remarks:" 
                         VerticalOptions="Center" 
                         HorizontalOptions="FillAndExpand"
                         FontAttributes="Bold"
@@ -513,8 +513,7 @@
             <Label VerticalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{lEx:Translate odtText}" FontAttributes="Bold"/>
-                        <Span Text=" "/>
+                        <Span Text="Order Date: " FontAttributes="Bold"/>
                         <Span Text="{Binding Source={x:Static staticfn:Library.KEY_CHECK_ORDER_DATE},Mode=OneWay}"/>
                     </FormattedString>
                 </Label.FormattedText>
@@ -580,21 +579,21 @@
             </ListView>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
-                <Button Text="{lEx:Translate cnContent}" BackgroundColor="Red" TextColor="White"
+                <Button Text="Cancel" BackgroundColor="Red" TextColor="White"
                             FontSize="Medium"
                         CornerRadius="5"
                         HeightRequest="60"
                             HorizontalOptions="FillAndExpand"
                             Command="{Binding CancelCommand}"
-                            ImageSource="{lEx:PlatformImage SourceImage='cancel_mealsummary'}"/>
+                            ImageSource="{converters:PlatformImage SourceImage='cancel_mealsummary'}"/>
 
-                <Button Text="{lEx:Translate cnfeContent}" BackgroundColor="Green" TextColor="White"
+                <Button Text="Confirm" BackgroundColor="Green" TextColor="White"
                             FontSize="Medium"
                         CornerRadius="5"
                         HeightRequest="60"
                             HorizontalOptions="FillAndExpand"
                         Command="{Binding ConfirmCommand}"
-                            ImageSource="{lEx:PlatformImage SourceImage='confirm_mealsummary'}"/>
+                            ImageSource="{converters:PlatformImage SourceImage='confirm_mealsummary'}"/>
             </StackLayout>
 
 

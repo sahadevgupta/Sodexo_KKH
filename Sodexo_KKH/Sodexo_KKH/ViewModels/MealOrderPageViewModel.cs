@@ -9,13 +9,13 @@ using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.Repos;
-using Sodexo_KKH.Resx;
 using Sodexo_KKH.Views;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -92,6 +92,14 @@ namespace Sodexo_KKH.ViewModels
             }
         }
 
+
+        private ImageSource _menuImage;
+
+        public ImageSource menuImage
+        {
+            get { return this._menuImage; }
+            set { SetProperty(ref _menuImage, value); }
+        }
 
 
         private mstr_menu_item_category _selectedMenuCategory;
@@ -303,10 +311,10 @@ namespace Sodexo_KKH.ViewModels
         {
             try
             {
-                if (obj.ameContent == AppResources.ResourceManager.GetString("am", CultureInfo.CurrentCulture))
+                if (obj.ameContent == "Add to menu")
                 {
                     if (Carts.Where(o => string.Equals(SelectedMenuCategory.ID.ToString(), o.mealtimeid.ToString(), StringComparison.OrdinalIgnoreCase)).Any())
-                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("yc", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", "You can't select more than one item.", "OK");
                     else
                     {
                         Cart ob = new Cart();
@@ -319,7 +327,7 @@ namespace Sodexo_KKH.ViewModels
                         if (SelectedMenuCategory.meal_item_name.Contains("AddOn"))
                             ob.addonid = obj.ID;
 
-                        obj.ameContent = AppResources.ResourceManager.GetString("rm", CultureInfo.CurrentCulture);
+                        obj.ameContent = "Remove";
                         obj.btncolor = "True";
 
                         Carts.Add(ob);
@@ -328,7 +336,7 @@ namespace Sodexo_KKH.ViewModels
                 else
                 {
                     Carts.RemoveAll((x) => x.mealitemid == obj.ID.ToString());
-                    obj.ameContent = AppResources.ResourceManager.GetString("am", CultureInfo.CurrentCulture);
+                    obj.ameContent = "Add to menu";
                     obj.btncolor = "False";
                 }
             }
@@ -398,7 +406,7 @@ namespace Sodexo_KKH.ViewModels
                         }
                         else
                         {
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("pls", CultureInfo.CurrentCulture), "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", "Please select any items from Entree menu Or select meal option.", "OK");
                             IsPageEnabled = false;
                             return;
                         }
@@ -409,7 +417,7 @@ namespace Sodexo_KKH.ViewModels
 
                     if (localOrders.Count() > 0)
                     {
-                        await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("offl", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture), "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", "Order is already Placed in offline mode for this Patient. " + "Please Sync it from patient details screen.", "OK");
 
                         return;
                     }
@@ -434,7 +442,7 @@ namespace Sodexo_KKH.ViewModels
                         else
                         {
                             if (Check_order_result == true)
-                                await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture), "OK");
+                                await PageDialog.DisplayAlertAsync("Alert!!", "Meal order is already placed. "  + "Please Sync it from patient details screen.", "OK");
                             else
                             {
                                 Library.KEY_langchangedfrommealpage = "no";
@@ -445,7 +453,7 @@ namespace Sodexo_KKH.ViewModels
                     else
                     {
                         if (Check_order_result == true)
-                            await PageDialog.DisplayAlertAsync("Alert!!", AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture) + ". " + AppResources.ResourceManager.GetString("offl2", CultureInfo.CurrentCulture), "OK");
+                            await PageDialog.DisplayAlertAsync("Alert!!", " Meal order is already placed. " + "Please Sync it from patient details screen.", "OK");
                         else
                             await NavigateToMealSummary();
                     }
@@ -717,7 +725,7 @@ namespace Sodexo_KKH.ViewModels
             MenuItems = new ObservableCollection<MenuItemClass>();
             if (menuitem.meal_item_name.ToLower().Contains("entrée") || menuitem.meal_item_name.ToLower().ToLower().Contains("entree"))
             {
-                if (Title.Contains(AppResources.ResourceManager.GetString("cex", CultureInfo.CurrentCulture)))
+                if (Title.Contains("Cut off time exceeds"))
                 {
                     if (isallacartebreakfast)
                     {
@@ -738,6 +746,8 @@ namespace Sodexo_KKH.ViewModels
                 IsItemAvailable = false;
             else
                 IsItemAvailable = true;
+
+            //menuImage = ImageSource.FromStream(() => new MemoryStream(MenuItems.Where(x => x.ImageData !=null).First().ImageData));
         }
 
         private void GetsetMenuItems(mstr_menu_item_category menuitem)
@@ -980,13 +990,13 @@ namespace Sodexo_KKH.ViewModels
                         {
                             if (Library.KEY_langchangedfrommealpage == "yes")
                             {
-                                obj.ameContent = AppResources.ResourceManager.GetString("rm", CultureInfo.CurrentCulture);//loader.GetString("rm").ToString();
+                                obj.ameContent = "Remove";//loader.GetString("rm").ToString();
                                 obj.btncolor = "True";
 
                             }
                             else
                             {
-                                obj.ameContent = AppResources.ResourceManager.GetString("am", CultureInfo.CurrentCulture);
+                                obj.ameContent = "Add to menu";
                                 obj.btncolor = "False";
                             }
 
@@ -1298,12 +1308,12 @@ namespace Sodexo_KKH.ViewModels
 
                     if ((Carts.Count > 0 && Carts.Any(x => x.mealitemid == item.ID.ToString())))
                     {
-                        ob.ameContent = AppResources.ResourceManager.GetString("rm", CultureInfo.CurrentCulture);
+                        ob.ameContent = "Remove";
                         ob.btncolor = "True";
                     }
                     else
                     {
-                        ob.ameContent = AppResources.ResourceManager.GetString("am", CultureInfo.CurrentCulture);
+                        ob.ameContent = "Add to menu";
                         ob.btncolor = "False";
 
                     }
@@ -1313,12 +1323,12 @@ namespace Sodexo_KKH.ViewModels
                 {
                     if ((Carts.Count > 0 && Carts.Any(x => x.mealitemid == item.ID.ToString())))
                     {
-                        ob.ameContent = AppResources.ResourceManager.GetString("rm", CultureInfo.CurrentCulture);
+                        ob.ameContent = "Remove";
                         ob.btncolor = "True";
                     }
                     else
                     {
-                        ob.ameContent = AppResources.ResourceManager.GetString("am", CultureInfo.CurrentCulture);
+                        ob.ameContent = "Add to menu";
                         ob.btncolor = "False";
                     }
 
@@ -1376,7 +1386,7 @@ namespace Sodexo_KKH.ViewModels
 
             if (dtToDate > lateformat && DateTime.Now.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) == Library.KEY_ORDER_DATE)
             {
-                Title = $"{mealTime.meal_name} {AppResources.ResourceManager.GetString("le", CultureInfo.CurrentCulture)}";
+                Title = $"{mealTime.meal_name} {" Late Cut off time exceeds"}";
                 IsMenuEnable = false;
                 await PageDialog.DisplayAlertAsync("Alert!!", Title, "OK");
 
@@ -1397,7 +1407,7 @@ namespace Sodexo_KKH.ViewModels
 
             if (difference.TotalMinutes < 0 && DateTime.Now.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) == Library.KEY_ORDER_DATE)
             {
-                Title = $"{mealTime.meal_name} {AppResources.ResourceManager.GetString("cex", CultureInfo.CurrentCulture)}";
+                Title = $"{mealTime.meal_name} {" Cut off time exceeds"}";
 
                 int bedclassID = Convert.ToInt32(PatientInfo.Bed_Class_ID);
                 var bedmealMap = _mappingRepo.QueryTable().Where(x => x.bed_class_id == bedclassID && x.status_id == 1).FirstOrDefault();
@@ -1414,7 +1424,7 @@ namespace Sodexo_KKH.ViewModels
             }
             else
             {
-                Title = $"{mealTime.meal_name} {AppResources.ResourceManager.GetString("cot", CultureInfo.CurrentCulture)} {mealTime.cut_off_start_time}";
+                Title = $"{mealTime.meal_name} Cut off time: {mealTime.cut_off_start_time}";
                 Library.KEY_IS_LATE_ORDERED = "0";
             }
 
@@ -1426,13 +1436,13 @@ namespace Sodexo_KKH.ViewModels
                 bool Check_order_result = await Check_Order_Taken(Library.KEY_CHECK_ORDER_DATE, PatientInfo.ID, SelectedMealTime.meal_name, Convert.ToInt32(Library.KEY_ORDER_ID));
                 if (Check_order_result)
                 {
-                    Title = $"{SelectedMealTime.meal_name} {AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture)}";
+                    Title = $"{SelectedMealTime.meal_name} Meal order is already placed.";
                     IsMenuEnable = false;
                     if (others.ID == 8 || others.ID == 1)
                     {
                         IsBtnVisible = false;
                     }
-                    await PageDialog.DisplayAlertAsync("Alert!!", $"{SelectedMealTime.meal_name} {AppResources.ResourceManager.GetString("mp", CultureInfo.CurrentCulture)}", "OK");
+                    await PageDialog.DisplayAlertAsync("Alert!!", $"{SelectedMealTime.meal_name} Meal order is already placed.", "OK");
 
 
                 }

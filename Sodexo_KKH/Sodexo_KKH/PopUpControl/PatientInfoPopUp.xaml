@@ -3,7 +3,7 @@
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:UiTemplates="clr-namespace:Sodexo_KKH.PopUpControl"
-    xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+    xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
     x:Class="Sodexo_KKH.PopUpControl.PatientInfoPopUp">
 
     <pages:PopupPage.Resources>
@@ -35,7 +35,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <lEx:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
+            <converters:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
         </ResourceDictionary>
     </pages:PopupPage.Resources>
 
@@ -112,48 +112,48 @@
 
                     <Label x:Uid="pname" 
                            x:Name="txtp_name" 
-                           Text="{lEx:Translate pnameText}" 
+                           Text="Patient Name" 
                            Grid.Row="1" Grid.Column="0" 
                            Style="{StaticResource Titlelbl}"
                             />
 
-                    <Label x:Uid="bclass" x:Name="txtp_bedclass" Text="{lEx:Translate bclassText}" 
+                    <Label x:Uid="bclass" x:Name="txtp_bedclass" Text="Bed Class:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="2" Grid.Column="0"  />
-                    <Label x:Uid="page" x:Name="txtp_age" Text="{lEx:Translate pageText}" 
+                    <Label x:Uid="page" x:Name="txtp_age" Text="Patient Age:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="3" Grid.Column="0"  />
-                    <Label x:Uid="txtWardbeds" x:Name="txtp_ward_bed" Text="{lEx:Translate txtWardbedsText}" 
+                    <Label x:Uid="txtWardbeds" x:Name="txtp_ward_bed" Text="Ward-Bed:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="4" Grid.Column="0"  />
-                    <Label x:Uid="adch" x:Name="txtp_adult" Text="{lEx:Translate adchText}" 
+                    <Label x:Uid="adch" x:Name="txtp_adult" Text="Adult/Child:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="5" Grid.Column="0"  />
 
-                    <Label x:Name="txtp_race" x:Uid="parace"  Text="{lEx:Translate paraceText}" 
+                    <Label x:Name="txtp_race" x:Uid="parace"  Text="Patient Race:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="6" Grid.Column="0"  />
 
-                    <Label x:Name="txtp_admissiondate" x:Uid="adate" Text="{lEx:Translate adateText}" 
+                    <Label x:Name="txtp_admissiondate" x:Uid="adate" Text="Admission Date:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="7" Grid.Column="0"  />
 
-                    <Label x:Name="txtp_dischargedate" x:Uid="ddate" Text="{lEx:Translate ddateText}"
+                    <Label x:Name="txtp_dischargedate" x:Uid="ddate" Text="Discharge Date:"
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="8" Grid.Column="0"  />
 
-                    <Label x:Name="txtp_dob" x:Uid="dobtxt" Text="{lEx:Translate dobtxtText}"
+                    <Label x:Name="txtp_dob" x:Uid="dobtxt" Text="DOB:"
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="9" Grid.Column="0"  />
 
-                    <Label x:Name="txtp_gender" x:Uid="gender" Text="{lEx:Translate genderText}" 
+                    <Label x:Name="txtp_gender" x:Uid="gender" Text="Gender:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="10" Grid.Column="0"  />
-                    <Label x:Name="txtp_religion" x:Uid="rel" Text="{lEx:Translate relText}" 
+                    <Label x:Name="txtp_religion" x:Uid="rel" Text="Religion:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="11" Grid.Column="0"  />
 
-                    <Label x:Name="txtp_prefered_server" x:Uid="ps" Text="{lEx:Translate psText}"
+                    <Label x:Name="txtp_prefered_server" x:Uid="ps" Text="Patient Preference:"
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="12" Grid.Column="0"  />
 
@@ -161,18 +161,18 @@
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="13" Grid.Column="0"  />
 
-                    <Label x:Uid="veg"   Text="{lEx:Translate vnText}" 
+                    <Label x:Uid="veg"   Text="Veg/Non-Veg:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="14" Grid.Column="0"  />
 
-                    <Label x:Uid="hl"  Text="{lEx:Translate hlnlText}" 
+                    <Label x:Uid="hl"  Text="Halal/Non-Halal:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="15" Grid.Column="0"  />
 
-                    <Label x:Uid="alge" Text="{lEx:Translate algeText}" 
+                    <Label x:Uid="alge" Text="Allergies:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="17" Grid.Column="0"  />
-                    <Label x:Uid="ther" Text="{lEx:Translate therText}" Grid.Row="19" 
+                    <Label x:Uid="ther" Text="Therapeutic:}" Grid.Row="19" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Column="0"  />
 
@@ -180,7 +180,7 @@
                            Style="{StaticResource Titlelbl}"
                            Grid.Column="0"  />
 
-                    <Label x:Uid="case"  Text="{lEx:Translate caseText}" Grid.Row="23" 
+                    <Label x:Uid="case"  Text="Case Id:" Grid.Row="23" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Column="0"  />
                     
@@ -211,12 +211,12 @@
                                Text="{Binding isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
                                Grid.Column="1"  
                                FontSize="18"/>
-                        <Image Source="{lEx:PlatformImage SourceImage='Veg_symbol'}" VerticalOptions="Center" HeightRequest="30" >
+                        <Image Source="{converters:PlatformImage SourceImage='Veg_symbol'}" VerticalOptions="Center" HeightRequest="30" >
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image"
                                              Binding="{Binding Source={x:Reference txtveg},Path=Text}"
                                              Value="Non-Veg">
-                                    <Setter Property="Source" Value="{lEx:PlatformImage SourceImage='non-veg'}"/>
+                                    <Setter Property="Source" Value="{converters:PlatformImage SourceImage='non-veg'}"/>
                                 </DataTrigger>
                             </Image.Triggers>
                         </Image>

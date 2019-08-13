@@ -1,8 +1,12 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.ListView.XForms.iOS;
+using Syncfusion.SfBusyIndicator.iOS;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.SfAutoComplete.XForms.iOS;
 using UIKit;
-
+using Xamarin.Forms;
 
 namespace Sodexo_KKH.iOS
 {
@@ -30,6 +34,10 @@ namespace Sodexo_KKH.iOS
 
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
+            FormsMaterial.Init();
+            SfListViewRenderer.Init();
+            SfAutoCompleteRenderer.Init();
+            new SfBusyIndicatorRenderer();
             LoadApplication(new App(new iOSInitializer()));
 
             

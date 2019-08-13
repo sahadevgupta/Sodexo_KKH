@@ -4,7 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Sodexo_KKH.Views.MealOrderPage"
-             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
              xmlns:SyncListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
               xmlns:behaviors="clr-namespace:Sodexo_KKH.Behaviors"
@@ -13,8 +13,8 @@
              x:Name="mealorderpage">
 
     <ContentPage.Resources>
-        <lEx:BytesToImageSource x:Key="BytesToImageSourceConverter"/>
-        <lEx:BoolToColorConverter x:Key="BoolToColorConverter"/>
+        <converters:BytesToImageSource x:Key="BytesToImageSourceConverter"/>
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
     </ContentPage.Resources>
     
     <NavigationPage.TitleView>
@@ -47,8 +47,8 @@
             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <cell:ConnectionView/>
                 <StackLayout Orientation="Horizontal">
-                    <Image x:Name="sss"   Source="{lEx:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="Start" HeightRequest="60" />
-                    <Image  HorizontalOptions="EndAndExpand" Source="{lEx:PlatformImage SourceImage='sodexologo'}" HeightRequest="60" />
+                    <Image x:Name="sss"   Source="{converters:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="Start" HeightRequest="60" />
+                    <Image  HorizontalOptions="EndAndExpand" Source="{converters:PlatformImage SourceImage='sodexologo'}" HeightRequest="60" />
                 </StackLayout>
 
                 <!--<Grid>
@@ -146,7 +146,7 @@
                             </Grid.Resources>
 
                             <Label  
-                        Text="{lEx:Translate mcText}" 
+                        Text="Meal Class:" 
                                 FontAttributes="Bold"
                         VerticalOptions="Center" Grid.Row="0" Grid.Column="0" 
                          />
@@ -155,7 +155,7 @@
                            VerticalOptions="Center" Grid.Row="0" Grid.Column="1"/>
 
                             <Label  
-                        Text="{lEx:Translate mosText}" 
+                        Text="Meal Option:" 
                                 FontAttributes="Bold"
                         VerticalOptions="Center" Grid.Row="1" Grid.Column="0" 
                          />
@@ -167,7 +167,7 @@
                         />
 
                             <Label   
-                        Text="{lEx:Translate datText}" 
+                        Text="Diet Type:" 
                                 FontAttributes="Bold"
                         VerticalOptions="Center" Grid.Row="2" Grid.Column="0" 
                          />
@@ -183,7 +183,7 @@
                             <StackLayout Orientation="Horizontal">
                                 <Label   FontAttributes="Bold"
                                          LineHeight="1.8"
-                        Text="{lEx:Translate rmsText}" 
+                        Text="Remarks:" 
                         VerticalOptions="Center" Grid.Row="0" Grid.Column="2" 
                          />
                                 <Picker Grid.Row="0" Grid.Column="3" 
@@ -336,11 +336,6 @@
                 <Image x:Name="menuImg" Source="{lEx:PlatformImage SourceImage='breakfast'}"   Grid.RowSpan="2"
                            IsVisible="{Binding IsMenuImageVisible}" Aspect="AspectFill"/>-->
 
-
-
-                
-                
-
                 <!--<ListView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ItemsSource="{Binding MenuItems}"
                           HasUnevenRows="True"
                           x:Name="menulist"
@@ -421,7 +416,11 @@
 
                 <ScrollView>
                 <StackLayout Spacing="10">
-                    <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
+
+
+                        <Image Source="{Binding menuImage}"/>
+
+                        <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
                                  Direction="Row">
 
                         <Label FontSize="50"  
@@ -434,9 +433,9 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        IsVisible="{Binding IsItemAvailable}"
-                       Text="{lEx:Translate nitText}"/>
+                       Text="No Item Available "/>
 
-                        <Image x:Name="menuImg" Source="{lEx:PlatformImage SourceImage='breakfast'}"   FlexLayout.Basis="100%"
+                        <Image x:Name="menuImg" Source="{converters:PlatformImage SourceImage='breakfast'}"   FlexLayout.Basis="100%"
                            IsVisible="{Binding IsMenuImageVisible}" Aspect="AspectFill"/>
 
 
@@ -481,7 +480,7 @@
                                                             <DataTrigger TargetType="Button"
                                                                      Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
                                                                      Value="Remove">
-                                                                <Setter Property="ImageSource" Value="{lEx:PlatformImage SourceImage='cancel_mealsummary'}"/>
+                                                                <Setter Property="ImageSource" Value="{converters:PlatformImage SourceImage='cancel_mealsummary'}"/>
 
                                                             </DataTrigger>
                                                             <DataTrigger TargetType="Button"
@@ -697,7 +696,7 @@
                     Margin="0,10,0,0"
                             CornerRadius="5"
                             x:Name="NxtBtn"
-                    Text="{lEx:Translate poContent}" 
+                    Text="Place Order" 
                         Grid.Row="1"
                     HorizontalOptions="FillAndExpand"
                     TextColor="White"  

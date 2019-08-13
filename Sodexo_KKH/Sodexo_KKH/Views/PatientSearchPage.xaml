@@ -6,7 +6,7 @@
              x:Class="Sodexo_KKH.Views.PatientSearchPage"
              Padding="10"
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
-             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
              xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms">
@@ -22,9 +22,9 @@
     </NavigationPage.TitleView>
     <ContentPage.Resources>
         <ResourceDictionary>
-            <lEx:AllergytextConverter x:Key="AllergytextConverter"/>
-            <lEx:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
-            <lEx:ImageConverter x:Key="ImageConverter"/>
+            <converters:AllergytextConverter x:Key="AllergytextConverter"/>
+            <converters:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
+            <converters:ImageConverter x:Key="ImageConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <AbsoluteLayout>
@@ -66,8 +66,8 @@
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="ByWard"
                 NumberOfTapsRequired="1" />
                     </StackLayout.GestureRecognizers>
-                    
-                    <Label x:Name="sbyward" Text="{lEx:Translate sbwText}"/>
+
+                    <Label x:Name="sbyward" Text="Search By ward No."/>
                     <BoxView x:Name="sbywardboxview" IsVisible="False" HeightRequest="5" BackgroundColor="BlueViolet">
                         <BoxView.Triggers>
                             <DataTrigger TargetType="BoxView"
@@ -85,7 +85,7 @@
                         <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped" CommandParameter="ByPatient"
                 NumberOfTapsRequired="1" />
                     </StackLayout.GestureRecognizers>
-                    <Label  x:Name="sbypatient" Text="{lEx:Translate sbpText}" />
+                    <Label  x:Name="sbypatient" Text="Search By Patient Name" />
                     <BoxView IsVisible="False" 
                              x:Name="sbypatientboxview" HeightRequest="5" BackgroundColor="BlueViolet">
                         <BoxView.Triggers>
@@ -115,7 +115,7 @@
                     </DataTrigger>
 
                 </StackLayout.Triggers>
-                <Label  Text="{lEx:Translate txtWardText}" VerticalOptions="Center"   
+                <Label  Text="Ward:" VerticalOptions="Center"   
                         FontSize="17"  />
 
                 <Picker ItemDisplayBinding="{Binding ward_name}"
@@ -127,7 +127,7 @@
                         Title="Select Ward no."
                         />
 
-                <Label  Text="{lEx:Translate txtbedText}" VerticalOptions="Center"  FontSize="17" />
+                <Label  Text="Bed:" VerticalOptions="Center"  FontSize="17" />
 
                 <Picker ItemDisplayBinding="{Binding bed_no}"  
                         x:Name="cmbsearchbypatient"
@@ -156,7 +156,7 @@
 
                 <autocomplete:SfAutoComplete  ValueChanged="SfAutoComplete_ValueChanged"
                                               DataSource="{Binding PatientDatas}"
-                                              Watermark="{lEx:Translate txtAutoSuggestBoxPlaceholderText}" 
+                                              Watermark="Search" 
                                               HorizontalOptions="FillAndExpand"
                                               />
                 
@@ -168,7 +168,7 @@
                             WidthRequest="100"
                             Command="{Binding SearchBtnCommand}" 
                             CommandParameter="PatientName"
-                            Text="{lEx:Translate btnsearch1Content}"  
+                            Text="Search"  
                             />
                
             </StackLayout>
@@ -206,20 +206,20 @@
 
                 <Label  Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Text="Category"   />
 
-                <Label  Grid.Column="1" Grid.RowSpan="2" Grid.Row="0" Text="{lEx:Translate txtWardbedText}"  />
+                <Label  Grid.Column="1" Grid.RowSpan="2" Grid.Row="0" Text="Ward-Bed"  />
 
-                <Label Grid.Column="2" Grid.RowSpan="2" Grid.Row="0"  Text="{lEx:Translate pnameText}" />
+                <Label Grid.Column="2" Grid.RowSpan="2" Grid.Row="0"  Text="Patient Name" />
 
 
-                <Label Grid.Row="0"  Grid.Column="3" HorizontalOptions="Center" Text="{lEx:Translate allgeyText}"  />
+                <Label Grid.Row="0"  Grid.Column="3" HorizontalOptions="Center" Text="Allergy"  />
 
 
                 <Label  Grid.Row="0" Grid.RowSpan="2" Grid.Column="4" Text="Therapeutic Condition"   HorizontalOptions="Center"/>
-                <Label HorizontalOptions="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="5" Text="{lEx:Translate tblkH_NHText}" />
+                <Label HorizontalOptions="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="5" Text="H-NH" />
 
-                <Label Grid.RowSpan="2"  HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" Text="{lEx:Translate tblkgenderText}" />
+                <Label Grid.RowSpan="2"  HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" Text="G" />
 
-                <Label   Text="{lEx:Translate tblkorderText}" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="7"  HorizontalOptions="Center"/>
+                <Label   Text="Order" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="7"  HorizontalOptions="Center"/>
 
                 <Label HorizontalTextAlignment="Center" 
                    Grid.Row="1" Grid.Column="7"
@@ -247,12 +247,12 @@
                 <Label Grid.Row="0" 
                    Grid.RowSpan="2"  Grid.Column="10"  
                    HorizontalOptions="Center"
-                   Text="{lEx:Translate tblklastmodifiedText}" 
+                   Text="Last Order Taken By" 
                       />
                 <Label  Grid.Row="0" Grid.Column="11" 
                     Grid.RowSpan="2" 
                     HorizontalOptions="Center"
-                    Text="{lEx:Translate codText}" 
+                    Text="Cancel Order" 
                      />
             </Grid>
 

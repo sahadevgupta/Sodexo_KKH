@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
-             xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
              x:Class="Sodexo_KKH.Views.MealOrderStatusPage"
@@ -28,15 +26,15 @@
                 <Image  HorizontalOptions="EndAndExpand" Source="Assets/sodexologo.png" HeightRequest="60" />
             </StackLayout>
             <StackLayout BackgroundColor="White" Orientation="Horizontal">
-            <Label x:Name="txt_date" Text="{lEx:Translate dteText}" 
+                <Label x:Name="txt_date" Text="Date" 
                                VerticalOptions="Center" HorizontalOptions="Start" 
                                TextColor="Black" Font="22" />
             <DatePicker x:Name="dt_picker" VerticalOptions="Center" Date="{Binding SelectedDate}"/>
         </StackLayout>
         
         <StackLayout Orientation="Horizontal">
-           
-            <Label x:Name="lbl_selectward" Text="{lEx:Translate cmbsearchbywardPlaceholderText}" 
+
+                <Label x:Name="lbl_selectward" Text="Select ward  no." 
                    VerticalOptions="Center" />
             <Picker x:Name="pkr_ward"  ItemsSource="{Binding WardData}"
                     SelectedItem="{Binding SelectedWard}"
@@ -44,7 +42,7 @@
                     WidthRequest="150"
                     Title="Select Ward"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-            <Label x:Name="lbl_status" Text="{lEx:Translate statusText}" 
+                <Label x:Name="lbl_status" Text="Status" 
                    VerticalOptions="Center" />
             <Picker x:Name="pkr_status" 
                     ItemsSource="{Binding StatusList}"
@@ -52,7 +50,7 @@
                     WidthRequest="150"
                     Title="Select Meal Status"
                     HorizontalOptions="StartAndExpand"  VerticalOptions="Center" />
-            <Label x:Name="lbl_selectmealtime" Text="{lEx:Translate mteText}" 
+                <Label x:Name="lbl_selectmealtime" Text="Meal Time" 
                    VerticalOptions="Center"/>
             <Picker x:Name="pkr_mealtime" 
                     ItemsSource="{Binding MealTimeList}"
@@ -67,7 +65,7 @@
                 Command="{Binding SearchCommand}"
                 HeightRequest="40" VerticalOptions="CenterAndExpand" 
                  FontSize="Medium"
-                HorizontalOptions="FillAndExpand" Text="{lEx:Translate btnsearch1Content}" 
+                HorizontalOptions="FillAndExpand" Text="Search" 
                 CornerRadius="5" BackgroundColor="{StaticResource My_Header_Color}" 
                 TextColor="White"/>
 
@@ -82,11 +80,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="{lEx:Translate srnText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White" />
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="{lEx:Translate dteText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White" />
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Sr. No." VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White" />
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="Date" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White" />
                 <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="2" Text="Ward-Bed" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="3" Text="{lEx:Translate pnameText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
-                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="4" Text="{lEx:Translate statusText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="3" Text="Patient Name" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
+                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="4" Text="Status" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" TextColor="White"/>
 
             </Grid>
 

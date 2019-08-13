@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             xmlns:lEx="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
              xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:syncfusion1="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
@@ -22,9 +22,9 @@
 
 
     <ContentPage.Resources>
-        <lEx:BoolToStringConverter x:Key="BoolToStringConverter"/>
-        <lEx:BoolToImageConverter x:Key="BoolToImageConverter"/>
-        <lEx:CheckBoxConverter x:Key="CheckBoxConverter"/>
+        <converters:BoolToStringConverter x:Key="BoolToStringConverter"/>
+        <converters:BoolToImageConverter x:Key="BoolToImageConverter"/>
+        <converters:CheckBoxConverter x:Key="CheckBoxConverter"/>
     </ContentPage.Resources>
     <AbsoluteLayout>
         <StackLayout  AbsoluteLayout.LayoutBounds="0,0,1,1"
@@ -40,8 +40,7 @@
                                Font="22" >
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{lEx:Translate dteText}" FontSize="22" TextColor="Black"/>
-                        <Span Text=": "/>
+                        <Span Text="Date: " FontSize="22" TextColor="Black"/>
                         <Span Text="{Binding SelectedDate,Mode=OneWay,StringFormat='{}{0:dd-MM-yyyy}'}" FontSize="Medium"/>
                     </FormattedString>
                 </Label.FormattedText>
@@ -50,7 +49,7 @@
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 
-                <Label x:Name="lbl_selectward" Text="{lEx:Translate cmbsearchbywardPlaceholderText}" 
+                <Label x:Name="lbl_selectward" Text="Select ward  no." 
                    VerticalOptions="Center" FontSize="Small"/>
                 <Picker x:Name="pkr_ward"  
                     WidthRequest="150"
@@ -59,7 +58,7 @@
                         Title="Select Ward"
                     ItemDisplayBinding="{Binding ward_name}"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-                <Label x:Name="lbl_Bed" Text="{lEx:Translate cmbsearchbypatientPlaceholderText}" 
+                <Label x:Name="lbl_Bed" Text="Select bed no." 
                    VerticalOptions="Center" FontSize="Small" />
                 <Picker x:Name="pkr_bed" 
                     WidthRequest="150"
@@ -68,7 +67,7 @@
                     SelectedItem="{Binding SelectedBed}"
                         Title="Select Bed"
                     HorizontalOptions="StartAndExpand"  VerticalOptions="Center" />
-                <Label x:Name="lbl_selectmealtime" Text="{lEx:Translate mteText}" 
+                <Label x:Name="lbl_selectmealtime" Text="Meal Time" 
                    VerticalOptions="Center" FontSize="Small" />
                 <Picker x:Name="pkr_mealtime" 
                     ItemsSource="{Binding MealTimeList}"
@@ -82,7 +81,7 @@
             <syncfusion1:SfCheckBox  IsVisible="True" 
                             x:Uid="chk_care"   
                             FontSize="18" x:Name="chkcare_giver"  
-                            Text="{lEx:Translate cgContent}"
+                            Text="Care Giver"
                             IsChecked="{Binding IsCareGiver}"
                             WidthRequest="20" />
             <Button  x:Name="searchButton" 
@@ -91,7 +90,7 @@
                      HeightRequest="40"
                      CornerRadius="5"
                      FontSize="Medium"
-                 Text="{lEx:Translate btnsearch1Content}" 
+                 Text="Search" 
                 BackgroundColor="{StaticResource My_Header_Color}" 
                 TextColor="White"/>
 
@@ -110,13 +109,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="lbl0" Grid.Row="0" Grid.Column="0" />
-                <Label x:Name="lbl1" Grid.Row="0" Grid.Column="1" Text="{lEx:Translate dteText}" HorizontalOptions="Start" VerticalOptions="Center" FontSize="Small" Font="16" TextColor="White" />
-                <Label x:Name="lbl2" Grid.Row="0" Grid.Column="2" Text="{lEx:Translate wdText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl3" Grid.Row="0" Grid.Column="3" Text="{lEx:Translate bdText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl4" Grid.Row="0" Grid.Column="4" Text="{lEx:Translate pneText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl5" Grid.Row="0" Grid.Column="5" Text="{lEx:Translate mteText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl6" Grid.Row="0" Grid.Column="6" Text="{lEx:Translate obyText}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl7" Grid.Row="0" Grid.Column="7" Text="{lEx:Translate verify}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl1" Grid.Row="0" Grid.Column="1" Text="Date" HorizontalOptions="Start" VerticalOptions="Center" FontSize="Small" Font="16" TextColor="White" />
+                <Label x:Name="lbl2" Grid.Row="0" Grid.Column="2" Text="Ward" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl3" Grid.Row="0" Grid.Column="3" Text="Bed" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl4" Grid.Row="0" Grid.Column="4" Text="Patient/NRIC" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl5" Grid.Row="0" Grid.Column="5" Text="Meal Time" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl6" Grid.Row="0" Grid.Column="6" Text="Order by" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label x:Name="lbl7" Grid.Row="0" Grid.Column="7" Text="Verify" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
             </Grid>
 
            
@@ -145,7 +144,6 @@
                                                                 x:Uid="chk_select"  x:Name="chk_select"    
                                                                 VerticalOptions="Center" 
                                                             HorizontalOptions="Center" IsChecked="{Binding is_checked}"  />
-                                        <!--lEx:Tags.Tag="{Binding OrderedID}"-->
                                         <Label  Grid.Row="0" Grid.Column="1" x:Name="tbldate" Text="{Binding date}" VerticalOptions="Center" HorizontalTextAlignment="Start" />
 
                                 <Label  Grid.Row="0" Grid.Column="2" x:Name="tblward" Text="{Binding Ward}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
@@ -160,7 +158,6 @@
 
                                         <Image x:Name="imgbtn_scan" IsEnabled="{Binding is_verifed,Converter={StaticResource BoolToStringConverter}}" Grid.Row="0" Grid.Column="7"
                                            WidthRequest="40" HeightRequest="40" Source="{Binding is_verifed,Converter={StaticResource BoolToImageConverter}}" VerticalOptions="Center">
-                                            <!--lEx:Tags.Tag="{Binding OrderedID}"-->
                                             <Image.GestureRecognizers >
                                                 <TapGestureRecognizer Tapped="ScanImageTapped"  NumberOfTapsRequired="1"/>
                                             </Image.GestureRecognizers>
@@ -177,7 +174,7 @@
             <Button x:Name="btn_update" HorizontalOptions="FillAndExpand"
                     VerticalOptions="CenterAndExpand"
                     CornerRadius="5"
-                Text="{lEx:Translate btnupdateContent}" FontSize="Medium"
+                Text="Update" FontSize="Medium"
                         HeightRequest="60"  Command="{Binding UpdateCommand}"
                 BackgroundColor="{StaticResource My_Header_Color}" 
                 TextColor="White"  >
