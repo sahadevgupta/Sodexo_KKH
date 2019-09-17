@@ -153,12 +153,6 @@ namespace Sodexo_KKH.ViewModels
             {
                 if (CrossConnectivity.Current.IsConnected == true)
                 {
-                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-
-                    //start progessring
-                    //   pbar.IsBusy = true;
-                    //  pbar.IsEnabled = true;
-
                     dynamic p = new ExpandoObject();
                     p.country_id = Library.KEY_USER_ccode;
                     string dt = Library.last_mastersynctime;
@@ -179,7 +173,7 @@ namespace Sodexo_KKH.ViewModels
                     using (var httpClient = new System.Net.Http.HttpClient())
                     {
                         var httpResponse = new System.Net.Http.HttpResponseMessage();
-                        httpResponse = await httpClient.PostAsync(URL + "/othernotification", httpContent);
+                        httpResponse = await httpClient.PostAsync(Library.URL + "/othernotification", httpContent);
 
                         if (httpResponse.Content != null)
                         {
@@ -217,8 +211,6 @@ namespace Sodexo_KKH.ViewModels
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-
 
                     dynamic p = new ExpandoObject();
                     p.country_id = Library.KEY_USER_ccode;
@@ -242,7 +234,7 @@ namespace Sodexo_KKH.ViewModels
                         var httpResponse = new System.Net.Http.HttpResponseMessage();
 
 
-                        httpResponse = await httpClient.PostAsync(URL + "/Menunotification", httpContent);
+                        httpResponse = await httpClient.PostAsync(Library.URL + "/Menunotification", httpContent);
 
 
 
@@ -254,19 +246,16 @@ namespace Sodexo_KKH.ViewModels
                                 isMenuNotificationAvailable = true;
                                 IsMenuAvailable = true;
                                 ShowToastNotification("T2O", "An Update is Available for Menu Master!");
-                                //   mastervis.Visibility = Visibility.Visible;
 
                             }
                             else
                             {
                                 IsMenuAvailable = false;
-                                //   mastervis.Visibility = Visibility.Collapsed;
                             }
 
                         }
                     }
-                    // pbar.IsBusy = false;
-                    //    pbar.IsEnabled = false;
+                    
                 }
             }
             catch (Exception)
@@ -301,8 +290,11 @@ namespace Sodexo_KKH.ViewModels
                                 var ui = new LoadingViewPopup();
                                 await navigation.PushPopupAsync(ui);
 
-                                string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-                                await MasterSync.Sync_mstr_patient_info();
+                               await Task.Run(async() => 
+                                {
+                                    await MasterSync.Sync_mstr_patient_info();
+                                });
+                                
 
                                 await navigation.PopPopupAsync();
 
@@ -321,7 +313,7 @@ namespace Sodexo_KKH.ViewModels
                         IsPageEnabled = true;
                         if (CrossConnectivity.Current.IsConnected)
                         {
-                            isMstrNotificationAvailable = false;
+                            isMstrNotificationAvailable = true;
                             var ui = new LoadingViewPopup();
                             await navigation.PushPopupAsync(ui);
 
@@ -329,15 +321,14 @@ namespace Sodexo_KKH.ViewModels
                             string tm = DateTime.Now.AddMinutes(-atime).ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
                             Library.last_mastersynctime = tm;
-
+                           
                             await MasterSync.SyncMaster();
-
 
                             await navigation.PopPopupAsync();
 
                             MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", "Master");
                             await PageDialog.DisplayAlertAsync("Alert!!", "Master data synced successfully.", "OK");
-
+                            isMstrNotificationAvailable = false;
 
                         }
                         else
@@ -351,7 +342,7 @@ namespace Sodexo_KKH.ViewModels
                         IsPageEnabled = true;
                         if (CrossConnectivity.Current.IsConnected)
                         {
-                            isMenuNotificationAvailable = false;
+                            isMenuNotificationAvailable = true;
                             var ui = new LoadingViewPopup();
                             await navigation.PushPopupAsync(ui);
 
@@ -363,12 +354,10 @@ namespace Sodexo_KKH.ViewModels
                             await MasterSync.Sync_mstr_menu_master();
                             await MasterSync.Sync_mstr_menu_item();
 
-
-
-
                             await navigation.PopPopupAsync();
 
                             await PageDialog.DisplayAlertAsync("Alert!!", "Menu Items synced succeesfully.", "OK");
+                            isMenuNotificationAvailable = false;
                         }
                         else
                             await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
@@ -441,12 +430,11 @@ namespace Sodexo_KKH.ViewModels
                         {
                             if (CrossConnectivity.Current.IsConnected)
                             {
-                                string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
 
                                 using (var httpClient = new System.Net.Http.HttpClient())
                                 {
 
-                                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogfalse/" + Library.KEY_USER_ID);
+                                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/updatelogfalse/" + Library.KEY_USER_ID);
 
                                     await httpClient.SendAsync(request);
                                 }

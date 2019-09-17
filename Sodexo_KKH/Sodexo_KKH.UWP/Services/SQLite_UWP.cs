@@ -15,7 +15,7 @@ namespace Sodexo_KKH.UWP.Services
 {
     public class SQLite_UWP : IDBInterface
     {
-        SQLiteConnection conn;
+       public SQLiteConnection conn;
         public SQLite_UWP()
         {
            // InitializeDB();

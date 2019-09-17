@@ -71,9 +71,8 @@ namespace Sodexo_KKH.PopUpControl
                 string json = JsonConvert.SerializeObject(p);
 
                 var httpClient = new HttpClient();
-                var url = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc/OrderCanceled";
 
-                var result = await httpClient.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                var result = await httpClient.PostAsync($"{Library.URL}/OrderCanceled", new StringContent(json, Encoding.UTF8, "application/json"));
                 var contents = await result.Content.ReadAsStringAsync();
 
 

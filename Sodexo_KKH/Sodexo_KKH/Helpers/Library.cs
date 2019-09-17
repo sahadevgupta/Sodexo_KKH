@@ -5,34 +5,12 @@ namespace Sodexo_KKH.Helpers
 {
     public class Library
     {
-
-
-        //Patient's information
-       // public static string KEY_SERVER_IP = "www.touch2orderqaws.sodexonet.com";  //For QA Server
-        //public static string KEY_SERVER_IP = "172.30.33.76/";
-       // public static string KEY_SERVER_IP = "epinetuat/";//For Local Server
-                                                          //  public static string KEY_SERVER_IP = "172.25.1.29/";
-        public static string KEY_SERVER_IP = "172.25.1.29/";
         public static string ServerName = "UAT";
         //public static string ServerName = "QA";
 
-        // public static string KEY_SERVER_LOCATION = "Sodexo_Service_prasad";
-        //  public static string KEY_SERVER_LOCATION = "sodexo_test_services"; //check  
-        //public static string KEY_SERVER_LOCATION = "";
-        //public static string KEY_SERVER_LOCATION = "sodexo_services_kkh"; //"t2O_cac_services";
-        public static string KEY_SERVER_LOCATION = "t2o_kkh_service"; //"t2O_cac_services"; //QA server                                                          // public static string KEY_SERVER_LOCATION = "SodexoService";
-
-        //public static string KEY_http = "https://";      //For QA Server
-        public static string KEY_http = "http://";          //For Local Server
-        //sodexo wcf service touch2orderuat.sodexonet.com  //
-
-        //http://touch2orderuat.sodexonet.com
-        //https://www.touch2orderws.sodexonet.com/Sodexo.svc/ latest
-        //public static string URL = Library.KEY_http+Lo Library.KEY_SERVER_IP+"/SodexoService/sodexo.svc"; https://www.touch2orderqaws.sodexonet.com/Sodexo.svc/
-
-
-        // public static string DB_PATH = Path.Combine(Path.Combine(ApplicationData.Current.LocalFolder.Path, "SODEXO.sqlite"));//DataBase Name  
-        //user informations
+        //public static string URL = "https://kkhemosvdapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH DC
+         public static string URL = "http://epinetuat/t2o_kkh_service/Sodexo.svc/";  // for Local Server
+        //public static string URL = "https://www.touch2orderqaws.sodexonet.com/t2o_kkh_service/Sodexo.svc/";  //  for QA Server
 
 
         //WCF service methods

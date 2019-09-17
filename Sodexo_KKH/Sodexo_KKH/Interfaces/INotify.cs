@@ -6,6 +6,6 @@ namespace Sodexo_KKH.Interfaces
     {
         void ShowLocalNotification(string title, string body);
         void ShowToast(string body);
-        Task<string> ShowAlert(string title, string body);
+        Task<string> ShowAlert(string title, string body, string acceptbtn = null, string rejectbtn = null, string cancelbtn = null);
     }
 }

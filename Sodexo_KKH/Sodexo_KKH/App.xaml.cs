@@ -47,13 +47,23 @@ namespace Sodexo_KKH
             {
                 if (!string.IsNullOrEmpty(Library.KEY_USER_ID))
                 {
-                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+                    try
+                    {
+
+                    
+                    //string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                     using (var httpClient = new System.Net.Http.HttpClient())
                     {
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogfalse/" + Library.KEY_USER_ID);
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/updatelogfalse/" + Library.KEY_USER_ID);
                         await httpClient.SendAsync(request);
                     }
                     Library.KEY_USER_ID = string.Empty;
+                    }
+                    catch (Exception)
+                    {
+
+                        Library.KEY_USER_ID = string.Empty;
+                    }
                 }
             }
         }
@@ -76,16 +86,20 @@ namespace Sodexo_KKH
             {
                 if (!string.IsNullOrEmpty(Library.KEY_USER_ID))
                 {
-                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+                    try
+                    {
+                        using (var httpClient = new System.Net.Http.HttpClient())
+                        {
+                            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/updatelogfalse/" + Library.KEY_USER_ID);
 
-                    using (var httpClient = new System.Net.Http.HttpClient())
+                            await httpClient.SendAsync(request);
+                            Library.KEY_USER_ID = string.Empty;
+                        }
+                    }
+                    catch (Exception)
                     {
 
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogfalse/" + Library.KEY_USER_ID);
-
-                        await httpClient.SendAsync(request);
                     }
-                    Library.KEY_USER_ID = string.Empty;
                 }
             }
             SessionManager.Instance.EndTrackSession();

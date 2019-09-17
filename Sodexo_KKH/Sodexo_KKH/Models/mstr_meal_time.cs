@@ -1,6 +1,10 @@
-﻿namespace Sodexo_KKH.Models
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
+using SQLite;
+
+namespace Sodexo_KKH.Models
 {
-    public class mstr_meal_time
+    public class mstr_meal_time : BindableBase
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
@@ -28,6 +32,15 @@
         public int region_id { get; set; }
         public int site_id { get; set; }
 
+
+        private bool _isTapped;
+        [Ignore]
+        [JsonIgnore]
+        public bool IsTapped
+        {
+            get { return this._isTapped; }
+            set { SetProperty(ref _isTapped, value); }
+        }
 
         public mstr_meal_time()
         {

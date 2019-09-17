@@ -163,7 +163,6 @@ namespace Sodexo_KKH.ViewModels
 
         public DelegateCommand<string> SearchBtnCommand { get; set; }
         public INavigation navigation { get; internal set; }
-        public string URL { get; private set; }
 
         IPatientManager _patientManager;
         public PatientSearchPageViewModel(INavigationService navigationService, IGenericRepo<mstr_ward_details> mstrWardRepo,
@@ -224,7 +223,7 @@ namespace Sodexo_KKH.ViewModels
                 //myring.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 // String method = "AllergentDietList";
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_SHOWPATIENTMEALDETAILSBYID + "/" + Convert.ToInt32(ID) + "/" + mealtype + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_SHOWPATIENTMEALDETAILSBYID + "/" + Convert.ToInt32(ID) + "/" + mealtype + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 var data = await response.Content.ReadAsStringAsync();
@@ -274,7 +273,6 @@ namespace Sodexo_KKH.ViewModels
         private async void CancelOrder(mstr_patient_info patient, bool IsDeleted = false)
         {
             mstr_meal_history meal = null;
-            string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
             ObservableCollection<mstr_meal_history> dataList = new ObservableCollection<mstr_meal_history>();
 
             List<mstr_meal_option> list = new List<mstr_meal_option>();
@@ -282,16 +280,16 @@ namespace Sodexo_KKH.ViewModels
             string ss = Library.KEY_USER_ROLE.ToString();
             string scode = Library.KEY_USER_SiteCode.ToString();
             HttpRequestMessage request = null;
-            if (ss == "Nurse")
-            {
-                request = new HttpRequestMessage(HttpMethod.Get, URL + "/Nurse_Cancel_order/" + patient.ID + "/" + patient.meal_order_id + "/" + patient.meal_order_date + "/" + scode);
+            //if (ss == "Nurse")
+            //{
+            //    request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/Nurse_Cancel_order/" + patient.ID + "/" + patient.meal_order_id + "/" + patient.meal_order_date + "/" + scode);
 
-            }
-            else
-            {
-                request = new HttpRequestMessage(HttpMethod.Get, URL + "/FSA_Cancel_order/" + patient.ID + "/" + patient.meal_order_id + "/" + patient.meal_order_date + "/" + scode);
+            //}
+            //else
+            //{
+                request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/FSA_Cancel_order/" + patient.ID + "/" + patient.meal_order_id + "/" + patient.meal_order_date + "/" + scode);
 
-            }
+            //}
 
             HttpResponseMessage response = await httpClient.SendAsync(request);
             var data = await response.Content.ReadAsStringAsync();
@@ -385,7 +383,7 @@ namespace Sodexo_KKH.ViewModels
                 try
                 {
                     HttpClient httpClient = new System.Net.Http.HttpClient();
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/Searchpatient/" + value + "/" + Library.KEY_USER_SiteCode);
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/Searchpatient/" + value + "/" + Library.KEY_USER_SiteCode);
                     HttpResponseMessage response = await httpClient.SendAsync(request);
 
                     var data = await response.Content.ReadAsStringAsync();
@@ -421,12 +419,15 @@ namespace Sodexo_KKH.ViewModels
 
         internal async void NavigateToInfoPage(mstr_patient_info patient)
         {
+            IsPageEnabled = true;
+
             var sqlite = DependencyService.Get<IDBInterface>().GetConnection();
             var MasterMenuInfo = sqlite.Table<mstr_menu_master>();
             if (!MasterMenuInfo.Any())
             {
                 await PageDialog.DisplayAlertAsync("Alert!!", "Please sync 'Sync Menu Items' from drawer menu to proceed further.", "OK");
                 Library.KEY_SYNC_NOTIFICATION = "1";
+                IsPageEnabled = false;
                 return;
             }
 
@@ -447,6 +448,8 @@ namespace Sodexo_KKH.ViewModels
                 AssignPatientInfo(patient);
 
             await NavigationService.NavigateAsync($"{nameof(PatientInformationPage)}", new NavigationParameters { { "PatientInfo", patient } });
+
+            IsPageEnabled = false;
         }
 
         private void AssignPatientInfo(mstr_patient_info patient)
@@ -535,7 +538,7 @@ namespace Sodexo_KKH.ViewModels
                         IsPageEnabled = true;
                         HttpClient httpClient = new System.Net.Http.HttpClient();
 
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/PullpatientData_by_patientname/" + Library.KEY_USER_SiteCode + "/" + format + "/" + PatientName);
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/PullpatientData_by_patientname/" + Library.KEY_USER_SiteCode + "/" + format + "/" + PatientName);
                         HttpResponseMessage response = await httpClient.SendAsync(request);
 
                         var data = await response.Content.ReadAsStringAsync();
@@ -588,6 +591,9 @@ namespace Sodexo_KKH.ViewModels
             var wbed = 0;
             try
             {
+                if (SelectedWard == null)
+                    return;
+                
                     IsPageEnabled = true;
                     string format = SelectedDate.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
                     wbed = SelectedBed != null ? SelectedBed.ID : 0;
@@ -628,7 +634,6 @@ namespace Sodexo_KKH.ViewModels
             MstrWards = new List<mstr_ward_details>(_mstrWardRepo.QueryTable().Where(x => x.ward_type_name != "Staff" && x.status_id == 1).OrderBy(y => y.ID));
            // BedDetails = new List<mstr_bed_details>();
 
-            URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
 
             if (string.IsNullOrEmpty(Library.KEY_SYNC_NOTIFICATION))
             {

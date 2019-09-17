@@ -5,6 +5,7 @@ using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfBusyIndicator.iOS;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.SfAutoComplete.XForms.iOS;
+
 using UIKit;
 using Xamarin.Forms;
 
@@ -33,11 +34,15 @@ namespace Sodexo_KKH.iOS
             UIApplication.SharedApplication.RegisterUserNotificationSettings(pushSettings);
 
             Rg.Plugins.Popup.Popup.Init();
-            global::Xamarin.Forms.Forms.Init();
+            global::Xamarin.Forms.Forms.Init();   
             FormsMaterial.Init();
             SfListViewRenderer.Init();
             SfAutoCompleteRenderer.Init();
             new SfBusyIndicatorRenderer();
+            //SfBorderRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfCheckBoxRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfRadioButtonRenderer.Init();
+
             LoadApplication(new App(new iOSInitializer()));
 
             

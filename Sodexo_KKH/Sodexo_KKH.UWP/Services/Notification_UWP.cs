@@ -78,23 +78,35 @@ namespace Sodexo_KKH.UWP.Services
             timer.Start();
         }
 
-        public async Task<string> ShowAlert(string title,string body)
+        public async Task<string> ShowAlert(string title,string body,string acceptbtn = null, string rejectbtn = null, string cancelbtn = null)
         {
             var dialog = new MessageDialog(body, title);
-
+            
             // If you want to add custom buttons
-            dialog.Commands.Add(new UICommand("Yes", delegate (IUICommand command)
+            if (!string.IsNullOrEmpty(acceptbtn))
             {
-                // Your command action here
-            }));
-            dialog.Commands.Add(new UICommand("No", delegate (IUICommand command)
+                dialog.Commands.Add(new UICommand(acceptbtn, delegate (IUICommand command)
+                {
+                    // Your command action here
+                }));
+            }
+
+            if (!string.IsNullOrEmpty(rejectbtn))
             {
-                // Your command action here
-            }));
-            dialog.Commands.Add(new UICommand("Cancel", delegate (IUICommand command)
+                dialog.Commands.Add(new UICommand(rejectbtn, delegate (IUICommand command)
+                {
+                    // Your command action here
+                }));
+            }
+
+            if (!string.IsNullOrEmpty(cancelbtn))
             {
-                // Your command action here
-            }));
+                dialog.Commands.Add(new UICommand(cancelbtn, delegate (IUICommand command)
+                {
+                    // Your command action here
+                }));
+            }
+           
 
             // Show dialog and save result
             var result = await dialog.ShowAsync();

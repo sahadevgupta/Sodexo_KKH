@@ -25,6 +25,5 @@ namespace Sodexo_KKH.Models
             get { return this._isChecked; }
             set { SetProperty(ref _isChecked, value); }
         }
-
     }
 }

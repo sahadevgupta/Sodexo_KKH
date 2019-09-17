@@ -36,6 +36,10 @@ namespace Sodexo_KKH.Converters
             {
                 One = (FileImageSource)PlatFromImage.GetImage("hl.png");
             }
+            if (value.ToString() == "6")
+            {
+                One = (FileImageSource)PlatFromImage.GetImage("TC.png");
+            }
             // string FileName = "SAN_P_NU_033-34.JPG";
 
             //BitmapImage One = new BitmapImage(new Uri("ms-appx:///" + FileName));

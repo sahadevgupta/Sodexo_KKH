@@ -20,7 +20,7 @@ namespace Sodexo_KKH.Helpers
         {
 
             Library library = new Library();
-            string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
+            //string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
             var localOrders = orderlocalRepo.QueryTable();
             foreach (var item in localOrders)
             {
@@ -71,7 +71,7 @@ namespace Sodexo_KKH.Helpers
 
 
                                     // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url
-                                    httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_UPDATE_ORDER, httpContent);
+                                    httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_UPDATE_ORDER, httpContent);
 
 
 
@@ -106,7 +106,7 @@ namespace Sodexo_KKH.Helpers
 
 
                                     // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url
-                                    httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_SAVEORDER, httpContent);
+                                    httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_SAVEORDER, httpContent);
 
 
                                     var orderResponse = await CheckOrderReaponse(orderlocalRepo, item, httpResponse, pageDialog);
@@ -159,9 +159,8 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 Library library = new Library();
-                string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_CHECKFIRSTORDER + "/" + p_id);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_CHECKFIRSTORDER + "/" + p_id);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 var data = await response.Content.ReadAsStringAsync();
@@ -192,7 +191,6 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 Library library = new Library();
-                string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 if (meal_time == "Breakfast")
                 {
@@ -209,7 +207,7 @@ namespace Sodexo_KKH.Helpers
 
                 DateTime check_date = Convert.ToDateTime(DateTime.ParseExact(order_date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
                 string format = check_date.Date.ToString("dd-MM-yyyy");
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_CHECKORDERTAKEN + "/" + format + "/" + p_id + "/" + meal_time + "/" + order_id);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_CHECKORDERTAKEN + "/" + format + "/" + p_id + "/" + meal_time + "/" + order_id);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 var data = await response.Content.ReadAsStringAsync();
@@ -237,9 +235,8 @@ namespace Sodexo_KKH.Helpers
                 DateTime check_date = Convert.ToDateTime(DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
                 string format = check_date.Date.ToString("dd-MM-yyyy");
                 Library library = new Library();
-                string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
                 System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
-                System.Net.Http.HttpRequestMessage request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, URL + "/" + Library.METHODE_CHECKORDER + "/" + format + "/" + p_id);
+                System.Net.Http.HttpRequestMessage request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, Library.URL + "/" + Library.METHODE_CHECKORDER + "/" + format + "/" + p_id);
                 System.Net.Http.HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 var data = await response.Content.ReadAsStringAsync();

@@ -12,31 +12,29 @@ namespace Sodexo_KKH.Helpers
 {
     public static class MasterSync
     {
-        private static string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
         public async static Task SyncMaster()
         {
-            await Sync_mstr_mealclass();
-            await Sync_mstr_bed_meal_class_mapping();
-            await Sync_mstr_allergies_master();
             await Sync_mstr_bed_details();
-            await Sync_mstr_diet_type();
-            await Sync_mstr_diet_texture();
-            await Sync_mstr_fluid_master();
-            await Sync_mstr_ingredient();
-            await Sync_mstr_allergies_master();
-            await Sync_mstr_remarks();
-            await Sync_mstr_meal_type();
+            await Sync_mstr_bed_meal_class_mapping();
             await Sync_mstr_Cycledetails();
             await Sync_mstr_ward_details();
-            await Sync_mstr_meal_time();
-            await Sync_mstr_displaypayment();
-            await Sync_mstr_menu_item_category();
-            await Sync_mstr_therapeutic();
-            await Sync_mstr_others_master();
+            await Sync_mstr_allergies_master();
+            await Sync_mstr_diet_type();
+            await Sync_mstr_ingredient();
+            await Sync_mstr_mealclass();
             await Sync_mstr_meal_option();
-            await Sync_mstr_flag();
-            // await Sync_mstr_patient_info();
+            await Sync_mstr_meal_time();
+            await Sync_mstr_meal_type();
+            await Sync_mstr_menu_item_category();
+            await Sync_mstr_others_master();
+            await Sync_mstr_remarks();
+            await Sync_mstr_diet_texture();
+            await Sync_mstr_fluid_master();
+            await Sync_mstr_therapeutic();
             await Sync_mstr_therapeutic_condition();
+            
+           // await Sync_mstr_displaypayment();
+           //await Sync_mstr_flag();
 
         }
 
@@ -45,7 +43,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_THERAPEUTICCONDITIONDETAILS + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_THERAPEUTICCONDITIONDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_therapeutic_condition> jarray = JsonConvert.DeserializeObject<List<mstr_therapeutic_condition>>(await response.Content.ReadAsStringAsync());
 
@@ -69,7 +67,7 @@ namespace Sodexo_KKH.Helpers
             {
                 mstr_patient_info patient_info = new mstr_patient_info();
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETALLPATIENT + "/" + Library.KEY_USER_SiteCode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETALLPATIENT + "/" + Library.KEY_USER_SiteCode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 List<mstr_patient_info> jarray = JsonConvert.DeserializeObject<List<mstr_patient_info>>(await response.Content.ReadAsStringAsync());
@@ -102,7 +100,7 @@ namespace Sodexo_KKH.Helpers
             {
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DisplayLanguageDetails);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DisplayLanguageDetails);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_DisplayLanguageDetails> jarray = JsonConvert.DeserializeObject<List<mstr_DisplayLanguageDetails>>(await response.Content.ReadAsStringAsync());
@@ -138,7 +136,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DISPLAYMEAL_OPTION + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYMEAL_OPTION + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_meal_option> jarray = JsonConvert.DeserializeObject<List<mstr_meal_option>>(await response.Content.ReadAsStringAsync());
 
@@ -160,7 +158,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_OTHERSMASTERDETAILS + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_OTHERSMASTERDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_others_master> jarray = JsonConvert.DeserializeObject<List<mstr_others_master>>(await response.Content.ReadAsStringAsync());
 
@@ -182,7 +180,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_THERAPEUTICDETAILS + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_THERAPEUTICDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_therapeutic> jarray = JsonConvert.DeserializeObject<List<mstr_therapeutic>>(await response.Content.ReadAsStringAsync());
 
@@ -205,7 +203,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_MENUITEMCATEGORYDETAILS + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_MENUITEMCATEGORYDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_menu_item_category> jarray = JsonConvert.DeserializeObject<List<mstr_menu_item_category>>(await response.Content.ReadAsStringAsync());
@@ -231,7 +229,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DisplayPaymentModeDetails);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DisplayPaymentModeDetails);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_DisplayPaymentModeDetails> jarray = JsonConvert.DeserializeObject<List<mstr_DisplayPaymentModeDetails>>(await response.Content.ReadAsStringAsync());
@@ -255,7 +253,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_MEALTIMELIST);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_MEALTIMELIST);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_meal_time> jarray = JsonConvert.DeserializeObject<List<mstr_meal_time>>(await response.Content.ReadAsStringAsync());
@@ -268,21 +266,12 @@ namespace Sodexo_KKH.Helpers
                     dbConn.Commit();
                 };
 
-                //loading items in ward combobox
-                // FillCombobox2();
-                // stop progressring
-                // display the previous state of selection
-                //orderdtpicker.Date = new DateTime(seldate.DayOfYear, seldate.Month, seldate.Day);
-                //cmbsearchbyward.SelectedIndex = selward;
-                //cmbsearchbypatient.SelectedIndex = selbed;
-
-                //   FillCombobox2();
+                
 
             }
             catch (Exception excp)
             {
-                // stop progressring
-                //   FillCombobox2();
+                
             }
         }
 
@@ -291,7 +280,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DISPLAYWARDDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYWARDDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_ward_details> jarray = JsonConvert.DeserializeObject<List<mstr_ward_details>>(await response.Content.ReadAsStringAsync());
 
@@ -323,11 +312,9 @@ namespace Sodexo_KKH.Helpers
             {
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_CYCLEDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_CYCLEDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
-                // jarray= await response.Content.ReadAsStringAsync();
-                var data = await response.Content.ReadAsStringAsync();
-                //JArray jarray = JArray.Parse(data);
+               
                 List<mstr_Cycledetails> jarray = JsonConvert.DeserializeObject<List<mstr_Cycledetails>>(await response.Content.ReadAsStringAsync());
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
@@ -393,7 +380,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DISPLAYMEALTYPE + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYMEALTYPE + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_meal_type> jarray = JsonConvert.DeserializeObject<List<mstr_meal_type>>(await response.Content.ReadAsStringAsync());
@@ -406,21 +393,10 @@ namespace Sodexo_KKH.Helpers
                     dbConn.Commit();
                 };
 
-                //loading items in ward combobox
-                // FillCombobox2();
-
-                // stop progressring
-                // display the previous state of selection
-                //orderdtpicker.Date = new DateTime(seldate.DayOfYear, seldate.Month, seldate.Day);
-                //cmbsearchbyward.SelectedIndex = selward;
-                //cmbsearchbypatient.SelectedIndex = selbed;
-
-                //   FillCombobox2();
             }
             catch (Exception excp)
             {
-                // stop progressring
-                //   FillCombobox2();
+                
             }
         }
 
@@ -429,7 +405,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETREMARKSDETAIL + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETREMARKSDETAIL + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_remarks> jarray = JsonConvert.DeserializeObject<List<mstr_remarks>>(await response.Content.ReadAsStringAsync());
@@ -452,7 +428,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_INGREDIENTLIST + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_INGREDIENTLIST + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_ingredient> jarray = JsonConvert.DeserializeObject<List<mstr_ingredient>>(await response.Content.ReadAsStringAsync());
@@ -476,7 +452,7 @@ namespace Sodexo_KKH.Helpers
             {
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETALLFLUIDCONSISTENCY + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETALLFLUIDCONSISTENCY + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_fluid_master> jarray = JsonConvert.DeserializeObject<List<mstr_fluid_master>>(await response.Content.ReadAsStringAsync());
@@ -501,7 +477,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETALLDIETTEXTURE + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETALLDIETTEXTURE + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_diet_texture> jarray = JsonConvert.DeserializeObject<List<mstr_diet_texture>>(await response.Content.ReadAsStringAsync());
@@ -524,7 +500,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DISPLAYDIET_TYPE + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYDIET_TYPE + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_diet_type> jarray = JsonConvert.DeserializeObject<List<mstr_diet_type>>(await response.Content.ReadAsStringAsync());
@@ -548,7 +524,7 @@ namespace Sodexo_KKH.Helpers
             {
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DISPLAYBEDDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYBEDDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_bed_details> jarray = JsonConvert.DeserializeObject<List<mstr_bed_details>>(await response.Content.ReadAsStringAsync());
@@ -577,7 +553,7 @@ namespace Sodexo_KKH.Helpers
 
                         }
                     }
-                    dbConn.Commit();
+                    //dbConn.Commit();
                 }
             }
             catch (Exception excp)
@@ -590,7 +566,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_ALLERGENTDIETLIST + "/" + Library.KEY_USER_ccode);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_ALLERGENTDIETLIST + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_allergies_master> jarray = JsonConvert.DeserializeObject<List<mstr_allergies_master>>(await response.Content.ReadAsStringAsync());
@@ -613,7 +589,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_BEDMEALCLASSMAPPING + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_BEDMEALCLASSMAPPING + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 List<mstr_bed_meal_class_mapping> jarray = JsonConvert.DeserializeObject<List<mstr_bed_meal_class_mapping>>(await response.Content.ReadAsStringAsync());
@@ -651,7 +627,7 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_DISPLAYMEALCLASS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYMEALCLASS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_mealclass> jarray = JsonConvert.DeserializeObject<List<mstr_mealclass>>(await response.Content.ReadAsStringAsync());
@@ -685,7 +661,8 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_NENUITEMDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                httpClient.Timeout = TimeSpan.FromMinutes(20);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENUITEMDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_menu_item> jarray = JsonConvert.DeserializeObject<List<mstr_menu_item>>(await response.Content.ReadAsStringAsync());
@@ -710,7 +687,8 @@ namespace Sodexo_KKH.Helpers
             try
             {
                 HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_NENU_MASETER + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                httpClient.Timeout = TimeSpan.FromMinutes(20);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENU_MASETER + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_menu_master> jarray = JsonConvert.DeserializeObject<List<mstr_menu_master>>(await response.Content.ReadAsStringAsync());

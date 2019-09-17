@@ -33,5 +33,14 @@ namespace Sodexo_KKH.Models
         [JsonIgnore]
         public int SrNo { get; set; }
 
+
+        private string _patientNRIC;
+        [JsonProperty("PatientNRIC")]
+        public string PatientNRIC
+        {
+            get { return this._patientNRIC; }
+            set { SetProperty(ref _patientNRIC, value); }
+        }
+
     }
 }

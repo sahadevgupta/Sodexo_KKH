@@ -65,7 +65,7 @@
                     ItemsSource="{Binding BedDetails}"
                     ItemDisplayBinding="{Binding bed_no}"
                     SelectedItem="{Binding SelectedBed}"
-                        Title="Select Bed"
+                        Title="Select Bed no."
                     HorizontalOptions="StartAndExpand"  VerticalOptions="Center" />
                 <Label x:Name="lbl_selectmealtime" Text="Meal Time" 
                    VerticalOptions="Center" FontSize="Small" />
@@ -150,14 +150,14 @@
 
                                 <Label  Grid.Row="0" Grid.Column="3" x:Name="tblbed" Text="{Binding Bed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
 
-                                <Label  Grid.Row="0" Grid.Column="4" x:Name="tblpname" Text="{Binding Name}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                <Label  Grid.Row="0" Grid.Column="4" x:Name="tblpname" Text="{Binding PatientNRIC}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
 
                                 <Label  Grid.Row="0" Grid.Column="5" x:Name="tblmealtime" Text="{Binding MealTime}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
 
                                 <Label  Grid.Row="0" Grid.Column="6" x:Name="tblorderedby" Text="{Binding OrderBy}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
 
-                                        <Image x:Name="imgbtn_scan" IsEnabled="{Binding is_verifed,Converter={StaticResource BoolToStringConverter}}" Grid.Row="0" Grid.Column="7"
-                                           WidthRequest="40" HeightRequest="40" Source="{Binding is_verifed,Converter={StaticResource BoolToImageConverter}}" VerticalOptions="Center">
+                                        <Image x:Name="imgbtn_scan" VerticalOptions="Center" HorizontalOptions="Center" IsEnabled="{Binding is_verifed,Converter={StaticResource BoolToStringConverter}}" Grid.Row="0" Grid.Column="7"
+                                           WidthRequest="40" HeightRequest="40" Source="{Binding is_verifed,Converter={StaticResource BoolToImageConverter}}">
                                             <Image.GestureRecognizers >
                                                 <TapGestureRecognizer Tapped="ScanImageTapped"  NumberOfTapsRequired="1"/>
                                             </Image.GestureRecognizers>

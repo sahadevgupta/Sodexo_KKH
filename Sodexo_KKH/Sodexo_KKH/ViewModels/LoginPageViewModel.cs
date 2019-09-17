@@ -4,8 +4,10 @@ using Plugin.Connectivity;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using Rg.Plugins.Popup.Extensions;
 using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Models;
+using Sodexo_KKH.PopUpControl;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -71,6 +73,9 @@ namespace Sodexo_KKH.ViewModels
             get { return _enableSubmitButton; }
             set { SetProperty(ref _enableSubmitButton, value); }
         }
+
+        public INavigation navigation;
+
         #region reCAPTCHA
 
         private string _captcha;
@@ -189,33 +194,15 @@ namespace Sodexo_KKH.ViewModels
                     try
                     {
                         RoleList = new List<string>();
-                        // string URL = Library.KEY_http + library.LoadSetting(Library.KEY_SERVER_IP) + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-                        string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-
-                        //start progessring
                         IsPageEnabled = true;
-                        //var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-                        //JArray jarray;
 
-
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETUSERROLEBYUSERNAMEMOBILE + "/" + UserName);
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETUSERROLEBYUSERNAMEMOBILE + "/" + UserName);
 
                         HttpClient httpClient = new System.Net.Http.HttpClient();
                         HttpResponseMessage response = await httpClient.SendAsync(request);
 
                         var data = await response.Content.ReadAsStringAsync();
                         JArray jarray = JArray.Parse(data);
-
-
-                        //HttpClient httpClient = new System.Net.Http.HttpClient();
-                        //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETUSERROLEBYUSERNAMEMOBILE + "/" + UserName);
-
-                        //HttpResponseMessage response = await httpClient.SendAsync(request);
-
-                        //var data = await response.Content.ReadAsStringAsync();
-                        //var db = DependencyService.Get<IDBInterface>().GetConnection();
-
-
 
                         if (jarray.Count > 0)
                         {
@@ -281,7 +268,6 @@ namespace Sodexo_KKH.ViewModels
 
         public async Task Login(bool isLDap = false)
         {
-
             bool isInternetConnected = NetworkInterface.GetIsNetworkAvailable();
             var str = Captcha.Replace(" ", string.Empty);
             // checking if user name and password are not blank      
@@ -290,18 +276,9 @@ namespace Sodexo_KKH.ViewModels
                 try
                 {
                     if (CrossConnectivity.Current.IsConnected)
-                    {
-
                         await checkLogin(isLDap);
-
-
-                    }
                     else
-                    {
                         await PageDialog.DisplayAlertAsync("Server is not accessible, please check internet connection.", "Alert!!", "OK");
-                    }
-
-
                 }
                 catch (Exception ex)
                 {
@@ -327,13 +304,9 @@ namespace Sodexo_KKH.ViewModels
         {
             try
             {
-                // string URL = Library.KEY_http + library.LoadSetting(Library.KEY_SERVER_IP) + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-                string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
-                // string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + "t2O_cac_services" + "/sodexo.svc";
 
                 string userType = string.Empty;
 
-                //Toast.makeText(LoginActivity.this,"Selection changed",Toast.LENGTH_LONG).show();
                 if (SelectedRole.Equals("Select Role"))
                 {
                     userType = "Select Role";
@@ -383,17 +356,9 @@ namespace Sodexo_KKH.ViewModels
 
                 using (var httpClient = new System.Net.Http.HttpClient())
                 {
-
-                    // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url
-                    var response = await httpClient.PostAsync(URL + "/" + Library.METHODE_USERLOGIN, httpContent);
+                    var response = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_USERLOGIN, httpContent);
 
 
-                    // display a message jason conversion
-                    //var message2 = new MessageDialog(httpResponse.ToString());
-                    //await message2.ShowAsync();
-                    //var httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_SAVEORDER, httpContent);
-
-                    // If the response contains content we want to read it!
                     if (response.Content != null)
                     {
                         var data = await response.Content.ReadAsStringAsync();
@@ -462,57 +427,53 @@ namespace Sodexo_KKH.ViewModels
                                 Library.KEY_USER_currency = row["country_currency"].ToString();
                                 Library.KEY_USER_adjusttime = row["AdjustsiteTime"].ToString();
 
-
-                                //Storing user name and password also
-                                //Library.KEY_USER_NAME, txtusername.Text);
-                                //  Library.KEY_USER_PWD, txtpass.Password);
-
-
-                                //opening patient search page
-                                //opening patient search page
-
-                               
-
                                 if (Library.KEY_USER_ROLE == "FSA" || Library.KEY_USER_ROLE == "Nurse" || Library.KEY_USER_ROLE == "Nurse+FSA")
                                 {
                                     CreateDB();
+
                                     if (expireday == "")
                                     {
-                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
-                                        await httpClient.SendAsync(request);
-
-                                        await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
-                                        await SessionManager.Instance.StartTrackSessionAsync();
-
-                                        //var message = new MessageDialog("Password will expire in one day");
-                                        //await message.ShowAsync();
+                                        await NavigateToHome(Library.URL, httpClient, id);
                                     }
                                     else if (expireday == "100")
                                     {
-
                                         await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in one day", "ok");
-                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
-                                        await httpClient.SendAsync(request);
 
-                                        await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
-
-
+                                        await NavigateToHome(Library.URL, httpClient, id);
+                                       
                                     }
                                     else if (expireday == "200")
                                     {
 
                                         await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in two days", "OK");
-                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
-                                        await httpClient.SendAsync(request);
-                                        await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
+                                        await NavigateToHome(Library.URL, httpClient, id);
                                     }
                                     else if (expireday == "300")
                                     {
                                         await PageDialog.DisplayAlertAsync("Alert!!", "Password will expire in three days", "OK");
-                                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
-                                        await httpClient.SendAsync(request);
-                                        await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
+                                        await NavigateToHome(Library.URL, httpClient, id);
 
+                                    }
+                                    else if (expireday == "400")
+                                    {
+                                        var termsPopup = new TermsConditionPopup();
+                                        termsPopup.Disappearing += async(s, e) => 
+                                        {
+                                            if (termsPopup.isAccepted)
+                                            {
+                                                dynamic p = new JObject();
+                                                p.UserId = Library.KEY_USER_ID;
+
+                                                var Payload = JsonConvert.SerializeObject(p);
+                                                var httpMSgClient = new System.Net.Http.HttpClient();
+                                                // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+                                                var Content = new StringContent(Payload, Encoding.UTF8, "application/json");
+
+                                                var msgResponse = await httpMSgClient.PostAsync(Library.URL + "/" + "TermsConditions", Content);
+                                                await NavigateToHome(Library.URL, httpMSgClient, id);
+                                            }
+                                        };
+                                        await navigation.PushPopupAsync(termsPopup,true);
                                     }
                                     else if (expireday == "500")
                                     {
@@ -525,6 +486,10 @@ namespace Sodexo_KKH.ViewModels
                                         //this.Frame.Navigate(typeof(PatientSearch), null);
                                         await PageDialog.DisplayAlertAsync("Alert!!", "This User Is Deactivated, Kindly Contact Admin.", "OK");
 
+                                    }
+                                    else
+                                    {
+                                        await PageDialog.DisplayAlertAsync("Alert!!", "Unknown Error.", "OK");
                                     }
 
 
@@ -573,6 +538,15 @@ namespace Sodexo_KKH.ViewModels
                 // await DisplayAlert("", excp.Message, "ok");
 
             }
+        }
+
+        private async Task NavigateToHome(string URL, HttpClient httpClient, string id)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
+            await httpClient.SendAsync(request);
+
+            await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
+            await SessionManager.Instance.StartTrackSessionAsync();
         }
 
         private void CreateDB()

@@ -16,7 +16,7 @@ namespace Sodexo_KKH.Views
         {
             base.OnAppearing();
             _viewModel.Navigation = Navigation;
-            RadioGroup.CheckedChanged += RadioGroup_CheckedChanged;
+            //RadioGroup.CheckedChanged += RadioGroup_CheckedChanged;
         }
 
         private void RadioGroup_CheckedChanged(object sender, int e)

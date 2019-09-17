@@ -20,7 +20,7 @@
                     Wrap="Wrap"
                     BackgroundColor="#1e90ff"
                     JustifyContent="SpaceBetween">
-                    <Image Margin="0,10,0,0" WidthRequest="100"  HeightRequest="100" HorizontalOptions="Start" Source="Assets/defaultprofile.png" FlexLayout.Basis="100%"/>
+                    <Image Margin="0,10,0,0" WidthRequest="100"  HeightRequest="100" HorizontalOptions="Start" Source="{converters:PlatformImage SourceImage='defaultprofile'}" FlexLayout.Basis="100%"/>
 
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10,0" FlexLayout.Basis="100%">
                         <StackLayout HorizontalOptions="FillAndExpand">
@@ -94,11 +94,12 @@
                                 <Label  Margin="0,0,0,0" LineBreakMode="WordWrap" 
                                         VerticalTextAlignment="Center" Text="Sync All Master Data" 
                                         TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
-                                <Label x:Name="mastervis"   IsVisible="{Binding IsMasterAvailable}" Margin="10,0,0,0"  
+                                <Label x:Name="mastervis"   IsVisible="{Binding IsMasterAvailable}"   
                                        VerticalTextAlignment="Center"   
                                        LineBreakMode="WordWrap" 
+                                       Margin="0,0,10,0"
                                        VerticalOptions="Center" Text="Update Available" TextColor="Black"  
-                                       HorizontalOptions="End"  FontSize="12" FontAttributes="Bold" 
+                                       HorizontalOptions="EndAndExpand"  FontSize="12" FontAttributes="Bold" 
                                        HeightRequest="31" WidthRequest="60" />
 
                             </StackLayout>
@@ -114,8 +115,11 @@
                                 <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" 
                                         Text="Sync Menu Master" TextColor="Black"  
                                         HorizontalOptions="Start"   FontAttributes="Bold" />
-                                <Label x:Name="menuvis" IsVisible="{Binding IsMenuAvailable}"  Margin="60,0,0,0" VerticalTextAlignment="Center"   LineBreakMode="WordWrap" VerticalOptions="Center" 
-                                       Text="Update Available" TextColor="#2a295c"  HorizontalOptions="Start"  FontSize="12" FontAttributes="Bold" HeightRequest="31" WidthRequest="60" />
+                                <Label x:Name="menuvis" IsVisible="{Binding IsMenuAvailable}"  
+                                       LineBreakMode="WordWrap" 
+                                       VerticalOptions="Center" 
+                                       Margin="0,0,10,0"
+                                       Text="Update Available" TextColor="#2a295c"  HorizontalOptions="EndAndExpand"  FontSize="12" FontAttributes="Bold" HeightRequest="31" WidthRequest="60" />
 
                             </StackLayout>
                             <BoxView Color="Black" WidthRequest ="100" HeightRequest="1"/>
@@ -202,11 +206,8 @@
                             <StackLayout Orientation="Horizontal" Margin="10" VerticalOptions="Center">
                                
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/patient_logout.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" Text="App Version 5.3" 
+                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" Text="App Version 5.4" 
                                         TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
-                                <Label  IsVisible="False"  Margin="60,0,0,0" VerticalTextAlignment="Center"   LineBreakMode="WordWrap" VerticalOptions="Center" 
-                                        Text="5.2" TextColor="#2a295c"  HorizontalOptions="Start"  FontSize="12" FontAttributes="Bold" HeightRequest="31" WidthRequest="60" />
-
                             </StackLayout>
                             <BoxView Color="Black" WidthRequest ="100" HeightRequest="1"/>
                         </StackLayout>

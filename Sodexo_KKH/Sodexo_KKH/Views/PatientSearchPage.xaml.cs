@@ -41,9 +41,8 @@ namespace Sodexo_KKH.Views
 
         private void SfListView_ItemTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
-            _viewModel.IsPageEnabled = true;
             _viewModel.NavigateToInfoPage(e.ItemData as mstr_patient_info);
-            _viewModel.IsPageEnabled = false;
+            
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

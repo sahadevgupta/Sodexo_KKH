@@ -5,9 +5,8 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Sodexo_KKH.Views.MealOrderPage"
              xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
-             xmlns:SyncListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-              xmlns:behaviors="clr-namespace:Sodexo_KKH.Behaviors"
+             xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
              Padding="10"
              xmlns:cell="clr-namespace:Sodexo_KKH.PopUpControl"
              x:Name="mealorderpage">
@@ -42,8 +41,6 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
        
-      
-                  
             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <cell:ConnectionView/>
                 <StackLayout Orientation="Horizontal">
@@ -124,11 +121,11 @@
 
                 </Grid>-->
 
-                <StackLayout Spacing="10">
+                <StackLayout>
                     <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
                                  Direction="Row">
 
-                        <Grid FlexLayout.Basis="50%">
+                        <Grid FlexLayout.Basis="50%" RowSpacing="15">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -151,7 +148,7 @@
                         VerticalOptions="Center" Grid.Row="0" Grid.Column="0" 
                          />
 
-                            <Label Text="{Binding BedClassName}"
+                            <Label Text="{Binding MealClassName}"
                            VerticalOptions="Center" Grid.Row="0" Grid.Column="1"/>
 
                             <Label  
@@ -161,10 +158,26 @@
                          />
                             <Picker Grid.Row="1" Grid.Column="1" 
                             WidthRequest="200" 
+                                    IsEnabled="True"
                             ItemDisplayBinding="{Binding meal_option_name}"
                             SelectedItem="{Binding SelectedMealOption}"
                             ItemsSource="{Binding MealOptions}"
-                        />
+                             >
+                                <Picker.Triggers>
+                                    <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="Full Feeds">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="Clear Feeds">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <!--<DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="T&amp;A">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>-->
+                                </Picker.Triggers>
+                            </Picker>
 
                             <Label   
                         Text="Diet Type:" 
@@ -179,7 +192,7 @@
 
                         </Grid>
 
-                        <StackLayout Margin="10,0,0,0" FlexLayout.Basis="50%">
+                        <StackLayout Margin="10,0,0,0" FlexLayout.Basis="50%" >
                             <StackLayout Orientation="Horizontal">
                                 <Label   FontAttributes="Bold"
                                          LineHeight="1.8"
@@ -197,7 +210,7 @@
                             </StackLayout>
 
                             <Editor Grid.Row="1" 
-                            HeightRequest="55"
+                            HeightRequest="65"
                             Grid.Column="2" 
                             Text="{Binding OrderRemarks}"
                             Grid.ColumnSpan="2" 
@@ -210,219 +223,156 @@
 
                 <BoxView HeightRequest="1" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"/>
 
+                <!--<CollectionView ItemsSource="{Binding MstrMeals}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal" Span="3" />
+                    </CollectionView.ItemsLayout>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-
-
-                    <SyncListView:SfListView HorizontalOptions="FillAndExpand"
-                                     Grid.Row="0"
-                                     AutoFitMode="Height"
-                                     HeightRequest="50"    
-                                     SelectedItem="{Binding SelectedMealTime}"
-                                     VerticalOptions="FillAndExpand"
-                                     Orientation="Horizontal"
-                                     ItemsSource="{Binding MstrMeals}">
-                        <SyncListView:SfListView.ItemTemplate>
-                            <DataTemplate>
-
-
-                                <StackLayout Orientation="Horizontal" Margin="10,0,0,0" HorizontalOptions="FillAndExpand">
-                                    <StackLayout >
-                                        <Label FontSize="Medium"  Text="{Binding meal_name}"/>
-                                        <BoxView Margin="0,0,-5,0"  HeightRequest="5" BackgroundColor="Transparent"/>
-                                    </StackLayout>
-                                    <BoxView Margin="10,0,0,10"  WidthRequest="5" BackgroundColor="Gray"/>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Spacing="0" Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="MealTime_Tapped"/>
+                                </StackLayout.GestureRecognizers>
+                                
+                                <StackLayout >
+                                    <Label FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" Text="{Binding meal_name}"/>
+                                    <BoxView Margin="0,0,-5,0"  HeightRequest="5" BackgroundColor="Transparent">
+                                        <BoxView.Triggers>
+                                            <DataTrigger TargetType="BoxView"
+                                                         Binding="{Binding IsTapped}" Value="true">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                    <BoxView Margin="0,0,-5,0" IsVisible="{Binding IsTapped}"  HeightRequest="5" BackgroundColor="BlueViolet"/>
                                 </StackLayout>
+                                <BoxView Margin="10,0,0,10"  WidthRequest="5" BackgroundColor="Gray"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    
+                    
+                </CollectionView>-->
+
+                <controls:SegmentedBarControl TextColor="Black"
+                                              x:Name="segment"
+                                              SelectedTextColor="Navy"
+                                              SelectedLineColor="Navy"
+                                              SelectedItemChanged="mealtime_SelectedItemChanged"/>
 
 
-                            </DataTemplate>
-                        </SyncListView:SfListView.ItemTemplate>
 
-                        <SyncListView:SfListView.SelectedItemTemplate>
-                            <DataTemplate>
+                
+                
 
-
-                                <StackLayout Orientation="Horizontal" Margin="10,0,0,0" HorizontalOptions="FillAndExpand">
-                                    <StackLayout >
-                                        <Label FontSize="Medium" FontAttributes="Bold" Text="{Binding meal_name}"/>
-                                        <BoxView Margin="0,0,-5,0"  HeightRequest="5" BackgroundColor="BlueViolet"/>
-                                    </StackLayout>
-                                    <BoxView Margin="10,0,0,10" HeightRequest="20" WidthRequest="5" BackgroundColor="Gray"/>
-                                </StackLayout>
-
-
-                            </DataTemplate>
-                        </SyncListView:SfListView.SelectedItemTemplate>
-                    </SyncListView:SfListView>
-
-                    <SyncListView:SfListView AutoFitMode="Height"
-                                     Orientation="Horizontal"  
-                                     HeightRequest="150"     
-                                     Grid.Row="1"
-                                     x:Name="menuCategories"
-                                             SelectedItem="{Binding SelectedMenuCategory}"
-                                     ItemsSource="{Binding MenuCategories}">
-
-                        <SyncListView:SfListView.Triggers>
-                            <DataTrigger TargetType="SyncListView:SfListView"
+                    <StackLayout x:Name="menuCategories" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding MenuCategories}">
+                    <StackLayout.Triggers>
+                        <DataTrigger TargetType="StackLayout"
                                          Binding="{Binding IsMenuEnable}"
                                          Value="false">
-                                <Setter Property="IsEnabled" Value="False"/>
-                                <Setter Property="Opacity" Value="0.5"/>
-                            </DataTrigger>
-                        </SyncListView:SfListView.Triggers>
-                        
-                        
-                        <SyncListView:SfListView.ItemTemplate >
-                            <DataTemplate>
-                                <StackLayout  IsEnabled="{Binding CategoryVisibility}" >
-                                    <StackLayout.Triggers>
-                                        <DataTrigger TargetType="StackLayout"
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </DataTrigger>
+                    </StackLayout.Triggers>
+                    
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                                <Frame  ClassId="{Binding ID}" 
+                                   BackgroundColor="{Binding fcolor}" 
+                                   Margin="4" Padding="15"  BorderColor="Gray" CornerRadius="10">
+
+                                        <Frame.Triggers>
+                                            <DataTrigger TargetType="Frame"
                                                          Binding="{Binding CategoryVisibility}" Value="false">
-                                            <Setter Property="Opacity" Value="0.5"/>
-                                        </DataTrigger>
-                                    </StackLayout.Triggers>
+                                                <Setter Property="Opacity" Value="0.6"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Frame.Triggers>
 
-                                    <Frame HasShadow="False" BackgroundColor="{Binding fcolor}" Margin="4"   BorderColor="Gray" CornerRadius="10">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                                        </Frame.GestureRecognizers>
 
-                                        <Image WidthRequest="80" HeightRequest="70"  Source="{Binding imgname}" Aspect="AspectFit" HorizontalOptions="Center" />
 
-                                    </Frame>
-                                    <Label  HorizontalTextAlignment="Center" LineBreakMode="WordWrap" HorizontalOptions="Center" Text="{Binding meal_item_name}" FontSize="Small"/>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="#FF2a295c"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="UnSelected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                    
+
+                                        <StackLayout>
+                                    <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="80" 
+                                                   HeightRequest="70"  
+                                                   Source="{Binding imgname}" Aspect="AspectFit" >
+
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source" Value="{Binding selimgname}"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="UnSelected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source" Value="{Binding imgname}"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+
+                                    </Image>
+                                    <Label HorizontalTextAlignment="Center" LineBreakMode="WordWrap" 
+                                                   FontAttributes="Bold"
+                                                   Text="{Binding meal_item_name}" FontSize="Small">
+
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="TextColor" Value="White"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="UnSelected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="TextColor" Value="Black"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+
+                                    </Label>
                                 </StackLayout>
-
-                            </DataTemplate>
-                        </SyncListView:SfListView.ItemTemplate>
-
-                        <SyncListView:SfListView.SelectedItemTemplate>
-                            <DataTemplate>
-                                <StackLayout IsEnabled="{Binding ss}" HorizontalOptions="FillAndExpand">
-
-                                    <Frame BackgroundColor="{Binding selcolor}" Margin="4"   HasShadow="False" BorderColor="Gray" CornerRadius="10">
-
-                                        <Image WidthRequest="80" HeightRequest="70" Source="{Binding selimgname}" Aspect="AspectFit" HorizontalOptions="Center" ></Image>
-
                                     </Frame>
-                                    <Label  HorizontalTextAlignment="Center" LineBreakMode="WordWrap" HorizontalOptions="Center" FontAttributes="Bold" Text="{Binding meal_item_name}" FontSize="Small"/>
-                                </StackLayout>
+                              
                             </DataTemplate>
-                        </SyncListView:SfListView.SelectedItemTemplate>
-
-                    </SyncListView:SfListView>
-
-                </Grid>
-
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                  
+                
                 <SearchBar Placeholder="Search..." Text="{Binding SearchText}"/>
 
-
-                <!--<Label FontSize="50"  
-                       FontAttributes="Bold"
-                       BackgroundColor="LightGray"  
-                       x:Name="noitemlbl"
-                       Grid.Row="0"
-                       HeightRequest="150"
-                       TextColor="Black" x:Uid="nit" 
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"
-                       IsVisible="{Binding IsItemAvailable}"
-                       Text="{lEx:Translate nitText}"/>
-
-
-                <Image x:Name="menuImg" Source="{lEx:PlatformImage SourceImage='breakfast'}"   Grid.RowSpan="2"
-                           IsVisible="{Binding IsMenuImageVisible}" Aspect="AspectFill"/>-->
-
-                <!--<ListView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ItemsSource="{Binding MenuItems}"
-                          HasUnevenRows="True"
-                          x:Name="menulist"
-                          Grid.RowSpan="2"
-                          SelectionMode="None">
-
-                    <ListView.Triggers>
-                        <DataTrigger TargetType="ListView"
-                                             Binding="{Binding IsItemAvailable}"
-                                             Value="true">
-                            <Setter Property="IsVisible" Value="False"/>
-                        </DataTrigger>
-                    </ListView.Triggers>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="300" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Image  Grid.Column="0" Grid.Row="0"  
-                                                        Aspect="AspectFit"  
-                                                        HeightRequest="200"
-                                                        WidthRequest="300"
-                                                        VerticalOptions="Center"
-                                                        Source="{Binding ImageData,Converter={StaticResource BytesToImageSourceConverter}}"/>
-
-
-                                        <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
-                                            <Label  FontSize="20" FontAttributes="Bold" Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
-                                            <Label  LineBreakMode="WordWrap" 
-                                           FontSize="17"  
-                                           MaxLines="8" HorizontalOptions="CenterAndExpand"
-                                           Text="{Binding menu_item_description}"/>
-
-                                            <Button x:Uid="ame" x:Name="addremovebtn"  CornerRadius="5" HorizontalOptions="CenterAndExpand" 
-                                            Text="{Binding ameContent}" TextColor="White" 
-                                            BackgroundColor="{Binding btncolor,Converter={StaticResource BoolToColorConverter}}"
-                                           VerticalOptions="EndAndExpand"
-                                                        FontSize="20"
-                                                        FontAttributes="Bold"
-                                                        Clicked="Addremovebtn_Clicked"
-                                            WidthRequest="200">
-                                                <Button.Triggers>
-                                                    <DataTrigger TargetType="Button"
-                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
-                                                                     Value="Remove">
-                                                        <Setter Property="ImageSource" Value="{lEx:PlatformImage SourceImage='cancel_mealsummary'}"/>
-
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Button"
-                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
-                                                                     Value="Add to menu">
-                                                        <Setter Property="ImageSource" Value="{Null}"/>
-
-                                                    </DataTrigger>
-
-                                                </Button.Triggers>
-                                            </Button>
-
-                                        </StackLayout>
-
-                                    </Grid>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>-->
-
-
-
                 <ScrollView>
-                <StackLayout Spacing="10">
-
-
-                        <Image Source="{Binding menuImage}"/>
-
+                <StackLayout>
                         <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
                                  Direction="Row">
-
                         <Label FontSize="50"  
                                FlexLayout.Basis="100%"
                        FontAttributes="Bold"
@@ -502,193 +452,12 @@
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
 
-                        <!--<ListView 
-                                  ItemsSource="{Binding MenuItems}"
-                                  FlexLayout.Basis="100%"
-                                  CachingStrategy="RecycleElement"
-                          HasUnevenRows="True"
-                          x:Name="menulist"
-                          Grid.RowSpan="2"
-                          SelectionMode="None">
-
-                    <ListView.Triggers>
-                        <DataTrigger TargetType="ListView"
-                                             Binding="{Binding IsItemAvailable}"
-                                             Value="true">
-                            <Setter Property="IsVisible" Value="False"/>
-                        </DataTrigger>
-                    </ListView.Triggers>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="300" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Image  Grid.Column="0" Grid.Row="0"  
-                                                        Aspect="AspectFit"  
-                                                        HeightRequest="200"
-                                                        WidthRequest="300"
-                                                        VerticalOptions="Center"
-                                                        Source="{Binding ImageData,Converter={StaticResource BytesToImageSourceConverter}}"/>
-
-
-                                        <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
-                                            <Label  FontSize="20" FontAttributes="Bold" Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
-                                            <Label  LineBreakMode="WordWrap" 
-                                           FontSize="17"  
-                                           MaxLines="8" HorizontalOptions="CenterAndExpand"
-                                           Text="{Binding menu_item_description}"/>
-
-                                            <Button x:Uid="ame" x:Name="addremovebtn"  CornerRadius="5" HorizontalOptions="CenterAndExpand" 
-                                            Text="{Binding ameContent}" TextColor="White" 
-                                            BackgroundColor="{Binding btncolor,Converter={StaticResource BoolToColorConverter}}"
-                                           VerticalOptions="EndAndExpand"
-                                                        FontSize="20"
-                                                        FontAttributes="Bold"
-                                                        Clicked="Addremovebtn_Clicked"
-                                            WidthRequest="200">
-                                                <Button.Triggers>
-                                                    <DataTrigger TargetType="Button"
-                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
-                                                                     Value="Remove">
-                                                        <Setter Property="ImageSource" Value="{lEx:PlatformImage SourceImage='cancel_mealsummary'}"/>
-
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Button"
-                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
-                                                                     Value="Add to menu">
-                                                        <Setter Property="ImageSource" Value="{Null}"/>
-
-                                                    </DataTrigger>
-
-                                                </Button.Triggers>
-                                            </Button>
-
-                                        </StackLayout>
-
-                                    </Grid>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>-->
+                     
 
                     </FlexLayout>
                 </StackLayout>
                 </ScrollView>
-                <!--<Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="150"/>
-                        <RowDefinition Height="*"/>
-                        
-                    </Grid.RowDefinitions>
-
-                    <Label FontSize="50"  
-                       FontAttributes="Bold"
-                       BackgroundColor="LightGray"  
-                       x:Name="noitemlbl"
-                       Grid.Row="0"
-                       HeightRequest="150"
-                       TextColor="Black" x:Uid="nit" 
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"
-                       IsVisible="{Binding IsItemAvailable}"
-                       Text="{lEx:Translate nitText}"/>
-
-                    <Image x:Name="menuImg" Source="{lEx:PlatformImage SourceImage='breakfast'}"   Grid.RowSpan="2"
-                           IsVisible="{Binding IsMenuImageVisible}" Aspect="AspectFill"/>
-
-
-                    <CollectionView ItemsSource="{Binding MenuItems}" SelectionMode="None"
-                                    Grid.RowSpan="2"
-                                    Grid.Row="0">
-
-                        <CollectionView.Triggers>
-                            <DataTrigger TargetType="CollectionView"
-                                             Binding="{Binding IsItemAvailable}"
-                                             Value="true">
-                                <Setter Property="IsVisible" Value="False"/>
-                            </DataTrigger>
-                        </CollectionView.Triggers>
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-
-                                <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="300" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Image  Grid.Column="0" Grid.Row="0"  
-                                                        Aspect="AspectFit"  
-                                                        HeightRequest="200"
-                                                        WidthRequest="300"
-                                                        VerticalOptions="Center"
-                                                        Source="{Binding ImageData,Converter={StaticResource BytesToImageSourceConverter}}"/>
-
-
-                                        <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
-                                            <Label  FontSize="20" FontAttributes="Bold" Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
-                                            <Label  LineBreakMode="WordWrap" 
-                                           FontSize="17"  
-                                           MaxLines="8" HorizontalOptions="CenterAndExpand"
-                                           Text="{Binding menu_item_description}"/>
-
-                                            <Button x:Uid="ame" x:Name="addremovebtn"  CornerRadius="5" HorizontalOptions="CenterAndExpand" 
-                                            Text="{Binding ameContent}" TextColor="White" 
-                                            BackgroundColor="{Binding btncolor,Converter={StaticResource BoolToColorConverter}}"
-                                           VerticalOptions="EndAndExpand"
-                                                        FontSize="20"
-                                                        FontAttributes="Bold"
-                                                        Clicked="Addremovebtn_Clicked"
-                                            WidthRequest="200">
-                                                <Button.Triggers>
-                                                    <DataTrigger TargetType="Button"
-                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
-                                                                     Value="Remove">
-                                                        <Setter Property="ImageSource" Value="{lEx:PlatformImage SourceImage='cancel_mealsummary'}"/>
-
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Button"
-                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
-                                                                     Value="Add to menu">
-                                                        <Setter Property="ImageSource" Value="{Null}"/>
-
-                                                    </DataTrigger>
-
-                                                </Button.Triggers>
-                                            </Button>
-
-                                        </StackLayout>
-
-                                    </Grid>
-                                </Frame>
-
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-
-                        <CollectionView.EmptyView>
-                            <Label Text="No item"/>
-
-                        </CollectionView.EmptyView>
-
-                    </CollectionView>
-
-
-                </Grid>-->
+              
 
             </StackLayout>
       
@@ -700,26 +469,40 @@
                         Grid.Row="1"
                     HorizontalOptions="FillAndExpand"
                     TextColor="White"  
-                        Command="{Binding PlaceOrderCommand}"
+                    Clicked="NxtBtn_Clicked"
                             CommandParameter="{Binding Source={x:Reference NxtBtn},Path=Text}"
                         FontSize="Medium" 
                     Opacity="1"
                      >
                 <Button.Triggers>
-                    <DataTrigger TargetType="Button"
-                                     Binding="{Binding Source={x:Reference menuCategories},Path=IsEnabled}"
-                                     Value="false">
-                        <Setter Property="IsEnabled" Value="False"/>
-                        <Setter Property="Opacity" Value="0.5"/>
-                    </DataTrigger>
 
-                    <DataTrigger TargetType="Button"
-                                     Binding="{Binding IsBtnVisible}"
-                                     Value="true">
+                    <MultiTrigger TargetType="Button">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding Source={x:Reference menuCategories},
+                                   Path=IsEnabled}"
+                               Value="false" />
+                            <BindingCondition Binding="{Binding IsBtnVisible}"
+                               Value="false" />
+                        </MultiTrigger.Conditions>
+                        
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </MultiTrigger>
+
+
+                    <MultiTrigger TargetType="Button">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding Source={x:Reference menuCategories},
+                                   Path=IsEnabled}"
+                               Value="false" />
+                            <BindingCondition Binding="{Binding IsBtnVisible}"
+                               Value="true" />
+                        </MultiTrigger.Conditions>
+
                         <Setter Property="IsEnabled" Value="true"/>
                         <Setter Property="Opacity" Value="1"/>
-                    </DataTrigger>
-                    
+                    </MultiTrigger>
+
                     <DataTrigger TargetType="Button"
                                          Binding="{Binding Source={x:Reference menuImg},Path=IsVisible}"
                                          Value="true">

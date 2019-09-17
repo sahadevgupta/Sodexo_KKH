@@ -22,6 +22,11 @@ namespace Sodexo_KKH.iOS.Services
             throw new NotImplementedException();
         }
 
+        public Task<string> ShowAlert(string title, string body, string acceptbtn = null, string rejectbtn = null, string cancelbtn = null)
+        {
+            return null;
+        }
+
         public void ShowLocalNotification(string title, string body)
         {
             var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(1, false);

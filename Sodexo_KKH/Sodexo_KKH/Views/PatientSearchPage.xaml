@@ -40,8 +40,8 @@
             
             <local:ConnectionView/>
             <StackLayout Orientation="Horizontal">
-                <Image x:Name="sss"   Source="Assets/logoinnertouch2order.png" HorizontalOptions="Start" HeightRequest="60" />
-                <Image  HorizontalOptions="EndAndExpand" Source="Assets/sodexologo.png" HeightRequest="60" />
+                <Image x:Name="sss" Source="{converters:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="Start" HeightRequest="60" />
+                <Image  HorizontalOptions="EndAndExpand" Source="{converters:PlatformImage SourceImage='sodexologo'}" HeightRequest="60" />
             </StackLayout>
 
             <StackLayout  Orientation="Horizontal">
@@ -122,6 +122,7 @@
                         x:Name="cmbsearchbyward"
                     HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
+                        
                     ItemsSource="{Binding MstrWards}"
                     SelectedItem="{Binding SelectedWard}"
                         Title="Select Ward no."
@@ -137,8 +138,13 @@
                     ItemsSource="{Binding BedDetails}"
                          Title="Select Bed no."
                         />
-                <Button Image="Assets/searchbtn.png" Text="Search" 
-                        BackgroundColor="{StaticResource My_Button_Color}" TextColor="{StaticResource My_Button_Foreground}"
+                <Button  Text="Search" 
+                        HorizontalOptions="Center"
+                         VerticalOptions="End"
+                        WidthRequest="100"
+                        HeightRequest="46"
+                         FontSize="Subtitle"
+                        BackgroundColor="{StaticResource My_Button_Color}" CornerRadius="5" TextColor="{StaticResource My_Button_Foreground}"
                     Command="{Binding SearchBtnCommand}"
                         CommandParameter="WardNo"/>
             </StackLayout>
@@ -161,11 +167,13 @@
                                               />
                 
                 
-                    <Button Image="Assets/searchbtn.png" 
+                    <Button CornerRadius="5"
                             x:Uid="btnsearch1" x:Name="btnsearch2" 
                             BackgroundColor="{StaticResource My_Button_Color}" 
                             TextColor="White" 
                             WidthRequest="100"
+                           HeightRequest="50"
+                         FontSize="Subtitle"
                             Command="{Binding SearchBtnCommand}" 
                             CommandParameter="PatientName"
                             Text="Search"  
@@ -311,21 +319,21 @@
                                 <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="6" x:Name="tblwardid" Text="{Binding gender}" LineBreakMode="WordWrap"  />
 
                                 <ImageButton BackgroundColor="Transparent" Source="{Binding BF,Converter={StaticResource ImageConverter}}"
-                                         Grid.Column="7" HeightRequest="20"
+                                         Grid.Column="7" HeightRequest="20" WidthRequest="40"  
                                              Clicked="ImageButton_Clicked"
                                              CommandParameter="BF"
                                              HorizontalOptions="Center"
                                          VerticalOptions="Center"/>
 
                                 <ImageButton BackgroundColor="Transparent" Source="{Binding LH,Converter={StaticResource ImageConverter}}"
-                                         Grid.Column="8" HeightRequest="20"
+                                         Grid.Column="8" HeightRequest="20"  WidthRequest="40"
                                              Clicked="ImageButton_Clicked"
                                              CommandParameter="LH"
                                               HorizontalOptions="Center"
                                          VerticalOptions="Center"/>
 
                                 <ImageButton BackgroundColor="Transparent" Source="{Binding DN,Converter={StaticResource ImageConverter}}"
-                                         Grid.Column="9" HeightRequest="20"
+                                         Grid.Column="9" WidthRequest="40" HeightRequest="20"  
                                              Clicked="ImageButton_Clicked"
                                              CommandParameter="DN"
                                               HorizontalOptions="Center"
@@ -333,7 +341,7 @@
 
                                 <Label  HorizontalOptions="Center"  Grid.Column="10"  VerticalOptions="Center"  LineBreakMode="WordWrap" Text="{Binding Last_Order_by}" FontSize="13"   />
 
-                                <ImageButton BackgroundColor="Transparent" Source="Assets/cancel.png"
+                                <ImageButton BackgroundColor="Transparent" Source="{converters:PlatformImage SourceImage='cancel'}"
                                          Grid.Column="11" HeightRequest="35" 
                                              x:Name="DeleteOrder"
                                              Margin="0,0,5,0"

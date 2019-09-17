@@ -72,14 +72,14 @@ namespace Sodexo_KKH.ViewModels
 
             }
         }
-        private List<mstr_ward_details> _wardData;
-        public List<mstr_ward_details> WardData
+        private ObservableCollection<mstr_ward_details> _wardData;
+        public ObservableCollection<mstr_ward_details> WardData
         {
             get { return _wardData; }
             set { SetProperty(ref _wardData, value); }
         }
-        private List<mstr_meal_time> _MealTimeList;
-        public List<mstr_meal_time> MealTimeList
+        private ObservableCollection<mstr_meal_time> _MealTimeList;
+        public ObservableCollection<mstr_meal_time> MealTimeList
         {
             get { return _MealTimeList; }
             set { SetProperty(ref _MealTimeList, value); }
@@ -90,9 +90,9 @@ namespace Sodexo_KKH.ViewModels
             get { return _mealdeliveredCollection; }
             set { SetProperty(ref _mealdeliveredCollection, value); }
         }
-        private List<mstr_bed_details> _bedDetails;
+        private ObservableCollection<mstr_bed_details> _bedDetails;
 
-        public List<mstr_bed_details> BedDetails
+        public ObservableCollection<mstr_bed_details> BedDetails
         {
             get { return this._bedDetails; }
             set { SetProperty(ref _bedDetails, value); }
@@ -109,24 +109,7 @@ namespace Sodexo_KKH.ViewModels
         public mstr_bed_details SelectedBed
         {
             get { return this._selectedBed; }
-            set
-            {
-                if (_selectedBed == null)
-                {
-                    SetProperty(ref _selectedBed, value);
-                }
-                else
-                {
-                    if (value != null)
-                    {
-                        if (_selectedBed.bed_no != value.bed_no)
-                        {
-                            SetProperty(ref _selectedBed, value);
-                        }
-                    }
-                }
-
-            }
+            set { SetProperty(ref _selectedBed, value); }
         }
         private ObservableCollection<mstr_caregiver_mealorder_details> _caregiver_details;
         public ObservableCollection<mstr_caregiver_mealorder_details> caregiver_details
@@ -148,7 +131,6 @@ namespace Sodexo_KKH.ViewModels
         }
         public string PaymentModeName { get; set; }
         public double TotalAmount { get; set; }
-        string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
         public DelegateCommand SearchCommand { get; set; }
         public DelegateCommand UpdateCommand { get; set; }
         IGenericRepo<mstr_ward_details> _mstrWardRepo;
@@ -256,7 +238,7 @@ namespace Sodexo_KKH.ViewModels
 
                         string format_date = dt.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
 
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_CAREGIVERMENUITEMS + "/" +
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_CAREGIVERMENUITEMS + "/" +
                             SelectedOrderDetail.pateint_id + "/" + SelectedMealTime.ID + "/" + SelectedOrderDetail.OrderedID + "/" + format_date);
                         HttpResponseMessage response = await httpClient.SendAsync(request);
                         var data = await response.Content.ReadAsStringAsync();
@@ -347,7 +329,7 @@ namespace Sodexo_KKH.ViewModels
                 {
                     var httpResponse = new System.Net.Http.HttpResponseMessage();
 
-                    httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_SETDELIVEREDSTATUS, httpContent);
+                    httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_SETDELIVEREDSTATUS, httpContent);
 
                     if (httpResponse.Content != null)
                     {
@@ -415,7 +397,7 @@ namespace Sodexo_KKH.ViewModels
                         {
                             var httpResponse = new System.Net.Http.HttpResponseMessage();
 
-                            httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_SETDELIVEREDSTATUS, httpContent);
+                            httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_SETDELIVEREDSTATUS, httpContent);
 
                             if (httpResponse.Content != null)
                             {
@@ -436,12 +418,12 @@ namespace Sodexo_KKH.ViewModels
         }
         private void PopulateBedData(mstr_ward_details SelectedWard)
         {
-            BedDetails = new List<mstr_bed_details>
+            BedDetails = new ObservableCollection<mstr_bed_details>
                         (
-                        _mstrBedRepo.QueryTable().Where(x => x.ward_id == SelectedWard.ID && x.status_id == 1).OrderBy(y => y.bed_no)
+                        _mstrBedRepo.QueryTable().Where(x => x.ward_id == SelectedWard.ID && x.status_id == 1)
                         );
-            BedDetails.Insert(0, new mstr_bed_details { bed_no = "Select All" });
-            SelectedBed = BedDetails[0];
+            BedDetails.Insert(0, new mstr_bed_details { bed_no = "All" });
+            SelectedBed = BedDetails.First(); ;
         }
         public async void SearchMethod()
         {
@@ -470,7 +452,7 @@ namespace Sodexo_KKH.ViewModels
 
                         string format_date = dt.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
 
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETDELIVEREDDATA + "/" + format_date + "/" + SelectedMealTime.ID + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid);
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETDELIVEREDDATA + "/" + format_date + "/" + SelectedMealTime.ID + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid);
                         HttpResponseMessage response = await httpClient.SendAsync(request);
 
                         var data = await response.Content.ReadAsStringAsync();
@@ -487,7 +469,7 @@ namespace Sodexo_KKH.ViewModels
                         foreach (var item in orderData)
                         {
                             item.istrue = false;
-                            if (!SelectedBed.bed_no.ToString().Equals("Select All"))
+                            if (!SelectedBed.bed_no.Equals("All"))
                             {
                                 if (item.Ward == SelectedWard.ward_name && item.Bed == SelectedBed.bed_no && item.MealTime == SelectedMealTime.meal_name)
                                 {
@@ -542,6 +524,14 @@ namespace Sodexo_KKH.ViewModels
                             // stop
                             IsPageEnabled = false;
                         }
+
+                        if (!MealDeliveredCollection.Any())
+                        {
+                            IsPageEnabled = false;
+                            DependencyService.Get<INotify>().ShowToast("No records found!!");
+                            return;
+                        }
+                        
                     }
                     catch (Exception excp)
                     {
@@ -580,7 +570,7 @@ namespace Sodexo_KKH.ViewModels
                 DateTime dt = SelectedDate;
 
                 string format_date = dt.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_QRVERIFIED + "/" + patientid.pateint_id + "/" + orderid + "/" + mealtime_id + "/" + format_date);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_QRVERIFIED + "/" + patientid.pateint_id + "/" + orderid + "/" + mealtime_id + "/" + format_date);
 
                 //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_QRVERIFIED + "/" + patientid + "/" + tagid + "/" + mealtime_id + "/" + format_date);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
@@ -628,7 +618,7 @@ namespace Sodexo_KKH.ViewModels
             {
                 var db = DependencyService.Get<IDBInterface>().GetConnection();
 
-                WardData = new List<mstr_ward_details>(db.Query<mstr_ward_details>("Select ID,ward_name From mstr_ward_details where ward_type_name not like '%staff%' and status_id ='1' order by ID"));
+                WardData = new ObservableCollection<mstr_ward_details>(db.Query<mstr_ward_details>("Select ID,ward_name From mstr_ward_details where ward_type_name not like '%staff%' and status_id ='1' order by ID"));
                 //SelectedWard = WardData.FirstOrDefault();
             }
             catch (Exception exp)
@@ -641,7 +631,7 @@ namespace Sodexo_KKH.ViewModels
             try
             {
                 var db = DependencyService.Get<IDBInterface>().GetConnection();
-                MealTimeList = new List<mstr_meal_time>(db.Query<mstr_meal_time>("Select * From mstr_meal_time where status_id ='1' order by ID"));
+                MealTimeList = new ObservableCollection<mstr_meal_time>(db.Query<mstr_meal_time>("Select * From mstr_meal_time where status_id ='1' order by ID"));
             }
             catch (Exception exp)
             {

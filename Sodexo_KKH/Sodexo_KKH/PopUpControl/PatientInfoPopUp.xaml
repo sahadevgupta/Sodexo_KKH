@@ -111,6 +111,7 @@
                     <UiTemplates:PopupTitleView Text="Patient Information"  Close="PopupTitleView_Close" Grid.ColumnSpan="2"/>
 
                     <Label x:Uid="pname" 
+                           
                            x:Name="txtp_name" 
                            Text="Patient Name" 
                            Grid.Row="1" Grid.Column="0" 
@@ -238,8 +239,8 @@
                                Grid.Row="21" Grid.Column="1"
                                Text="{Binding Therapeutic_Condition}"
                                   />
-                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="22" Grid.ColumnSpan="2"/>
-                    <Label x:Name="txtcase" Text="{Binding sequenceno}" Grid.Row="23" Grid.Column="1"   />
+                    <BoxView  HeightRequest="1" BackgroundColor="Gray" Grid.Row="22" Grid.ColumnSpan="2"/>
+                    <Label  x:Name="txtcase" Text="{Binding sequenceno}" Grid.Row="23" Grid.Column="1"   />
 
                 </Grid>
             </StackLayout>

@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using DependencyService = Xamarin.Forms.DependencyService;
 
 namespace Sodexo_KKH.ViewModels
@@ -70,7 +71,6 @@ namespace Sodexo_KKH.ViewModels
         int mealtime_id = 0;
         int ward_id = 0;
 
-        string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
         public DelegateCommand SearchCommand { get; set; }
         public MealOrderStatusPageViewModel(INavigationService navigationService, IPageDialogService pageDialog) : base(navigationService, pageDialog)
         {
@@ -78,12 +78,14 @@ namespace Sodexo_KKH.ViewModels
             SearchCommand = new DelegateCommand(SearchMethod);
         }
 
-        public void SearchMethod()
+        public async void SearchMethod()
         {
-            GetMealOrderStatus();
+            IsPageEnabled = true;
+            await GetMealOrderStatus();
+            IsPageEnabled = false;
         }
 
-        private async void GetMealOrderStatus()
+        private async Task GetMealOrderStatus()
         {
             try
             {
@@ -92,7 +94,7 @@ namespace Sodexo_KKH.ViewModels
                     try
                     {
                         MealOrderStatusCollection = new ObservableCollection<meal_order_status>();
-                        IsPageEnabled = true;
+                       
 
                         HttpClient httpClient = new System.Net.Http.HttpClient();
 
@@ -101,7 +103,7 @@ namespace Sodexo_KKH.ViewModels
                         string format_date = dt.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
                         var SelectedMealStatusIndex = StatusList.IndexOf(StatusList.First(x => x == SelectedMealStatus));
 
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/" + Library.METHODE_GETMEALORDERSTATUS + "/" + SelectedWard.ID + "/" + format_date + "/" + SelectedMealTime.ID + "/" + SelectedMealStatusIndex.ToString() + "/" + Library.KEY_USER_SiteCode);
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETMEALORDERSTATUS + "/" + SelectedWard.ID + "/" + format_date + "/" + SelectedMealTime.ID + "/" + SelectedMealStatusIndex.ToString() + "/" + Library.KEY_USER_SiteCode);
                         HttpResponseMessage response = await httpClient.SendAsync(request);
                         var data = await response.Content.ReadAsStringAsync();
 
@@ -120,27 +122,23 @@ namespace Sodexo_KKH.ViewModels
                         }
 
                         // stop
-                        IsPageEnabled = false;
+                       
                     }
                     catch (Exception excp)
                     {
                         // stop progressring
-                        IsPageEnabled = false;
 
                     }
-                    IsPageEnabled = false;
 
                 }
                 else
                 {
-                    IsPageEnabled = false;
                     await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
                 }
             }
             catch (Exception excp)
             {
                 // stop progressring
-                IsPageEnabled = false;
             }
         }
 

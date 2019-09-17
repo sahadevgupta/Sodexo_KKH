@@ -141,10 +141,14 @@ namespace Sodexo_KKH.ViewModels
 
                 if (MealTime.meal_name == "Breakfast")
                 {
-                    if (Others.ID == 1 || Others.others_name.Contains("TC"))
+                    if (Others.ID == 1)
                     {
                         mtype1 = 3;
                         //meal_time_id = 4;
+                    }
+                    else if (Others.others_name == "TC" || Others.others_name == "To Collect")
+                    {
+                        mtype3 = 6;
                     }
                     else if (Others.ID == 8)
                     {
@@ -158,10 +162,14 @@ namespace Sodexo_KKH.ViewModels
                 }
                 else if (MealTime.meal_name == "Lunch")
                 {
-                    if (Others.ID == 1 || Others.others_name.Contains("TC"))
+                    if (Others.ID == 1 )
                     {
                         mtype2 = 3;
                         //meal_time_id = 2;
+                    }
+                    else if (Others.others_name == "TC" || Others.others_name == "To Collect")
+                    {
+                        mtype3 = 6;
                     }
                     else if (Others.ID == 8)
                     {
@@ -175,10 +183,14 @@ namespace Sodexo_KKH.ViewModels
                 }
                 else if (MealTime.meal_name == "Dinner")
                 {
-                    if (Others.ID == 1 || Others.others_name.Contains("TC"))
+                    if (Others.ID == 1)
                     {
                         mtype3 = 3;
                         //meal_time_id = 3;
+                    }
+                    else if (Others.others_name == "TC" || Others.others_name == "To Collect")
+                    {
+                        mtype3 = 6;
                     }
                     else if (Others.ID == 8)
                     {
@@ -197,7 +209,6 @@ namespace Sodexo_KKH.ViewModels
                     mtype3 = 0;
                 }
 
-                string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
 
                 int _meal_soup_id = 0;
                 int _meal_menu_juice_item_id = 0;
@@ -354,9 +365,13 @@ namespace Sodexo_KKH.ViewModels
                 p.ward_bed = Patient.ward_bed;
                 p.Is_Late_Ordered = Convert.ToInt32(Library.KEY_IS_LATE_ORDERED);
                 p.role = Library.KEY_USER_ROLE.ToString();
-                if (Others.others_name == "NBM/NPO" || Others.others_name == "TC")
+                if (Others.others_name == "NBM/NPO" )
                 {
                     p.orderstatus = "3";
+                }
+                else if (Others.others_name == "TC" || Others.others_name == "To Collect")
+                {
+                    p.orderstatus = "6";
                 }
                 else if (Others.others_name == "Home Leave")
                 {
@@ -402,19 +417,19 @@ namespace Sodexo_KKH.ViewModels
                             // Do the actual request and await the response
                             if (Library.KEY_IS_CARE_GIVER.ToString() == "yes")
                             {
-                                httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_SAVEORDER, httpContent);
+                                httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_SAVEORDER, httpContent);
 
                             }
                             else if (Convert.ToInt32(Library.KEY_ORDER_ID) > 0)
                             {
 
                                 // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url
-                                httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_UPDATE_ORDER, httpContent);
+                                httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_UPDATE_ORDER, httpContent);
                             }
                             else
                             {
                                 // httpResponse = new Uri(URL + "/" + Library.METHODE_SAVEORDER); //replace your Url 
-                                httpResponse = await httpClient.PostAsync(URL + "/" + Library.METHODE_SAVEORDER, httpContent);
+                                httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_SAVEORDER, httpContent);
                             }
                             // display a message jason conversion
                             //var message2 = new MessageDialog(httpResponse.ToString());
@@ -427,19 +442,15 @@ namespace Sodexo_KKH.ViewModels
                                 var responseContent = await httpResponse.Content.ReadAsStringAsync();
                                 if (responseContent == "true")
                                 {
-                                    var action = await PageDialog.DisplayAlertAsync("Alert!!", " Your order is confirmed. Do you want to place another order for same patient?", "Yes", "No");
-                                    if (action)
+                                    if (p.Is_Late_Ordered == 1)
                                     {
-
-
-                                        MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "NewOrder", "order");
-
-                                        await NavigationService.GoBackAsync(new NavigationParameters { { "NewOrder", "order" } });
+                                        var orderAction = await PageDialog.DisplayAlertAsync("Alert!!", " Late Order is Placed Successfully , Kindly contact controller to Approve/Reject the order. \nDo you want to place another order for same patient?", "Yes", "No");
+                                        await OrderConfirmationMsg(orderAction);
                                     }
                                     else
                                     {
-                                        await NavigationService.NavigateAsync("../../../");
-
+                                        var action = await PageDialog.DisplayAlertAsync("Alert!!", " Your order is confirmed. Do you want to place another order for same patient?", "Yes", "No");
+                                        await OrderConfirmationMsg(action);
                                     }
                                 }
                                 else
@@ -463,6 +474,21 @@ namespace Sodexo_KKH.ViewModels
                 await PageDialog.DisplayAlertAsync("Alert!!", excp.Message, "OK");
             }
 
+        }
+
+        private async Task OrderConfirmationMsg(bool action)
+        {
+            if (action)
+            {
+                MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "NewOrder", "order");
+
+                await NavigationService.GoBackAsync(new NavigationParameters { { "NewOrder", "order" } });
+            }
+            else
+            {
+                await NavigationService.NavigateAsync("../../../");
+
+            }
         }
 
         private async Task InserOrderLocal(mstr_meal_order_local p)

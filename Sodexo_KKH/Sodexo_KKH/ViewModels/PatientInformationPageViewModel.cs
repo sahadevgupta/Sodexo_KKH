@@ -37,6 +37,8 @@ namespace Sodexo_KKH.ViewModels
 
         private ObservableCollection<mstr_others_master> _othersradio;
 
+       
+
         public ObservableCollection<mstr_others_master> OthersRadio
         {
             get { return this._othersradio; }
@@ -106,6 +108,29 @@ namespace Sodexo_KKH.ViewModels
         }
 
 
+        private bool _isAllergiesEnable;
+
+        public bool IsAllergiesEnable
+        {
+            get { return this._isAllergiesEnable; }
+            set { SetProperty(ref _isAllergiesEnable, value); }
+        }
+
+        private async void SelectionForFoodAllergies()
+        {
+            var response = await DependencyService.Get<INotify>().ShowAlert("Alert!", "Choose preferred menu",  "Allergic Menu","Regular Menu");
+            if (response == "Allergic Menu")
+            {
+                IsAllergiesEnable = true;
+                Library.IsFAGeneralEnable = true;
+            }
+            else
+            {
+                IsAllergiesEnable = false;
+                Library.IsFAGeneralEnable = false;
+            }
+        }
+
         private bool _isDisposable;
 
         public bool IsDisposable
@@ -130,15 +155,41 @@ namespace Sodexo_KKH.ViewModels
         }
 
 
-        private bool _isFAGeneral;
+        private string _isFAGeneral;
 
-        public bool IsFAGeneral
+        public string IsFAGeneral
         {
             get { return this._isFAGeneral; }
             set
             {
-                SetProperty(ref _isFAGeneral, value);
+                if (_isFAGeneral == null)
+                {
+                    SetProperty(ref _isFAGeneral, value);
+                    AssignFoodAllergy(value);
+                    
 
+                }
+                else if (_isFAGeneral != value)
+                {
+                    SetProperty(ref _isFAGeneral, value);
+                     AssignFoodAllergy(value);
+                   
+                }
+                
+            }
+        }
+
+        private void AssignFoodAllergy(string value)
+        {
+            
+            if (value == "Yes")
+            {
+                SelectionForFoodAllergies();
+            }
+            else
+            {
+                Library.IsFAGeneralEnable= false;
+                IsAllergiesEnable = false;
             }
         }
 
@@ -231,10 +282,9 @@ namespace Sodexo_KKH.ViewModels
 
                         string check_order_date = Library.KEY_CHECK_ORDER_DATE;
 
-                        string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
 
                         HttpClient httpClientGet = new System.Net.Http.HttpClient();
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
                         HttpResponseMessage response = await httpClientGet.SendAsync(request);
                         // jarray= await response.Content.ReadAsStringAsync();
                         var data = await response.Content.ReadAsStringAsync();
@@ -270,7 +320,7 @@ namespace Sodexo_KKH.ViewModels
                             var msgStr = string.Join(",", msgArray);
                             msgStr = msgStr.Replace(",", " and ");
 
-                            var result = await DependencyService.Get<INotify>().ShowAlert("Preference Changed!!", $"Patient’s {msgStr} has been changed. Do you want to delete the future order of this patient?");
+                            var result = await DependencyService.Get<INotify>().ShowAlert("Preference Changed!!", $"Patient’s {msgStr} has been changed. Do you want to delete the future order of this patient?","Yes","No","Cancel");
                             if (result == "Yes")
                             {
                                 dynamic p = new JObject();
@@ -282,9 +332,8 @@ namespace Sodexo_KKH.ViewModels
                                 string json = JsonConvert.SerializeObject(p);
 
                                 var httpClient = new HttpClient();
-                                var url = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc/DeleteunprocessOrder";
 
-                                var msg = await httpClient.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                                var msg = await httpClient.PostAsync($"{Library.URL}/DeleteunprocessOrder", new StringContent(json, Encoding.UTF8, "application/json"));
                                 var contents = await msg.Content.ReadAsStringAsync();
                                 if (!string.IsNullOrEmpty(contents))
                                     await PageDialog.DisplayAlertAsync("Delete", $"Total Orders deleted : {contents}", "OK");
@@ -382,10 +431,9 @@ namespace Sodexo_KKH.ViewModels
 
                     string check_order_date = Library.KEY_CHECK_ORDER_DATE;
 
-                    string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
 
                     HttpClient httpClientGet = new System.Net.Http.HttpClient();
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
                     HttpResponseMessage response = await httpClientGet.SendAsync(request);
                     // jarray= await response.Content.ReadAsStringAsync();
                     var data = await response.Content.ReadAsStringAsync();
@@ -421,7 +469,7 @@ namespace Sodexo_KKH.ViewModels
                         var msgStr = string.Join(",", msgArray);
                         msgStr = msgStr.Replace(",", " and ");
 
-                        var result = await DependencyService.Get<INotify>().ShowAlert("Preference Changed!!", $"Patient’s {msgStr} has been changed. Do you want to delete the future order of this patient?");
+                        var result = await DependencyService.Get<INotify>().ShowAlert("Preference Changed!!", $"Patient’s {msgStr} has been changed. Do you want to delete the future order of this patient?","Yes","No","Cancel");
                         if (result == "Yes")
                         {
                             dynamic p = new JObject();
@@ -433,9 +481,8 @@ namespace Sodexo_KKH.ViewModels
                             string json = JsonConvert.SerializeObject(p);
 
                             var httpClient = new HttpClient();
-                            var url = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc/DeleteunprocessOrder";
 
-                            var msg = await httpClient.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                            var msg = await httpClient.PostAsync($"{Library.URL}/DeleteunprocessOrder", new StringContent(json, Encoding.UTF8, "application/json"));
                             var contents = await msg.Content.ReadAsStringAsync();
                             if (!string.IsNullOrEmpty(contents))
                                 await PageDialog.DisplayAlertAsync("Delete", $"Total records deleted - {contents}", "OK");
@@ -499,7 +546,6 @@ namespace Sodexo_KKH.ViewModels
         {
             IsPageEnabled = true;
 
-            string URL = Library.KEY_http + Library.KEY_SERVER_IP + "/" + Library.KEY_SERVER_LOCATION + "/sodexo.svc";
             string isAllergy = string.Empty;
             var selectedAllergies = Allergies.Where(x => x.IsChecked);
 
@@ -529,7 +575,7 @@ namespace Sodexo_KKH.ViewModels
 
 
                 // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url
-                httpResponse = await httpClient.PostAsync(URL + "/setpatientprofile", httpContent);
+                httpResponse = await httpClient.PostAsync(Library.URL + "/setpatientprofile", httpContent);
 
 
                 // display a message jason conversion
@@ -580,8 +626,18 @@ namespace Sodexo_KKH.ViewModels
 
 
                 SelectedPatient = parameters["PatientInfo"] as mstr_patient_info;
+
+                SelectedPatient.PropertyChanged += SelectedPatient_PropertyChanged;      
                 SelectedPatient.FluidInfo = string.IsNullOrEmpty(SelectedPatient.FluidInfo) ? "NA" : SelectedPatient.FluidInfo;
 
+                if (string.IsNullOrEmpty(SelectedPatient.Allergies) || SelectedPatient.Allergies == "NA" || SelectedPatient.Allergies == "0" )
+                {
+                    IsFAGeneral = RadioButtonList[1];
+                }
+                else
+                {
+                    IsFAGeneral = RadioButtonList[0];
+                }
 
                 var Others = _OthersRepo.QueryTable().OrderBy(x => x.others_name);
                 foreach (var other in Others.Where(x => x.status_id == 0).Take(8))
@@ -589,12 +645,6 @@ namespace Sodexo_KKH.ViewModels
                     other.PropertyChanged += Other_PropertyChanged;
                     OthersRadio.Add(other);
                 }
-
-                var naOther = new mstr_others_master { others_name = "NA", ID = 0 };
-                naOther.PropertyChanged += Other_PropertyChanged;
-                OthersRadio.Add(naOther);
-
-
 
                 foreach (var item in Others.Where(x => x.status_id == 1))
                 {
@@ -673,27 +723,47 @@ namespace Sodexo_KKH.ViewModels
                     }
                     DietTextures.Add(item);
                 }
+                
+                InitializeMealType(SelectedPatient);
+            }
+            
 
+        }
 
+        private void SelectedPatient_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ishalal")
+            {
+                var patient = sender as mstr_patient_info;
+                Cuisines = new ObservableCollection<mstr_meal_type>();
+                InitializeMealType(patient);
+               
+            }
+        }
 
-                var mealTypes = _mealTypeRepo.QueryTable().Where(x => x.status_id == 1).OrderBy(y => y.meal_type_name);
-                foreach (var mealType in mealTypes)
+        private void InitializeMealType(mstr_patient_info patient)
+        {
+
+            var mealTypes = _mealTypeRepo.QueryTable().Where(x => x.status_id == 1).OrderBy(y => y.meal_type_name);
+            foreach (var mealType in mealTypes)
+            {
+                if (Convert.ToBoolean(patient.ishalal) && mealType.ID==1)
+                    continue;
+
+                if (!string.IsNullOrEmpty(SelectedPatient.Meal_Type))
                 {
-                    if (!string.IsNullOrEmpty(SelectedPatient.Meal_Type))
+                    var _mealTypesname = SelectedPatient.Meal_Type.Split(',');
+                    foreach (var _mealTypename in _mealTypesname)
                     {
-                        var _mealTypesname = SelectedPatient.Meal_Type.Split(',');
-                        foreach (var _mealTypename in _mealTypesname)
+                        if (mealType.meal_type_name == _mealTypename)
                         {
-                            if (mealType.meal_type_name == _mealTypename)
-                            {
-                                mealType.IsChecked = true;
-                            }
+                            mealType.IsChecked = true;
                         }
                     }
-                    Cuisines.Add(mealType);
                 }
-            }
 
+                Cuisines.Add(mealType);
+            }
         }
 
         private void Other_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

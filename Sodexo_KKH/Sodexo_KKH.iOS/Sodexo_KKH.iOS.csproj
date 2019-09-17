@@ -96,7 +96,9 @@
     <Compile Include="Services\Notification_iOS.cs" />
     <Compile Include="Services\SQLite_iOS.cs" />
     <None Include="Entitlements.plist" />
-    <None Include="Info.plist" />
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -209,20 +211,14 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
       <Version>16.3.0.36</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>16.3.0.36</Version>
-    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>16.3.0.36</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />
+    <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
-    <PackageReference Include="Xamarin.Forms.Visual.Material">
-      <Version>4.1.0.673156</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sodexo_KKH\Sodexo_KKH.csproj">

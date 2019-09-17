@@ -36,7 +36,7 @@ namespace GoodsMan.UWP.Services
                 Control.SelectionChanged += Control_SelectionChanged;
                 _scrollControl.selectedIndex = _pickerControl.SelectedIndex;
                 Control.Style = (Windows.UI.Xaml.Style)_scrollControl.Resources["ComboBoxStyle1"];
-
+                Control.Height = 50;
               
 
 

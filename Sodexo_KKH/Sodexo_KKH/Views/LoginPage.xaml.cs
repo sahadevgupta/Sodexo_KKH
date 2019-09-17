@@ -12,6 +12,7 @@ namespace Sodexo_KKH.Views
         {
             InitializeComponent();
             _viewModel = BindingContext as LoginPageViewModel;
+            _viewModel.navigation = Navigation;
         }
         protected override void OnAppearing()
         {
@@ -21,7 +22,7 @@ namespace Sodexo_KKH.Views
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            this.txtusername.EntryUnfocused -= Txtusername_EntryUnfocused;
+           // this.txtusername.EntryUnfocused -= Txtusername_EntryUnfocused;
 
         }
 
@@ -31,6 +32,7 @@ namespace Sodexo_KKH.Views
             var result = await _viewModel.BindRole();
             if (result == null)
             {
+                this.Txtusername.Focus();
                 return;
             }
             else if (result.Any())
@@ -45,6 +47,7 @@ namespace Sodexo_KKH.Views
             else
             {
                 await App.pageDialog.DisplayAlertAsync("Alert.!", $"Please check username you have entered", "OK");
+                this.Txtusername.Focus();
                 _viewModel.EnableSubmitButton = false;
             }
 
@@ -64,7 +67,7 @@ namespace Sodexo_KKH.Views
             else
                 await _viewModel.Login();
 
-            this.txtusername.Unfocus();
+            //this.txtusername.Unfocus();
 
         }
     }
