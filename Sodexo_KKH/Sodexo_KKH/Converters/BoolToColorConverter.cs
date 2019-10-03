@@ -14,8 +14,8 @@ namespace Sodexo_KKH.Converters
             }
             if (value.ToString().ToLower() == "true")
             {
-                Color aa = (Color)Application.Current.Resources["Red"];
-                return aa;
+                //Color aa = (Color)Application.Current.Resources["Red"];
+                return Color.Red;
             }
             else
             {

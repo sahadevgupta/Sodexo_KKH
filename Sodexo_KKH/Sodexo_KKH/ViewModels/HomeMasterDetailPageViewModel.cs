@@ -101,31 +101,6 @@ namespace Sodexo_KKH.ViewModels
             timer.Elapsed += timer_elapsed;
             timer.Start();
 
-
-
-
-            //var timer = new System.Threading.Timer((e) =>
-            //{
-            //    if (!isMstrNotificationAvailable)
-            //    {
-            //       MasterUpdateNotify();
-            //    }
-            //    if (!isMenuNotificationAvailable)
-            //    {
-            //        MenuUpdateNotify();
-            //    }
-            //}, null, startTimeSpan, periodTimeSpan);
-
-
-
-
-            //Device.StartTimer(TimeSpan.FromSeconds(10), callback: () =>
-            //{
-
-
-            //    return true;
-            //});
-
         }
 
         private void timer_elapsed(object sender, ElapsedEventArgs e)

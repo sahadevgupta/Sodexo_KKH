@@ -11,41 +11,7 @@ namespace Sodexo_KKH.Helpers
         public static void CreateTables()
         {
             SQLiteConnection conn = DependencyService.Get<IDBInterface>().GetConnection();
-            var PatientInfo = conn.GetTableInfo(nameof(Patient));
-            if (!PatientInfo.Any())
-            {
-                conn.CreateTable<Patient>();
-            }
-            var PatienttherapeuticInfo = conn.GetTableInfo(nameof(opt_patient_meal_therapeutic_details));
-            if (!PatienttherapeuticInfo.Any())
-            {
-                conn.CreateTable<opt_patient_meal_therapeutic_details>();
-            }
-            var PatientMealOthInfo = conn.GetTableInfo(nameof(opt_patient_meal_other_details));
-            if (!PatientMealOthInfo.Any())
-            {
-                conn.CreateTable<opt_patient_meal_other_details>();
-            }
-            var PatientIngInfo = conn.GetTableInfo(nameof(opt_patient_meal_ingredient_details));
-            if (!PatientIngInfo.Any())
-            {
-                conn.CreateTable<opt_patient_meal_ingredient_details>();
-            }
-            var PatientMealInfo = conn.GetTableInfo(nameof(opt_patient_meal_details));
-            if (!PatientMealInfo.Any())
-            {
-                conn.CreateTable<opt_patient_meal_details>();
-            }
-            var OrderDetailInfo = conn.GetTableInfo(nameof(opt_meal_order_details));
-            if (!OrderDetailInfo.Any())
-            {
-                conn.CreateTable<opt_meal_order_details>();
-            }
-            var OrderInfo = conn.GetTableInfo(nameof(opt_meal_order));
-            if (!OrderInfo.Any())
-            {
-                conn.CreateTable<opt_meal_order>();
-            }
+            
             var WardDetailInfo = conn.GetTableInfo(nameof(mstr_ward_details));
             if (!WardDetailInfo.Any())
             {
@@ -126,11 +92,7 @@ namespace Sodexo_KKH.Helpers
             {
                 conn.CreateTable<mstr_allergies_master>();
             }
-            var BedClassInfo = conn.GetTableInfo(nameof(mstr_bedclass));
-            if (!BedClassInfo.Any())
-            {
-                conn.CreateTable<mstr_bedclass>();
-            }
+            
             var MealClassInfo = conn.GetTableInfo(nameof(mstr_mealclass));
             if (!MealClassInfo.Any())
             {
@@ -156,16 +118,7 @@ namespace Sodexo_KKH.Helpers
             {
                 conn.CreateTable<mstr_Cycledetails>();
             }
-            var PaymentModeInfo = conn.GetTableInfo(nameof(mstr_payment_mode));
-            if (!PaymentModeInfo.Any())
-            {
-                conn.CreateTable<mstr_payment_mode>();
-            }
-            var MealDeliveryInfo = conn.GetTableInfo(nameof(meal_delivery_status));
-            if (!MealDeliveryInfo.Any())
-            {
-                conn.CreateTable<meal_delivery_status>();
-            }
+           
         }
     }
 }

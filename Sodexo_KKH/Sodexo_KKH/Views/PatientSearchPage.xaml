@@ -16,6 +16,7 @@
       <Label Text="Search Patient" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
              BackgroundColor="{StaticResource My_Header_Color}" 
              FontSize="17"
+             FontFamily="{StaticResource SansationRegular}"
              FontAttributes="Bold"
              TextColor="White" HorizontalTextAlignment="Center" />
 
@@ -45,7 +46,7 @@
             </StackLayout>
 
             <StackLayout  Orientation="Horizontal">
-                <Label x:Uid="txtDate"  TextColor="Black" FontSize="22" Text="Date:" VerticalOptions="Center" HorizontalOptions="Start"   />
+                <Label x:Uid="txtDate" FontFamily="{StaticResource SansationRegular}"  TextColor="Black" FontSize="22" Text="Date:" VerticalOptions="Center" HorizontalOptions="Start"   />
 
                 <DatePicker Date="{Binding SelectedDate}"
                         Format="dd-MMMM-yyyy"  
@@ -53,6 +54,7 @@
                         x:Name="orderdtpicker"  
                         MinimumWidthRequest="150"  
                         FontSize="17" 
+                            FontFamily="{StaticResource SansationRegular}"
                         MaximumDate="{Binding MaxDate}"
                             MinimumDate="{Binding MinDate}"
                         VerticalOptions="Center"   />
@@ -67,7 +69,7 @@
                 NumberOfTapsRequired="1" />
                     </StackLayout.GestureRecognizers>
 
-                    <Label x:Name="sbyward" Text="Search By ward No."/>
+                    <Label x:Name="sbyward" FontFamily="{StaticResource SansationRegular}" Text="Search By ward No."/>
                     <BoxView x:Name="sbywardboxview" IsVisible="False" HeightRequest="5" BackgroundColor="BlueViolet">
                         <BoxView.Triggers>
                             <DataTrigger TargetType="BoxView"
@@ -85,7 +87,7 @@
                         <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped" CommandParameter="ByPatient"
                 NumberOfTapsRequired="1" />
                     </StackLayout.GestureRecognizers>
-                    <Label  x:Name="sbypatient" Text="Search By Patient Name" />
+                    <Label FontFamily="{StaticResource SansationRegular}" x:Name="sbypatient" Text="Search By Patient Name" />
                     <BoxView IsVisible="False" 
                              x:Name="sbypatientboxview" HeightRequest="5" BackgroundColor="BlueViolet">
                         <BoxView.Triggers>
@@ -115,23 +117,24 @@
                     </DataTrigger>
 
                 </StackLayout.Triggers>
-                <Label  Text="Ward:" VerticalOptions="Center"   
+                <Label  Text="Ward:" VerticalOptions="Center" FontFamily="{StaticResource SansationRegular}"  
                         FontSize="17"  />
 
                 <Picker ItemDisplayBinding="{Binding ward_name}"
                         x:Name="cmbsearchbyward"
+                        FontFamily="{StaticResource SansationRegular}"
                     HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
-                        
                     ItemsSource="{Binding MstrWards}"
                     SelectedItem="{Binding SelectedWard}"
                         Title="Select Ward no."
                         />
 
-                <Label  Text="Bed:" VerticalOptions="Center"  FontSize="17" />
+                <Label  Text="Bed:" VerticalOptions="Center" FontFamily="{StaticResource SansationRegular}" FontSize="17" />
 
                 <Picker ItemDisplayBinding="{Binding bed_no}"  
                         x:Name="cmbsearchbypatient"
+                        FontFamily="{StaticResource SansationRegular}"
                     HorizontalOptions="FillAndExpand"
                          VerticalOptions="Center"
                     SelectedItem="{Binding SelectedBed}"
@@ -139,6 +142,7 @@
                          Title="Select Bed no."
                         />
                 <Button  Text="Search" 
+                         FontFamily="{StaticResource SansationRegular}"
                         HorizontalOptions="Center"
                          VerticalOptions="End"
                         WidthRequest="100"
@@ -163,11 +167,13 @@
                 <autocomplete:SfAutoComplete  ValueChanged="SfAutoComplete_ValueChanged"
                                               DataSource="{Binding PatientDatas}"
                                               Watermark="Search" 
+                                              FontFamily="{StaticResource SansationRegular}"
                                               HorizontalOptions="FillAndExpand"
                                               />
                 
                 
                     <Button CornerRadius="5"
+                            FontFamily="{StaticResource SansationRegular}"
                             x:Uid="btnsearch1" x:Name="btnsearch2" 
                             BackgroundColor="{StaticResource My_Button_Color}" 
                             TextColor="White" 
@@ -208,7 +214,7 @@
                 <Grid.Resources>
                     <Style TargetType="Label">
                         <Setter Property="TextColor" Value="{StaticResource My_Button_Foreground}"/>
-                       
+                        <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
                     </Style>
                 </Grid.Resources>
 
@@ -265,14 +271,6 @@
             </Grid>
 
 
-            <!--<Image Source="Assets/oops.jpg" IsVisible="False" Aspect="AspectFill" >
-                <Image.Triggers>
-                    <DataTrigger TargetType="Image" Binding="{Binding Patients.Count}" Value="0">
-                        <Setter Property="IsVisible" Value="True"/>
-                    </DataTrigger>
-                </Image.Triggers>
-            </Image>-->
-
             <syncfusions:SfListView AutoFitMode="Height"
                                     SelectionMode="None"
                                 ItemHolding="SfListView_ItemHolding"
@@ -303,6 +301,12 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="1"/>
                                 </Grid.RowDefinitions>
+
+                                <Grid.Resources>
+                                    <Style TargetType="Label">
+                                        <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
+                                    </Style>
+                                </Grid.Resources>
 
                                 <Label VerticalOptions="Center" HorizontalOptions="Start" Margin="5,0,0,0"  Text="{Binding category}" LineBreakMode="WordWrap" />
 

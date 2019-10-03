@@ -6,6 +6,7 @@
              BackgroundColor="OrangeRed">
 
     <Label Text="Oops, looks like you don't have internet connection &#x263a; "
+           FontFamily="{StaticResource SansationRegular}"
                    TextColor="White"
                    HorizontalOptions="CenterAndExpand"
                    Margin="20"/>

@@ -461,6 +461,9 @@ namespace Sodexo_KKH.ViewModels
                                         {
                                             if (termsPopup.isAccepted)
                                             {
+                                                IsPageEnabled = true;
+
+
                                                 dynamic p = new JObject();
                                                 p.UserId = Library.KEY_USER_ID;
 
@@ -471,6 +474,8 @@ namespace Sodexo_KKH.ViewModels
 
                                                 var msgResponse = await httpMSgClient.PostAsync(Library.URL + "/" + "TermsConditions", Content);
                                                 await NavigateToHome(Library.URL, httpMSgClient, id);
+
+                                                IsPageEnabled = false;
                                             }
                                         };
                                         await navigation.PushPopupAsync(termsPopup,true);
@@ -542,10 +547,18 @@ namespace Sodexo_KKH.ViewModels
 
         private async Task NavigateToHome(string URL, HttpClient httpClient, string id)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
-            await httpClient.SendAsync(request);
+            await Task.Run(async() =>
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL + "/updatelogtrue/" + id);
+                await httpClient.SendAsync(request);
+            });
 
-            await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
+
+            Device.BeginInvokeOnMainThread(async() =>
+            {
+                await NavigationService.NavigateAsync("app:///HomeMasterDetailPage");
+            });
+            
             await SessionManager.Instance.StartTrackSessionAsync();
         }
 

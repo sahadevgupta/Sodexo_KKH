@@ -18,7 +18,8 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
-    <PackageCertificateKeyFile>Sodexo_KKH.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>
+    </PackageCertificateKeyFile>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Never</AppxBundle>
@@ -27,6 +28,7 @@
     <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
     <PackageCertificateThumbprint>0636D41C8BFCB653529465BA352194E790568775</PackageCertificateThumbprint>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -132,15 +134,12 @@
     <Content Include="Assets\defaultprofile.png" />
     <Content Include="Assets\dessertbtn.png" />
     <Content Include="Assets\dessertbtnover.png" />
-    <Content Include="Assets\desser_btn_over.jpg" />
     <Content Include="Assets\entreebtn.png" />
     <Content Include="Assets\entreebtnover.png" />
-    <Content Include="Assets\entree_btn_over.jpg" />
     <Content Include="Assets\feeback.png" />
     <Content Include="Assets\hl.png" />
     <Content Include="Assets\juicebtn.png" />
     <Content Include="Assets\juicebtnover.png" />
-    <Content Include="Assets\juice_btn_over.jpg" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
@@ -149,19 +148,12 @@
     <Content Include="Assets\lock.png" />
     <Content Include="Assets\login.png" />
     <Content Include="Assets\loginimg.JPG" />
-    <Content Include="Assets\loginimg.png" />
     <Content Include="Assets\logoinnertouch2order.png" />
-    <Content Include="Assets\logo_Touch2Order.png" />
     <Content Include="Assets\NBM.png" />
-    <Content Include="Assets\newcbc.png" />
-    <Content Include="Assets\newcbu.png" />
     <Content Include="Assets\nil.png" />
-    <Content Include="Assets\nodata-found.jpg" />
     <Content Include="Assets\non-veg.png" />
     <Content Include="Assets\no_image.png" />
     <Content Include="Assets\ok.png" />
-    <Content Include="Assets\oops.jpg" />
-    <Content Include="Assets\oops.png" />
     <Content Include="Assets\order_details.png" />
     <Content Include="Assets\patient_logout.png" />
     <Content Include="Assets\patient_search.png" />
@@ -178,7 +170,6 @@
     <Content Include="Assets\sodexologo.png" />
     <Content Include="Assets\soupbtn.png" />
     <Content Include="Assets\soupbtnover.png" />
-    <Content Include="Assets\soup_btn_over.jpg" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />

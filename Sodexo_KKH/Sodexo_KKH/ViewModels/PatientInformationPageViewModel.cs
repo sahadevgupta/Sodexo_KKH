@@ -121,12 +121,12 @@ namespace Sodexo_KKH.ViewModels
             var response = await DependencyService.Get<INotify>().ShowAlert("Alert!", "Choose preferred menu",  "Allergic Menu","Regular Menu");
             if (response == "Allergic Menu")
             {
-                IsAllergiesEnable = true;
+               // IsAllergiesEnable = true;
                 Library.IsFAGeneralEnable = true;
             }
             else
             {
-                IsAllergiesEnable = false;
+                //IsAllergiesEnable = false;
                 Library.IsFAGeneralEnable = false;
             }
         }
@@ -189,7 +189,7 @@ namespace Sodexo_KKH.ViewModels
             else
             {
                 Library.IsFAGeneralEnable= false;
-                IsAllergiesEnable = false;
+               // IsAllergiesEnable = false;
             }
         }
 
@@ -275,92 +275,103 @@ namespace Sodexo_KKH.ViewModels
 
                 bool isChange = (isChangeTher || isChangeAllergy || isChangeIngredient || isChangeDietTexture || isChangeMealType);
 
-                if (isChange)
+                if (isChangeMealType && !isChangeTher && !isChangeAllergy && !isChangeIngredient && !isChangeDietTexture)
                 {
-                    if (CrossConnectivity.Current.IsConnected)
+
+                   bool resp = await PageDialog.DisplayAlertAsync("", $"Patient's cuisine choice has been changed, \npress OK to proceed", "OK","Cancel");
+                    if (!resp)
                     {
-
-                        string check_order_date = Library.KEY_CHECK_ORDER_DATE;
-
-
-                        HttpClient httpClientGet = new System.Net.Http.HttpClient();
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
-                        HttpResponseMessage response = await httpClientGet.SendAsync(request);
-                        // jarray= await response.Content.ReadAsStringAsync();
-                        var data = await response.Content.ReadAsStringAsync();
-                        if (data != "\"NULL\"" && data != string.Empty)
+                        IsPageEnabled = false;
+                        return;
+                    }
+                }
+                else
+                {
+                    if (isChange)
+                    {
+                        if (CrossConnectivity.Current.IsConnected)
                         {
 
-                            List<string> alertMsg = new List<string>();
+                            string check_order_date = Library.KEY_CHECK_ORDER_DATE;
 
-
-                            if (isChangeTher)
+                            HttpClient httpClientGet = new System.Net.Http.HttpClient();
+                            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
+                            HttpResponseMessage response = await httpClientGet.SendAsync(request);
+                            // jarray= await response.Content.ReadAsStringAsync();
+                            var data = await response.Content.ReadAsStringAsync();
+                            if (data != "\"NULL\"" && data != string.Empty)
                             {
-                                alertMsg.Add("Therapeutic Condition");
+
+                                List<string> alertMsg = new List<string>();
+
+
+                                if (isChangeTher)
+                                {
+                                    alertMsg.Add("Therapeutic Condition");
+                                }
+                                if (isChangeAllergy)
+                                {
+                                    alertMsg.Add("Allergic Condition");
+                                }
+                                if (isChangeIngredient)
+                                {
+                                    alertMsg.Add("Ingredient exclusion");
+                                }
+
+                                if (isChangeDietTexture)
+                                {
+                                    alertMsg.Add("Diet Texture");
+                                }
+                                if (isChangeMealType)
+                                {
+                                    alertMsg.Add("Cuisine Choice");
+                                }
+
+                                var msgArray = alertMsg.ToArray();
+                                var msgStr = string.Join(",", msgArray);
+                                msgStr = msgStr.Replace(",", " and ");
+
+                                var result = await DependencyService.Get<INotify>().ShowAlert("Preference Changed!!", $"Patient’s {msgStr} has been changed. Do you want to delete the future order of this patient?", "Yes", "No", "Cancel");
+                                if (result == "Yes")
+                                {
+                                    dynamic p = new JObject();
+
+                                    p.orderdetailsids = data.Replace("\"", "");
+                                    p.system_module = DependencyService.Get<ILocalize>().GetDeviceName();
+                                    p.work_station_IP = DependencyService.Get<ILocalize>().GetIpAddress();
+
+                                    string json = JsonConvert.SerializeObject(p);
+
+                                    var httpClient = new HttpClient();
+
+                                    var msg = await httpClient.PostAsync($"{Library.URL}/DeleteunprocessOrder", new StringContent(json, Encoding.UTF8, "application/json"));
+                                    var contents = await msg.Content.ReadAsStringAsync();
+                                    if (!string.IsNullOrEmpty(contents))
+                                        await PageDialog.DisplayAlertAsync("Delete", $"Total Orders deleted : {contents}", "OK");
+
+
+                                }
+                                else if (result == "Cancel")
+                                {
+                                    IsPageEnabled = false;
+                                    return;
+                                }
+
+
+
                             }
-                            if (isChangeAllergy)
-                            {
-                                alertMsg.Add("Allergic Condition");
-                            }
-                            if (isChangeIngredient)
-                            {
-                                alertMsg.Add("Ingredient exclusion");
-                            }
 
-                            if (isChangeDietTexture)
-                            {
-                                alertMsg.Add("Diet Texture");
-                            }
-                            if (isChangeMealType)
-                            {
-                                alertMsg.Add("Cuisine Choice");
-                            }
-
-                            var msgArray = alertMsg.ToArray();
-                            var msgStr = string.Join(",", msgArray);
-                            msgStr = msgStr.Replace(",", " and ");
-
-                            var result = await DependencyService.Get<INotify>().ShowAlert("Preference Changed!!", $"Patient’s {msgStr} has been changed. Do you want to delete the future order of this patient?","Yes","No","Cancel");
-                            if (result == "Yes")
-                            {
-                                dynamic p = new JObject();
-
-                                p.orderdetailsids = data.Replace("\"", "");
-                                p.system_module = DependencyService.Get<ILocalize>().GetDeviceName();
-                                p.work_station_IP = DependencyService.Get<ILocalize>().GetIpAddress();
-
-                                string json = JsonConvert.SerializeObject(p);
-
-                                var httpClient = new HttpClient();
-
-                                var msg = await httpClient.PostAsync($"{Library.URL}/DeleteunprocessOrder", new StringContent(json, Encoding.UTF8, "application/json"));
-                                var contents = await msg.Content.ReadAsStringAsync();
-                                if (!string.IsNullOrEmpty(contents))
-                                    await PageDialog.DisplayAlertAsync("Delete", $"Total Orders deleted : {contents}", "OK");
-
-
-                            }
-                            else if (result == "Cancel")
-                            {
-                                IsPageEnabled = false;
-                                return;
-                            }
-
+                        }
+                        else
+                        {
+                            IsPageEnabled = false;
+                            await PageDialog.DisplayAlertAsync("Error!!", "Unable to change patient settings during offline mode. Please undo the changes and try again", "OK");
+                            return;
 
 
                         }
-
-                    }
-                    else
-                    {
-                        IsPageEnabled = false;
-                        await PageDialog.DisplayAlertAsync("Error!!", "Unable to change patient settings during offline mode. Please undo the changes and try again", "OK");
-                        return;
-
-
                     }
                 }
-
 
                 var navParam = new NavigationParameters();
                 navParam.Add("Patient", SelectedPatient);

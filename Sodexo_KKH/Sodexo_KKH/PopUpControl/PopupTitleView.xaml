@@ -7,13 +7,13 @@
             
 
             <Label HorizontalOptions="FillAndExpand" Margin="5,13.5"
-                   HorizontalTextAlignment="Center"
+                   HorizontalTextAlignment="Center" FontFamily="{StaticResource SansationRegular}"
             VerticalOptions="CenterAndExpand"
              x:Name="Title"
             FontAttributes="Bold"
             FontSize="18" TextColor="WhiteSmoke"/>
 
-            <Label Text="X" 
+            <Label Text="X" FontFamily="{StaticResource SansationRegular}"
                    FontAttributes="Bold" 
                    x:Name="CloseLbl" 
                    TextColor="Red"
@@ -23,7 +23,7 @@
                    VerticalOptions="CenterAndExpand" FontSize="Large"/>
 
             <Label x:Name="AddLbl" 
-                   
+                   FontFamily="{StaticResource SansationRegular}"
                    HorizontalOptions="End" 
                    Margin="0,0,10,0" 
                    VerticalOptions="CenterAndExpand" 

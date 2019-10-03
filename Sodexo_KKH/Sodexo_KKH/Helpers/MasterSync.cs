@@ -51,6 +51,9 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_therapeutic_condition>();
                     dbConn.CreateTable<mstr_therapeutic_condition>();
+
+                    dbConn.BeginTransaction();
+
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -75,7 +78,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_patient_info>();
                     dbConn.CreateTable<mstr_patient_info>();
-                    // dbConn.BeginTransaction();
+                    dbConn.BeginTransaction();
                     foreach (var item in jarray)
                     {
                         item.ward_bed = item.ward_name + "-" + item.bed_name;
@@ -94,42 +97,38 @@ namespace Sodexo_KKH.Helpers
             }
         }
 
-        private async static Task Sync_mstr_flag()
-        {
-            try
-            {
+        //private async static Task Sync_mstr_flag()
+        //{
+        //    try
+        //    {
 
-                HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DisplayLanguageDetails);
-                HttpResponseMessage response = await httpClient.SendAsync(request);
-                // jarray= await response.Content.ReadAsStringAsync();
-                List<mstr_DisplayLanguageDetails> jarray = JsonConvert.DeserializeObject<List<mstr_DisplayLanguageDetails>>(await response.Content.ReadAsStringAsync());
+        //        HttpClient httpClient = new System.Net.Http.HttpClient();
+        //        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DisplayLanguageDetails);
+        //        HttpResponseMessage response = await httpClient.SendAsync(request);
+        //        // jarray= await response.Content.ReadAsStringAsync();
+        //        List<mstr_DisplayLanguageDetails> jarray = JsonConvert.DeserializeObject<List<mstr_DisplayLanguageDetails>>(await response.Content.ReadAsStringAsync());
 
-                using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
-                {
-                    dbConn.DropTable<mstr_DisplayLanguageDetails>();
-                    dbConn.CreateTable<mstr_DisplayLanguageDetails>();
-
-                    foreach (var item in jarray)
-                    {
-                        byte[] toBytes = item.country_flag;
-                        //var toBytes = (item.country_flag == null ? null : aa.ToObject<byte[]>());
-                        item.country_flag = toBytes;
-                        dbConn.Insert(item);
-                        //   dbhelper.Insert_INTO_flag(new mstr_DisplayLanguageDetails(Convert.ToInt32(row["ID"].ToString()), toBytes, Convert.ToInt32(row["country_id"].ToString()), row["country_name"].ToString(), row["language_name"].ToString(), Convert.ToBoolean(row["status_id"].ToString())));
-                    }
-
-                    //  searchbtn1();
-                    //  StackPanel_Tapped(new object(), new TappedRoutedEventArgs());
-
-                    //var message = new MessageDialog(loader.GetString("msg7").ToString());
-                    //await message.ShowAsync();
-                };
-            }
-            catch (Exception excp)
-            {
-            }
-        }
+        //        using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
+        //        {
+        //            dbConn.DropTable<mstr_DisplayLanguageDetails>();
+        //            dbConn.CreateTable<mstr_DisplayLanguageDetails>();
+        //            dbConn.BeginTransaction();
+        //            foreach (var item in jarray)
+        //            {
+        //                byte[] toBytes = item.country_flag;
+        //                //var toBytes = (item.country_flag == null ? null : aa.ToObject<byte[]>());
+        //                item.country_flag = toBytes;
+        //                dbConn.Insert(item);
+        //                //   dbhelper.Insert_INTO_flag(new mstr_DisplayLanguageDetails(Convert.ToInt32(row["ID"].ToString()), toBytes, Convert.ToInt32(row["country_id"].ToString()), row["country_name"].ToString(), row["language_name"].ToString(), Convert.ToBoolean(row["status_id"].ToString())));
+        //            }
+        //            dbConn.Commit();
+                    
+        //        };
+        //    }
+        //    catch (Exception excp)
+        //    {
+        //    }
+        //}
 
         private async static Task Sync_mstr_meal_option()
         {
@@ -144,6 +143,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_meal_option>();
                     dbConn.CreateTable<mstr_meal_option>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -166,6 +166,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_others_master>();
                     dbConn.CreateTable<mstr_others_master>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -188,6 +189,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_therapeutic>();
                     dbConn.CreateTable<mstr_therapeutic>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -212,6 +214,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_menu_item_category>();
                     dbConn.CreateTable<mstr_menu_item_category>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -224,29 +227,30 @@ namespace Sodexo_KKH.Helpers
             }
         }
 
-        private async static Task Sync_mstr_displaypayment()
-        {
-            try
-            {
-                HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DisplayPaymentModeDetails);
-                HttpResponseMessage response = await httpClient.SendAsync(request);
-                // jarray= await response.Content.ReadAsStringAsync();
-                List<mstr_DisplayPaymentModeDetails> jarray = JsonConvert.DeserializeObject<List<mstr_DisplayPaymentModeDetails>>(await response.Content.ReadAsStringAsync());
+        //private async static Task Sync_mstr_displaypayment()
+        //{
+        //    try
+        //    {
+        //        HttpClient httpClient = new System.Net.Http.HttpClient();
+        //        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DisplayPaymentModeDetails);
+        //        HttpResponseMessage response = await httpClient.SendAsync(request);
+        //        // jarray= await response.Content.ReadAsStringAsync();
+        //        List<mstr_DisplayPaymentModeDetails> jarray = JsonConvert.DeserializeObject<List<mstr_DisplayPaymentModeDetails>>(await response.Content.ReadAsStringAsync());
 
-                using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
-                {
-                    dbConn.DropTable<mstr_DisplayPaymentModeDetails>();
-                    dbConn.CreateTable<mstr_DisplayPaymentModeDetails>();
-                    dbConn.InsertAll(jarray);
-                    dbConn.Commit();
-                };
-            }
-            catch (Exception excp)
-            {
+        //        using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
+        //        {
+        //            dbConn.DropTable<mstr_DisplayPaymentModeDetails>();
+        //            dbConn.CreateTable<mstr_DisplayPaymentModeDetails>();
+        //            dbConn.BeginTransaction();
+        //            dbConn.InsertAll(jarray);
+        //            dbConn.Commit();
+        //        };
+        //    }
+        //    catch (Exception excp)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         private async static Task Sync_mstr_meal_time()
         {
@@ -262,6 +266,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_meal_time>();
                     dbConn.CreateTable<mstr_meal_time>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -288,7 +293,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_ward_details>();
                     dbConn.CreateTable<mstr_ward_details>();
-
+                    dbConn.BeginTransaction();
                     foreach (var item in jarray)
                     {
                         string cont_id = item.country_id.ToString();
@@ -299,6 +304,7 @@ namespace Sodexo_KKH.Helpers
                              && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
                               dbConn.Insert(item);
                     }
+                    dbConn.Commit();
                 };
             }
             catch (Exception excp)
@@ -320,6 +326,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_Cycledetails>();
                     dbConn.CreateTable<mstr_Cycledetails>();
+                    dbConn.BeginTransaction();
                     foreach (var item in jarray)
                     {
                         string todate = "";
@@ -365,10 +372,7 @@ namespace Sodexo_KKH.Helpers
                     }
                     dbConn.Commit();
                 };
-                //var message = new MessageDialog(loader.GetString("msg8").ToString());
-                //await message.ShowAsync();
-                //myring.IsActive = false;
-                //myring.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+              
             }
             catch (Exception excp)
             {
@@ -389,6 +393,8 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_meal_type>();
                     dbConn.CreateTable<mstr_meal_type>();
+
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -414,6 +420,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_remarks>();
                     dbConn.CreateTable<mstr_remarks>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -437,6 +444,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_ingredient>();
                     dbConn.CreateTable<mstr_ingredient>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -462,6 +470,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_fluid_master>();
                     dbConn.CreateTable<mstr_fluid_master>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -486,6 +495,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_diet_texture>();
                     dbConn.CreateTable<mstr_diet_texture>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -509,6 +519,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_diet_type>();
                     dbConn.CreateTable<mstr_diet_type>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -534,7 +545,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_bed_details>();
                     dbConn.CreateTable<mstr_bed_details>();
-
+                    dbConn.BeginTransaction();
                     foreach (var item in jarray)
                     {
 
@@ -553,7 +564,8 @@ namespace Sodexo_KKH.Helpers
 
                         }
                     }
-                    //dbConn.Commit();
+                    dbConn.Commit();
+
                 }
             }
             catch (Exception excp)
@@ -575,6 +587,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_allergies_master>();
                     dbConn.CreateTable<mstr_allergies_master>();
+                    dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
@@ -598,7 +611,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_bed_meal_class_mapping>();
                     dbConn.CreateTable<mstr_bed_meal_class_mapping>();
-
+                    dbConn.BeginTransaction();
                     foreach (var item in jarray)
                     {
                         string cont_id = item.country_id.ToString();
@@ -636,7 +649,7 @@ namespace Sodexo_KKH.Helpers
                 {
                     dbConn.DropTable<mstr_mealclass>();
                     dbConn.CreateTable<mstr_mealclass>();
-
+                    dbConn.BeginTransaction();
                     foreach (var item in jarray)
                     {
                         string cont_id = item.country_id.ToString();

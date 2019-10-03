@@ -487,11 +487,11 @@ namespace Sodexo_KKH.ViewModels
             }
             else
             {
-                SearchOfflineOrder(param);
+                GetOfflinePatients(param);
             }
         }
 
-        private void SearchOfflineOrder(string param)
+        private void GetOfflinePatients(string param)
         {
 
             string order_date = SelectedDate.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
@@ -501,11 +501,11 @@ namespace Sodexo_KKH.ViewModels
                 var patientlist = new List<mstr_patient_info>();
                 if (wbed == "0")
                 {
-                    patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.meal_order_date == order_date).ToList();
+                    patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.meal_order_date == order_date).OrderBy(x => x.bed_no).ToList();
                 }
                 else
 
-                    patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.bed_name == wbed && x.meal_order_date == order_date).ToList();
+                    patientlist = _patientRepo.QueryTable().Where(x => x.ward_name == SelectedWard.ward_name && x.bed_name == wbed && x.meal_order_date == order_date).OrderBy(x => x.bed_no).ToList();
 
 
                 Patients = new ObservableCollection<mstr_patient_info>(patientlist);
@@ -616,7 +616,7 @@ namespace Sodexo_KKH.ViewModels
                         patient.Therapeutic_Condition = string.IsNullOrEmpty(patient.Therapeutic_Condition) ? "NA" : patient.Therapeutic_Condition;
                     }
 
-                    var list = patientsData.OrderByDescending(x => x.admission_date);
+                    var list = patientsData.OrderBy(x => x.bed_no);
                     Patients = new ObservableCollection<mstr_patient_info>(list);
 
                     IsPageEnabled = false;

@@ -444,12 +444,12 @@ namespace Sodexo_KKH.ViewModels
                                 {
                                     if (p.Is_Late_Ordered == 1)
                                     {
-                                        var orderAction = await PageDialog.DisplayAlertAsync("Alert!!", " Late Order is Placed Successfully , Kindly contact controller to Approve/Reject the order. \nDo you want to place another order for same patient?", "Yes", "No");
+                                        var orderAction = await PageDialog.DisplayAlertAsync("Alert!!", "Late Order is Placed Successfully , Kindly contact controller to Approve/Reject the order. \nDo you want to place another order for same patient?", "Yes", "No");
                                         await OrderConfirmationMsg(orderAction);
                                     }
                                     else
                                     {
-                                        var action = await PageDialog.DisplayAlertAsync("Alert!!", " Your order is confirmed. Do you want to place another order for same patient?", "Yes", "No");
+                                        var action = await PageDialog.DisplayAlertAsync("Alert!!", "Your order is confirmed. Do you want to place another order for same patient?", "Yes", "No");
                                         await OrderConfirmationMsg(action);
                                     }
                                 }

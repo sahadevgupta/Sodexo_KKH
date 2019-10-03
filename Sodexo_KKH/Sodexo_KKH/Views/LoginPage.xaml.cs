@@ -17,6 +17,7 @@ namespace Sodexo_KKH.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
         }
 
         protected override void OnDisappearing()

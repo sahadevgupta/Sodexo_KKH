@@ -10,7 +10,6 @@
                   xmlns:staticfn="clr-namespace:Sodexo_KKH.Helpers"
                   xmlns:converters="clr-namespace:Sodexo_KKH.Converters">
     
-    
     <MasterDetailPage.Master>
         <ContentPage Title=" ">
           
@@ -24,7 +23,7 @@
 
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10,0" FlexLayout.Basis="100%">
                         <StackLayout HorizontalOptions="FillAndExpand">
-                            <Label VerticalOptions="Center" HorizontalOptions="FillAndExpand"
+                            <Label VerticalOptions="Center" HorizontalOptions="FillAndExpand" FontFamily="{StaticResource SansationRegular}"
                    TextColor="White">
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -35,11 +34,11 @@
                                 </Label.FormattedText>
                             </Label>
 
-                            <Label  Text="{Binding UserRole}" TextColor="White"  FontAttributes="Bold" HorizontalOptions="FillAndExpand" />
-                            <Label Text="{Binding UserSiteCode}" TextColor="White"  FontAttributes="Bold" HorizontalOptions="FillAndExpand"  />
+                            <Label FontFamily="{StaticResource SansationRegular}"  Text="{Binding UserRole}" TextColor="White"  FontAttributes="Bold" HorizontalOptions="FillAndExpand" />
+                            <Label FontFamily="{StaticResource SansationRegular}" Text="{Binding UserSiteCode}" TextColor="White"  FontAttributes="Bold" HorizontalOptions="FillAndExpand"  />
                         </StackLayout>
                         <Label Text="{Binding Source={x:Static staticfn:Library.ServerName}}" HorizontalOptions="EndAndExpand" 
-                       VerticalOptions="EndAndExpand"
+                       VerticalOptions="EndAndExpand" FontFamily="{StaticResource SansationRegular}"
                        VerticalTextAlignment="Center"
                        HorizontalTextAlignment="Center"
                                FontAttributes="Bold"
@@ -67,7 +66,7 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"   CommandParameter="Patient_Search"  NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/patient_search.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" 
+                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" FontFamily="{StaticResource SansationRegular}"
                                         Text="Patient Search" TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
                             </StackLayout>
 
@@ -79,7 +78,7 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="Patient" NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/sync.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" Text="Sync Patient Data" 
+                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" Text="Sync Patient Data" FontFamily="{StaticResource SansationRegular}"
                                         TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
                             </StackLayout>
 
@@ -91,11 +90,11 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="Master" NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/sync.png"/>
-                                <Label  Margin="0,0,0,0" LineBreakMode="WordWrap" 
+                                <Label  Margin="0,0,0,0" LineBreakMode="WordWrap" FontFamily="{StaticResource SansationRegular}"
                                         VerticalTextAlignment="Center" Text="Sync All Master Data" 
                                         TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
                                 <Label x:Name="mastervis"   IsVisible="{Binding IsMasterAvailable}"   
-                                       VerticalTextAlignment="Center"   
+                                       VerticalTextAlignment="Center"   FontFamily="{StaticResource SansationRegular}"
                                        LineBreakMode="WordWrap" 
                                        Margin="0,0,10,0"
                                        VerticalOptions="Center" Text="Update Available" TextColor="Black"  
@@ -112,10 +111,10 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="Menu"  NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/sync.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" 
+                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" FontFamily="{StaticResource SansationRegular}"
                                         Text="Sync Menu Master" TextColor="Black"  
                                         HorizontalOptions="Start"   FontAttributes="Bold" />
-                                <Label x:Name="menuvis" IsVisible="{Binding IsMenuAvailable}"  
+                                <Label x:Name="menuvis" IsVisible="{Binding IsMenuAvailable}"  FontFamily="{StaticResource SansationRegular}"
                                        LineBreakMode="WordWrap" 
                                        VerticalOptions="Center" 
                                        Margin="0,0,10,0"
@@ -130,8 +129,8 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="Offline"  NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/sync.png"/>
-                                <Label Margin="0,0,0,0" VerticalTextAlignment="Center" Text="Sync Offline Order" TextColor="Black"  HorizontalOptions="Start"  FontAttributes="Bold" />
-                                <Button  x:Name="txtofflinecount" BorderColor="Transparent"   BackgroundColor="Red"
+                                <Label FontFamily="{StaticResource SansationRegular}" Margin="0,0,0,0" VerticalTextAlignment="Center" Text="Sync Offline Order" TextColor="Black"  HorizontalOptions="Start"  FontAttributes="Bold" />
+                                <Button FontFamily="{StaticResource SansationRegular}"  x:Name="txtofflinecount" BorderColor="Transparent"   BackgroundColor="Red"
                                Text="{Binding OrderCount}"
                                TextColor="White"
                                FontSize="Micro"
@@ -158,7 +157,7 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="Order"   NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/order_details.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center"
+                                <Label FontFamily="{StaticResource SansationRegular}" Margin="0,0,0,0" VerticalTextAlignment="Center"
                                         Text="Daily Order Detail" TextColor="Black"  HorizontalOptions="Start"  FontAttributes="Bold" />
                             </StackLayout>
                             <BoxView Color="Black" WidthRequest ="100" HeightRequest="1"/>
@@ -170,7 +169,7 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="OrderStatus"  NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="15" HeightRequest="15" Source="setting.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" 
+                                <Label FontFamily="{StaticResource SansationRegular}" Margin="0,0,0,0" VerticalTextAlignment="Center" 
                                         Text="Meal Order Status" TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
 
                             </StackLayout>
@@ -183,7 +182,7 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="Feed" NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" VerticalOptions="Center" HeightRequest="25" Source="{converters:PlatformImage SourceImage='feeback'}"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" 
+                                <Label FontFamily="{StaticResource SansationRegular}" Margin="0,0,0,0" VerticalTextAlignment="Center" 
                                         Text="Feedback" TextColor="Black"  HorizontalOptions="Start"  FontAttributes="Bold" />
                             </StackLayout>
                             <BoxView Color="Black" WidthRequest ="100" HeightRequest="1"/>
@@ -195,7 +194,7 @@
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="LogOut"  NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/patient_logout.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" Text="LogOut"
+                                <Label FontFamily="{StaticResource SansationRegular}" Margin="0,0,0,0" VerticalTextAlignment="Center" Text="LogOut"
                                         TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
 
                             </StackLayout>
@@ -206,7 +205,7 @@
                             <StackLayout Orientation="Horizontal" Margin="10" VerticalOptions="Center">
                                
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/patient_logout.png"/>
-                                <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" Text="App Version 5.4" 
+                                <Label FontFamily="{StaticResource SansationRegular}" Margin="0,0,0,0" VerticalTextAlignment="Center" Text="App Version 5.5" 
                                         TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
                             </StackLayout>
                             <BoxView Color="Black" WidthRequest ="100" HeightRequest="1"/>
@@ -220,7 +219,7 @@
     </MasterDetailPage.Master>
     
     <MasterDetailPage.Detail >
-        <NavigationPage>
+        <NavigationPage >
             <x:Arguments>
                
                     <local:PatientSearchPage  />

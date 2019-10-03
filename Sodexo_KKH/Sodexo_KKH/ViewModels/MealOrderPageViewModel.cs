@@ -685,12 +685,16 @@ namespace Sodexo_KKH.ViewModels
                 else
                     item.CategoryVisibility = true;
 
-                if (others.others_name == "Full Feeds" || others.others_name == "T&A" || others.others_name == "Clear Feeds")
-                {
 
-                }
-                else if ((item.ID == 1 || item.ID == 3) && !isAlaCarte)
-                    item.CategoryVisibility = false;
+                #region AlaCarte
+                //if (others.others_name == "Full Feeds" || others.others_name == "T&A" || others.others_name == "Clear Feeds")
+                //{
+
+                //}
+                //else if ((item.ID == 1 || item.ID == 3) && !isAlaCarte)
+                //    item.CategoryVisibility = false;
+
+                #endregion
 
                 if (ss.ToLower().Contains("entrée") || ss.ToLower().Contains("entree"))
                     MenuCategories.Insert(0, item);
@@ -1220,67 +1224,65 @@ namespace Sodexo_KKH.ViewModels
                 int cntdiets = 0;
                 bool istheraCount = false;
 
-
-                
-
-
-                foreach (var itemdetail in item.menu_item_ides.Split(','))
+                if (!string.IsNullOrEmpty(item.menu_item_ides))
                 {
-                    if (!String.IsNullOrEmpty(itemdetail))
+                    foreach (var itemdetail in item.menu_item_ides.Split(','))
                     {
-                        string q1;
-                        if (!String.IsNullOrEmpty(ingredients))
+                        if (!String.IsNullOrEmpty(itemdetail))
                         {
-                            string q2 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and ingredient_name IN (" + ingredients + ")";
-                            cntingredients += db.Query<mstr_menu_item>(q2).Count;
-                        }
-                        else
-                            cntingredients = 0;
-
-                        if (Library.IsFAGeneralEnable == null || Library.IsFAGeneralEnable == true)
-                        {
-                            if (!string.IsNullOrEmpty(allergies))
+                            string q1;
+                            if (!String.IsNullOrEmpty(ingredients))
                             {
-                                q1 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and (" + allergies + ")";
-                                cntallergies += db.Query<mstr_menu_item>(q1).Count;
+                                string q2 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and ingredient_name IN (" + ingredients + ")";
+                                cntingredients += db.Query<mstr_menu_item>(q2).Count;
                             }
-                        }
+                            else
+                                cntingredients = 0;
 
-
-
-                        if (!string.IsNullOrEmpty(diets))
-                        {
-                            q1 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and (" + diets + ")";
-                            cntdiets += db.Query<mstr_menu_item>(q1).Count;
-                        }
-
-                        if (diet_code == "")
-                            cntdiets = 1;
-
-                        
-
-                        if (others == "DOC" && DocCheckEnable)
-                        {
-                            q1 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and (TH_CODE IS NULL OR TH_CODE = '')";
-
-                            int cnt = db.Query<mstr_menu_item>(q1).Count;
-                            if (cnt == 0)
+                            if (Library.IsFAGeneralEnable == null || Library.IsFAGeneralEnable == true)
                             {
-                                isthere = 0;
-                                break;
+                                if (!string.IsNullOrEmpty(allergies))
+                                {
+                                    q1 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and (" + allergies + ")";
+                                    cntallergies += db.Query<mstr_menu_item>(q1).Count;
+                                }
                             }
 
-                            istheraCount = (cnt == 0) ? true : istheraCount;
-                            isthere = (cnt == 0 && istheraCount) ? 0 : (cnt + isthere);
 
+
+                            if (!string.IsNullOrEmpty(diets))
+                            {
+                                q1 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and (" + diets + ")";
+                                cntdiets += db.Query<mstr_menu_item>(q1).Count;
+                            }
+
+                            if (diet_code == "")
+                                cntdiets = 1;
+
+
+
+                            if (others == "DOC" && DocCheckEnable)
+                            {
+                                q1 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and (TH_CODE IS NULL OR TH_CODE = '')";
+
+                                int cnt = db.Query<mstr_menu_item>(q1).Count;
+                                if (cnt == 0)
+                                {
+                                    isthere = 0;
+                                    break;
+                                }
+
+                                istheraCount = (cnt == 0) ? true : istheraCount;
+                                isthere = (cnt == 0 && istheraCount) ? 0 : (cnt + isthere);
+
+
+                            }
 
                         }
 
                     }
-
+                    SetEntree(item, isthere, cntingredients, cntallergies, cntdiets, db);
                 }
-                SetEntree(item, isthere, cntingredients, cntallergies, cntdiets, db);
-
             }
         }
 

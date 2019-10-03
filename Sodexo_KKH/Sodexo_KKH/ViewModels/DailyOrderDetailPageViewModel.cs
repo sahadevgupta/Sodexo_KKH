@@ -117,12 +117,7 @@ namespace Sodexo_KKH.ViewModels
             get { return _caregiver_details; }
             set { SetProperty(ref _caregiver_details, value); }
         }
-        private mstr_DisplayPaymentModeDetails _paymentMode;
-        public mstr_DisplayPaymentModeDetails paymentmode
-        {
-            get { return _paymentMode; }
-            set { SetProperty(ref _paymentMode, value); }
-        }
+        
         private string _entryText;
         public string RemarkText
         {
@@ -638,6 +633,14 @@ namespace Sodexo_KKH.ViewModels
                 await PageDialog.DisplayAlertAsync("Alert!!", exp.Message, "OK");
             }
         }
+    }
+
+    public class mstr_caregiver_mealorder_details
+    {
+        public string menu_item_name { get; set; }
+        public double amount { get; set; }
+        public int mode_of_payment { get; set; }
+        public string paymentmodename { get; set; }
     }
 
 }

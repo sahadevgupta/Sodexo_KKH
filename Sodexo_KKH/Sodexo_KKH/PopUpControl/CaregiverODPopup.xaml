@@ -56,7 +56,7 @@
         </ScrollView.Resources>
         <Frame Padding="15" BackgroundColor="WhiteSmoke" OutlineColor="Black" >
             <StackLayout Style="{StaticResource PopupView}">
-                    <Label Text="{Binding MealTime}"
+                <Label Text="{Binding MealTime}" FontFamily="{StaticResource SansationRegular}"
                            HorizontalOptions="CenterAndExpand" 
                            FontAttributes="Bold" FontSize="Large"/>
                 <Grid>
@@ -71,42 +71,43 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Label Margin="2" Text="Order Id:" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
-                    <Label Margin="2" Text="Date" FontAttributes="Bold" Grid.Row="1" Grid.Column="0"/>
-                    <Label Margin="2" Text="Patient Name:"  FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
-                    <Label Margin="2" Text="Ward-Bed:" FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
-
-                    <Label Margin="2" Text="{Binding OrderedID}"  Grid.Row="0" Grid.Column="1"/>
-                    <Label Margin="2" Text="{Binding date}"  Grid.Row="1" Grid.Column="1"/>
-                    <Label Margin="2" Text="{Binding Name}"  Grid.Row="2" Grid.Column="1"/>
-                    <Label Margin="2" Text="{Binding ward_bed}" Grid.Row="3" Grid.Column="1"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="Order Id:" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="Date" FontAttributes="Bold" Grid.Row="1" Grid.Column="0"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="Patient Name:"  FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="Ward-Bed:" FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="{Binding OrderedID}"  Grid.Row="0" Grid.Column="1"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="{Binding date}"  Grid.Row="1" Grid.Column="1"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="{Binding Name}"  Grid.Row="2" Grid.Column="1"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="2" Text="{Binding ward_bed}" Grid.Row="3" Grid.Column="1"/>
 
                 </Grid>
                 <StackLayout BackgroundColor="{StaticResource My_Header_Color}" Orientation="Horizontal">
                     <Label Text="Menu Item" FontSize="Medium" HorizontalOptions="CenterAndExpand" 
-                           FontAttributes="Bold" TextColor="White"/>
+                           FontAttributes="Bold" TextColor="White"
+                           FontFamily="{StaticResource SansationRegular}"/>
                     <Label Text="Amount" FontSize="Medium" HorizontalOptions="CenterAndExpand" 
-                           FontAttributes="Bold" TextColor="White"/>
+                           FontAttributes="Bold" TextColor="White"
+                           FontFamily="{StaticResource SansationRegular}"/>
                 </StackLayout>
                 
                     <StackLayout Orientation="Horizontal" Margin="20">
-                        <Label x:Name="menuItemNameLabel" HorizontalOptions="StartAndExpand"/>
-                        <Label x:Name="AmountLabel"  HorizontalOptions="End"/>
+                        <Label FontFamily="{StaticResource SansationRegular}" x:Name="menuItemNameLabel" HorizontalOptions="StartAndExpand"/>
+                        <Label FontFamily="{StaticResource SansationRegular}" x:Name="AmountLabel"  HorizontalOptions="End"/>
                     </StackLayout>
                 <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand"  BackgroundColor="DarkGray"/>
                 <StackLayout Orientation="Horizontal" Margin="20">
-                    <Label Text="Amount" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
-                        <Label x:Name="TotalAmountLabel" HorizontalOptions="End" FontAttributes="Bold"/>
+                    <Label Text="Amount" FontAttributes="Bold" HorizontalOptions="StartAndExpand" FontFamily="{StaticResource SansationRegular}"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" x:Name="TotalAmountLabel" HorizontalOptions="End" FontAttributes="Bold"/>
                     </StackLayout>
                 
                 <StackLayout Orientation="Horizontal" Margin="10">
-                    <Label Text="Mode of transaction:" FontAttributes="Bold" />
-                    <Label x:Name="PaymentModeLabel" HorizontalOptions="FillAndExpand"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Text="Mode of transaction:" FontAttributes="Bold" />
+                    <Label FontFamily="{StaticResource SansationRegular}" x:Name="PaymentModeLabel" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="10">
-                    <Label Text="Remarks:" VerticalTextAlignment="Center" FontAttributes="Bold"
+                    <Label FontFamily="{StaticResource SansationRegular}" Text="Remarks:" VerticalTextAlignment="Center" FontAttributes="Bold"
                            HorizontalOptions="Start" />
-                    <Entry x:Name="remarksEntry" Placeholder="Enter remarks here" 
+                    <Entry x:Name="remarksEntry" Placeholder="Enter remarks here" FontFamily="{StaticResource SansationRegular}"
                            HorizontalOptions="FillAndExpand">
                         <Entry.Behaviors>
                             <behaviors:SpecialCharValidationBehavior/>
@@ -117,9 +118,11 @@
                     <Button Text="Update" x:Name="DeliverButton" Clicked="DeliverButton_Clicked" 
                             HeightRequest="40" HorizontalOptions="FillAndExpand" 
                             FontAttributes="Bold" TextColor="White"
+                            FontFamily="{StaticResource SansationRegular}"
                             BackgroundColor="{StaticResource My_Header_Color}"/>
                     <Button Text="Cancel" x:Name="CancelButton" Clicked="CancelButton_Clicked"
                             HeightRequest="40" HorizontalOptions="FillAndExpand" 
+                            FontFamily="{StaticResource SansationRegular}"
                             FontAttributes="Bold" TextColor="White" BackgroundColor="IndianRed"/>
                 </StackLayout>
             </StackLayout>

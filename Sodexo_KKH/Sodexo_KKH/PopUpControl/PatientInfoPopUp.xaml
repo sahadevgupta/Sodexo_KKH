@@ -108,6 +108,13 @@
                          <RowDefinition Height="1" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
+                        </Style>
+                    </Grid.Resources>
+                    
                     <UiTemplates:PopupTitleView Text="Patient Information"  Close="PopupTitleView_Close" Grid.ColumnSpan="2"/>
 
                     <Label x:Uid="pname" 

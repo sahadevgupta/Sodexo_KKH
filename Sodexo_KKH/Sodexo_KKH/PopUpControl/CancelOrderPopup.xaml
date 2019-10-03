@@ -53,6 +53,7 @@
                         <Setter Property="FontAttributes" Value="Bold"/>
                         <Setter Property="FontSize" Value="17"/>
                         <Setter Property="TextColor" Value="White"/>
+                        <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
                     </Style>
                 </Grid.Resources>
 
@@ -63,7 +64,7 @@
                     
                 </Grid>
 
-                <ListView x:Name="HistoryList">
+                <ListView x:Name="HistoryList" CachingStrategy="RecycleElement">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -81,24 +82,25 @@
                                 </Grid.RowDefinitions>
 
                                 <Label LineBreakMode="WordWrap" 
+                                       FontFamily="{StaticResource SansationRegular}"
                                        VerticalOptions="Center"
                                        HorizontalOptions="Center"
                                        Grid.Column="0"
                                        Text="{Binding orderdate}"/>
-                                <Label Grid.Column="1"  
+                                <Label Grid.Column="1"  FontFamily="{StaticResource SansationRegular}"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"
                                        LineBreakMode="WordWrap" 
                                        Text="{Binding mealtimename}"/>
-                                <Label Grid.Column="2"   
+                                <Label Grid.Column="2" FontFamily="{StaticResource SansationRegular}"  
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"
                                        LineBreakMode="WordWrap" 
                                        Text="{Binding createdby}"/>
-                                <Entry Grid.Column="3"  
+                                <Entry Grid.Column="3" FontFamily="{StaticResource SansationRegular}" 
                                        Placeholder="Enter Remarks"
                                        Text="{Binding remarks}"/>
-                                <Button Text="Cancel" 
+                                <Button Text="Cancel" FontFamily="{StaticResource SansationRegular}"
                                         VerticalOptions="Center" x:Name="CancelBtn"
                                         Clicked="CancelBtn_Clicked"
                                         BackgroundColor="IndianRed" TextColor="White" 

@@ -15,7 +15,7 @@
     <NavigationPage.TitleView>
         <Label Text="Daily Order Detail" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
              BackgroundColor="{StaticResource My_Header_Color}" 
-             FontSize="17"
+             FontSize="17" FontFamily="{StaticResource SansationRegular}"
              FontAttributes="Bold"
              TextColor="White" HorizontalTextAlignment="Center" />
     </NavigationPage.TitleView>
@@ -37,7 +37,8 @@
             </StackLayout>
 
             <Label  VerticalOptions="Center" HorizontalOptions="Start" 
-                               Font="22" >
+                    FontFamily="{StaticResource SansationRegular}"           
+                    Font="22" >
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Date: " FontSize="22" TextColor="Black"/>
@@ -49,27 +50,27 @@
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 
-                <Label x:Name="lbl_selectward" Text="Select ward  no." 
+                <Label x:Name="lbl_selectward" Text="Select ward  no." FontFamily="{StaticResource SansationRegular}"
                    VerticalOptions="Center" FontSize="Small"/>
-                <Picker x:Name="pkr_ward"  
+                <Picker x:Name="pkr_ward"  FontFamily="{StaticResource SansationRegular}"
                     WidthRequest="150"
                     ItemsSource="{Binding WardData}"
                     SelectedItem="{Binding SelectedWard}"
                         Title="Select Ward"
                     ItemDisplayBinding="{Binding ward_name}"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-                <Label x:Name="lbl_Bed" Text="Select bed no." 
+                <Label x:Name="lbl_Bed" Text="Select bed no." FontFamily="{StaticResource SansationRegular}"
                    VerticalOptions="Center" FontSize="Small" />
-                <Picker x:Name="pkr_bed" 
+                <Picker x:Name="pkr_bed" FontFamily="{StaticResource SansationRegular}"
                     WidthRequest="150"
                     ItemsSource="{Binding BedDetails}"
                     ItemDisplayBinding="{Binding bed_no}"
                     SelectedItem="{Binding SelectedBed}"
                         Title="Select Bed no."
                     HorizontalOptions="StartAndExpand"  VerticalOptions="Center" />
-                <Label x:Name="lbl_selectmealtime" Text="Meal Time" 
+                <Label x:Name="lbl_selectmealtime" Text="Meal Time" FontFamily="{StaticResource SansationRegular}"
                    VerticalOptions="Center" FontSize="Small" />
-                <Picker x:Name="pkr_mealtime" 
+                <Picker x:Name="pkr_mealtime" FontFamily="{StaticResource SansationRegular}"
                     ItemsSource="{Binding MealTimeList}"
                     SelectedItem="{Binding SelectedMealTime}"
                     WidthRequest="150"
@@ -79,12 +80,12 @@
             </StackLayout>
             
             <syncfusion1:SfCheckBox  IsVisible="True" 
-                            x:Uid="chk_care"   
+                            x:Uid="chk_care"   FontFamily="{StaticResource SansationRegular}"
                             FontSize="18" x:Name="chkcare_giver"  
                             Text="Care Giver"
                             IsChecked="{Binding IsCareGiver}"
                             WidthRequest="20" />
-            <Button  x:Name="searchButton" 
+            <Button  x:Name="searchButton" FontFamily="{StaticResource SansationRegular}"
                 Command="{Binding SearchCommand}"
                      HorizontalOptions="FillAndExpand"
                      HeightRequest="40"
@@ -108,18 +109,20 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="lbl0" Grid.Row="0" Grid.Column="0" />
-                <Label x:Name="lbl1" Grid.Row="0" Grid.Column="1" Text="Date" HorizontalOptions="Start" VerticalOptions="Center" FontSize="Small" Font="16" TextColor="White" />
-                <Label x:Name="lbl2" Grid.Row="0" Grid.Column="2" Text="Ward" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl3" Grid.Row="0" Grid.Column="3" Text="Bed" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl4" Grid.Row="0" Grid.Column="4" Text="Patient/NRIC" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl5" Grid.Row="0" Grid.Column="5" Text="Meal Time" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl6" Grid.Row="0" Grid.Column="6" Text="Order by" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
-                <Label x:Name="lbl7" Grid.Row="0" Grid.Column="7" Text="Verify" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl0" Grid.Row="0" Grid.Column="0" />
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl1" Grid.Row="0" Grid.Column="1" Text="Date" HorizontalOptions="Start" VerticalOptions="Center" FontSize="Small" Font="16" TextColor="White" />
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl2" Grid.Row="0" Grid.Column="2" Text="Ward" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl3" Grid.Row="0" Grid.Column="3" Text="Bed" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl4" Grid.Row="0" Grid.Column="4" Text="Patient/NRIC" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl5" Grid.Row="0" Grid.Column="5" Text="Meal Time" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl6" Grid.Row="0" Grid.Column="6" Text="Order by" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
+                <Label FontFamily="{StaticResource SansationRegular}" x:Name="lbl7" Grid.Row="0" Grid.Column="7" Text="Verify" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Font="16" TextColor="White"/>
             </Grid>
 
            
-                <ListView  x:Name="mylist" ItemsSource="{Binding MealDeliveredCollection}" HasUnevenRows="True" SelectionMode="None">
+                <ListView  x:Name="mylist" ItemsSource="{Binding MealDeliveredCollection}" 
+                           CachingStrategy="RecycleElement"
+                           HasUnevenRows="True" SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -143,18 +146,14 @@
                                         <syncfusion1:SfCheckBox IsVisible="{Binding status,Converter={StaticResource CheckBoxConverter}}"  
                                                                 x:Uid="chk_select"  x:Name="chk_select"    
                                                                 VerticalOptions="Center" 
+                                                                FontFamily="{StaticResource SansationRegular}"
                                                             HorizontalOptions="Center" IsChecked="{Binding is_checked}"  />
-                                        <Label  Grid.Row="0" Grid.Column="1" x:Name="tbldate" Text="{Binding date}" VerticalOptions="Center" HorizontalTextAlignment="Start" />
-
-                                <Label  Grid.Row="0" Grid.Column="2" x:Name="tblward" Text="{Binding Ward}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
-
-                                <Label  Grid.Row="0" Grid.Column="3" x:Name="tblbed" Text="{Binding Bed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
-
-                                <Label  Grid.Row="0" Grid.Column="4" x:Name="tblpname" Text="{Binding PatientNRIC}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
-
-                                <Label  Grid.Row="0" Grid.Column="5" x:Name="tblmealtime" Text="{Binding MealTime}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-
-                                <Label  Grid.Row="0" Grid.Column="6" x:Name="tblorderedby" Text="{Binding OrderBy}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                                <Label FontFamily="{StaticResource SansationRegular}" Grid.Row="0" Grid.Column="1" x:Name="tbldate" Text="{Binding date}" VerticalOptions="Center" HorizontalTextAlignment="Start" />
+                                <Label FontFamily="{StaticResource SansationRegular}"  Grid.Row="0" Grid.Column="2" x:Name="tblward" Text="{Binding Ward}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                <Label FontFamily="{StaticResource SansationRegular}"  Grid.Row="0" Grid.Column="3" x:Name="tblbed" Text="{Binding Bed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                <Label FontFamily="{StaticResource SansationRegular}"  Grid.Row="0" Grid.Column="4" x:Name="tblpname" Text="{Binding PatientNRIC}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                <Label FontFamily="{StaticResource SansationRegular}"  Grid.Row="0" Grid.Column="5" x:Name="tblmealtime" Text="{Binding MealTime}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                                <Label FontFamily="{StaticResource SansationRegular}"  Grid.Row="0" Grid.Column="6" x:Name="tblorderedby" Text="{Binding OrderBy}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
 
                                         <Image x:Name="imgbtn_scan" VerticalOptions="Center" HorizontalOptions="Center" IsEnabled="{Binding is_verifed,Converter={StaticResource BoolToStringConverter}}" Grid.Row="0" Grid.Column="7"
                                            WidthRequest="40" HeightRequest="40" Source="{Binding is_verifed,Converter={StaticResource BoolToImageConverter}}">
@@ -172,7 +171,7 @@
                 </ListView>
 
             <Button x:Name="btn_update" HorizontalOptions="FillAndExpand"
-                    VerticalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand" FontFamily="{StaticResource SansationRegular}"
                     CornerRadius="5"
                 Text="Update" FontSize="Medium"
                         HeightRequest="60"  Command="{Binding UpdateCommand}"

@@ -9,8 +9,10 @@ namespace Sodexo_KKH.Helpers
         //public static string ServerName = "QA";
 
         //public static string URL = "https://kkhemosvdapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH DC
-         public static string URL = "http://epinetuat/t2o_kkh_service/Sodexo.svc/";  // for Local Server
+        //public static string URL = "https://kkhemosvpapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH production
+        public static string URL = "http://epinetuat/t2o_kkh_service/Sodexo.svc/";  // for Local Server
         //public static string URL = "https://www.touch2orderqaws.sodexonet.com/t2o_kkh_service/Sodexo.svc/";  //  for QA Server
+            
 
 
         //WCF service methods

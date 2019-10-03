@@ -67,8 +67,8 @@
                          Style="{StaticResource PopupView}"
               >
 
-                <Label HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Text="Terms &amp; Conditions" FontSize="Title" FontAttributes="Bold"/>
-                <Editor Text="Term and condition of services....." 
+                <Label FontFamily="{StaticResource SansationRegular}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Text="Terms &amp; Conditions" FontSize="Title" FontAttributes="Bold"/>
+                <Editor FontFamily="{StaticResource SansationRegular}" Text="Term and condition of services....." 
                     IsReadOnly="True"
                     HeightRequest="300"
                     Grid.Row="1"/>
@@ -76,11 +76,12 @@
                     <CheckBox x:Name="checked" VerticalOptions="Center" 
                               Color="HotPink"
                               HorizontalOptions="Start" WidthRequest="30"/>
-                    <Label Margin="-10,0,0,0" VerticalOptions="Center" Text="I Accept above Terms and conditions"/>
+                    <Label FontFamily="{StaticResource SansationRegular}" Margin="-10,0,0,0" VerticalOptions="Center" Text="I Accept above Terms and conditions"/>
                 </StackLayout>
 
                 <Button Margin="0,10,0,0" WidthRequest="60"
                     BackgroundColor="IndianRed"
+                        FontFamily="{StaticResource SansationRegular}"
                     FontSize="Body"
                     IsEnabled="False"
                     Clicked="Button_Clicked"

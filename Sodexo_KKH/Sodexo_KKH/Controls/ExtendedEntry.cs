@@ -9,7 +9,6 @@ namespace Sodexo_KKH.Controls
     {
         public ExtendedEntry()
         {
-            this.FontFamily = Device.RuntimePlatform == Device.UWP ? "Assets/Fonts/Sansation-Regular.ttf#Sansation" : "Sansation-Regular.ttf#Sansation-Regular";
         }
     }
 }

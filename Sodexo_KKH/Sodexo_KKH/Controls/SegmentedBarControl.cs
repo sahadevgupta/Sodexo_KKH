@@ -133,11 +133,13 @@ namespace Sodexo_KKH.Controls
             foreach (var item in Children)
             {
                 var vstack = new StackLayout();
-                
-                
+
+                var a = App.Current.Resources;
+
                 var label = new Label()
                 {
                     FontAttributes = FontAttributes.Bold,
+                    FontFamily = Device.RuntimePlatform == Device.UWP ? "Assets/Fonts/Sansation-Regular.ttf#Sansation" : (Device.RuntimePlatform == Device.Android ? "Sansation-Regular.ttf#Sansation-Regular" : "Sansation-Regular"),
                     Text = item,
                     FontSize = 20,
                     TextColor = TextColor,
@@ -162,8 +164,7 @@ namespace Sodexo_KKH.Controls
                     HorizontalOptions = LayoutOptions.FillAndExpand
                 };
                 var childrenLayout = new StackLayout() { Spacing = 5,Orientation = StackOrientation.Horizontal};
-
-                childrenLayout.Children.Add(vstack);
+                                                                                                                                                                                                                                                                              childrenLayout.Children.Add(vstack);
                 childrenLayout.Children.Add(boxview);
                 childrenLayout.ClassId = item;
                 _mainContentLayout.Children.Add(childrenLayout);
@@ -189,16 +190,11 @@ namespace Sodexo_KKH.Controls
         {
             if (_lastElementSelected != null)
             {
-                //var box1 = (_lastElementSelected.Children.Where(p => p is BoxView).First() as BoxView);
-                //box1.BackgroundColor = Color.Transparent;
-                //(_lastElementSelected.Children.First(p => p is Label) as Label).TextColor = TextColor;
-
                 var stack1 = (_lastElementSelected.Children.Where(p => p is StackLayout).First() as StackLayout);
                 (stack1.Children.First(x => x is Label) as Label).TextColor = TextColor;
                 (stack1.Children.First(x => x is BoxView) as BoxView).BackgroundColor = Color.Transparent;
             }
 
-            //(itemSelected.Children.Where(p => p is BoxView).First() as BoxView).BackgroundColor = SelectedLineColor;
             var stack =  (itemSelected.Children.Where(p => p is StackLayout).First() as StackLayout);
             (stack.Children.First(x => x is Label) as Label).TextColor = SelectedTextColor;
             (stack.Children.First(x => x is BoxView) as BoxView).BackgroundColor = SelectedLineColor;

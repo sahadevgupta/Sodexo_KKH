@@ -10,7 +10,7 @@
 
         <Label Text="Feedback" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" 
              BackgroundColor="{StaticResource My_Header_Color}" 
-             FontSize="17"
+             FontSize="17" FontFamily="{StaticResource SansationRegular}"
              FontAttributes="Bold"
              TextColor="White" HorizontalTextAlignment="Center" />
 

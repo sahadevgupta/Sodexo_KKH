@@ -68,7 +68,8 @@
                             <Setter Property="TextColor" Value="White"/>
                             <Setter Property="VerticalOptions" Value="Center"/>
                             <Setter Property="HorizontalOptions" Value="Center"/>
-                        </Style>
+                        <Setter Property="FontFamily" Value="StaticResource SansationRegular}"/>
+                    </Style>
                     </Grid.Resources>
 
                 <Label Grid.Row="0"  LineBreakMode="WordWrap" Text="Order Date"/>
@@ -84,7 +85,7 @@
                 </Grid>
 
 
-                <ListView x:Name="meallist" SelectionMode="None" MinimumHeightRequest="80">
+            <ListView x:Name="meallist" CachingStrategy="RecycleElement" SelectionMode="None" MinimumHeightRequest="80">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -110,6 +111,7 @@
                                     <Style TargetType="Label">
                                         <Setter Property="VerticalOptions" Value="Center"/>
                                         <Setter Property="HorizontalOptions" Value="Center"/>
+                                        <Setter Property="FontFamily" Value="StaticResource SansationRegular}"/>
                                     </Style>
                                 </Grid.Resources>
 
