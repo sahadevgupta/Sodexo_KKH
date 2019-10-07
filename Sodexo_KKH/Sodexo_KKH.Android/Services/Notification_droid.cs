@@ -71,5 +71,10 @@ namespace Sodexo_KKH.Droid.Services
                 Toast.MakeText(activity, description, ToastLength.Long).Show();
             });
         }
+
+        public Task<string> ShowAlert(string title, string body, string acceptbtn = null, string rejectbtn = null, string cancelbtn = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
