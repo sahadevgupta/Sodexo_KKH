@@ -127,11 +127,8 @@ namespace Sodexo_KKH.ViewModels
 
                     SetOrderRemark(value.Name);
                 }
-
-
             }
         }
-
 
 
         private string _orderRemarks = string.Empty;
@@ -160,7 +157,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private string _mealClassName;
-
         public string MealClassName
         {
             get { return this._mealClassName; }
@@ -1224,6 +1220,24 @@ namespace Sodexo_KKH.ViewModels
                 int cntdiets = 0;
                 bool istheraCount = false;
 
+
+                if (others == "DOC" && DocCheckEnable)
+                {
+                    var q1 = "select * from mstr_menu_master where ID ='" + item.ID + "' and (TH_CODE IS NULL OR TH_CODE = '')";
+
+                    int cnt = db.Query<mstr_menu_item>(q1).Count;
+                    if (cnt == 0)
+                    {
+                        isthere = 0;
+                    }
+
+                    istheraCount = (cnt == 0) ? true : istheraCount;
+                    isthere = (cnt == 0 && istheraCount) ? 0 : (cnt + isthere);
+
+                }
+                else
+                    isthere = 1;
+
                 if (!string.IsNullOrEmpty(item.menu_item_ides))
                 {
                     foreach (var itemdetail in item.menu_item_ides.Split(','))
@@ -1261,22 +1275,7 @@ namespace Sodexo_KKH.ViewModels
 
 
 
-                            if (others == "DOC" && DocCheckEnable)
-                            {
-                                q1 = "select * from mstr_menu_item where ID ='" + itemdetail + "' and (TH_CODE IS NULL OR TH_CODE = '')";
-
-                                int cnt = db.Query<mstr_menu_item>(q1).Count;
-                                if (cnt == 0)
-                                {
-                                    isthere = 0;
-                                    break;
-                                }
-
-                                istheraCount = (cnt == 0) ? true : istheraCount;
-                                isthere = (cnt == 0 && istheraCount) ? 0 : (cnt + isthere);
-
-
-                            }
+                            
 
                         }
 
@@ -1358,7 +1357,7 @@ namespace Sodexo_KKH.ViewModels
 
             //
             //if (((others == "DOC" && isthere <=0) || (others != "DOC" && isthere > 0)) && cntingredients <= 0 && cntallergies <= 0 && cntdiets > 0 && isSetmenuOk && cyclecounter > 0 && isconfinementok == true)//&& isSetmenuOk
-            if (cntingredients <= 0 && cntallergies <= 0 && cntdiets > 0 && isSetmenuOk && cyclecounter > 0 && isconfinementpresent)//&& isSetmenuOk
+            if (isthere > 0 && cntingredients <= 0 && cntallergies <= 0 && cntdiets > 0 && isSetmenuOk && cyclecounter > 0 && isconfinementpresent)//&& isSetmenuOk
             {
                 if (Library.KEY_langchangedfrommealpage == "yes")
                 {

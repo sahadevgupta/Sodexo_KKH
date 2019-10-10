@@ -442,7 +442,12 @@ namespace Sodexo_KKH.ViewModels
                 if (!String.IsNullOrEmpty(patient.Last_Order_by))
                     AssignPatientInfo(patient);
                 else
+                {
+                    IsPageEnabled = false;
                     await PageDialog.DisplayAlertAsync("Alert!!", "SORRY, You Are Not Authorised To Take First Order Of Patient", "OK");
+                    return;
+                }
+                    
             }
             else
                 AssignPatientInfo(patient);

@@ -35,7 +35,7 @@ namespace Sodexo_KKH.iOS
 
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();   
-            FormsMaterial.Init();
+           // FormsMaterial.Init();
             SfListViewRenderer.Init();
             SfAutoCompleteRenderer.Init();
             new SfBusyIndicatorRenderer();

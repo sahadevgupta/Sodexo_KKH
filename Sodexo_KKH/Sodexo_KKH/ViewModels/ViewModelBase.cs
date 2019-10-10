@@ -25,7 +25,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private bool _isNotConnected;
-
         public bool IsNotConnected
         {
             get { return this._isNotConnected; }
