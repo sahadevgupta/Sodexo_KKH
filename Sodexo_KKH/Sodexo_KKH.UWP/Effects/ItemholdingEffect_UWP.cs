@@ -16,7 +16,7 @@ using GestureRecognizer = Windows.UI.Input.GestureRecognizer;
 [assembly: ExportEffect(typeof(ItemholdingEffect_UWP), ItemholdingEffect.EffectName)]
 namespace Sodexo_KKH.UWP.Effects
 {
-    class ItemholdingEffect_UWP : PlatformEffect
+    public class ItemholdingEffect_UWP : PlatformEffect
     {
 
         private FrameworkElement _nativeView;
@@ -38,14 +38,19 @@ namespace Sodexo_KKH.UWP.Effects
         private void _nativeView_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
 
-            var name = (e.OriginalSource as TextBlock).Text;
-            _itemholdingEffect?.ControlLongPressed(name);
+            var block = (e.OriginalSource as TextBlock);
+            if (block != null)
+            {
+                var patientInfo = (block.DataContext as ViewCell).BindingContext;
+                _itemholdingEffect?.ControlLongPressed(patientInfo);
+            }
         }
 
        
 
         protected override void OnDetached()
         {
+            _nativeView.PointerReleased -= _nativeView_PointerReleased;
         }
 
         

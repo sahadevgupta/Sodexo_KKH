@@ -4,12 +4,28 @@
                      xmlns:popupPage="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                      xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
                      BackgroundColor="Transparent"
+                     xmlns:UiTemplate ="clr-namespace:Sodexo_KKH.PopUpControl"
              x:Class="Sodexo_KKH.PopUpControl.LoadingViewPopup">
-    <StackLayout BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="Center">
-        <syncfusion:SfBusyIndicator 
-                x:Name="pbar" 
-                IsBusy="True"  
-                ViewBoxWidth="100" ViewBoxHeight="100" TextSize="24"  AnimationType="DoubleCircle" Title="Syncing..."   TextColor="Black" >
-        </syncfusion:SfBusyIndicator>
-    </StackLayout>
+
+    <Frame VerticalOptions="CenterAndExpand" HorizontalOptions="Center"
+           Visual="Material"
+           BackgroundColor="White"
+           HasShadow="True"
+           BorderColor="LightGray"
+           CornerRadius="10" Margin="20" 
+           Padding="20" HeightRequest="150">
+        <StackLayout  VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+            <ActivityIndicator Color="Accent" x:Name="ProgressB"  IsRunning="True"/>
+
+            <Label Text="Syncing..."  
+                   FontSize="Subtitle"
+                   IsVisible="{Binding IsVisible,Source={x:Reference ProgressB}}" 
+                   TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+            <UiTemplate:LoadingScreen x:Name="prog" LoadingText="Please wait while we sync all data. &#10;This might take some time..."/>
+
+        </StackLayout>
+
+    </Frame>
+
+   
 </popupPage:PopupPage>

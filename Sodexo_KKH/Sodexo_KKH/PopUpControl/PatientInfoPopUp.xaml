@@ -66,7 +66,8 @@
                 <StackLayout.Resources>
                     <Style x:Key="Titlelbl" TargetType="Label">
                         <Setter Property="LineHeight" Value="1.8"/>
-                        <Setter Property="VerticalTextAlignment" Value="Center" />
+                        <Setter Property="VerticalOptions" Value="Center" />
+                        <Setter Property="HorizontalOptions" Value="Center"/>
                         <Setter Property="Margin" Value="10,2" />
                     </Style>
                     <Style BasedOn="{StaticResource Titlelbl}" TargetType="Label">
@@ -83,7 +84,6 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                       
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -118,7 +118,6 @@
                     <UiTemplates:PopupTitleView Text="Patient Information"  Close="PopupTitleView_Close" Grid.ColumnSpan="2"/>
 
                     <Label x:Uid="pname" 
-                           
                            x:Name="txtp_name" 
                            Text="Patient Name" 
                            Grid.Row="1" Grid.Column="0" 
@@ -180,7 +179,7 @@
                     <Label x:Uid="alge" Text="Allergies:" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Row="17" Grid.Column="0"  />
-                    <Label x:Uid="ther" Text="Therapeutic:}" Grid.Row="19" 
+                    <Label x:Uid="ther" Text="Therapeutic:" Grid.Row="19" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Column="0"  />
 
@@ -215,10 +214,10 @@
                     <Label x:Name="txtp_prefered_server1" Text="{Binding Preferredserver}"   Grid.Row="12" Grid.Column="1"></Label>
                     <Label x:Name="txtp_NRIC1"    Grid.Row="13" Grid.Column="1"/>
                     <StackLayout Grid.Row="14" Grid.Column="1" Orientation="Horizontal">
-                        <Label x:Name="txtveg" VerticalOptions="Center"  Grid.Row="15" 
+                        <Label x:Name="txtveg" VerticalOptions="Center"  
                                Text="{Binding isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
                                Grid.Column="1"  
-                               FontSize="18"/>
+                               />
                         <Image Source="{converters:PlatformImage SourceImage='Veg_symbol'}" VerticalOptions="Center" HeightRequest="30" >
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image"

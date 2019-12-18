@@ -4,10 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
-             xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
-             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:syncfusion1="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
              x:Class="Sodexo_KKH.Views.DailyOrderDetailPage"
              Padding="10">
@@ -30,6 +27,12 @@
         <StackLayout  AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             Opacity="1">
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout" Binding="{Binding IsPageEnabled}"
+                             Value="true">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </DataTrigger>
+            </StackLayout.Triggers>
             <local:ConnectionView/>
             <StackLayout Orientation="Horizontal">
                 <Image x:Name="sss"   Source="Assets/logoinnertouch2order.png" HorizontalOptions="Start" HeightRequest="60" />
@@ -78,13 +81,37 @@
                     ItemDisplayBinding="{Binding meal_name}"
                     HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
             </StackLayout>
-            
-            <syncfusion1:SfCheckBox  IsVisible="True" 
-                            x:Uid="chk_care"   FontFamily="{StaticResource SansationRegular}"
-                            FontSize="18" x:Name="chkcare_giver"  
-                            Text="Care Giver"
-                            IsChecked="{Binding IsCareGiver}"
-                            WidthRequest="20" />
+
+            <StackLayout Orientation="Horizontal" >
+                <CheckBox IsChecked="{Binding IsCareGiver}" WidthRequest="30">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup>
+
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Color" Value="Black"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="IsChecked">
+                                <VisualState.Setters>
+                                    <Setter Property="Color" Value="Accent"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </CheckBox>
+                <Label VerticalTextAlignment="Center" 
+                                   FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
+                                   FontSize="18" 
+                                   Text="Care Giver"/>
+
+            </StackLayout>
+
+
+
+           
             <Button  x:Name="searchButton" FontFamily="{StaticResource SansationRegular}"
                 Command="{Binding SearchCommand}"
                      HorizontalOptions="FillAndExpand"
@@ -143,11 +170,14 @@
                                     <RowDefinition Height="1"/>
                                 </Grid.RowDefinitions>
                                         
-                                        <syncfusion1:SfCheckBox IsVisible="{Binding status,Converter={StaticResource CheckBoxConverter}}"  
+                                       
+                                        
+                                        
+                                        <CheckBox IsVisible="{Binding status,Converter={StaticResource CheckBoxConverter}}"  
                                                                 x:Uid="chk_select"  x:Name="chk_select"    
                                                                 VerticalOptions="Center" 
-                                                                FontFamily="{StaticResource SansationRegular}"
                                                             HorizontalOptions="Center" IsChecked="{Binding is_checked}"  />
+                                        
                                 <Label FontFamily="{StaticResource SansationRegular}" Grid.Row="0" Grid.Column="1" x:Name="tbldate" Text="{Binding date}" VerticalOptions="Center" HorizontalTextAlignment="Start" />
                                 <Label FontFamily="{StaticResource SansationRegular}"  Grid.Row="0" Grid.Column="2" x:Name="tblward" Text="{Binding Ward}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                                 <Label FontFamily="{StaticResource SansationRegular}"  Grid.Row="0" Grid.Column="3" x:Name="tblbed" Text="{Binding Bed}" HorizontalTextAlignment="Center" VerticalOptions="Center" />
@@ -185,23 +215,35 @@
                 </Button.Triggers>
             </Button>
         </StackLayout>
-        
-        <syncfusion:SfBusyIndicator 
-                x:Name="pbar" 
-                IsVisible="False" 
-                IsBusy="False" 
-                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" TextSize="24" Title="Loading..."  TextColor="Black" 
-            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-            AbsoluteLayout.LayoutFlags="All">
-            <syncfusion:SfBusyIndicator.Triggers>
-                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+
+        <StackLayout x:Name="loadingStack" AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+            AbsoluteLayout.LayoutFlags="All" IsVisible="False">
+
+
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout"
                              Binding="{Binding IsPageEnabled}"
                              Value="true">
                     <Setter Property="IsVisible" Value="True"/>
-                    <Setter Property="IsBusy" Value="True"/>
-                    <Setter Property="Opacity" Value="0.7"/>
                 </DataTrigger>
-            </syncfusion:SfBusyIndicator.Triggers>
-        </syncfusion:SfBusyIndicator>
+            </StackLayout.Triggers>
+
+            <ActivityIndicator Color="Accent" x:Name="ProgressB"  IsRunning="False">
+                <ActivityIndicator.Triggers>
+                    <DataTrigger TargetType="ActivityIndicator"
+                                 Binding="{Binding Source={x:Reference loadingStack},Path=IsVisible}"
+                                 Value="true">
+                        <Setter Property="IsRunning" Value="True"/>
+                    </DataTrigger>
+                </ActivityIndicator.Triggers>
+            </ActivityIndicator>
+
+            <Label Text="Loading..."  
+                   FontSize="Title"
+                   IsVisible="{Binding IsVisible,Source={x:Reference ProgressB}}" 
+                   TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+        </StackLayout>
     </AbsoluteLayout>
 </ContentPage>

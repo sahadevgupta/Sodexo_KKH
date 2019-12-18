@@ -1,17 +1,12 @@
-﻿using Plugin.Connectivity;
-using Sodexo_KKH.Helpers;
-using Syncfusion.ListView.XForms.UWP;
-using Syncfusion.XForms.UWP.Buttons;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
- 
+
 
 namespace Sodexo_KKH.UWP
 {
@@ -48,31 +43,20 @@ namespace Sodexo_KKH.UWP
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-               
-
                 List<Assembly> assembliesToInclude = new List<Assembly>();
-                assembliesToInclude.Add(typeof(Syncfusion.SfBusyIndicator.XForms.UWP.SfBusyIndicatorRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(SfListViewRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.SfAutoComplete.XForms.UWP.SfAutoCompleteRenderer).GetTypeInfo().Assembly);
-                // Replace the Xamarin.Forms.Forms.Init(e);      
-                assembliesToInclude.Add(typeof(SfRadioButtonRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(SfCheckBoxRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
                 assembliesToInclude.AddRange(Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
                 Rg.Plugins.Popup.Popup.Init();
-                Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
-                
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }

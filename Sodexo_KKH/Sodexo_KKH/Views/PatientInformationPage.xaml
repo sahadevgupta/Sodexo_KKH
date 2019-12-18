@@ -8,7 +8,6 @@
              x:Class="Sodexo_KKH.Views.PatientInformationPage"
              xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
               xmlns:behaviors="clr-namespace:Sodexo_KKH.Behaviors"
-             xmlns:SfIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:staticFn="clr-namespace:Sodexo_KKH.Helpers"
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
              Padding="10"
@@ -55,18 +54,18 @@
                         <Image x:Name="sss" Source="{converters:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="Start" HeightRequest="60" />
                         <Image  HorizontalOptions="EndAndExpand" Source="{converters:PlatformImage SourceImage='sodexologo'}" HeightRequest="60" />
                 </StackLayout>
-                <Grid RowSpacing="10">
+                    <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
@@ -78,6 +77,7 @@
                         <Grid.Resources>
                             <Style TargetType="Label">
                                 <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
+                                <Setter Property="LineHeight" Value="1.8"/>
                             </Style>
 
                             <Style TargetType="Entry">
@@ -91,7 +91,7 @@
 
                         </Grid.Resources>
 
-                        <Label FontAttributes="Bold" Text="Name:" Grid.Row="0" Grid.Column="0"/>
+                        <Label  FontAttributes="Bold" Text="Name:" Grid.Row="0" Grid.Column="0"/>
                         <Label Text="{Binding SelectedPatient.Patientname}" Grid.Row="0" Grid.Column="1"/>
                         <Label FontAttributes="Bold" Text="Bed Class:" Grid.Row="0" Grid.Column="2"/>
                         <Label Text="{Binding SelectedPatient.Bed_Class_Name}" Grid.Row="0" Grid.Column="3"/>
@@ -124,7 +124,7 @@
                             </Entry.Behaviors>
                         </Entry>
 
-                        <Label FontAttributes="Bold" Text="Gen Comment:" VerticalOptions="Center" Grid.Row="5" Grid.Column="0"/>
+                        <Label FontAttributes="Bold" Text="Dietician Comment:" VerticalOptions="Center" Grid.Row="5" Grid.Column="0"/>
                         <Entry Text="{Binding SelectedPatient.Generalcomment}" Grid.Row="5" MaxLength="200" Grid.Column="1">
                             <Entry.Behaviors>
                                 <behaviors:SpecialCharValidationBehavior/>
@@ -167,32 +167,78 @@
                                 </DataTrigger>
                             </Picker.Triggers>
                         </Picker>
-                    
 
-                            <syncfusion:SfCheckBox  x:Uid="txtdia" 
-                                                     FontSize="18"
-                                                    Grid.Row="7" Grid.Column="0"
-                                                    x:Name="chkdiabetic" 
-                                                    HorizontalOptions="FillAndExpand"
-                                                    FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
-                                                    Text="Diabetic" >
-                                <syncfusion:SfCheckBox.Triggers>
-                                    <DataTrigger TargetType="syncfusion:SfCheckBox"
+
+                        <StackLayout Orientation="Horizontal" Grid.Row="7" Grid.Column="0">
+                            <CheckBox x:Name="chkdiabetic" 
+                                      VerticalOptions="CenterAndExpand"
+                                      WidthRequest="20">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
+
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="Black"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="IsChecked">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="Accent"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <CheckBox.Triggers>
+                                    <DataTrigger TargetType="CheckBox"
                                              Binding="{Binding Source={x:Static staticFn:Library.KEY_USER_ROLE}}"
                                              Value="FSA">
-                                    <Setter Property="IsEnabled" Value="False"/>
-
+                                        <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
-                                </syncfusion:SfCheckBox.Triggers>
+                                </CheckBox.Triggers>
+                                
+                                
+                            </CheckBox>
+                            <Label VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="Center"
+                                   FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
+                                   FontSize="18" 
+                                   Text="Diabetic"/>
 
-                            </syncfusion:SfCheckBox>
+                        </StackLayout>
 
-                            <syncfusion:SfCheckBox x:Uid="cnf"  
-                                                   Grid.Row="7" Grid.Column="1"
-                                                   FontSize="18" x:Name="confine" 
-                                                   HorizontalOptions="FillAndExpand"
-                                                   FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
-                                                   IsChecked="{Binding IsConfinement}"   Text="Confinement" />
+                        <StackLayout Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
+                            <CheckBox IsChecked="{Binding IsConfinement}" 
+                                      VerticalOptions="CenterAndExpand"
+                                      WidthRequest="20">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
+
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="Black"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="IsChecked">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="Accent"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </CheckBox>
+                            <Label VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="Center"
+                                   FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
+                                   FontSize="18" 
+                                   Text="Confinement"/>
+
+                        </StackLayout>
+                    
                       
                         <Label FontAttributes="Bold" Text="Disposable Tray:" VerticalOptions="Center" Grid.Row="7" Grid.Column="2"/>
                         <Picker Grid.Row="7" Grid.Column="3" SelectedIndex="0" SelectedItem="{Binding IsDisposable,Converter={StaticResource BoolToObjectConverter}, ConverterParameter=Disposable}">
@@ -202,13 +248,37 @@
                             </Picker.Items>
                         </Picker>
 
+                        <StackLayout Orientation="Horizontal" Grid.Row="8" Grid.Column="0">
+                            <CheckBox IsChecked="{Binding IsInfantEnabled}"
+                                      VerticalOptions="CenterAndExpand"
+                                      WidthRequest="20">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
 
-                        <syncfusion:SfCheckBox x:Uid="cnf"  
-                                                   FontSize="18"  
-                                               Grid.Row="8" Grid.Column="0"
-                                                   HorizontalOptions="FillAndExpand"
-                                                   FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
-                                                   IsChecked="{Binding IsInfantEnabled}" Text="Infant Diet" />
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="Black"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="IsChecked">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="Accent"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </CheckBox>
+                            <Label VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="Center"
+                                   FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
+                                   FontSize="18" 
+                                   Text="Infant Diet"/>
+
+                        </StackLayout>
+
+
 
                         <Label FontAttributes="Bold" Text="Food Allergy :" VerticalOptions="Center" Grid.Row="8" Grid.Column="2"/>
                         <Picker Grid.Row="8" ItemsSource="{Binding RadioButtonList}" Grid.Column="3" SelectedIndex="0" SelectedItem="{Binding IsFAGeneral}">
@@ -275,12 +345,36 @@
                     BindableLayout.ItemsSource="{Binding OthersChecBox,Mode=OneWay}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Spacing="10"
+                            <StackLayout Spacing="10" Orientation="Horizontal"
                             MinimumHeightRequest="40">
-                                    <syncfusion:SfCheckBox IsEnabled="{Binding BindingContext.IsNoMealEnable,Source={x:Reference patientinfopage}}" 
-                                                           CheckedColor="Green" 
-                                                           FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"
-                                                           Text="{Binding others_name}" IsChecked="{Binding IsChecked}" />
+
+                                    <CheckBox WidthRequest="30" IsChecked="{Binding IsChecked}" 
+                                              IsEnabled="{Binding BindingContext.IsNoMealEnable,Source={x:Reference patientinfopage}}">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Black"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="IsChecked">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Green"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
+
+                                    <Label Text="{Binding others_name}" 
+                                           VerticalTextAlignment="Center" 
+                                           FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"/>
+
                                 </StackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -312,11 +406,36 @@
                     BindableLayout.ItemsSource="{Binding Allergies,Mode=OneWay}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Spacing="10"
+                                <StackLayout Spacing="10" Orientation="Horizontal"
                             MinimumHeightRequest="40"
                             FlexLayout.Basis="33%" >
 
-                                    <syncfusion:SfCheckBox FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation" CheckedColor="Green" Text="{Binding allergies_name}"  IsChecked="{Binding IsChecked}" />
+                                    <CheckBox WidthRequest="30" IsChecked="{Binding IsChecked}" >
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Black"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="IsChecked">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Green"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
+                                    <Label Text="{Binding allergies_name}" 
+                                           VerticalTextAlignment="Center" 
+                                           FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"/>
+
+                                   
 
                             </StackLayout>
                         </DataTemplate>
@@ -358,11 +477,37 @@
                     BindableLayout.ItemsSource="{Binding Ingredients,Mode=OneWay}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout Spacing="10"
+                                <StackLayout Spacing="10" Orientation="Horizontal"
                             MinimumHeightRequest="40"
                             FlexLayout.Basis="33%" >
 
-                                    <syncfusion:SfCheckBox FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation" CheckedColor="Green" Text="{Binding ingredient_name}" IsChecked="{Binding IsChecked}" />
+                                    <CheckBox WidthRequest="30" IsChecked="{Binding IsChecked}" >
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Black"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="IsChecked">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Green"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
+                                    <Label Text="{Binding ingredient_name}" 
+                                           VerticalTextAlignment="Center" 
+                                           FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"/>
+
+
+                                   
 
                                 </StackLayout>
                             </DataTemplate>
@@ -402,11 +547,36 @@
                     BindableLayout.ItemsSource="{Binding Therapeutics,Mode=OneWay}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Spacing="10"
+                                <StackLayout Spacing="10" Orientation="Horizontal"
                             MinimumHeightRequest="40"
                             FlexLayout.Basis="33%" >
 
-                                    <syncfusion:SfCheckBox FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation" CheckedColor="Green" Text="{Binding TH_code}" IsChecked="{Binding IsChecked}" />
+                                    <CheckBox WidthRequest="30" IsChecked="{Binding IsChecked}" >
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Black"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="IsChecked">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Green"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
+                                    <Label Text="{Binding TH_code}" 
+                                           VerticalTextAlignment="Center" 
+                                           FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"/>
+
+                                   
 
                             </StackLayout>
                         </DataTemplate>
@@ -445,11 +615,37 @@
                     BindableLayout.ItemsSource="{Binding Cuisines,Mode=OneWay}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Spacing="10"
+                                <StackLayout Spacing="10" Orientation="Horizontal"
                                          MinimumHeightRequest="40"
                                          FlexLayout.Basis="33%" >
 
-                                    <syncfusion:SfCheckBox x:Name="sfcheck" FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation" CheckedColor="Green" Text="{Binding meal_type_name}" IsChecked="{Binding IsChecked}" />
+                                    <CheckBox WidthRequest="30" IsChecked="{Binding IsChecked}" >
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Black"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="IsChecked">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Green"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
+                                    <Label Text="{Binding meal_type_name}" 
+                                           VerticalTextAlignment="Center" 
+                                           FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"/>
+
+
+                                   
 
 
                                 </StackLayout>
@@ -487,10 +683,36 @@
                     BindableLayout.ItemsSource="{Binding DietTextures,Mode=OneWay}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Spacing="10"
+                                <StackLayout Spacing="10" Orientation="Horizontal"
                                 MinimumHeightRequest="40"
                                 FlexLayout.Basis="33%" >
-                                    <syncfusion:SfCheckBox FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation" CheckedColor="Green" Text="{Binding diet_texture_name}" IsChecked="{Binding IsChecked}" />
+
+                                    <CheckBox WidthRequest="30" IsChecked="{Binding IsChecked}" >
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Black"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="IsChecked">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Green"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
+                                    <Label Text="{Binding diet_texture_name}" 
+                                           VerticalTextAlignment="Center" 
+                                           FontFamily="Assets/Fonts/Sansation-Regular.ttf#Sansation"/>
+
+                                   
                             </StackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -527,25 +749,36 @@
                 </Button.Triggers>
             </Button>
         </StackLayout>
-        
-        <SfIndicator:SfBusyIndicator 
-                x:Name="pbar" 
-                IsVisible="False" 
-                IsBusy="False"  
-            TextSize="24"
-                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" Title="Loading..."  TextColor="Black" 
-            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-            AbsoluteLayout.LayoutFlags="All">
-            <SfIndicator:SfBusyIndicator.Triggers>
-                <DataTrigger TargetType="SfIndicator:SfBusyIndicator"
+
+        <StackLayout x:Name="loadingStack" AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+            AbsoluteLayout.LayoutFlags="All" IsVisible="False">
+
+
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout"
                              Binding="{Binding IsPageEnabled}"
                              Value="true">
                     <Setter Property="IsVisible" Value="True"/>
-                    <Setter Property="IsBusy" Value="True"/>
-                    <Setter Property="Opacity" Value="0.7"/>
                 </DataTrigger>
-            </SfIndicator:SfBusyIndicator.Triggers>
-        </SfIndicator:SfBusyIndicator>
+            </StackLayout.Triggers>
+
+            <ActivityIndicator Color="Accent" x:Name="ProgressB"  IsRunning="False">
+                <ActivityIndicator.Triggers>
+                    <DataTrigger TargetType="ActivityIndicator"
+                                 Binding="{Binding Source={x:Reference loadingStack},Path=IsVisible}"
+                                 Value="true">
+                        <Setter Property="IsRunning" Value="True"/>
+                    </DataTrigger>
+                </ActivityIndicator.Triggers>
+            </ActivityIndicator>
+
+            <Label Text="Loading..."  
+                   FontSize="Title"
+                   IsVisible="{Binding IsVisible,Source={x:Reference ProgressB}}" 
+                   TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+        </StackLayout>
 
     </AbsoluteLayout>
     

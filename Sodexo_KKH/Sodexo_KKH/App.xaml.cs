@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Prism.Services;
 using Sodexo_KKH.Helpers;
 using Sodexo_KKH.Models;
+using Sodexo_KKH.PopUpControl;
 using Sodexo_KKH.Repos;
 using Sodexo_KKH.Services;
 using Sodexo_KKH.ViewModels;
@@ -18,7 +19,7 @@ namespace Sodexo_KKH
 {
     public partial class App
     {
-
+        public static float CurrentProgress = 1;
         public static string CultureCode { get; set; }
         public static IPageDialogService pageDialog;
         /* 
@@ -32,10 +33,8 @@ namespace Sodexo_KKH
 
         protected override async void OnInitialized()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzk0MDZAMzEzNjJlMzMyZTMwTmpnaGdFOHZXejE3bUlGTktoTmxTL0FPNGZ2cEplK3l6cnRFUXdadURhVT0=");
             InitializeComponent();
             CultureCode = "";
-
             Check_User_Already_Exist();
 
             await NavigationService.NavigateAsync(nameof(LoginPage));
@@ -142,6 +141,7 @@ namespace Sodexo_KKH
             containerRegistry.RegisterForNavigation<DailyOrderDetailPage, DailyOrderDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<MealOrderStatusPage>();
             containerRegistry.RegisterForNavigation<FeedBackPage, FeedBackPageViewModel>();
+            //containerRegistry.RegisterDialog<DialogView, DialogViewModel>();
         }
     }
 }

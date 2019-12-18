@@ -7,9 +7,12 @@
              Padding="10"
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
              xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
+             xmlns:effects="clr-namespace:Sodexo_KKH.Effects"
+             xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
              xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms">
+             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+             xmlns:autosuggestion="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox">
 
     <NavigationPage.TitleView>
 
@@ -59,6 +62,8 @@
                             MinimumDate="{Binding MinDate}"
                         VerticalOptions="Center"   />
 
+                <Image Source="Assets/calendar.png" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+
             </StackLayout>
 
 
@@ -75,7 +80,7 @@
                             <DataTrigger TargetType="BoxView"
                                          Binding="{Binding IsWardVisible}"
                                          Value="true">
-                                <Setter Property="IsVisible" Value="True"/>
+                                <Setter Property="IsVisible" Value="True"/> 
                             </DataTrigger>
                         </BoxView.Triggers>
                     </BoxView>
@@ -101,11 +106,6 @@
 
 
                 </StackLayout>
-
-
-
-
-
 
             </StackLayout>
             <StackLayout Margin="0,10,0,0" Orientation="Horizontal" IsVisible="True" x:Name="WardStack">
@@ -164,22 +164,20 @@
                     </DataTrigger>
                 </StackLayout.Triggers>
 
-                <autocomplete:SfAutoComplete  ValueChanged="SfAutoComplete_ValueChanged"
-                                              DataSource="{Binding PatientDatas}"
-                                              Watermark="Search" 
-                                              FontFamily="{StaticResource SansationRegular}"
-                                              HorizontalOptions="FillAndExpand"
-                                              />
-                
-                
+
+               
+                    <controls:AutoSuggestionBox ItemsSource="{Binding PatientDatas}"
+                                            Item="AutoSuggestionBox_Item"
+                                            HorizontalOptions="FillAndExpand"
+                                            TextChanged="AutoSuggestionBox_TextChanged"/>
+
                     <Button CornerRadius="5"
                             FontFamily="{StaticResource SansationRegular}"
                             x:Uid="btnsearch1" x:Name="btnsearch2" 
                             BackgroundColor="{StaticResource My_Button_Color}" 
                             TextColor="White" 
-                            WidthRequest="100"
-                           HeightRequest="50"
-                         FontSize="Subtitle"
+                          
+                         FontSize="Body"
                             Command="{Binding SearchBtnCommand}" 
                             CommandParameter="PatientName"
                             Text="Search"  
@@ -270,13 +268,16 @@
                      />
             </Grid>
 
-
-            <syncfusions:SfListView AutoFitMode="Height"
-                                    SelectionMode="None"
-                                ItemHolding="SfListView_ItemHolding"
-                                ItemTapped="SfListView_ItemTapped"
-                                ItemsSource="{Binding Patients}">
-                <syncfusions:SfListView.ItemTemplate>
+            <ListView HasUnevenRows="True"
+                      SelectionMode="None"
+                      CachingStrategy="RecycleElement"
+                      ItemTapped="ListView_ItemTapped"
+                      ItemsSource="{Binding Patients}">
+                <ListView.Effects>
+                    <effects:ItemholdingEffect ItemLongPressed="ItemholdingEffect_ItemLongPressed"/>
+                </ListView.Effects>
+                
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Grid>
@@ -316,7 +317,7 @@
 
                                 <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" x:Name="tblname" Text="{Binding Allergies,Converter={StaticResource AllergytextConverter}}" LineBreakMode="WordWrap"  />
 
-                                <Label VerticalOptions="Center" MaxLines="4"   Grid.Column="4"  Text="{Binding Therapeutic_Condition}" LineBreakMode="TailTruncation"  />
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" MaxLines="4"   Grid.Column="4"  Text="{Binding Therapeutic_Condition}" LineBreakMode="TailTruncation"  />
 
                                 <Label VerticalOptions="Center" HorizontalOptions="Center"  Grid.Column="5" x:Name="tblage" Text="{Binding ishalal,Converter={StaticResource BoolToObjectConverter}}" LineBreakMode="WordWrap"  />
 
@@ -352,7 +353,7 @@
                                              Clicked="DeleteOrder_Clicked"
                                          VerticalOptions="Center"/>
 
-                              
+
                                 <BoxView VerticalOptions="End" Grid.ColumnSpan="12" Grid.Row="1" HeightRequest="1" BackgroundColor="Black"/>
 
 
@@ -360,30 +361,40 @@
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
-                </syncfusions:SfListView.ItemTemplate>
-            </syncfusions:SfListView>
-
-           
+                </ListView.ItemTemplate>
+            </ListView>
+            
         </StackLayout>
 
-        <syncfusion:SfBusyIndicator 
-                x:Name="pbar" 
-                IsVisible="False" 
-                IsBusy="False"  
-            TextSize="24"
-                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" Title="Loading..."  TextColor="Black" 
-            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-            AbsoluteLayout.LayoutFlags="All">
-            <syncfusion:SfBusyIndicator.Triggers>
-                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+        <StackLayout x:Name="loadingStack" AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+            AbsoluteLayout.LayoutFlags="All" IsVisible="False">
+
+
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout"
                              Binding="{Binding IsPageEnabled}"
                              Value="true">
                     <Setter Property="IsVisible" Value="True"/>
-                    <Setter Property="IsBusy" Value="True"/>
-                    <Setter Property="Opacity" Value="0.7"/>
                 </DataTrigger>
-            </syncfusion:SfBusyIndicator.Triggers>
-        </syncfusion:SfBusyIndicator>
+            </StackLayout.Triggers>
+
+            <ActivityIndicator Color="Accent" x:Name="ProgressB"  IsRunning="False">
+                <ActivityIndicator.Triggers>
+                    <DataTrigger TargetType="ActivityIndicator"
+                                 Binding="{Binding Source={x:Reference loadingStack},Path=IsVisible}"
+                                 Value="true">
+                        <Setter Property="IsRunning" Value="True"/>
+                    </DataTrigger>
+                </ActivityIndicator.Triggers>
+            </ActivityIndicator>
+
+            <Label Text="Loading..."  
+                   FontSize="Title"
+                   IsVisible="{Binding IsVisible,Source={x:Reference ProgressB}}" 
+                   TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+        </StackLayout>
     </AbsoluteLayout>
 
 </ContentPage>

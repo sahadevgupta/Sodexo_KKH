@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -21,7 +23,7 @@ namespace Sodexo_KKH.Effects
             return (ICommand)view.GetValue(CommandProperty);
         }
 
-        public void ControlLongPressed(string name) => ItemLongPressed?.Invoke(name, EventArgs.Empty);
+        public void ControlLongPressed(object data) => ItemLongPressed?.Invoke(data, EventArgs.Empty);
 
         public static void SetCommand(BindableObject view, ICommand value)
         {

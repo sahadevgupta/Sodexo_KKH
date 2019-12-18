@@ -66,7 +66,6 @@
 
                             <Grid.Resources>
                                 <Style TargetType="Label">
-                                    <Setter Property="LineHeight" Value="1.8"/>
                                     <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
                                 </Style>
                             </Grid.Resources>
@@ -102,10 +101,10 @@
                                                  Value="Clear Feeds">
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
-                                    <!--<DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                    <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
                                                  Value="T&amp;A">
                                         <Setter Property="IsEnabled" Value="False"/>
-                                    </DataTrigger>-->
+                                    </DataTrigger>
                                 </Picker.Triggers>
                             </Picker>
 
@@ -125,7 +124,6 @@
                         <StackLayout Margin="10,0,0,0" FlexLayout.Basis="50%" >
                             <StackLayout Orientation="Horizontal">
                                 <Label   FontAttributes="Bold"
-                                         LineHeight="1.8"
                         Text="Remarks:" 
                         VerticalOptions="Center" Grid.Row="0" Grid.Column="2" 
                          />
@@ -150,7 +148,99 @@
                     </FlexLayout>
                 </StackLayout>
 
+                <!--<Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
+                            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Label Text="Meal Class:" 
+                           FontAttributes="Bold"
+                           Grid.Row="0" Grid.Column="0" />
+
+                    <Label Text="{Binding MealClassName}"
+                           Grid.Row="0" Grid.Column="1"/>
+
+                    <Label FontAttributes="Bold"
+                           Text="Remarks:" 
+                           
+                           Grid.Row="0" Grid.Column="2" />
+                    
+                    <Picker Grid.Row="0" Grid.Column="3" FontFamily="{StaticResource SansationRegular}"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="FillAndExpand" 
+                            WidthRequest="150"
+                            Title="Select Remark"
+                            ItemDisplayBinding="{Binding Name}"
+                            ItemsSource="{Binding Remarks}"
+                            SelectedItem="{Binding SelectedRemark}"/>
+
+                    <Label Text="Meal Option:" 
+                           FontAttributes="Bold"
+                           Grid.Row="1" Grid.Column="0" />
+
+                    <Picker Grid.Row="1" Grid.Column="1" 
+                            VerticalOptions="CenterAndExpand"
+                             HorizontalOptions="FillAndExpand"
+                            FontFamily="{StaticResource SansationRegular}"
+                            IsEnabled="True"
+                            WidthRequest="150"
+                            ItemDisplayBinding="{Binding meal_option_name}"
+                            SelectedItem="{Binding SelectedMealOption}"
+                            ItemsSource="{Binding MealOptions}">
+                        <Picker.Triggers>
+                            <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="Full Feeds">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="Clear Feeds">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+
+                            --><!--<DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="T&amp;A">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>--><!--
+
+                        </Picker.Triggers>
+                            </Picker>
+
+                    <Editor Grid.Row="1" FontFamily="{StaticResource SansationRegular}"
+                            Grid.Column="2" 
+                            Text="{Binding OrderRemarks}"
+                            Grid.ColumnSpan="2" 
+                            Grid.RowSpan="2"/>
+
+                    <Label Text="Diet Type:" 
+                           FontAttributes="Bold"
+                           Grid.Row="2" Grid.Column="0" />
+
+                    <Picker Grid.Row="2" Grid.Column="1" 
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="150"
+                            HorizontalOptions="FillAndExpand"
+                            FontFamily="{StaticResource SansationRegular}"
+                            ItemDisplayBinding="{Binding diet_name}"
+                            ItemsSource="{Binding DietTypes}"
+                            SelectedItem="{Binding SelectedDietType}"/>
+
+                </Grid>-->
                 <BoxView HeightRequest="1" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand"/>
 
                 <controls:SegmentedBarControl TextColor="Black"
@@ -159,8 +249,10 @@
                                               SelectedLineColor="Navy"
                                               SelectedItemChanged="mealtime_SelectedItemChanged"/>
 
-
-                    <StackLayout x:Name="menuCategories" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding MenuCategories}">
+               
+                    <StackLayout x:Name="menuCategories" Orientation="Horizontal" 
+                                 HeightRequest="120"
+                                 BindableLayout.ItemsSource="{Binding MenuCategories}">
                     <StackLayout.Triggers>
                         <DataTrigger TargetType="StackLayout"
                                          Binding="{Binding IsMenuEnable}"
@@ -172,9 +264,11 @@
                     
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                                <Frame  ClassId="{Binding ID}" 
-                                   BackgroundColor="{Binding fcolor}" 
-                                   Margin="4" Padding="15"  BorderColor="Gray" CornerRadius="10">
+                                <Frame ClassId="{Binding ID}" 
+                                       BackgroundColor="White"  
+                                       WidthRequest="120"
+                                       Margin="1" Padding="5"  
+                                       BorderColor="Gray" CornerRadius="5">
 
                                         <Frame.Triggers>
                                             <DataTrigger TargetType="Frame"
@@ -199,7 +293,7 @@
 
                                         <VisualState x:Name="UnSelected">
                                             <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                                <Setter Property="BackgroundColor" Value="White" />
                                             </VisualState.Setters>
                                         </VisualState>
 
@@ -258,7 +352,7 @@
                             </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
-
+                
 
                 <SearchBar FontFamily="{StaticResource SansationRegular}" Placeholder="Search..." Text="{Binding SearchText}"/>
 
@@ -289,23 +383,28 @@
                                         <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="300" />
+                                                    <ColumnDefinition Width="250" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="180"/>
                                                 </Grid.RowDefinitions>
-
-                                                <Image  Grid.Column="0" Grid.Row="0"  
-                                                        Aspect="AspectFit"  
+                                               
+                                                    <Image    
+                                                        Aspect="Fill"  
                                                         HeightRequest="200"
-                                                        WidthRequest="300"
+                                                        Grid.Column="0" Grid.Row="0"
+                                                        WidthRequest="250"
                                                         VerticalOptions="Center"
                                                         Source="{Binding ImageData,Converter={StaticResource BytesToImageSourceConverter}}"/>
+                                                
+                                                
 
 
                                                 <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
-                                                    <Label FontFamily="{StaticResource SansationRegular}"  FontSize="20" FontAttributes="Bold" Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
+                                                    <Label FontFamily="{StaticResource SansationRegular}"  FontSize="20" 
+                                                           FontAttributes="Bold" 
+                                                           Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
                                                     <Label FontFamily="{StaticResource SansationRegular}"  LineBreakMode="WordWrap" 
                                            FontSize="17"  
                                            MaxLines="8" HorizontalOptions="CenterAndExpand"
@@ -405,25 +504,27 @@
                 </Button.Triggers>
             </Button>
         </Grid>
-        <syncfusion:SfBusyIndicator 
-                x:Name="pbar" 
-                IsVisible="False" 
-                IsBusy="False"  
-            TextSize="24"
-                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" Title="Loading..."  TextColor="Black" 
-            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1" 
-            AbsoluteLayout.LayoutFlags="All">
-            <syncfusion:SfBusyIndicator.Triggers>
-                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
-                             Binding="{Binding IsPageEnabled}"
-                             Value="true">
-                    <Setter Property="IsVisible" Value="True"/>
-                    <Setter Property="IsBusy" Value="True"/>
-                    <Setter Property="Opacity" Value="0.7"/>
-                </DataTrigger>
-            </syncfusion:SfBusyIndicator.Triggers>
-        </syncfusion:SfBusyIndicator>
+        <StackLayout x:Name="loadingStack" AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+            AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsPageEnabled}">
 
+
+            <ActivityIndicator Color="Accent" x:Name="ProgressB"  IsRunning="False">
+                <ActivityIndicator.Triggers>
+                    <DataTrigger TargetType="ActivityIndicator"
+                                 Binding="{Binding Source={x:Reference loadingStack},Path=IsVisible}"
+                                 Value="true">
+                        <Setter Property="IsRunning" Value="True"/>
+                    </DataTrigger>
+                </ActivityIndicator.Triggers>
+            </ActivityIndicator>
+
+            <Label Text="Loading..."  
+                   FontSize="Title"
+                   IsVisible="{Binding IsVisible,Source={x:Reference ProgressB}}" 
+                   TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+        </StackLayout>
 
     </AbsoluteLayout>
 

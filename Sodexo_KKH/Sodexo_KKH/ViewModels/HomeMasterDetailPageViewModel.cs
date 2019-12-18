@@ -22,26 +22,7 @@ namespace Sodexo_KKH.ViewModels
 {
     public class HomeMasterDetailPageViewModel : ViewModelBase
     {
-        private string _user = Library.KEY_USER_FIRST_NAME;
-        public string User
-        {
-            get { return _user; }
-            set { SetProperty(ref _user, value); }
-        }
-
-        private string _userRole = Library.KEY_USER_ROLE;
-        public string UserRole
-        {
-            get { return _userRole; }
-            set { SetProperty(ref _userRole, value); }
-        }
-        private string _userSiteCode = Library.KEY_USER_SiteCode;
-        public string UserSiteCode
-        {
-            get { return _userSiteCode; }
-            set { SetProperty(ref _userSiteCode, value); }
-        }
-
+       
         private int _orderCount;
         public int OrderCount
         {
@@ -49,9 +30,7 @@ namespace Sodexo_KKH.ViewModels
             set { SetProperty(ref _orderCount, value); }
         }
 
-
         private bool _isMasterAvailable;
-
         public bool IsMasterAvailable
         {
             get { return this._isMasterAvailable; }
@@ -59,7 +38,6 @@ namespace Sodexo_KKH.ViewModels
         }
 
         private bool _isMenuAvailable;
-
         public bool IsMenuAvailable
         {
             get { return this._isMenuAvailable; }
@@ -67,6 +45,7 @@ namespace Sodexo_KKH.ViewModels
         }
 
         public bool isMstrNotificationAvailable;
+
         public bool isMenuNotificationAvailable;
         public INavigation navigation { get; set; }
 
@@ -122,7 +101,7 @@ namespace Sodexo_KKH.ViewModels
 
         }
 
-        async Task MasterUpdateNotify()
+        async void MasterUpdateNotify()
         {
             try
             {
@@ -180,7 +159,7 @@ namespace Sodexo_KKH.ViewModels
 
         }
 
-        async Task MenuUpdateNotify()
+        async void MenuUpdateNotify()
         {
             try
             {
@@ -297,14 +276,15 @@ namespace Sodexo_KKH.ViewModels
 
                             Library.last_mastersynctime = tm;
                            
-                            await MasterSync.SyncMaster();
+                            await MasterSync.SyncMaster(ui);
 
-                            await navigation.PopPopupAsync();
+                            
 
                             MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", "Master");
                             await PageDialog.DisplayAlertAsync("Alert!!", "Master data synced successfully.", "OK");
+                            await navigation.PopPopupAsync();
                             isMstrNotificationAvailable = false;
-
+                           
                         }
                         else
                             await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
@@ -318,7 +298,7 @@ namespace Sodexo_KKH.ViewModels
                         if (CrossConnectivity.Current.IsConnected)
                         {
                             isMenuNotificationAvailable = true;
-                            var ui = new LoadingViewPopup();
+                           var ui = new LoadingViewPopup();
                             await navigation.PushPopupAsync(ui);
 
                             int atime = Convert.ToInt32(Library.KEY_USER_adjusttime);
@@ -326,13 +306,18 @@ namespace Sodexo_KKH.ViewModels
 
                             Library.last_mealssynctime = tm;
 
-                            await MasterSync.Sync_mstr_menu_master();
-                            await MasterSync.Sync_mstr_menu_item();
 
-                            await navigation.PopPopupAsync();
+                            await MasterSync.SyncMenuMaster(ui);
+
+                            //await MasterSync.Sync_mstr_menu_master();
+                            //await MasterSync.Sync_mstr_menu_item();
+
+                            
 
                             await PageDialog.DisplayAlertAsync("Alert!!", "Menu Items synced succeesfully.", "OK");
+                            await navigation.PopPopupAsync();
                             isMenuNotificationAvailable = false;
+                           
                         }
                         else
                             await PageDialog.DisplayAlertAsync("Alert!!", "Server is not accessible, please check internet connection.", "OK");
@@ -391,7 +376,7 @@ namespace Sodexo_KKH.ViewModels
                         else
                             await PageDialog.DisplayAlertAsync("Error!!", "Please check your internet connection.", "OK");
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
 
 

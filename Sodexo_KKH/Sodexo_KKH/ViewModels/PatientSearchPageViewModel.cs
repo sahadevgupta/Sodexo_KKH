@@ -118,11 +118,9 @@ namespace Sodexo_KKH.ViewModels
             set { SetProperty(ref _maxDate, value); }
         }
 
+        public string PatientName { get; set; }
 
-        private List<string> _patientDatas;
-
-        public string PatientName { get; private set; }
-
+        private List<string> _patientDatas = new List<string>();  
         public List<string> PatientDatas
         {
             get { return this._patientDatas; }
@@ -377,7 +375,7 @@ namespace Sodexo_KKH.ViewModels
         internal async void GetPatientInfo(string value)
         {
             PatientName = value;
-            PatientDatas = new List<string>();
+            var temp = new List<string>();
             if (CrossConnectivity.Current.IsConnected == true)
             {
                 try
@@ -393,8 +391,12 @@ namespace Sodexo_KKH.ViewModels
                     foreach (var item in namelist)
                     {
                         string name = item.Patient_Name;
-                        PatientDatas.Add(name);
+                        temp.Add(name);
                     }
+                    PatientDatas = new List<string>(temp);
+
+                    if (!PatientDatas.Any())
+                        PatientDatas = new List<string> { "No Results" };
 
                 }
                 catch (Exception)

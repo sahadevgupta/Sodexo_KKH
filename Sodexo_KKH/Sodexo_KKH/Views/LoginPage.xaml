@@ -45,8 +45,24 @@
 
                 <StackLayout BackgroundColor="{StaticResource My_Header_Color}" 
                              Orientation="Horizontal"
+                              HeightRequest="60"
+                             Margin="0,-10,0,0"
+                             HorizontalOptions="FillAndExpand">
+
+                    <Button ImageSource="Assets/login.png" Text="LOGIN" HorizontalOptions="FillAndExpand" 
+                            VerticalOptions="CenterAndExpand"
+                            
+                            HeightRequest="60"
+                            FontFamily="SulphurPoint-Bold"
+                            InputTransparent="True"
+                            TextColor="White" BackgroundColor="Transparent"/>
+                </StackLayout>
+
+
+                <!--<StackLayout BackgroundColor="{StaticResource My_Header_Color}" 
+                             Orientation="Horizontal"
                              Margin="0,-10,0,0" HeightRequest="60" HorizontalOptions="FillAndExpand">
-                    <!--<Image Source="Assets/login.png"  HorizontalOptions="Center" VerticalOptions="CenterAndExpand"   /-->
+                    --><!--<Image Source="Assets/login.png"  HorizontalOptions="Center" VerticalOptions="CenterAndExpand"   /--><!--
 
                     <Label Text="LOGIN" TextColor="White" 
                            FontFamily="{StaticResource SansationRegular}"
@@ -54,11 +70,11 @@
                            HorizontalOptions="CenterAndExpand"
                          FontSize="Medium"
                          FontAttributes="Bold"/>
-                </StackLayout>
-                
-                
+                </StackLayout>-->
 
-                
+
+               
+
                 <StackLayout Orientation="Horizontal" IsVisible="{Binding IsRolePickerVisible}" Margin="0,20,0,0">
                     <Label FontSize="Medium"
                            FontFamily="{StaticResource SansationRegular}"
@@ -166,24 +182,38 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
+
         
-        <syncfusion:SfBusyIndicator 
-                x:Name="pbar" 
-                IsVisible="False" 
-                IsBusy="False" 
-                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" TextSize="24" Title="Loading..."  TextColor="Black" 
-            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-            AbsoluteLayout.LayoutFlags="All">
-            <syncfusion:SfBusyIndicator.Triggers>
-                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+
+        <StackLayout x:Name="loadingStack" AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+            AbsoluteLayout.LayoutFlags="All" IsVisible="False">
+
+
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout"
                              Binding="{Binding IsPageEnabled}"
                              Value="true">
                     <Setter Property="IsVisible" Value="True"/>
-                    <Setter Property="IsBusy" Value="True"/>
-                    <Setter Property="Opacity" Value="0.7"/>
                 </DataTrigger>
-            </syncfusion:SfBusyIndicator.Triggers>
-        </syncfusion:SfBusyIndicator>
+            </StackLayout.Triggers>
+
+            <ActivityIndicator Color="Accent" x:Name="ProgressB"  IsRunning="False">
+                <ActivityIndicator.Triggers>
+                    <DataTrigger TargetType="ActivityIndicator"
+                                 Binding="{Binding Source={x:Reference loadingStack},Path=IsVisible}"
+                                 Value="true">
+                        <Setter Property="IsRunning" Value="True"/>
+                    </DataTrigger>
+                </ActivityIndicator.Triggers>
+            </ActivityIndicator>
+
+            <Label Text="Loading..."  
+                   FontSize="Title"
+                   IsVisible="{Binding IsVisible,Source={x:Reference ProgressB}}" 
+                   TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+        </StackLayout>
 
 
     </AbsoluteLayout>

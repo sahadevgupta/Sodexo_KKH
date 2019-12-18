@@ -1,6 +1,6 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using Sodexo_KKH.Views;
-
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,6 +9,21 @@ namespace Sodexo_KKH.PopUpControl
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoadingViewPopup : PopupPage
     {
+        private float _progress;
+
+        public float Progress
+        {
+            get { return _progress; }
+            set
+            {
+                _progress = value;
+                prog.Progress = value;
+                Debug.WriteLine(value);
+            }
+            
+        }
+
+
         public LoadingViewPopup()
         {
             InitializeComponent();

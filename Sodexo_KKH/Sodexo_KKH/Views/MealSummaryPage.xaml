@@ -29,6 +29,14 @@
       
             <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                     AbsoluteLayout.LayoutFlags="All">
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout" Binding="{Binding IsPageEnabled}"
+                             Value="true">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </DataTrigger>
+            </StackLayout.Triggers>
+
+
             <local:ConnectionView Grid.Row="0"/>
             <StackLayout Orientation="Horizontal" Grid.Row="1">
                 <Image x:Name="sss"   Source="{converters:PlatformImage SourceImage='logoinnertouch2order'}" HorizontalOptions="StartAndExpand" HeightRequest="60" />
@@ -301,25 +309,36 @@
 
         </StackLayout>
 
-       
-        <syncfusion:SfBusyIndicator 
-                x:Name="pbar" 
-                IsVisible="False" 
-                IsBusy="False"  
-            TextSize="24"
-                ViewBoxWidth="100" ViewBoxHeight="100"   AnimationType="DoubleCircle" Title="Loading..."  TextColor="Black" 
-            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-            AbsoluteLayout.LayoutFlags="All">
-            <syncfusion:SfBusyIndicator.Triggers>
-                <DataTrigger TargetType="syncfusion:SfBusyIndicator"
+
+        <StackLayout x:Name="loadingStack" AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+            AbsoluteLayout.LayoutFlags="All" IsVisible="False">
+
+
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout"
                              Binding="{Binding IsPageEnabled}"
                              Value="true">
                     <Setter Property="IsVisible" Value="True"/>
-                    <Setter Property="IsBusy" Value="True"/>
-                    <Setter Property="Opacity" Value="0.7"/>
                 </DataTrigger>
-            </syncfusion:SfBusyIndicator.Triggers>
-        </syncfusion:SfBusyIndicator>
+            </StackLayout.Triggers>
+
+            <ActivityIndicator Color="Accent" x:Name="ProgressB"  IsRunning="False">
+                <ActivityIndicator.Triggers>
+                    <DataTrigger TargetType="ActivityIndicator"
+                                 Binding="{Binding Source={x:Reference loadingStack},Path=IsVisible}"
+                                 Value="true">
+                        <Setter Property="IsRunning" Value="True"/>
+                    </DataTrigger>
+                </ActivityIndicator.Triggers>
+            </ActivityIndicator>
+
+            <Label Text="Loading..."  
+                   FontSize="Title"
+                   IsVisible="{Binding IsVisible,Source={x:Reference ProgressB}}" 
+                   TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+        </StackLayout>
     </AbsoluteLayout>
 
 </ContentPage>

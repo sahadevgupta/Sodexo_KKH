@@ -1,4 +1,6 @@
-﻿using Rg.Plugins.Popup.Extensions;
+﻿
+using Prism.Services.Dialogs;
+using Rg.Plugins.Popup.Extensions;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.PopUpControl;
 using Sodexo_KKH.ViewModels;
@@ -19,31 +21,10 @@ namespace Sodexo_KKH.Views
         {
             base.OnAppearing();
             _viewModel.navigation = Navigation;
-
-            //var effect = new ItemholdingEffect();
-            //effect.ItemLongPressed += ItemholdingEffect_ItemLongPressed;
-            //patientslist.Effects.Add(effect);
         }
 
-        private async void SfListView_ItemHolding(object sender, Syncfusion.ListView.XForms.ItemHoldingEventArgs e)
-        {
-            var selectedPatient = e.ItemData as mstr_patient_info;
-            if (selectedPatient.caregiverno == "0")
-            {
-                var popup = new PatientInfoPopUp
-                {
-                    BindingContext = selectedPatient
-                };
-
-                await Navigation.PushPopupAsync(popup);
-            }
-        }
-
-        private void SfListView_ItemTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
-        {
-            _viewModel.NavigateToInfoPage(e.ItemData as mstr_patient_info);
-            
-        }
+       
+    
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
@@ -59,15 +40,7 @@ namespace Sodexo_KKH.Views
 
 
         }
-
-        private void SfAutoComplete_ValueChanged(object sender, Syncfusion.SfAutoComplete.XForms.ValueChangedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(e.Value))
-            {
-                _viewModel.GetPatientInfo(e.Value);
-            }
-
-        }
+       
 
         private void DeleteOrder_Clicked(object sender, EventArgs e)
         {
@@ -83,23 +56,44 @@ namespace Sodexo_KKH.Views
             await _viewModel.NavigateToMealPopUp(selectedPatient, mealtype);
         }
 
+       
+
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            _viewModel.NavigateToInfoPage(e.Item as mstr_patient_info);
+        }
+
         private async void ItemholdingEffect_ItemLongPressed(object sender, EventArgs e)
         {
-            var selectedPatient = ((ListView)sender).SelectedItem as mstr_patient_info;
-            if (selectedPatient == null)
-            {
-                return;
-            }
+            _viewModel.IsPageEnabled = true;
+            var selectedPatient = sender as mstr_patient_info;
             if (selectedPatient.caregiverno == "0")
             {
+                //var param = new DialogParameters();
+                //param.Add("Message", selectedPatient);
+                //_viewModel._dialogService.ShowDialog("DialogView", param, CloseDialogCallback);
+
                 var popup = new PatientInfoPopUp
                 {
                     BindingContext = selectedPatient
                 };
 
-                await Navigation.PushPopupAsync(popup);
+                await Navigation.PushPopupAsync(popup, true);
             }
+            _viewModel.IsPageEnabled = false;
+        }
 
+        private void AutoSuggestionBox_TextChanged(object sender, Events.EventArgs<string> e)
+        {
+            if (!string.IsNullOrEmpty(e.Value))
+            {
+                _viewModel.GetPatientInfo(e.Value);
+            }
+        }
+
+        private void AutoSuggestionBox_Item(object sender, Events.EventArgs<object> e)
+        {
+            _viewModel.PatientName = e.Value.ToString();
         }
     }
 }

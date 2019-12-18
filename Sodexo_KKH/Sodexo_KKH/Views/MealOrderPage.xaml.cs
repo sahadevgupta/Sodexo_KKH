@@ -98,8 +98,6 @@ namespace Sodexo_KKH.Views
             {
                await _viewModel.SetMenuCategories(_viewModel.SelectedMenuCategory);
             });
-           
-           
         }
 
         private async void NxtBtn_Clicked(object sender, EventArgs e)
@@ -107,7 +105,7 @@ namespace Sodexo_KKH.Views
             string param = ((Button)sender).CommandParameter.ToString();
             if (param.Equals("NEXT"))
             {
-                if (_viewModel.others.ID == 1 || _viewModel.others.ID == 8 || _viewModel.others.others_name.Contains("TC") || _viewModel.others.others_name.Contains("To Collect") || _viewModel.others.ID == 3 || _viewModel.others.ID == 4 || _viewModel.others.ID == 9)
+                if (_viewModel.others.ID == 1 || _viewModel.others.ID == 8 || _viewModel.others.ID == 5)
                 {
                     await _viewModel.NavigateToMealSummary();
                 }
@@ -115,30 +113,13 @@ namespace Sodexo_KKH.Views
                 {
                     StackLayout s = this.FindByName<StackLayout>("menuCategories");
 
-                    SelectElement(s.Children[_viewModel.MenuCategories.IndexOf(_viewModel.MenuCategories.First())] as Frame);
+                    var enabledView = s.Children.Where(p => p is Frame).Where(x => x.IsEnabled).First();
+                    SelectElement(enabledView as Frame);
                 }
             }
             else
                 _viewModel.PlaceOrder();
         }
-        private double width = 0;
-        private double height = 0;
-        //protected override void OnSizeAllocated(double width, double height)
-        //{
-        //    base.OnSizeAllocated(width, height);
-        //    if (width != this.width || height != this.height)
-        //    {
-        //        this.width = width;
-        //        this.height = height;
-        //        if (width > height)
-        //        {
-        //            menuCategories.HeightRequest = 450;
-        //        }
-        //        else
-        //        {
-        //            menuCategories.HeightRequest = -1;
-        //        }
-        //    }
-        //}
+        
     }
 }

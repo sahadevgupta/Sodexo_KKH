@@ -623,6 +623,17 @@ namespace Sodexo_KKH.ViewModels
             base.OnNavigatedTo(parameters);
 
 
+          
+            
+
+        }
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            IsPageEnabled = true;
+
             if (parameters.ContainsKey("PatientInfo"))
             {
 
@@ -638,10 +649,10 @@ namespace Sodexo_KKH.ViewModels
 
                 SelectedPatient = parameters["PatientInfo"] as mstr_patient_info;
 
-                SelectedPatient.PropertyChanged += SelectedPatient_PropertyChanged;      
+                SelectedPatient.PropertyChanged += SelectedPatient_PropertyChanged;
                 SelectedPatient.FluidInfo = string.IsNullOrEmpty(SelectedPatient.FluidInfo) ? "NA" : SelectedPatient.FluidInfo;
 
-                if (string.IsNullOrEmpty(SelectedPatient.Allergies) || SelectedPatient.Allergies == "NA" || SelectedPatient.Allergies == "0" )
+                if (string.IsNullOrEmpty(SelectedPatient.Allergies) || SelectedPatient.Allergies == "NA" || SelectedPatient.Allergies == "0")
                 {
                     IsFAGeneral = RadioButtonList[1];
                 }
@@ -734,11 +745,11 @@ namespace Sodexo_KKH.ViewModels
                     }
                     DietTextures.Add(item);
                 }
-                
+
                 InitializeMealType(SelectedPatient);
             }
-            
 
+            IsPageEnabled = false;
         }
 
         private void SelectedPatient_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

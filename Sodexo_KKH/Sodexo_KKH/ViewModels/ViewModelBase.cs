@@ -5,7 +5,7 @@ using Xamarin.Essentials;
 
 namespace Sodexo_KKH.ViewModels
 {
-    public class ViewModelBase : BindableBase, INavigationAware, IDestructible
+    public class ViewModelBase : BindableBase, INavigationAware,IInitialize, IDestructible
     {
         protected INavigationService NavigationService { get; private set; }
         protected IPageDialogService PageDialog { get; private set; }
@@ -65,6 +65,11 @@ namespace Sodexo_KKH.ViewModels
         public virtual void Destroy()
         {
 
+        }
+
+        public virtual void Initialize(INavigationParameters parameters)
+        {
+           
         }
     }
 }

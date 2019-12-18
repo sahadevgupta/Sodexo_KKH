@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Sodexo_KKH.Interfaces;
 using Sodexo_KKH.Models;
+using Sodexo_KKH.PopUpControl;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,8 +13,12 @@ namespace Sodexo_KKH.Helpers
 {
     public static class MasterSync
     {
-        public async static Task SyncMaster()
+
+        public static LoadingViewPopup _loadingView { get; private set; }
+
+        public async static Task SyncMaster(LoadingViewPopup loadingView)
         {
+            _loadingView = loadingView;
             await Sync_mstr_bed_details();
             await Sync_mstr_bed_meal_class_mapping();
             await Sync_mstr_Cycledetails();
@@ -57,8 +62,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
 
             }
@@ -147,8 +153,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -170,8 +177,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -193,8 +201,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
 
             }
@@ -218,8 +227,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
                 // stop progressring
 
@@ -269,16 +279,19 @@ namespace Sodexo_KKH.Helpers
                     dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
+                   
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
 
-                
 
             }
-            catch (Exception excp)
+            catch (Exception)
             {
                 
             }
         }
+
+        
 
         private async static Task Sync_mstr_ward_details()
         {
@@ -305,9 +318,10 @@ namespace Sodexo_KKH.Helpers
                               dbConn.Insert(item);
                     }
                     dbConn.Commit();
+                    _loadingView.Progress = _loadingView.Progress + 0.056f;
                 };
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -371,10 +385,11 @@ namespace Sodexo_KKH.Helpers
                         }
                     }
                     dbConn.Commit();
+                    _loadingView.Progress = _loadingView.Progress + 0.056f;
                 };
               
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -398,9 +413,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
-
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
                 
             }
@@ -424,8 +439,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -448,8 +464,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -474,7 +491,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
-
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
             {
@@ -499,8 +516,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -523,8 +541,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -565,10 +584,10 @@ namespace Sodexo_KKH.Helpers
                         }
                     }
                     dbConn.Commit();
-
+                    _loadingView.Progress = _loadingView.Progress + 0.056f;
                 }
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -591,8 +610,9 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -628,9 +648,10 @@ namespace Sodexo_KKH.Helpers
                         }
                     }
                     dbConn.Commit();
+                    _loadingView.Progress = _loadingView.Progress + 0.056f;
                 };
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -664,11 +685,22 @@ namespace Sodexo_KKH.Helpers
                     }
                     dbConn.Commit();
                 }
+                _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
+
+        internal static async Task SyncMenuMaster(LoadingViewPopup loadingView)
+        {
+            _loadingView = loadingView;
+            await Sync_mstr_menu_item();
+            await Sync_mstr_menu_master();
+        }
+
+
+
         public async static Task Sync_mstr_menu_item()
         {
             try
@@ -687,11 +719,13 @@ namespace Sodexo_KKH.Helpers
                     dbConn.BeginTransaction();
 
                     dbConn.InsertAll(jarray);
+                    _loadingView.Progress = _loadingView.Progress + 0.5f;
                     dbConn.Commit();
                     
                 };
+                
             }
-            catch (Exception excp)
+            catch (Exception)
             {
             }
         }
@@ -713,11 +747,12 @@ namespace Sodexo_KKH.Helpers
                     dbConn.BeginTransaction();
 
                     dbConn.InsertAll(jarray);
-                       
+                    _loadingView.Progress = _loadingView.Progress + 0.5f;
                     dbConn.Commit();
                   
 
                 };
+                
             }
             catch (Exception)
             {

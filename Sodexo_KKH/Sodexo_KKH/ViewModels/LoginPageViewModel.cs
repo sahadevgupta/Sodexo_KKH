@@ -508,12 +508,7 @@ namespace Sodexo_KKH.ViewModels
 
                             }
                             else
-                            {
                                 ErrorText = "Invalid user name or password.";
-                                //var dialog = new MessageDialog("Invailid user name or password.");
-                                //await dialog.ShowAsync();
-                            }
-
                         }
 
                     }
