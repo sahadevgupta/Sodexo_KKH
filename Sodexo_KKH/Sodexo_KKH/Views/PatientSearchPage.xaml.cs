@@ -1,10 +1,12 @@
 ﻿
+using Plugin.Connectivity;
 using Prism.Services.Dialogs;
 using Rg.Plugins.Popup.Extensions;
 using Sodexo_KKH.Models;
 using Sodexo_KKH.PopUpControl;
 using Sodexo_KKH.ViewModels;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Sodexo_KKH.Views
@@ -21,10 +23,37 @@ namespace Sodexo_KKH.Views
         {
             base.OnAppearing();
             _viewModel.navigation = Navigation;
+
+            MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", OnSyncMasterTap);
+            MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "offlineOrderSync", OnOfflineOrderSyncTap);
+            MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "NewOrder", OnNewOrderReceived);
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            MessagingCenter.Unsubscribe<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync");
+            MessagingCenter.Unsubscribe<App, string>((App)Xamarin.Forms.Application.Current, "offlineOrderSync");
+        }
+        private async void OnNewOrderReceived(App arg1, string arg2)
+        {
+            if (CrossConnectivity.Current.IsConnected)
+                await _viewModel.GetPatientsFromServer();
         }
 
-       
-    
+        private async void OnOfflineOrderSyncTap(App arg1, string arg2)
+        {
+            if (CrossConnectivity.Current.IsConnected)
+                await _viewModel.GetPatientsFromServer();
+        }
+
+        private void OnSyncMasterTap(App arg1, string arg2)
+        {
+            _viewModel.LoadData();
+        }
+
+        
+
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
@@ -62,7 +91,6 @@ namespace Sodexo_KKH.Views
         {
             _viewModel.NavigateToInfoPage(e.Item as mstr_patient_info);
         }
-
         private async void ItemholdingEffect_ItemLongPressed(object sender, EventArgs e)
         {
             _viewModel.IsPageEnabled = true;

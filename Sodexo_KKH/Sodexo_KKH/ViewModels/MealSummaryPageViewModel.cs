@@ -32,7 +32,6 @@ namespace Sodexo_KKH.ViewModels
         }
 
         private mstr_meal_option _mealOption;
-
         public mstr_meal_option MealOption
         {
             get { return this._mealOption; }
@@ -415,12 +414,7 @@ namespace Sodexo_KKH.ViewModels
                         {
                             var httpResponse = new System.Net.Http.HttpResponseMessage();
                             // Do the actual request and await the response
-                            if (Library.KEY_IS_CARE_GIVER.ToString() == "yes")
-                            {
-                                httpResponse = await httpClient.PostAsync(Library.URL + "/" + Library.METHODE_SAVEORDER, httpContent);
-
-                            }
-                            else if (Convert.ToInt32(Library.KEY_ORDER_ID) > 0)
+                            if (Convert.ToInt32(Library.KEY_ORDER_ID) > 0)
                             {
 
                                 // httpResponse = new Uri(URL + "/" + Library.METHODE_UPDATE_ORDER); //replace your Url

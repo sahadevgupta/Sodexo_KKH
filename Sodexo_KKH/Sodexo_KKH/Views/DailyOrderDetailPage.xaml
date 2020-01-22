@@ -4,7 +4,6 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
-             xmlns:syncfusion1="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
              x:Class="Sodexo_KKH.Views.DailyOrderDetailPage"
              Padding="10">

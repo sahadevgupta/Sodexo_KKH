@@ -52,7 +52,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private string _selectedRole;
-
         public string SelectedRole
         {
             get { return this._selectedRole; }
@@ -61,7 +60,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private bool _isRolePickerVisible;
-
         public bool IsRolePickerVisible
         {
             get { return this._isRolePickerVisible; }
@@ -115,12 +113,7 @@ namespace Sodexo_KKH.ViewModels
         {
             App.pageDialog = pageDialog;
 
-            RoleList = new List<string> { "Select Role" };
-            _colorConverter = new ColorTypeConverter();
-            _random = new Random();
-            GetColorList();
-            ChangeBackgroundColor();
-            Captcha = GetUniqueKey(6);
+           
 
         }
         private void ReloadCAPTCHA()
@@ -560,6 +553,18 @@ namespace Sodexo_KKH.ViewModels
         private void CreateDB()
         {
             Helpers.DevelopmentCode.CreateTables();
+        }
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            RoleList = new List<string> { "Select Role" };
+            _colorConverter = new ColorTypeConverter();
+            _random = new Random();
+            GetColorList();
+            ChangeBackgroundColor();
+            Captcha = GetUniqueKey(6);
         }
     }
 }

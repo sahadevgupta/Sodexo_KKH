@@ -30,7 +30,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private ObservableCollection<mstr_meal_time> _mstrMeals;
-
         public ObservableCollection<mstr_meal_time> MstrMeals
         {
             get { return this._mstrMeals; }
@@ -39,7 +38,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private ObservableCollection<mstr_menu_item_category> _menuCategories;
-
         public ObservableCollection<mstr_menu_item_category> MenuCategories
         {
             get { return this._menuCategories; }
@@ -49,7 +47,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private ObservableCollection<MenuItemClass> _menuItems = new ObservableCollection<MenuItemClass>();
-
         public ObservableCollection<MenuItemClass> MenuItems
         {
             get { return this._menuItems; }
@@ -61,7 +58,6 @@ namespace Sodexo_KKH.ViewModels
         public mstr_menu_item_category SelectedMenuCategory { get; set; }
         
         private bool _isMenuEnable;
-
         public bool IsMenuEnable
         {
             get { return this._isMenuEnable; }
@@ -71,7 +67,6 @@ namespace Sodexo_KKH.ViewModels
       
 
         private ObservableCollection<mstr_meal_option> _mealOptions;
-
         public ObservableCollection<mstr_meal_option> MealOptions
         {
             get { return this._mealOptions; }
@@ -80,7 +75,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private ObservableCollection<mstr_diet_type> _dietTypes;
-
         public ObservableCollection<mstr_diet_type> DietTypes
         {
             get { return this._dietTypes; }
@@ -97,7 +91,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private mstr_meal_option _selectedMealOption;
-
         public mstr_meal_option SelectedMealOption
         {
             get { return this._selectedMealOption; }
@@ -106,7 +99,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private mstr_diet_type _selectedDietType;
-
         public mstr_diet_type SelectedDietType
         {
             get { return this._selectedDietType; }
@@ -115,7 +107,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private mstr_remarks _selectedRemark;
-
         public mstr_remarks SelectedRemark
         {
             get { return this._selectedRemark; }
@@ -132,7 +123,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private string _orderRemarks = string.Empty;
-
         public string OrderRemarks
         {
             get { return this._orderRemarks; }
@@ -169,7 +159,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private bool _isAlaCarte;
-
         public bool isAlaCarte
         {
             get { return this._isAlaCarte; }
@@ -200,9 +189,7 @@ namespace Sodexo_KKH.ViewModels
 
         public List<Cart> Carts = new List<Cart>();
 
-
         private bool _isMenuImageVisible = true;
-
         public bool IsMenuImageVisible
         {
             get { return this._isMenuImageVisible; }
@@ -220,7 +207,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private bool _isbtnVisible;
-
         public bool IsBtnVisible
         {
             get { return this._isbtnVisible; }
@@ -455,10 +441,7 @@ namespace Sodexo_KKH.ViewModels
                             if (Check_order_result == true)
                                 await PageDialog.DisplayAlertAsync("Alert!!", "Meal order is already placed. "  + "Please Sync it from patient details screen.", "OK");
                             else
-                            {
-                                Library.KEY_langchangedfrommealpage = "no";
                                 await NavigateToMealSummary();
-                            }
                         }
                     }
                     else
@@ -709,6 +692,18 @@ namespace Sodexo_KKH.ViewModels
 
 
                 #region AlaCarte
+
+
+                if (!isAlaCarte && others.others_name.Contains("DOC") && (ss.ToLower().Contains("beverages") || ss.ToLower().Contains("soup")))
+                {
+                    item.CategoryVisibility = false;
+                }
+                else
+                {
+                    item.CategoryVisibility = true;
+                }
+
+
                 //if (others.others_name == "Full Feeds" || others.others_name == "T&A" || others.others_name == "Clear Feeds")
                 //{
 
@@ -1038,27 +1033,10 @@ namespace Sodexo_KKH.ViewModels
 
 
                     MenuItemClass obj = new MenuItemClass();
-                    if (Library.KEY_IS_CARE_GIVER == "no")
-                    {
-                        if (classcounter > 0 && isAlaCount>0)//&& isSetmenuOk
+                    
+                    if (classcounter > 0 && isAlaCount>0)//&& isSetmenuOk
                         {
-                            if (Library.KEY_langchangedfrommealpage == "yes")
-                            {
-                                if ((Carts.Count > 0 && Carts.Any(x => x.mealitemid == item.ID.ToString())))
-                                {
-                                    obj.ameContent = "Remove";
-                                    obj.btncolor = "True";
-                                }
-                                else
-                                {
-                                    obj.ameContent = "Add to menu";
-                                    obj.btncolor = "False";
-                                }
-
-                            }
-                            else
-                            {
-
+                           
 
                                 if ((Carts.Count > 0 && Carts.Any(x => x.mealitemid == item.ID.ToString())))
                                 {
@@ -1071,32 +1049,18 @@ namespace Sodexo_KKH.ViewModels
                                     obj.btncolor = "False";
                                 }
 
-                            }
+                            
                             obj.ID = item.ID;
                             obj.ingredient_name = item.ingredient_name;
                             obj.ImageData = item.ImageData;
                             // ob.ID = item.ID;
                             obj.meal_type_id = item.meal_type_id;
                             obj.menu_image = item.menu_image;
-                            if (Library.KEY_langchangedfrommealpage == "yes")//(culture == "th")
-                            {
-
-                                obj.menu_item_name = item.menu_item_name_local_language ?? "N/A";
-
-                            }
-                            else
-                            {
-                                obj.menu_item_name = item.menu_item_name ?? "N/A";
-                            }
-
+                            obj.menu_item_name = item.menu_item_name ?? "N/A";
                             obj.menu_item_description = item.menu_item_description ?? "N/A";
-
                             obj.mealTime_names = item.mealTime_names;
                             obj.site_code = item.site_code;
                             obj.ingredient_name = item.ingredient_name;
-
-
-
 
                             Device.BeginInvokeOnMainThread(() =>
                             {
@@ -1104,51 +1068,8 @@ namespace Sodexo_KKH.ViewModels
                             });
 
                         }
-                    }
-                    else if (Library.KEY_IS_CARE_GIVER == "yes")
-                    {
-
-                        if (classcounter > 0 && item.is_visitor.ToLower() == "true")//&& isSetmenuOk
-                        {
-                            if (Library.KEY_langchangedfrommealpage == "yes")
-                            {
-                                obj.ameContent = "Remove";//loader.GetString("rm").ToString();
-                                obj.btncolor = "True";
-
-                            }
-                            else
-                            {
-                                obj.ameContent = "Add to menu";
-                                obj.btncolor = "False";
-                            }
-
-                            obj.ID = item.ID;
-                            obj.ingredient_name = item.ingredient_name;
-                            obj.ImageData = item.ImageData;
-
-                            obj.meal_type_id = item.meal_type_id;
-                            obj.menu_image = item.menu_image;
-                            if (culture == "th")
-                            {
-
-                                obj.menu_item_name = item.menu_item_name_local_language;
-                            }
-                            else
-                            {
-                                obj.menu_item_name = item.menu_item_name;
-                            }
-
-                            obj.menu_item_description = item.menu_item_description;
-
-                            obj.mealTime_names = item.mealTime_names;
-                            obj.site_code = item.site_code;
-                            obj.ingredient_name = item.ingredient_name;
-
-                           
-
-                        }
-
-                    }
+                    
+                    
                 }
 
             }
@@ -1463,24 +1384,7 @@ namespace Sodexo_KKH.ViewModels
             //if (((others == "DOC" && isthere <=0) || (others != "DOC" && isthere > 0)) && cntingredients <= 0 && cntallergies <= 0 && cntdiets > 0 && isSetmenuOk && cyclecounter > 0 && isconfinementok == true)//&& isSetmenuOk
             if (isAlaCount >0 && isthere > 0 && cntingredients <= 0 && cntallergies <= 0 && cntdiets > 0 && isSetmenuOk && cyclecounter > 0 && isconfinementpresent)//&& isSetmenuOk
             {
-                if (Library.KEY_langchangedfrommealpage == "yes")
-                {
-
-                    if ((Carts.Count > 0 && Carts.Any(x => x.mealitemid == item.ID.ToString())))
-                    {
-                        ob.ameContent = "Remove";
-                        ob.btncolor = "True";
-                    }
-                    else
-                    {
-                        ob.ameContent = "Add to menu";
-                        ob.btncolor = "False";
-
-                    }
-
-                }
-                else
-                {
+                
                     if ((Carts.Count > 0 && Carts.Any(x => x.mealitemid == item.ID.ToString())))
                     {
                         ob.ameContent = "Remove";
@@ -1492,7 +1396,7 @@ namespace Sodexo_KKH.ViewModels
                         ob.btncolor = "False";
                     }
 
-                }
+               
                 ob.age_id = item.age_id;
                 ob.diet_id = item.diet_id;
                 ob.Confinement = item.Confinement;
@@ -1500,16 +1404,10 @@ namespace Sodexo_KKH.ViewModels
                 ob.ingredient_name = item.ingredient_name;
                 ob.ImageData = item.ImageData;
                 ob.ID = item.ID;
-                if (Library.KEY_langchangedfrommealpage == "yes")
-                {
-                    ob.menu_name = item.menu_item_name_local_language ?? "N/A";
-                    ob.menu_item_name = item.menu_code + " - " + item.menu_name_local_language ?? "N/A";
-                }
-                else
-                {
+                
                     ob.menu_name = item.menu_name ?? "N/A";
                     ob.menu_item_name = item.menu_code + " - " + item.menu_name ?? "N/A";
-                }
+           
                 ob.menu_image = item.menu_image;
 
                 ob.menu_days = item.menu_days;

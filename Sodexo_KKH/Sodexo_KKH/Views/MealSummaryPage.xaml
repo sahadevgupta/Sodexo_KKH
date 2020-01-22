@@ -5,8 +5,6 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
              xmlns:staticfn="clr-namespace:Sodexo_KKH.Helpers"
-             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-              xmlns:behaviors="clr-namespace:Sodexo_KKH.Behaviors"
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
              x:Class="Sodexo_KKH.Views.MealSummaryPage"
              Padding="10">

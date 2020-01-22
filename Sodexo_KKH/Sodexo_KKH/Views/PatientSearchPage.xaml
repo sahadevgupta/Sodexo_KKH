@@ -8,11 +8,8 @@
              xmlns:local="clr-namespace:Sodexo_KKH.PopUpControl"
              xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
              xmlns:effects="clr-namespace:Sodexo_KKH.Effects"
-             xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
-             xmlns:syncfusions="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
-             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
-             xmlns:autosuggestion="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox">
+             xmlns:windows="clr-namespace:Xamarin.Forms.PlatformConfiguration.WindowsSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:controls="clr-namespace:Sodexo_KKH.Controls">
 
     <NavigationPage.TitleView>
 
@@ -163,8 +160,6 @@
                         <Setter Property="IsVisible" Value="True"/>
                     </DataTrigger>
                 </StackLayout.Triggers>
-
-
                
                     <controls:AutoSuggestionBox ItemsSource="{Binding PatientDatas}"
                                             Item="AutoSuggestionBox_Item"
@@ -176,7 +171,8 @@
                             x:Uid="btnsearch1" x:Name="btnsearch2" 
                             BackgroundColor="{StaticResource My_Button_Color}" 
                             TextColor="White" 
-                          
+                          WidthRequest="100"
+                            HeightRequest="40"
                          FontSize="Body"
                             Command="{Binding SearchBtnCommand}" 
                             CommandParameter="PatientName"
@@ -279,7 +275,7 @@
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
+                        <ViewCell >
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.5*"/>

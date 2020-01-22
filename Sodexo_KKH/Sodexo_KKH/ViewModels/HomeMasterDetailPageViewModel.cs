@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Plugin.Connectivity;
+using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using Rg.Plugins.Popup.Extensions;
@@ -49,6 +50,9 @@ namespace Sodexo_KKH.ViewModels
         public bool isMenuNotificationAvailable;
         public INavigation navigation { get; set; }
 
+
+        public DelegateCommand<string> OnDrawerSelectedCommand { get; set; }
+
         IGenericRepo<mstr_meal_order_local> _orderlocalRepo;
         IGenericRepo<mstr_meal_time> _mealtimeRepo;
         public HomeMasterDetailPageViewModel(INavigationService navigationService, IGenericRepo<mstr_meal_order_local> orderlocalRepo,
@@ -60,6 +64,8 @@ namespace Sodexo_KKH.ViewModels
             MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "LocalOrder", OnlocalOrderReceived);
 
             LoadData();
+
+            OnDrawerSelectedCommand = new DelegateCommand<string>(DrawerSelected);
         }
 
         private void OnlocalOrderReceived(App arg1, string arg2)
@@ -246,7 +252,7 @@ namespace Sodexo_KKH.ViewModels
 
                                await Task.Run(async() => 
                                 {
-                                    await MasterSync.Sync_mstr_patient_info();
+                                    await MasterSync.Sync_mstr_patient_info(ui);
                                 });
                                 
 

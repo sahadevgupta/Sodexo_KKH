@@ -67,7 +67,6 @@
                     <Style x:Key="Titlelbl" TargetType="Label">
                         <Setter Property="LineHeight" Value="1.8"/>
                         <Setter Property="VerticalOptions" Value="Center" />
-                        <Setter Property="HorizontalOptions" Value="Center"/>
                         <Setter Property="Margin" Value="10,2" />
                     </Style>
                     <Style BasedOn="{StaticResource Titlelbl}" TargetType="Label">

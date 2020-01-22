@@ -5,7 +5,6 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Sodexo_KKH.Views.MealOrderPage"
              xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
-             xmlns:syncfusion="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:controls="clr-namespace:Sodexo_KKH.Controls"
              Padding="10"
              xmlns:cell="clr-namespace:Sodexo_KKH.PopUpControl"
@@ -53,7 +52,7 @@
                     <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
                                  Direction="Row">
 
-                        <Grid FlexLayout.Basis="50%" RowSpacing="15">
+                        <Grid FlexLayout.Basis="50%">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -125,9 +124,9 @@
                             <StackLayout Orientation="Horizontal">
                                 <Label   FontAttributes="Bold"
                         Text="Remarks:" 
-                        VerticalOptions="Center" Grid.Row="0" Grid.Column="2" 
+                        VerticalOptions="Center"  
                          />
-                                <Picker Grid.Row="0" Grid.Column="3" FontFamily="{StaticResource SansationRegular}"
+                                <Picker  FontFamily="{StaticResource SansationRegular}"
                             HorizontalOptions="FillAndExpand" 
                             Title="Select Remark"
                             ItemDisplayBinding="{Binding Name}"
@@ -137,12 +136,13 @@
                                 
                             </StackLayout>
 
-                            <Editor Grid.Row="1" FontFamily="{StaticResource SansationRegular}"
-                            HeightRequest="65"
-                            Grid.Column="2" 
+                            <Editor VerticalOptions="FillAndExpand"
+                                    HeightRequest="70"
+                                    HorizontalOptions="FillAndExpand"
+                                    FontFamily="{StaticResource SansationRegular}"
                             Text="{Binding OrderRemarks}"
-                            Grid.ColumnSpan="2" 
-                            Grid.RowSpan="2"/>
+                            
+                            />
                         </StackLayout>
                        
                     </FlexLayout>
@@ -357,7 +357,7 @@
                 <SearchBar FontFamily="{StaticResource SansationRegular}" Placeholder="Search..." Text="{Binding SearchText}"/>
 
                 <ScrollView>
-                <StackLayout>
+                    <StackLayout>
                         <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
                                  Direction="Row">
                             <Label FontSize="50"  FontFamily="{StaticResource SansationRegular}"
@@ -372,14 +372,14 @@
                        IsVisible="{Binding IsItemAvailable}"
                        Text="No Item Available "/>
 
-                        <Image x:Name="menuImg" Source="{converters:PlatformImage SourceImage='breakfast'}"   FlexLayout.Basis="100%"
+                            <Image x:Name="menuImg" Source="{converters:PlatformImage SourceImage='breakfast'}"   FlexLayout.Basis="100%"
                            IsVisible="{Binding IsMenuImageVisible}" Aspect="AspectFill"/>
 
 
-                        <StackLayout BindableLayout.ItemsSource="{Binding MenuItems}"  FlexLayout.Basis="100%" >
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    
+                            <StackLayout BindableLayout.ItemsSource="{Binding MenuItems}"  FlexLayout.Basis="100%" >
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+
                                         <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -389,16 +389,16 @@
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="180"/>
                                                 </Grid.RowDefinitions>
-                                               
-                                                    <Image    
+
+                                                <Image    
                                                         Aspect="Fill"  
                                                         HeightRequest="200"
                                                         Grid.Column="0" Grid.Row="0"
                                                         WidthRequest="250"
                                                         VerticalOptions="Center"
                                                         Source="{Binding ImageData,Converter={StaticResource BytesToImageSourceConverter}}"/>
-                                                
-                                                
+
+
 
 
                                                 <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
@@ -439,16 +439,103 @@
 
                                             </Grid>
                                         </Frame>
-                                   
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
 
-                     
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
 
-                    </FlexLayout>
-                </StackLayout>
+                            <!--<ListView ItemsSource="{Binding MenuItems}" 
+                                      CachingStrategy="RetainElement"
+                                      SelectionMode="None"
+                                      HeightRequest="500"
+                                      
+                                      
+                                      
+                                      
+                                      FlexLayout.Basis="100%">
+                            <ListView.Triggers>
+                                <DataTrigger TargetType="ListView"
+                                             Binding="{Binding MenuItems.Count}"
+                                             Value="0">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </ListView.Triggers>
+                                
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="250" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="180"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Image    
+                                                        Aspect="Fill"  
+                                                        HeightRequest="200"
+                                                        Grid.Column="0" Grid.Row="0"
+                                                        WidthRequest="250"
+                                                        VerticalOptions="Center"
+                                                        Source="{Binding ImageData,Converter={StaticResource BytesToImageSourceConverter}}"/>
+
+
+
+
+                                                    <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
+                                                        <Label FontFamily="{StaticResource SansationRegular}"  FontSize="20" 
+                                                           FontAttributes="Bold" 
+                                                           Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
+                                                        <Label FontFamily="{StaticResource SansationRegular}"  LineBreakMode="WordWrap" 
+                                           FontSize="17"  
+                                           MaxLines="8" HorizontalOptions="CenterAndExpand"
+                                           Text="{Binding menu_item_description}"/>
+
+                                                        <Button FontFamily="{StaticResource SansationRegular}" x:Uid="ame" x:Name="addremovebtn"  CornerRadius="5" HorizontalOptions="CenterAndExpand" 
+                                            Text="{Binding ameContent}" TextColor="White" 
+                                            BackgroundColor="{Binding btncolor,Converter={StaticResource BoolToColorConverter}}"
+                                           VerticalOptions="EndAndExpand"
+                                                        FontSize="20"
+                                                        FontAttributes="Bold"
+                                                        Clicked="Addremovebtn_Clicked"
+                                            WidthRequest="200">
+                                                            <Button.Triggers>
+                                                                <DataTrigger TargetType="Button"
+                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
+                                                                     Value="Remove">
+                                                                    <Setter Property="ImageSource" Value="{converters:PlatformImage SourceImage='cancel_mealsummary'}"/>
+
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Button"
+                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
+                                                                     Value="Add to menu">
+                                                                    <Setter Property="ImageSource" Value="{Null}"/>
+
+                                                                </DataTrigger>
+
+                                                            </Button.Triggers>
+                                                        </Button>
+
+                                                    </StackLayout>
+
+                                                </Grid>
+                                            </Frame>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>-->
+
+
+
+
+                        </FlexLayout>
+                    </StackLayout>
                 </ScrollView>
+               
+              
               
 
             </StackLayout>

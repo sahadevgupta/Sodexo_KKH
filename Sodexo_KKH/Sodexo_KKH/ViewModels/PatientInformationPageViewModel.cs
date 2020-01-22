@@ -36,9 +36,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private ObservableCollection<mstr_others_master> _othersradio;
-
-       
-
         public ObservableCollection<mstr_others_master> OthersRadio
         {
             get { return this._othersradio; }
@@ -46,7 +43,6 @@ namespace Sodexo_KKH.ViewModels
         }
 
         private ObservableCollection<mstr_others_master> _othersChecBox;
-
         public ObservableCollection<mstr_others_master> OthersChecBox
         {
             get { return this._othersChecBox; }
@@ -54,14 +50,13 @@ namespace Sodexo_KKH.ViewModels
         }
 
         private ObservableCollection<mstr_allergies_master> _allergies;
-
         public ObservableCollection<mstr_allergies_master> Allergies
         {
             get { return this._allergies; }
             set { SetProperty(ref _allergies, value); }
         }
-        private ObservableCollection<mstr_ingredient> _ingredients;
 
+        private ObservableCollection<mstr_ingredient> _ingredients;
         public ObservableCollection<mstr_ingredient> Ingredients
         {
             get { return this._ingredients; }
@@ -70,7 +65,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private ObservableCollection<mstr_therapeutic> _therapeutics;
-
         public ObservableCollection<mstr_therapeutic> Therapeutics
         {
             get { return this._therapeutics; }
@@ -78,7 +72,6 @@ namespace Sodexo_KKH.ViewModels
         }
 
         private ObservableCollection<mstr_diet_texture> _dietTextures;
-
         public ObservableCollection<mstr_diet_texture> DietTextures
         {
             get { return this._dietTextures; }
@@ -87,7 +80,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private ObservableCollection<mstr_meal_type> _cuisines;
-
         public ObservableCollection<mstr_meal_type> Cuisines
         {
             get { return this._cuisines; }
@@ -96,7 +88,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private bool _isInfantEnabled;
-
         public bool IsInfantEnabled
         {
             get { return this._isInfantEnabled; }
@@ -107,9 +98,7 @@ namespace Sodexo_KKH.ViewModels
             }
         }
 
-
         private bool _isAllergiesEnable;
-
         public bool IsAllergiesEnable
         {
             get { return this._isAllergiesEnable; }
@@ -132,7 +121,6 @@ namespace Sodexo_KKH.ViewModels
         }
 
         private bool _isDisposable;
-
         public bool IsDisposable
         {
             get { return this._isDisposable; }
@@ -143,7 +131,6 @@ namespace Sodexo_KKH.ViewModels
             }
         }
         private bool _isConfinement;
-
         public bool IsConfinement
         {
             get { return this._isConfinement; }
@@ -156,7 +143,6 @@ namespace Sodexo_KKH.ViewModels
 
 
         private string _isFAGeneral;
-
         public string IsFAGeneral
         {
             get { return this._isFAGeneral; }
@@ -166,14 +152,12 @@ namespace Sodexo_KKH.ViewModels
                 {
                     SetProperty(ref _isFAGeneral, value);
                     AssignFoodAllergy(value);
-                    
 
                 }
                 else if (_isFAGeneral != value)
                 {
                     SetProperty(ref _isFAGeneral, value);
                      AssignFoodAllergy(value);
-                   
                 }
                 
             }
@@ -181,7 +165,6 @@ namespace Sodexo_KKH.ViewModels
 
         private void AssignFoodAllergy(string value)
         {
-            
             if (value == "Yes")
             {
                 SelectionForFoodAllergies();
@@ -194,7 +177,6 @@ namespace Sodexo_KKH.ViewModels
         }
 
         private bool _isNoMealEnable = true;
-
         public bool IsNoMealEnable
         {
             get { return this._isNoMealEnable; }
@@ -204,7 +186,7 @@ namespace Sodexo_KKH.ViewModels
         public List<string> RadioButtonList { get; set; }
 
         public DelegateCommand<string> NextCommand { get; set; }
-        public INavigation Navigation { get; internal set; }
+        
 
         IGenericRepo<mstr_others_master> _OthersRepo;
         IGenericRepo<mstr_allergies_master> _AllergyRepo;
@@ -245,10 +227,8 @@ namespace Sodexo_KKH.ViewModels
             {
                 IsPageEnabled = true;
 
-               // SelectionNotify();
 
-
-                if (!Library.KEY_PATIENT_IS_VEG.ToLower().Equals(SelectedPatient.isveg.ToLower()) || !Library.KEY_PATIENT_IS_HALAL.ToLower().Equals(SelectedPatient.ishalal.ToLower()))
+                if (!Library.KEY_PATIENT_IS_VEG.Equals(SelectedPatient.isveg) || !Library.KEY_PATIENT_IS_HALAL.Equals(SelectedPatient.ishalal))
                 {
                     var response = await PageDialog.DisplayAlertAsync("Meal Prefrence Changed!", "Do you want to Change the (Veg/Nonveg)/(Halal/Non-Halal) Status.", "Yes", "No");
                     if (response)
@@ -264,8 +244,7 @@ namespace Sodexo_KKH.ViewModels
 
                 }
 
-
-
+                #region Future_Order
 
                 bool isChangeTher = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Therapeutic) ? string.Empty : SelectedPatient.Therapeutic, Therapeutics.Where(x => x.IsChecked).Select(x => x.TH_code).ToList());
                 bool isChangeAllergy = CompareStrings(SelectedPatient.Allergies == "0" ? string.Empty : SelectedPatient.Allergies, Allergies.Where(x => x.IsChecked).Select(x => x.ID.ToString()).ToList());
@@ -373,6 +352,8 @@ namespace Sodexo_KKH.ViewModels
                     }
                 }
 
+                #endregion
+
                 var navParam = new NavigationParameters();
                 navParam.Add("Patient", SelectedPatient);
                 navParam.Add("Allergies", Allergies.Where(x => x.IsChecked).ToList());
@@ -383,148 +364,11 @@ namespace Sodexo_KKH.ViewModels
                 navParam.Add("Other", OthersRadio.Where(x => x.IsChecked).FirstOrDefault());
                 navParam.Add("Othercheckbox", OthersChecBox.Where(x => x.IsChecked).ToList());
 
-                //App.InfantDietEnable = infant.IsChecked.HasValue;
                 await NavigationService.NavigateAsync(nameof(MealOrderPage), navParam);
 
                 IsPageEnabled = false;
             }
         }
-
-        private void SelectionNotify()
-        {
-            string msg = string.Empty;
-            msg = $"You have Selected {SelectedPatient.isveg} and {SelectedPatient.is_halal}";
-
-            var selectedOtherFromRadio = OthersRadio.Where(x => x.IsChecked).ToList();
-            var selectedOtherFromCheck = OthersChecBox.Where(x => x.IsChecked).ToList();
-            var selectedFA = Allergies.Where(x => x.IsChecked).ToList();
-            var selectedThera = Therapeutics.Where(x => x.IsChecked).ToList();
-            var selectedIng = Ingredients.Where(x => x.IsChecked).ToList();
-            var selectedCuisine = Cuisines.Where(x => x.IsChecked).ToList();
-            var selectedDT = DietTextures.Where(x => x.IsChecked).ToList();
-
-            if (selectedOtherFromRadio.Any())
-            {
-                for (int i = 0; i < selectedOtherFromRadio.Count; i++)
-                {
-
-                    msg += $" and {selectedOtherFromRadio[i].others_name}";
-                }
-               
-            }
-            if (selectedOtherFromCheck.Any())
-            {
-                for (int i = 0; i < selectedOtherFromCheck.Count; i++)
-                {
-
-                    msg += $" and {selectedOtherFromCheck[i].others_name}";
-                }
-
-            }
-        }
-
-        private async Task CheckFutureOrder()
-        {
-
-
-            bool isChangeTher = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Therapeutic) ? string.Empty : SelectedPatient.Therapeutic, Therapeutics.Where(x => x.IsChecked).Select(x => x.TH_code).ToList());
-            bool isChangeAllergy = CompareStrings(SelectedPatient.Allergies == "0" ? string.Empty : SelectedPatient.Allergies, Allergies.Where(x => x.IsChecked).Select(x => x.ID.ToString()).ToList());
-            bool isChangeIngredient = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Ingredient) ? string.Empty : SelectedPatient.Ingredient, Ingredients.Where(x => x.IsChecked).Select(x => x.ingredient_name).ToList());
-            bool isChangeDietTexture = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Diet_Texture) ? string.Empty : SelectedPatient.Diet_Texture, DietTextures.Where(x => x.IsChecked).Select(x => x.diet_texture_name).ToList());
-            bool isChangeMealType = CompareStrings(string.IsNullOrEmpty(SelectedPatient.Meal_Type) ? string.Empty : SelectedPatient.Meal_Type, Cuisines.Where(x => x.IsChecked).Select(x => x.meal_type_name).ToList());
-
-            bool isChange = (isChangeTher || isChangeAllergy || isChangeIngredient || isChangeDietTexture || isChangeMealType);
-
-            if (isChange)
-            {
-                if (CrossConnectivity.Current.IsConnected)
-                {
-
-                    string check_order_date = Library.KEY_CHECK_ORDER_DATE;
-
-
-                    HttpClient httpClientGet = new System.Net.Http.HttpClient();
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/checkfutureorder/" + check_order_date + "/" + SelectedPatient.ID);
-                    HttpResponseMessage response = await httpClientGet.SendAsync(request);
-                    // jarray= await response.Content.ReadAsStringAsync();
-                    var data = await response.Content.ReadAsStringAsync();
-                    if (data != "\"NULL\"" && data != string.Empty)
-                    {
-
-                        List<string> alertMsg = new List<string>();
-
-
-                        if (isChangeTher)
-                        {
-                            alertMsg.Add("Therapeutic Condition");
-                        }
-                        if (isChangeAllergy)
-                        {
-                            alertMsg.Add("Allergic Condition");
-                        }
-                        if (isChangeIngredient)
-                        {
-                            alertMsg.Add("Ingredient exclusion");
-                        }
-
-                        if (isChangeDietTexture)
-                        {
-                            alertMsg.Add("Diet Texture");
-                        }
-                        if (isChangeMealType)
-                        {
-                            alertMsg.Add("Cuisine Choice");
-                        }
-
-                        var msgArray = alertMsg.ToArray();
-                        var msgStr = string.Join(",", msgArray);
-                        msgStr = msgStr.Replace(",", " and ");
-
-                        var result = await DependencyService.Get<INotify>().ShowAlert("Preference Changed!!", $"Patient’s {msgStr} has been changed. Do you want to delete the future order of this patient?","Yes","No","Cancel");
-                        if (result == "Yes")
-                        {
-                            dynamic p = new JObject();
-
-                            p.orderdetailsids = data.Replace("\"", "");
-                            p.system_module = DependencyService.Get<ILocalize>().GetDeviceName();
-                            p.work_station_IP = DependencyService.Get<ILocalize>().GetIpAddress();
-
-                            string json = JsonConvert.SerializeObject(p);
-
-                            var httpClient = new HttpClient();
-
-                            var msg = await httpClient.PostAsync($"{Library.URL}/DeleteunprocessOrder", new StringContent(json, Encoding.UTF8, "application/json"));
-                            var contents = await msg.Content.ReadAsStringAsync();
-                            if (!string.IsNullOrEmpty(contents))
-                                await PageDialog.DisplayAlertAsync("Delete", $"Total records deleted - {contents}", "OK");
-
-
-                        }
-                        else if (result == "Cancel")
-                        {
-
-                        }
-
-
-
-                    }
-
-                }
-                else
-                {
-                    IsPageEnabled = false;
-                    await PageDialog.DisplayAlertAsync("Error!!", "Unable to change patient settings during offline mode. Please undo the changes and try again", "OK");
-                    return;
-
-
-                }
-            }
-            else
-                return;
-
-        }
-
-
 
         private bool CompareStrings(string strOld, List<string> listNew)
         {
@@ -568,10 +412,10 @@ namespace Sodexo_KKH.ViewModels
             isAllergy = isAllergy.TrimEnd(',');
 
             dynamic p = new JObject();
-            p.halal = SelectedPatient.ishalal == "True" ? 1 : 0;
+            p.halal = SelectedPatient.ishalal  ? 1 : 0;
             p.isallergies = isAllergy;
             p.isdiabetic = 1;
-            p.isveg = SelectedPatient.isveg == "True" ? 1 : 0;
+            p.isveg = SelectedPatient.isveg  ? 1 : 0;
             p.patientid = SelectedPatient.ID.ToString();
 
             string stringPayload = JsonConvert.SerializeObject(p);
@@ -621,25 +465,18 @@ namespace Sodexo_KKH.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-
-
-          
-            
-
         }
 
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
 
-            IsPageEnabled = true;
 
             if (parameters.ContainsKey("PatientInfo"))
             {
 
                 OthersRadio = new ObservableCollection<mstr_others_master>();
                 OthersChecBox = new ObservableCollection<mstr_others_master>();
-
                 Allergies = new ObservableCollection<mstr_allergies_master>();
                 Ingredients = new ObservableCollection<mstr_ingredient>();
                 Therapeutics = new ObservableCollection<mstr_therapeutic>();
@@ -749,7 +586,6 @@ namespace Sodexo_KKH.ViewModels
                 InitializeMealType(SelectedPatient);
             }
 
-            IsPageEnabled = false;
         }
 
         private void SelectedPatient_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -759,7 +595,6 @@ namespace Sodexo_KKH.ViewModels
                 var patient = sender as mstr_patient_info;
                 Cuisines = new ObservableCollection<mstr_meal_type>();
                 InitializeMealType(patient);
-               
             }
         }
 

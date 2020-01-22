@@ -46,11 +46,12 @@ namespace Sodexo_KKH.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 List<Assembly> assembliesToInclude = new List<Assembly>();
+                assembliesToInclude.AddRange(Rg.Plugins.Popup.Popup.GetExtraAssemblies());
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
-                assembliesToInclude.AddRange(Rg.Plugins.Popup.Popup.GetExtraAssemblies());
-
+               
                 Rg.Plugins.Popup.Popup.Init();
+                Xamarin.Forms.Forms.SetFlags("SwipeView_Experimental");
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

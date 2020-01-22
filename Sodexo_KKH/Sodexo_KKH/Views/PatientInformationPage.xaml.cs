@@ -15,13 +15,7 @@ namespace Sodexo_KKH.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _viewModel.Navigation = Navigation;
-            //RadioGroup.CheckedChanged += RadioGroup_CheckedChanged;
         }
-
-        private void RadioGroup_CheckedChanged(object sender, int e)
-        {
-            Library.IsFAGeneralEnable = e == 1 ? false : true;
-        }
+       
     }
 }

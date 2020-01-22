@@ -173,28 +173,9 @@ namespace Sodexo_KKH.ViewModels
 
             SearchBtnCommand = new DelegateCommand<string>(GetPatientsList);
 
-            Library.KEY_langchangedfrommealpage = "no";
-
             LoadData();
-
             var currentDate = DateTime.UtcNow.Date;
-
             MaxDate = MinDate.AddDays(1);
-
-            MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", OnSyncMasterTap);
-            MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "offlineOrderSync", OnOfflineOrderSyncTap);
-            MessagingCenter.Subscribe<App, string>((App)Xamarin.Forms.Application.Current, "NewOrder", OnNewOrderReceived);
-        }
-
-        private async void OnNewOrderReceived(App arg1, string arg2)
-        {
-            if (CrossConnectivity.Current.IsConnected)
-                await GetPatientsFromServer();
-        }
-
-        private async void OnOfflineOrderSyncTap(App arg1, string arg2)
-        {
-            await GetPatientsFromServer();
         }
 
         internal async Task NavigateToMealPopUp(mstr_patient_info selectedPatient, string mealtype)
@@ -215,11 +196,7 @@ namespace Sodexo_KKH.ViewModels
             {
                 mstr_meal_history meal = null;
                 ObservableCollection<mstr_meal_history> dataList = new ObservableCollection<mstr_meal_history>();
-                // string p_id = library.LoadSetting(Library.KEY_PATIENT_ID_HISTORY);
-                //start progessring
-                //myring.IsActive = true;
-                //myring.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                // String method = "AllergentDietList";
+                
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_SHOWPATIENTMEALDETAILSBYID + "/" + Convert.ToInt32(ID) + "/" + mealtype + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
@@ -347,12 +324,6 @@ namespace Sodexo_KKH.ViewModels
             }
             PatientMealHistoryList = new List<mstr_meal_history>(dataList);
 
-            //commented on 23/08/2017
-            //this.clist.ItemsSource = dataList;
-            // img_panels.Visibility = Visibility.Visible;
-
-
-
             var a = PatientMealHistoryList;
             var ui = new CancelOrderPopup(PatientMealHistoryList, PageDialog);
             ui.Disappearing += Ui_Disappearing;
@@ -416,7 +387,7 @@ namespace Sodexo_KKH.ViewModels
 
         private void OnSyncMasterTap(App arg1, string arg2)
         {
-            LoadData();
+           
         }
 
         internal async void NavigateToInfoPage(mstr_patient_info patient)
@@ -433,7 +404,7 @@ namespace Sodexo_KKH.ViewModels
                 return;
             }
 
-            if (patient.is_care_giver == "true")
+            if (patient.is_care_giver)
             {
                 return;
             }
@@ -557,7 +528,7 @@ namespace Sodexo_KKH.ViewModels
                         {
                             item.ward_bed = item.ward_name + "-" + item.bed_name;
                             item.ID = item.ID;
-                            if (string.Equals(item.is_care_giver, "true", StringComparison.CurrentCultureIgnoreCase))
+                            if (item.is_care_giver)
                             {
                                 item.Patientname = item.Patientname + ' ' + "(Care Giver)";
                             }
@@ -567,7 +538,7 @@ namespace Sodexo_KKH.ViewModels
                         IsPageEnabled = false;
 
                     }
-                    catch (Exception excp)
+                    catch (Exception)
                     {
                         // stop progressring
                         IsPageEnabled = false;
@@ -593,7 +564,7 @@ namespace Sodexo_KKH.ViewModels
 
 
 
-        private async Task GetPatientsFromServer()
+        public async Task GetPatientsFromServer()
         {
             var wbed = 0;
             try
@@ -616,7 +587,7 @@ namespace Sodexo_KKH.ViewModels
                 foreach (var patient in patientsData)
                     {
                         patient.ward_bed = $"{patient.ward_name}-{patient.bed_name}";
-                        if (string.Equals(patient.is_care_giver, "true", StringComparison.CurrentCultureIgnoreCase))
+                        if (patient.is_care_giver)
                         {
                             patient.Patientname = $"{patient.Patientname} (Care Giver {patient.caregiverno})";
                         }
@@ -636,11 +607,9 @@ namespace Sodexo_KKH.ViewModels
             }
         }
 
-        private void LoadData()
+        public void LoadData()
         {
             MstrWards = new List<mstr_ward_details>(_mstrWardRepo.QueryTable().Where(x => x.ward_type_name != "Staff" && x.status_id == 1).OrderBy(y => y.ID));
-           // BedDetails = new List<mstr_bed_details>();
-
 
             if (string.IsNullOrEmpty(Library.KEY_SYNC_NOTIFICATION))
             {
@@ -655,20 +624,6 @@ namespace Sodexo_KKH.ViewModels
             if (CrossConnectivity.Current.IsConnected)
                 await GetPatientsFromServer();
         }
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            base.OnNavigatedFrom(parameters);
-
-            MessagingCenter.Unsubscribe<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync");
-            MessagingCenter.Unsubscribe<App, string>((App)Xamarin.Forms.Application.Current, "offlineOrderSync");
-
-        }
-        public override void OnNavigatingTo(INavigationParameters parameters)
-        {
-            base.OnNavigatingTo(parameters);
-        }
-
-
 
     }
 }

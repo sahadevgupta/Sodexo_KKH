@@ -70,15 +70,16 @@ namespace Sodexo_KKH.Helpers
             }
         }
 
-        public async static Task Sync_mstr_patient_info()
+        public async static Task Sync_mstr_patient_info(LoadingViewPopup LoadingViewPopup)
         {
+            _loadingView = LoadingViewPopup;
             try
             {
                 mstr_patient_info patient_info = new mstr_patient_info();
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETALLPATIENT + "/" + Library.KEY_USER_SiteCode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
-
+                float itemNo = 0;
                 List<mstr_patient_info> jarray = JsonConvert.DeserializeObject<List<mstr_patient_info>>(await response.Content.ReadAsStringAsync());
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
@@ -87,11 +88,15 @@ namespace Sodexo_KKH.Helpers
                     dbConn.BeginTransaction();
                     foreach (var item in jarray)
                     {
+
                         item.ward_bed = item.ward_name + "-" + item.bed_name;
                         item.ID = item.ID;
 
-                        if (string.Equals(item.is_care_giver, "true", StringComparison.CurrentCultureIgnoreCase))
+                        if (item.is_care_giver)
                             item.Patientname = item.Patientname + ' ' + "(Care Giver)";
+
+                        itemNo++;
+                        _loadingView.Progress = ((itemNo / jarray.Count) * 100) / 100;
 
                     }
                     dbConn.InsertAll(jarray);

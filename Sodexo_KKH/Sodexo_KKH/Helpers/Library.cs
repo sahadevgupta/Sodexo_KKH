@@ -16,9 +16,9 @@ namespace Sodexo_KKH.Helpers
         // public static string URL = "https://www.touch2orderqaws.sodexonet.com/t2o_kkh_service/Sodexo.svc/";  //  for QA Server
 
 
-        public static string VersionNumber = "K-5.1.0 U"; //for UAT or DC
+        public static string VersionNumber = "K-5.1.1 U"; //for UAT or DC
 
-        //public static string VersionNumber = "K-5.1.0 P"; //for Production
+       // public static string VersionNumber = "K-5.1.1 P"; //for Production
 
         //WCF service methods
         public static string METHOD_PULLPATIENTSBYWARD = "PullpatientData_by_wardno";
@@ -69,7 +69,6 @@ namespace Sodexo_KKH.Helpers
         // End of WCF service...........................................................
 
 
-        public static string USER_ROLE_KEY { get; internal set; }
         public static string KEY_USER_FIRST_NAME { get; internal set; }
         public static string KEY_USER_LAST_NAME { get; internal set; }
 
@@ -93,17 +92,15 @@ namespace Sodexo_KKH.Helpers
         public static string KEY_USER_language_id { get; internal set; }
         public static string KEY_USER_payment_mode_ids { get; internal set; }
 
-        public static string KEY_PATIENT_IS_HALAL { get; internal set; }
-        public static string KEY_PATIENT_IS_VEG { get; internal set; }
+        public static bool KEY_PATIENT_IS_HALAL { get; internal set; }
+        public static bool KEY_PATIENT_IS_VEG { get; internal set; }
 
         public static string KEY_ORDER_DATE { get; internal set; }
         public static int KEY_PATIENT_WARD_TYPE_ID { get; internal set; }
         public static string KEY_USER_adjusttime { get; internal set; }
 
-        public static string KEY_langchangedfrommealpage { get; internal set; }
+       
         public static string KEY_IS_LATE_ORDERED { get; internal set; }
-
-        public static string KEY_IS_CARE_GIVER = "no";
 
         public static string KEY_ORDER_ID { get; internal set; }
         public static string KEY_CHECK_ORDER_DATE { get; internal set; }
@@ -160,7 +157,6 @@ namespace Sodexo_KKH.Helpers
 
         // last_mastersynctime
         private const string last_mastersynctime_key = "last_mastersynctime_key";
-
         public static string last_mastersynctime
         {
             get
