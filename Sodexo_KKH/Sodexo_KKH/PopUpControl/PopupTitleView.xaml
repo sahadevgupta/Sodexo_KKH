@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Sodexo_KKH.PopUpControl.PopupTitleView">
     <ContentView.Content>
-        <StackLayout IsTabStop="False" BackgroundColor="#375E97" Margin="-5,-5,-5,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-            
+        <StackLayout IsTabStop="False" BackgroundColor="#375E97" Margin="-5,-5,-5,0" 
+                     Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 
             <Label HorizontalOptions="FillAndExpand" Margin="5,13.5"
                    HorizontalTextAlignment="Center" FontFamily="{StaticResource SansationRegular}"
@@ -16,6 +16,7 @@
             <Label Text="X" FontFamily="{StaticResource SansationRegular}"
                    FontAttributes="Bold" 
                    x:Name="CloseLbl" 
+                   VerticalTextAlignment="Center"
                    TextColor="Red"
                    HorizontalTextAlignment="Center"
                    HorizontalOptions="End" 

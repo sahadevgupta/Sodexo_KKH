@@ -21,6 +21,7 @@
              TextColor="White" HorizontalTextAlignment="Center" />
 
     </NavigationPage.TitleView>
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:AllergytextConverter x:Key="AllergytextConverter"/>
@@ -28,6 +29,7 @@
             <converters:ImageConverter x:Key="ImageConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
     <AbsoluteLayout>
         <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All" Opacity="1">
@@ -313,7 +315,8 @@
 
                                 <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" x:Name="tblname" Text="{Binding Allergies,Converter={StaticResource AllergytextConverter}}" LineBreakMode="WordWrap"  />
 
-                                <Label VerticalOptions="Center" HorizontalOptions="Center" MaxLines="4"   Grid.Column="4"  Text="{Binding Therapeutic_Condition}" LineBreakMode="TailTruncation"  />
+                                <Label VerticalOptions="Center" HorizontalOptions="CenterAndExpand" MaxLines="4"   Grid.Column="4"  Text="{Binding Therapeutic_Condition}" 
+                                       VerticalTextAlignment="Center"/>
 
                                 <Label VerticalOptions="Center" HorizontalOptions="Center"  Grid.Column="5" x:Name="tblage" Text="{Binding ishalal,Converter={StaticResource BoolToObjectConverter}}" LineBreakMode="WordWrap"  />
 

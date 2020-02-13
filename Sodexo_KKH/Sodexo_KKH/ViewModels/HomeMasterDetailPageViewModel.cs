@@ -76,7 +76,6 @@ namespace Sodexo_KKH.ViewModels
         private void LoadData()
         {
             OfflineOrderCount();
-
             GetUpdateNotification();
         }
         private void GetUpdateNotification()
@@ -90,14 +89,17 @@ namespace Sodexo_KKH.ViewModels
 
         private void timer_elapsed(object sender, ElapsedEventArgs e)
         {
-            if (!isMstrNotificationAvailable)
+            Task.Run(async() =>
             {
-                MasterUpdateNotify();
-            }
-            if (!isMenuNotificationAvailable)
-            {
-                MenuUpdateNotify();
-            }
+                if (!isMstrNotificationAvailable)
+                {
+                   await MasterUpdateNotify();
+                }
+                if (!isMenuNotificationAvailable)
+                {
+                   await MenuUpdateNotify();
+                }
+            });
         }
 
         void OfflineOrderCount()
@@ -107,7 +109,7 @@ namespace Sodexo_KKH.ViewModels
 
         }
 
-        async void MasterUpdateNotify()
+        async Task MasterUpdateNotify()
         {
             try
             {
@@ -165,7 +167,7 @@ namespace Sodexo_KKH.ViewModels
 
         }
 
-        async void MenuUpdateNotify()
+        async Task MenuUpdateNotify()
         {
             try
             {

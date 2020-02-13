@@ -8,7 +8,7 @@
 
     <pages:PopupPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="ScrollView">
+            <!--<Style TargetType="ScrollView">
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="VerticalOptions" Value="Center" />
 
@@ -34,35 +34,16 @@
                             Watch="Vertical" />
                     </Setter.Value>
                 </Setter>
-            </Style>
+            </Style>-->
             <converters:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
         </ResourceDictionary>
     </pages:PopupPage.Resources>
 
-    <ScrollView>
-        <ScrollView.Resources>
-            <Style x:Key="PopupView" TargetType="View">
+   
 
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="VerticalOptions" Value="Center" />
-
-
-                <Setter Property="HorizontalOptions">
-                    <Setter.Value>
-                        <OnIdiom
-                            x:TypeArguments="LayoutOptions"
-                            Desktop="Center"
-                            Phone="FillAndExpand"
-                            TV="Center"
-                            Tablet="CenterAndExpand"
-                            Watch="FillAndExpand" />
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ScrollView.Resources>
-
-        <Frame Padding="3" BackgroundColor="WhiteSmoke" BorderColor="Transparent" WidthRequest="550">
-            <StackLayout Style="{StaticResource PopupView}">
+        <Frame Padding="3" BackgroundColor="WhiteSmoke" BorderColor="Transparent" WidthRequest="550"
+               VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+            <StackLayout  BackgroundColor="Transparent" >
                 <StackLayout.Resources>
                     <Style x:Key="Titlelbl" TargetType="Label">
                         <Setter Property="LineHeight" Value="1.8"/>
@@ -74,8 +55,12 @@
                     </Style>
                 </StackLayout.Resources>
 
-                
-                <Grid>
+                <UiTemplates:PopupTitleView Text="Patient Information"  Close="PopupTitleView_Close"/>
+
+
+            <ScrollView VerticalOptions="Center"  HorizontalOptions="CenterAndExpand"
+                        Orientation="Vertical">
+                <Grid >
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -97,104 +82,103 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="1" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="1" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="1" />
                         <RowDefinition Height="Auto" />
-                         <RowDefinition Height="1" />
+                        <RowDefinition Height="1" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.Resources>
                         <Style TargetType="Label">
                             <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
+                            
+
                         </Style>
                     </Grid.Resources>
-                    
-                    <UiTemplates:PopupTitleView Text="Patient Information"  Close="PopupTitleView_Close" Grid.ColumnSpan="2"/>
 
                     <Label x:Uid="pname" 
                            x:Name="txtp_name" 
-                           Text="Patient Name" 
-                           Grid.Row="1" Grid.Column="0" 
+                           Text="Patient Name:" 
+                           Grid.Row="0" Grid.Column="0" 
                            Style="{StaticResource Titlelbl}"
                             />
 
                     <Label x:Uid="bclass" x:Name="txtp_bedclass" Text="Bed Class:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="2" Grid.Column="0"  />
+                           Grid.Row="1" Grid.Column="0"  />
                     <Label x:Uid="page" x:Name="txtp_age" Text="Patient Age:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="3" Grid.Column="0"  />
+                           Grid.Row="2" Grid.Column="0"  />
                     <Label x:Uid="txtWardbeds" x:Name="txtp_ward_bed" Text="Ward-Bed:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="4" Grid.Column="0"  />
+                           Grid.Row="3" Grid.Column="0"  />
                     <Label x:Uid="adch" x:Name="txtp_adult" Text="Adult/Child:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="5" Grid.Column="0"  />
+                           Grid.Row="4" Grid.Column="0"  />
 
                     <Label x:Name="txtp_race" x:Uid="parace"  Text="Patient Race:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="6" Grid.Column="0"  />
+                           Grid.Row="5" Grid.Column="0"  />
 
                     <Label x:Name="txtp_admissiondate" x:Uid="adate" Text="Admission Date:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="7" Grid.Column="0"  />
+                           Grid.Row="6" Grid.Column="0"  />
 
                     <Label x:Name="txtp_dischargedate" x:Uid="ddate" Text="Discharge Date:"
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="8" Grid.Column="0"  />
+                           Grid.Row="7" Grid.Column="0"  />
 
                     <Label x:Name="txtp_dob" x:Uid="dobtxt" Text="DOB:"
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="9" Grid.Column="0"  />
+                           Grid.Row="8" Grid.Column="0"  />
 
                     <Label x:Name="txtp_gender" x:Uid="gender" Text="Gender:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="10" Grid.Column="0"  />
+                           Grid.Row="9" Grid.Column="0"  />
                     <Label x:Name="txtp_religion" x:Uid="rel" Text="Religion:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="11" Grid.Column="0"  />
+                           Grid.Row="10" Grid.Column="0"  />
 
                     <Label x:Name="txtp_prefered_server" x:Uid="ps" Text="Patient Preference:"
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="12" Grid.Column="0"  />
+                           Grid.Row="11" Grid.Column="0"  />
 
                     <Label x:Name="txtp_NRIC"  Text="NRIC/ID(HN):" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="13" Grid.Column="0"  />
+                           Grid.Row="12" Grid.Column="0"  />
 
                     <Label x:Uid="veg"   Text="Veg/Non-Veg:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="14" Grid.Column="0"  />
+                           Grid.Row="13" Grid.Column="0"  />
 
                     <Label x:Uid="hl"  Text="Halal/Non-Halal:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="15" Grid.Column="0"  />
+                           Grid.Row="14" Grid.Column="0"  />
 
                     <Label x:Uid="alge" Text="Allergies:" 
                            Style="{StaticResource Titlelbl}"
-                           Grid.Row="17" Grid.Column="0"  />
-                    <Label x:Uid="ther" Text="Therapeutic:" Grid.Row="19" 
+                           Grid.Row="16" Grid.Column="0"  />
+                    <Label x:Uid="ther" Text="Therapeutic:" Grid.Row="18" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Column="0"  />
 
-                    <Label  Text="Therapeutic Condition :" Grid.Row="21" 
+                    <Label  Text="Therapeutic Condition :" Grid.Row="20" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Column="0"  />
 
-                    <Label x:Uid="case"  Text="Case Id:" Grid.Row="23" 
+                    <Label x:Uid="case"  Text="Case Id:" Grid.Row="22" 
                            Style="{StaticResource Titlelbl}"
                            Grid.Column="0"  />
-                    
+
                     <Label Text="{Binding Patientname}"  
-                           Grid.Row="1" Grid.Column="1" />
-                    <Label x:Name="txtp_bedclass1" Text="{Binding Bed_Class_Name}"  Grid.Row="2" Grid.Column="1" />
-                    <Label x:Name="txtp_age1" Text="{Binding Patient_Age}"   Grid.Row="3" Grid.Column="1"/>
-                    <Label x:Name="txtp_ward_bed1"    Grid.Row="4" Grid.Column="1">
+                           Grid.Row="0" Grid.Column="1" />
+                    <Label x:Name="txtp_bedclass1" Text="{Binding Bed_Class_Name}"  Grid.Row="1" Grid.Column="1" />
+                    <Label x:Name="txtp_age1" Text="{Binding Patient_Age}"   Grid.Row="2" Grid.Column="1"/>
+                    <Label x:Name="txtp_ward_bed1"    Grid.Row="3" Grid.Column="1">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{Binding ward_name,Mode=OneWay}"/>
@@ -203,16 +187,16 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Label x:Name="txtp_adult1" Text="{Binding Age_Name}"   Grid.Row="5" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_race1" Text="{Binding patient_race}"    Grid.Row="6" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_admissiondate1" Text="{Binding admission_date}"    Grid.Row="7" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_dischargedate1" Text="{Binding Discharge_Date}"   Grid.Row="8" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_dob1" Text="{Binding Birthdate}"   Grid.Row="9" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_gender1" Text="{Binding gender}"   Grid.Row="10" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_religion1" Text="{Binding Religion}"   Grid.Row="11" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_prefered_server1" Text="{Binding Preferredserver}"   Grid.Row="12" Grid.Column="1"></Label>
-                    <Label x:Name="txtp_NRIC1"    Grid.Row="13" Grid.Column="1"/>
-                    <StackLayout Grid.Row="14" Grid.Column="1" Orientation="Horizontal">
+                    <Label x:Name="txtp_adult1" Text="{Binding Age_Name}"   Grid.Row="4" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_race1" Text="{Binding patient_race}"    Grid.Row="5" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_admissiondate1" Text="{Binding admission_date}"    Grid.Row="6" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_dischargedate1" Text="{Binding Discharge_Date}"   Grid.Row="7" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_dob1" Text="{Binding Birthdate}"   Grid.Row="8" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_gender1" Text="{Binding gender}"   Grid.Row="9" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_religion1" Text="{Binding Religion}"   Grid.Row="10" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_prefered_server1" Text="{Binding Preferredserver}"   Grid.Row="11" Grid.Column="1"></Label>
+                    <Label x:Name="txtp_NRIC1"    Grid.Row="12" Grid.Column="1"/>
+                    <StackLayout Grid.Row="13" Grid.Column="1" Orientation="Horizontal">
                         <Label x:Name="txtveg" VerticalOptions="Center"  
                                Text="{Binding isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=VegNVeg}"
                                Grid.Column="1"  
@@ -227,31 +211,32 @@
                             </Image.Triggers>
                         </Image>
                     </StackLayout>
-                    <Label x:Name="txthalal" Text="{Binding isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=HNH}"  Grid.Row="15" Grid.Column="1"  ></Label>
-                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="16" Grid.ColumnSpan="2"/>
+                    <Label x:Name="txthalal" 
+                           Text="{Binding isveg_tab,Converter={StaticResource BoolToObjectConverter},ConverterParameter=HNH}"  
+                           Grid.Row="14" Grid.Column="1"  />
+                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="15" Grid.ColumnSpan="2"/>
                     <Label x:Name="txtallergies"
-                               LineBreakMode="WordWrap" Grid.Row="17" Grid.Column="1"    />
-                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="18" Grid.ColumnSpan="2"/>
+                               LineBreakMode="WordWrap" Grid.Row="16" Grid.Column="1"    />
+                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="17" Grid.ColumnSpan="2"/>
 
                     <Label x:Name="txtther" 
-                               Grid.Row="19" Grid.Column="1"
+                               Grid.Row="18" Grid.Column="1"
                                Text="{Binding Therapeutic}"
                                   />
 
-                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="20" Grid.ColumnSpan="2"/>
+                    <BoxView HeightRequest="1" BackgroundColor="Gray" Grid.Row="19" Grid.ColumnSpan="2"/>
 
                     <Label 
-                               Grid.Row="21" Grid.Column="1"
+                               Grid.Row="20" Grid.Column="1"
                                Text="{Binding Therapeutic_Condition}"
                                   />
-                    <BoxView  HeightRequest="1" BackgroundColor="Gray" Grid.Row="22" Grid.ColumnSpan="2"/>
-                    <Label  x:Name="txtcase" Text="{Binding sequenceno}" Grid.Row="23" Grid.Column="1"   />
+                    <BoxView  HeightRequest="1" BackgroundColor="Gray" Grid.Row="21" Grid.ColumnSpan="2"/>
+                    <Label  x:Name="txtcase" Text="{Binding sequenceno}" Grid.Row="22" Grid.Column="1"   />
 
                 </Grid>
-            </StackLayout>
+            </ScrollView>
+
+        </StackLayout>
         </Frame>
-    </ScrollView>
-
-
-
+  
 </pages:PopupPage>

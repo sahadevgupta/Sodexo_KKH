@@ -70,7 +70,7 @@
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"   CommandParameter="Patient_Search"  NumberOfTapsRequired="1"/>
                             </StackLayout.GestureRecognizers>
                             <StackLayout Orientation="Horizontal" Margin="10" VerticalOptions="Center">
-                                
+
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/patient_search.png"/>
                                 <Label  Margin="0,0,0,0" VerticalTextAlignment="Center" FontFamily="{StaticResource SansationRegular}"
                                         Text="Patient Search" TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" />
@@ -220,12 +220,13 @@
 
                                 <Image WidthRequest="25" HeightRequest="25" Source="Assets/info.png"/>
                                 <Label FontFamily="{StaticResource SansationRegular}" Margin="0,0,0,0" 
-                                       VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"
                                         TextColor="Black"  HorizontalOptions="Start"   FontAttributes="Bold" >
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="App Version "/>
+                                            <Span Text="App Version " />
                                             <Span Text="{Binding Source={x:Static staticfn:Library.VersionNumber},Mode=OneWay}"
+                                                  FontSize="Subtitle"
                                                   TextColor="IndianRed"/>
                                         </FormattedString>
                                     </Label.FormattedText>

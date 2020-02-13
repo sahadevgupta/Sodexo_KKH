@@ -9,7 +9,7 @@ namespace Sodexo_KKH.Helpers
        //public static string ServerName = "QA";
         //public static string ServerName = "P";
 
-        //public static string URL = "https://kkhemosvdapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH DC
+       // public static string URL = "https://kkhemosvdapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH UAT
        //public static string URL = "https://kkhemosvpapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH production
         public static string URL = "http://epinetuat/t2o_kkh_service/Sodexo.svc/";  // for Local Server
         //public static string URL = "http://172.25.1.29/t2o_kkh_service/Sodexo.svc/";// for Local Server (using IP)
@@ -18,7 +18,7 @@ namespace Sodexo_KKH.Helpers
 
         public static string VersionNumber = "K-5.1.1 U"; //for UAT or DC
 
-       // public static string VersionNumber = "K-5.1.1 P"; //for Production
+        //public static string VersionNumber = "K-5.1.1 P"; //for Production
 
         //WCF service methods
         public static string METHOD_PULLPATIENTSBYWARD = "PullpatientData_by_wardno";

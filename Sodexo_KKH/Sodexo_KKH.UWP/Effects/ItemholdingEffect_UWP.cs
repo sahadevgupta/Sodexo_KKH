@@ -1,16 +1,10 @@
 ﻿using Sodexo_KKH.Effects;
 using Sodexo_KKH.UWP.Effects;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
-using GestureRecognizer = Windows.UI.Input.GestureRecognizer;
 
 [assembly: ResolutionGroupName(ItemholdingEffect.EffectGroupName)]
 [assembly: ExportEffect(typeof(ItemholdingEffect_UWP), ItemholdingEffect.EffectName)]
