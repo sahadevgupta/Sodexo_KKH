@@ -61,44 +61,13 @@ namespace Sodexo_KKH.Views
 
         }
 
-        private void TapGestureRecognizer_Tapped_1(object sender, System.EventArgs e)
+        private async void TapGestureRecognizer_Tapped_1(object sender, System.EventArgs e)
         {
-
-            SelectElement((Frame)sender );
+            var currentMenu = ((Frame)sender).BindingContext as mstr_menu_item_category;
+            await selectMenuCategory(currentMenu);
         }
         
-        private async void SelectElement(Frame frame)
-        {
-            
-            var stack = (frame.Children.Where(p => p is StackLayout).First() as StackLayout);
-
-            if (_viewModel._lastElementSelectedFrame != null)
-            {
-                VisualStateManager.GoToState(_viewModel._lastElementSelectedFrame, "UnSelected");
-                VisualStateManager.GoToState(_viewModel._lastElementSelectedImage, "UnSelected");
-                VisualStateManager.GoToState(_viewModel._lastElementSelectedLabel, "UnSelected");
-            }
-
-            VisualStateManager.GoToState(frame, "Selected");
-            VisualStateManager.GoToState(stack.Children.First(x => x is Label) as Label, "Selected");
-            VisualStateManager.GoToState(stack.Children.First(x => x is Image) as Image, "Selected");
-
-            _viewModel._lastElementSelectedFrame = frame;
-
-            _viewModel._lastElementSelectedImage = stack.Children.First(x => x is Image) as Image;
-            _viewModel._lastElementSelectedLabel = stack.Children.First(x => x is Label) as Label;
-
-
-          
-            
-            _viewModel._lastElementSelectedFrame = frame;
-            _viewModel.SelectedMenuCategory = frame.BindingContext as mstr_menu_item_category;
-
-           await Task.Run(async () =>
-            {
-               await _viewModel.SetMenuCategories(_viewModel.SelectedMenuCategory);
-            });
-        }
+       
 
         private async void NxtBtn_Clicked(object sender, EventArgs e)
         {
@@ -111,15 +80,29 @@ namespace Sodexo_KKH.Views
                 }
                 else
                 {
-                    StackLayout s = this.FindByName<StackLayout>("menuCategories");
-
-                    var enabledView = s.Children.Where(p => p is Frame).Where(x => x.IsEnabled).First();
-                    SelectElement(enabledView as Frame);
+                    var menu = _viewModel.MenuCategories.Where(x => x.CategoryVisibility).First();
+                    await selectMenuCategory(menu);
+                    
                 }
             }
             else
                 _viewModel.PlaceOrder();
         }
-        
+        private async Task selectMenuCategory(mstr_menu_item_category currentMenu)
+        {
+            var previousMenus = _viewModel.MenuCategories.Where(x => x.isSelected && x.ID != currentMenu.ID).ToList();
+            if (previousMenus.Any())
+            {
+                previousMenus.ForEach(x => x.isSelected = false);
+            }
+            currentMenu.isSelected = true;
+            _viewModel.SelectedMenuCategory = currentMenu;
+
+            await Task.Run(async () =>
+            {
+                await _viewModel.SetMenuCategories(_viewModel.SelectedMenuCategory);
+            });
+        }
+
     }
 }

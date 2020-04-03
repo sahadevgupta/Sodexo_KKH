@@ -60,5 +60,10 @@ namespace Sodexo_KKH.PopUpControl
         {
             await Navigation.PopPopupAsync();
         }
+
+        private async void OnCloseButtonTapped(object sender, EventArgs e)
+        {
+            await Navigation.PopAllPopupAsync(true);
+        }
     }
 }

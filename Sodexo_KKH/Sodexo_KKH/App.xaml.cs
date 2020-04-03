@@ -130,6 +130,7 @@ namespace Sodexo_KKH
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_remarks>, GenericRepo<mstr_remarks>>();
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_patient_info>, GenericRepo<mstr_patient_info>>();
             containerRegistry.RegisterSingleton<IGenericRepo<mstr_therapeutic_condition>, GenericRepo<mstr_therapeutic_condition>>();
+            containerRegistry.RegisterSingleton<IGenericRepo<mstr_fluid_master>, GenericRepo<mstr_fluid_master>>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();

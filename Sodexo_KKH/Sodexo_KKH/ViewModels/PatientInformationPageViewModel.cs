@@ -30,9 +30,29 @@ namespace Sodexo_KKH.ViewModels
             get { return _selectedPatient; }
             set { SetProperty(ref _selectedPatient, value); }
         }
+
+        private ObservableCollection<mstr_fluid_master> _fluidList;
+        public ObservableCollection<mstr_fluid_master> FluidList
+        {
+            get { return _fluidList; }
+            set { SetProperty(ref _fluidList, value); }
+        }
+
+        private mstr_fluid_master _selectedFluid;
+        public mstr_fluid_master SelectedFluid
+        {
+            get { return _selectedFluid; }
+            set
+            {
+                SetProperty(ref _selectedFluid, value);
+                Library._selectedFluid = value;
+            }
+        }
+
+
         public List<string> HnHList { get; set; } //Halal NonHalal list
         public List<string> VegNVegList { get; set; }
-        public List<string> FluidList { get; set; }
+       
 
 
         private ObservableCollection<mstr_others_master> _othersradio;
@@ -183,7 +203,15 @@ namespace Sodexo_KKH.ViewModels
             set { SetProperty(ref _isNoMealEnable, value); }
         }
 
-        public List<string> RadioButtonList { get; set; }
+        private List<string> _radioButtonList;
+
+        public List<string> RadioButtonList
+        {
+            get { return this._radioButtonList; }
+            set { SetProperty(ref _radioButtonList, value); }
+        }
+
+     
 
         public DelegateCommand<string> NextCommand { get; set; }
         
@@ -194,10 +222,11 @@ namespace Sodexo_KKH.ViewModels
         IGenericRepo<mstr_therapeutic> _therapeuticsRepo;
         IGenericRepo<mstr_diet_texture> _dietTextureRepo;
         IGenericRepo<mstr_meal_type> _mealTypeRepo;
+        IGenericRepo<mstr_fluid_master> _fluidmasterRepo;
 
         public PatientInformationPageViewModel(INavigationService navigationService, IGenericRepo<mstr_others_master> OthersRepo, IGenericRepo<mstr_allergies_master> AllergyRepo,
             IGenericRepo<mstr_ingredient> ingredientRepo, IGenericRepo<mstr_therapeutic> therapeuticsRepo, IGenericRepo<mstr_diet_texture> dietTextureRepo,
-            IGenericRepo<mstr_meal_type> mealTypeRepo, IPageDialogService pageDialog) : base(navigationService, pageDialog)
+            IGenericRepo<mstr_meal_type> mealTypeRepo, IPageDialogService pageDialog, IGenericRepo<mstr_fluid_master> fluidmasterRepo) : base(navigationService, pageDialog)
         {
             _OthersRepo = OthersRepo;
             _AllergyRepo = AllergyRepo;
@@ -205,13 +234,11 @@ namespace Sodexo_KKH.ViewModels
             _therapeuticsRepo = therapeuticsRepo;
             _dietTextureRepo = dietTextureRepo;
             _mealTypeRepo = mealTypeRepo;
+            _fluidmasterRepo = fluidmasterRepo;
 
-            FluidList = new List<string> { "NA", "Thin" };
             HnHList = new List<string> { "Halal", "Non Halal" };
             VegNVegList = new List<string> { "Veg", "Non-Veg" };
-
             RadioButtonList = new List<string> { "Yes", "No" };
-
 
             NextCommand = new DelegateCommand<string>(NavigateToOrderPage);
         }
@@ -485,9 +512,16 @@ namespace Sodexo_KKH.ViewModels
 
 
                 SelectedPatient = parameters["PatientInfo"] as mstr_patient_info;
+                var fluids = new ObservableCollection<mstr_fluid_master>(_fluidmasterRepo.QueryTable().Where(x => x.status_id == 1).ToList());
+                fluids.Insert(0, new mstr_fluid_master { ID = 0, fluid_name = "No" });
+
+                FluidList = new ObservableCollection<mstr_fluid_master>(fluids);
+                SelectedFluid = string.IsNullOrEmpty(SelectedPatient.FluidInfo) ? FluidList.First() : FluidList.Where(x => x.fluid_name == SelectedPatient.FluidInfo).First();
+
+                
+
 
                 SelectedPatient.PropertyChanged += SelectedPatient_PropertyChanged;
-                SelectedPatient.FluidInfo = string.IsNullOrEmpty(SelectedPatient.FluidInfo) ? "NA" : SelectedPatient.FluidInfo;
 
                 if (string.IsNullOrEmpty(SelectedPatient.Allergies) || SelectedPatient.Allergies == "NA" || SelectedPatient.Allergies == "0")
                 {
@@ -510,7 +544,7 @@ namespace Sodexo_KKH.ViewModels
                     OthersChecBox.Add(item);
                 }
 
-                var allergies = _AllergyRepo.QueryTable().OrderBy(y => y.allergies_name);
+                var allergies = _AllergyRepo.QueryTable().Where(x => x.status_id == 1).OrderBy(y => y.allergies_name);
                 foreach (var item in allergies)
                 {
                     if (!string.IsNullOrEmpty(SelectedPatient.Allergies))

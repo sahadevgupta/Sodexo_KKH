@@ -364,7 +364,7 @@ namespace Sodexo_KKH.ViewModels
                 p.ward_bed = Patient.ward_bed;
                 p.Is_Late_Ordered = Convert.ToInt32(Library.KEY_IS_LATE_ORDERED);
                 p.role = Library.KEY_USER_ROLE.ToString();
-                if (Others.others_name == "NBM/NPO" )
+                if (Others.others_name == "NBM" )
                 {
                     p.orderstatus = "3";
                 }

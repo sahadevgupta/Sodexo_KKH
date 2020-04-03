@@ -1,66 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <pages:PopupPage
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:UiTemplates="clr-namespace:Sodexo_KKH.PopUpControl"
     xmlns:converters="clr-namespace:Sodexo_KKH.Converters"
     x:Class="Sodexo_KKH.PopUpControl.PatientInfoPopUp">
 
     <pages:PopupPage.Resources>
         <ResourceDictionary>
-            <!--<Style TargetType="ScrollView">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="VerticalOptions" Value="Center" />
-
-                <Setter Property="HorizontalOptions">
-                    <Setter.Value>
-                        <OnIdiom
-                            x:TypeArguments="LayoutOptions"
-                            Desktop="Center"
-                            Phone="FillAndExpand"
-                            TV="Center"
-                            Tablet="CenterAndExpand"
-                            Watch="FillAndExpand" />
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Orientation">
-                    <Setter.Value>
-                        <OnIdiom
-                            x:TypeArguments="ScrollOrientation"
-                            Desktop="Vertical"
-                            Phone="Vertical"
-                            TV="Both"
-                            Tablet="Vertical"
-                            Watch="Vertical" />
-                    </Setter.Value>
-                </Setter>
-            </Style>-->
             <converters:BoolToObjectConverter x:Key="BoolToObjectConverter"/>
         </ResourceDictionary>
     </pages:PopupPage.Resources>
+    <Frame Padding="3" BackgroundColor="WhiteSmoke" HasShadow="True" 
+               Visual="Material"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="Center"
+               BorderColor="Transparent" WidthRequest="550">
+        <StackLayout>
+            <StackLayout.Resources>
+                <Style x:Key="Titlelbl" TargetType="Label">
+                    <Setter Property="LineHeight" Value="1.8"/>
+                    <Setter Property="VerticalOptions" Value="CenterAndExpand" />
 
-   
+                    <Setter Property="Margin" Value="10,2" />
+                </Style>
+                <Style BasedOn="{StaticResource Titlelbl}" TargetType="Label">
+                    <Setter Property="FontAttributes" Value="Bold" />
+                </Style>
 
-        <Frame Padding="3" BackgroundColor="WhiteSmoke" BorderColor="Transparent" WidthRequest="550"
-               VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
-            <StackLayout  BackgroundColor="Transparent" >
-                <StackLayout.Resources>
-                    <Style x:Key="Titlelbl" TargetType="Label">
-                        <Setter Property="LineHeight" Value="1.8"/>
-                        <Setter Property="VerticalOptions" Value="Center" />
-                        <Setter Property="Margin" Value="10,2" />
-                    </Style>
-                    <Style BasedOn="{StaticResource Titlelbl}" TargetType="Label">
-                        <Setter Property="FontAttributes" Value="Bold" />
-                    </Style>
-                </StackLayout.Resources>
+                <converters:AllergytextConverter x:Key="AllergytextConverter"/>
 
-                <UiTemplates:PopupTitleView Text="Patient Information"  Close="PopupTitleView_Close"/>
+            </StackLayout.Resources>
 
 
-            <ScrollView VerticalOptions="Center"  HorizontalOptions="CenterAndExpand"
-                        Orientation="Vertical">
-                <Grid >
+            <UiTemplates:PopupTitleView Text="Patient Information" HorizontalOptions="FillAndExpand"  Close="PopupTitleView_Close" />
+
+            <ScrollView VerticalScrollBarVisibility="Never">
+                <Grid IsClippedToBounds="True" RowSpacing="3">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -93,11 +69,16 @@
                     </Grid.RowDefinitions>
 
                     <Grid.Resources>
-                        <Style TargetType="Label">
+                        <Style x:Key="Titlelbl" TargetType="Label">
                             <Setter Property="FontFamily" Value="{StaticResource SansationRegular}"/>
-                            
-
+                            <Setter Property="LineHeight" Value="1.8"/>
+                            <Setter Property="VerticalOptions" Value="Center" />
+                            <Setter Property="Margin" Value="10,2" />
                         </Style>
+                        <Style BasedOn="{StaticResource Titlelbl}" TargetType="Label">
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </Style>
+
                     </Grid.Resources>
 
                     <Label x:Uid="pname" 
@@ -206,7 +187,14 @@
                                 <DataTrigger TargetType="Image"
                                              Binding="{Binding Source={x:Reference txtveg},Path=Text}"
                                              Value="Non-Veg">
-                                    <Setter Property="Source" Value="{converters:PlatformImage SourceImage='non-veg'}"/>
+                                    <Setter Property="Source" Value="{converters:PlatformImage SourceImage='non-veg'}">
+                                        <Setter.Value>
+                                            <OnPlatform x:TypeArguments="FileImageSource"
+                                                        WinPhone="{converters:PlatformImage SourceImage='non-veg'}"
+                                                        Android="nonveg.png"
+                                                        iOS="nonveg.png"/>
+                                        </Setter.Value>
+                                    </Setter>
                                 </DataTrigger>
                             </Image.Triggers>
                         </Image>
@@ -235,8 +223,8 @@
 
                 </Grid>
             </ScrollView>
-
         </StackLayout>
-        </Frame>
-  
+    </Frame>
+
+
 </pages:PopupPage>

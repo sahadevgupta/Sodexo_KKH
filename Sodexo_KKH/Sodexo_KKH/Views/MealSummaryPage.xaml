@@ -111,7 +111,7 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{Binding Patient.Bed_Class_Name,Mode=OneWay}"/>
-                            <Span Text=" Menu"/>
+                           
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>

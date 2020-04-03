@@ -37,7 +37,10 @@
 
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
        
@@ -104,6 +107,18 @@
                                                  Value="T&amp;A">
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
+                                    <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="NBM">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="To Collect">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="Home Leave">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
                                 </Picker.Triggers>
                             </Picker>
 
@@ -131,9 +146,24 @@
                             Title="Select Remark"
                             ItemDisplayBinding="{Binding Name}"
                             ItemsSource="{Binding Remarks}"
-                            SelectedItem="{Binding SelectedRemark}"/>
-                                
-                                
+                            SelectedItem="{Binding SelectedRemark}">
+                                    <Picker.Triggers>
+                                        <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="NBM">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="To Collect">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
+                                                 Value="Home Leave">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Picker.Triggers>
+                                </Picker>
+
+
                             </StackLayout>
 
                             <Editor VerticalOptions="FillAndExpand"
@@ -248,119 +278,287 @@
                                               SelectedTextColor="Navy"
                                               SelectedLineColor="Navy"
                                               SelectedItemChanged="mealtime_SelectedItemChanged"/>
-
                
-                    <StackLayout x:Name="menuCategories" Orientation="Horizontal" 
-                                 HeightRequest="120"
-                                 BindableLayout.ItemsSource="{Binding MenuCategories}">
-                    <StackLayout.Triggers>
-                        <DataTrigger TargetType="StackLayout"
+            </StackLayout>
+
+
+            <CollectionView Grid.Row="1"
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsLayout="HorizontalList"
+                ItemsSource="{Binding MenuCategories}"
+                x:Name="menuCategories">
+
+                <CollectionView.Triggers>
+                    <DataTrigger TargetType="CollectionView"
                                          Binding="{Binding IsMenuEnable}"
                                          Value="false">
-                            <Setter Property="IsEnabled" Value="False"/>
-                            <Setter Property="Opacity" Value="0.5"/>
-                        </DataTrigger>
-                    </StackLayout.Triggers>
-                    
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                                <Frame ClassId="{Binding ID}" 
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </DataTrigger>
+                </CollectionView.Triggers>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Margin="-10,0">
+                        <Frame BackgroundColor="White"  
+                               WidthRequest="120"
+                               IsClippedToBounds="True"
+                               Margin="-10,1,1,1" Padding="5"  
+                               BorderColor="Gray" CornerRadius="5">
+
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding CategoryVisibility}" Value="false">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+
+                                    <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding isSelected}" Value="true">
+                                        <Setter Property="BackgroundColor" Value="#FF2a295c"/>
+                                    </DataTrigger>
+
+                                </Frame.Triggers>
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                            </Frame.GestureRecognizers>
+
+                            <StackLayout>
+                                <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="80" 
+                                                   HeightRequest="70"  
+                                                   Source="{Binding imgname}" Aspect="AspectFit" >
+
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding isSelected}" Value="true">
+                                                <Setter Property="Source" Value="{Binding selimgname}"/>
+
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                </Image>
+                                <Label HorizontalTextAlignment="Center" LineBreakMode="WordWrap" 
+                                                   FontAttributes="Bold" FontFamily="{StaticResource SansationRegular}"
+                                                   Text="{Binding meal_item_name}" FontSize="Small">
+
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label"
+                                                         Binding="{Binding isSelected}" Value="true">
+                                                <Setter Property="TextColor" Value="White"/>
+
+                                            </DataTrigger>
+                                        </Label.Triggers>
+
+                                </Label>
+                            </StackLayout>
+                        </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+            
+            
+            
+            <!--<StackLayout x:Name="menuCategories" Orientation="Horizontal" 
+                                 HeightRequest="120"
+                                 BindableLayout.ItemsSource="{Binding MenuCategories}">
+                <StackLayout.Triggers>
+                    <DataTrigger TargetType="StackLayout"
+                                         Binding="{Binding IsMenuEnable}"
+                                         Value="false">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </DataTrigger>
+                </StackLayout.Triggers>
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame ClassId="{Binding ID}" 
                                        BackgroundColor="White"  
                                        WidthRequest="120"
                                        Margin="1" Padding="5"  
                                        BorderColor="Gray" CornerRadius="5">
 
-                                        <Frame.Triggers>
-                                            <DataTrigger TargetType="Frame"
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame"
                                                          Binding="{Binding CategoryVisibility}" Value="false">
-                                                <Setter Property="Opacity" Value="0.6"/>
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Frame.Triggers>
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Frame.Triggers>
 
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
-                                        </Frame.GestureRecognizers>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                            </Frame.GestureRecognizers>
 
 
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup>
-                                        <VisualState x:Name="Selected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="#FF2a295c"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="#FF2a295c"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
 
-                                        <VisualState x:Name="UnSelected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="White" />
-                                            </VisualState.Setters>
-                                        </VisualState>
+                                    <VisualState x:Name="UnSelected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="White" />
+                                        </VisualState.Setters>
+                                    </VisualState>
 
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                                    
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
 
-                                        <StackLayout>
-                                    <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="80" 
+
+                            <StackLayout>
+                                <Image HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="80" 
                                                    HeightRequest="70"  
                                                    Source="{Binding imgname}" Aspect="AspectFit" >
 
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup>
-                                                <VisualState x:Name="Selected">
-                                                    <VisualState.Setters>
-                                                        <Setter Property="Source" Value="{Binding selimgname}"/>
-                                                    </VisualState.Setters>
-                                                </VisualState>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup>
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source" Value="{Binding selimgname}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
 
-                                                <VisualState x:Name="UnSelected">
-                                                    <VisualState.Setters>
-                                                        <Setter Property="Source" Value="{Binding imgname}"/>
-                                                    </VisualState.Setters>
-                                                </VisualState>
+                                            <VisualState x:Name="UnSelected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source" Value="{Binding imgname}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
 
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
 
-                                    </Image>
-                                    <Label HorizontalTextAlignment="Center" LineBreakMode="WordWrap" 
+                                </Image>
+                                <Label HorizontalTextAlignment="Center" LineBreakMode="WordWrap" 
                                                    FontAttributes="Bold" FontFamily="{StaticResource SansationRegular}"
                                                    Text="{Binding meal_item_name}" FontSize="Small">
 
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup>
-                                                <VisualState x:Name="Selected">
-                                                    <VisualState.Setters>
-                                                        <Setter Property="TextColor" Value="White"/>
-                                                    </VisualState.Setters>
-                                                </VisualState>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup>
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
 
-                                                <VisualState x:Name="UnSelected">
-                                                    <VisualState.Setters>
-                                                        <Setter Property="TextColor" Value="Black"/>
-                                                    </VisualState.Setters>
-                                                </VisualState>
+                                            <VisualState x:Name="UnSelected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="TextColor" Value="Black"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
 
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
 
-                                    </Label>
-                                </StackLayout>
+                                </Label>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>-->
+
+
+            <SearchBar FontFamily="{StaticResource SansationRegular}" Placeholder="Search..." 
+                       Grid.Row="2"
+                       Margin="0,-3,0,0"
+                       Text="{Binding SearchText}"/>
+
+            <Grid Grid.Row="3">
+                <Label FontSize="50"  FontFamily="{StaticResource SansationRegular}"
+                       FontAttributes="Bold"
+                       BackgroundColor="LightGray"  
+                       x:Name="noitemlbl"
+                       HeightRequest="150"
+                       TextColor="Black" x:Uid="nit" 
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       IsVisible="{Binding IsItemAvailable}"
+                       Text="No Item Available "/>
+
+                <Image x:Name="menuImg" Source="{converters:PlatformImage SourceImage='breakfast'}"   FlexLayout.Basis="100%"
+                           IsVisible="{Binding IsMenuImageVisible}" Aspect="AspectFill"/>
+
+
+                <CollectionView ItemsSource="{Binding MenuItems}"
+                                ItemSizingStrategy="MeasureFirstItem">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="250" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Frame IsClippedToBounds="True" CornerRadius="3" BorderColor="Silver" >
+                                        <Image HeightRequest="150"
+                                               WidthRequest="200"
+                                           Grid.Column="0" Grid.Row="0"
+                                           VerticalOptions="Center"
+                                           Source="{Binding ImageData,Converter={StaticResource BytesToImageSourceConverter}}"/>
                                     </Frame>
-                              
-                            </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </StackLayout>
+                                   
+
+                                    <StackLayout HorizontalOptions="FillAndExpand"  Margin="10,0" Grid.Column="1" Grid.Row="0" >
+                                        <Label FontFamily="{StaticResource SansationRegular}"  FontSize="20" 
+                                                           FontAttributes="Bold" 
+                                                           Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
+                                        <Label FontFamily="{StaticResource SansationRegular}"  LineBreakMode="WordWrap" 
+                                           FontSize="17"  
+                                           MaxLines="8" HorizontalOptions="CenterAndExpand"
+                                           Text="{Binding menu_item_description}"/>
+
+                                        <Button FontFamily="{StaticResource SansationRegular}" x:Uid="ame" x:Name="addremovebtn"  CornerRadius="5" HorizontalOptions="CenterAndExpand" 
+                                            Text="{Binding ameContent}" TextColor="White" 
+                                            BackgroundColor="{Binding btncolor,Converter={StaticResource BoolToColorConverter}}"
+                                           VerticalOptions="EndAndExpand"
+                                                        FontSize="20"
+                                                        FontAttributes="Bold"
+                                                        Clicked="Addremovebtn_Clicked"
+                                            WidthRequest="200">
+                                            <Button.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
+                                                                     Value="Remove">
+                                                    <Setter Property="ImageSource" Value="{converters:PlatformImage SourceImage='cancel_mealsummary'}"/>
+
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Button"
+                                                                     Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
+                                                                     Value="Add to menu">
+                                                    <Setter Property="ImageSource" Value="{Null}"/>
+
+                                                </DataTrigger>
+
+                                            </Button.Triggers>
+                                        </Button>
+
+                                    </StackLayout>
+
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                               
                 
 
-                <SearchBar FontFamily="{StaticResource SansationRegular}" Placeholder="Search..." Text="{Binding SearchText}"/>
-
-                <ScrollView>
-                    <StackLayout>
-                        <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
+            </Grid>
+            
+            
+            <!--<ScrollView>
+                <StackLayout>
+                    <FlexLayout AlignItems="Start" JustifyContent="SpaceBetween" Wrap="Wrap" 
                                  Direction="Row">
-                            <Label FontSize="50"  FontFamily="{StaticResource SansationRegular}"
+                        <Label FontSize="50"  FontFamily="{StaticResource SansationRegular}"
                                FlexLayout.Basis="100%"
                        FontAttributes="Bold"
                        BackgroundColor="LightGray"  
@@ -372,25 +570,25 @@
                        IsVisible="{Binding IsItemAvailable}"
                        Text="No Item Available "/>
 
-                            <Image x:Name="menuImg" Source="{converters:PlatformImage SourceImage='breakfast'}"   FlexLayout.Basis="100%"
+                        <Image x:Name="menuImg" Source="{converters:PlatformImage SourceImage='breakfast'}"   FlexLayout.Basis="100%"
                            IsVisible="{Binding IsMenuImageVisible}" Aspect="AspectFill"/>
 
 
-                            <StackLayout BindableLayout.ItemsSource="{Binding MenuItems}"  FlexLayout.Basis="100%" >
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                        <StackLayout BindableLayout.ItemsSource="{Binding MenuItems}"  FlexLayout.Basis="100%" >
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
 
-                                        <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="250" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="180"/>
-                                                </Grid.RowDefinitions>
+                                    <Frame BorderColor="LightGray" CornerRadius="3" HasShadow="False">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="250" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="180"/>
+                                            </Grid.RowDefinitions>
 
-                                                <Image    
+                                            <Image    
                                                         Aspect="Fill"  
                                                         HeightRequest="200"
                                                         Grid.Column="0" Grid.Row="0"
@@ -401,16 +599,16 @@
 
 
 
-                                                <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
-                                                    <Label FontFamily="{StaticResource SansationRegular}"  FontSize="20" 
+                                            <StackLayout HorizontalOptions="FillAndExpand"  Grid.Column="1" Grid.Row="0" >
+                                                <Label FontFamily="{StaticResource SansationRegular}"  FontSize="20" 
                                                            FontAttributes="Bold" 
                                                            Text="{Binding menu_item_name}" HorizontalOptions="CenterAndExpand"/>
-                                                    <Label FontFamily="{StaticResource SansationRegular}"  LineBreakMode="WordWrap" 
+                                                <Label FontFamily="{StaticResource SansationRegular}"  LineBreakMode="WordWrap" 
                                            FontSize="17"  
                                            MaxLines="8" HorizontalOptions="CenterAndExpand"
                                            Text="{Binding menu_item_description}"/>
 
-                                                    <Button FontFamily="{StaticResource SansationRegular}" x:Uid="ame" x:Name="addremovebtn"  CornerRadius="5" HorizontalOptions="CenterAndExpand" 
+                                                <Button FontFamily="{StaticResource SansationRegular}" x:Uid="ame" x:Name="addremovebtn"  CornerRadius="5" HorizontalOptions="CenterAndExpand" 
                                             Text="{Binding ameContent}" TextColor="White" 
                                             BackgroundColor="{Binding btncolor,Converter={StaticResource BoolToColorConverter}}"
                                            VerticalOptions="EndAndExpand"
@@ -418,33 +616,33 @@
                                                         FontAttributes="Bold"
                                                         Clicked="Addremovebtn_Clicked"
                                             WidthRequest="200">
-                                                        <Button.Triggers>
-                                                            <DataTrigger TargetType="Button"
+                                                    <Button.Triggers>
+                                                        <DataTrigger TargetType="Button"
                                                                      Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
                                                                      Value="Remove">
-                                                                <Setter Property="ImageSource" Value="{converters:PlatformImage SourceImage='cancel_mealsummary'}"/>
+                                                            <Setter Property="ImageSource" Value="{converters:PlatformImage SourceImage='cancel_mealsummary'}"/>
 
-                                                            </DataTrigger>
-                                                            <DataTrigger TargetType="Button"
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Button"
                                                                      Binding="{Binding Source={x:Reference addremovebtn},Path=Text}"
                                                                      Value="Add to menu">
-                                                                <Setter Property="ImageSource" Value="{Null}"/>
+                                                            <Setter Property="ImageSource" Value="{Null}"/>
 
-                                                            </DataTrigger>
+                                                        </DataTrigger>
 
-                                                        </Button.Triggers>
-                                                    </Button>
+                                                    </Button.Triggers>
+                                                </Button>
 
-                                                </StackLayout>
+                                            </StackLayout>
 
-                                            </Grid>
-                                        </Frame>
+                                        </Grid>
+                                    </Frame>
 
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
 
-                            <!--<ListView ItemsSource="{Binding MenuItems}" 
+                        --><!--<ListView ItemsSource="{Binding MenuItems}" 
                                       CachingStrategy="RetainElement"
                                       SelectionMode="None"
                                       HeightRequest="500"
@@ -526,26 +724,21 @@
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
-                            </ListView>-->
+                            </ListView>--><!--
 
 
 
 
-                        </FlexLayout>
-                    </StackLayout>
-                </ScrollView>
-               
-              
-              
-
-            </StackLayout>
+                    </FlexLayout>
+                </StackLayout>
+            </ScrollView>-->
 
             <Button BackgroundColor="{StaticResource My_Header_Color}" FontFamily="{StaticResource SansationRegular}"
                     Margin="0,10,0,0"
+                    Grid.Row="4"
                             CornerRadius="5"
                             x:Name="NxtBtn"
                     Text="Place Order" 
-                        Grid.Row="1"
                     HorizontalOptions="FillAndExpand"
                     TextColor="White"  
                     Clicked="NxtBtn_Clicked"

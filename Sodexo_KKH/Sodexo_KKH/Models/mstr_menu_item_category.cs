@@ -1,4 +1,6 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
+using SQLite;
 
 namespace Sodexo_KKH.Models
 {
@@ -21,42 +23,21 @@ namespace Sodexo_KKH.Models
 
 
         private bool _categoryVisibility;
-
+        [Ignore]
+        [JsonIgnore]
         public bool CategoryVisibility
         {
             get { return this._categoryVisibility; }
             set { SetProperty(ref _categoryVisibility, value); }
         }
 
-
-
-
-
-        public mstr_menu_item_category()
+        private bool _isSelected;
+        [Ignore]
+        [JsonIgnore]
+        public bool isSelected
         {
-
+            get { return this._isSelected; }
+            set { SetProperty(ref _isSelected, value); }
         }
-        //public mstr_menu_item_category(int Para1, string Para2, string Para3, int Para4, string Para5)
-        //{
-        //    tableid = Para1;
-        //    meal_item_name = Para2;
-        //    meal_item_description = Para3;
-        //    status_id = Para4;
-        //    site_code = Para5;
-        //}
-
-        // Inserting into mstr_menu_item_category
-        //public void Insert(int Para1, string Para2, string Para3, int Para4, string Para5)
-        //{
-        //    DatabaseHelperClass Db_Helper = new DatabaseHelperClass();//Creating object for DatabaseHelperClass.cs from ViewModel/DatabaseHelperClass.cs  
-        //    try
-        //    {
-        //        Db_Helper.Insert_INTO_mstr_menu_item_category(new mstr_menu_item_category(Para1, Para2, Para3, Para4, Para5));
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //    }
-        //}
     }
 }

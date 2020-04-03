@@ -1,6 +1,6 @@
 ﻿namespace Sodexo_KKH.Models
 {
-    class mstr_fluid_master
+    public class mstr_fluid_master
     {
         //Creating table
         [SQLite.PrimaryKey, SQLite.AutoIncrement]

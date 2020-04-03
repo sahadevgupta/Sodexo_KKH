@@ -17,7 +17,6 @@
     </NavigationPage.TitleView>
     <ScrollView>
         <StackLayout>
-            <local:ConnectionView/>
             <StackLayout Orientation="Horizontal">
                 <Image x:Name="sss"   Source="Assets/logoinnertouch2order.png" HorizontalOptions="Start" HeightRequest="60" />
                 <Image  HorizontalOptions="EndAndExpand" Source="Assets/sodexologo.png" HeightRequest="60" />
@@ -30,8 +29,11 @@
                  x:Name="progress"  
                  IsVisible="True"/>
                 <WebView x:Name="Webview"  
+                         HeightRequest="1000"
+                         WidthRequest="1000"
              Navigating="OnNavigating"  
-             Navigated="OnNavigated"  
+             Navigated="OnNavigated" 
+                         HorizontalOptions="FillAndExpand"
              VerticalOptions="FillAndExpand"/>
 
             </Grid>

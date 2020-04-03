@@ -1,24 +1,25 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using Sodexo_KKH.Models;
 
 namespace Sodexo_KKH.Helpers
 {
     public class Library
     {
-        public static string ServerName = "UAT";
-       //public static string ServerName = "QA";
-        //public static string ServerName = "P";
+      // public static string ServerName = "UAT";
+     //  public static string ServerName = "QA";
+        public static string ServerName = "P";
 
-       // public static string URL = "https://kkhemosvdapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH UAT
-       //public static string URL = "https://kkhemosvpapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH production
+      //  public static string URL = "https://kkhemosvdapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH UAT
+      // public static string URL = "https://kkhemosvpapp11.kkh.shs.com.sg/Sodexo_services/Sodexo.svc/";  // for KKH production
         public static string URL = "http://epinetuat/t2o_kkh_service/Sodexo.svc/";  // for Local Server
-        //public static string URL = "http://172.25.1.29/t2o_kkh_service/Sodexo.svc/";// for Local Server (using IP)
-        // public static string URL = "https://www.touch2orderqaws.sodexonet.com/t2o_kkh_service/Sodexo.svc/";  //  for QA Server
+       // public static string URL = "http://172.25.1.29/t2o_kkh_service/Sodexo.svc/";// for Local Server (using IP)
+      //  public static string URL = "https://www.touch2orderqaws.sodexonet.com/t2o_kkh_service/Sodexo.svc/";  //  for QA Server
 
 
-        public static string VersionNumber = "K-5.1.1 U"; //for UAT or DC
-
-        //public static string VersionNumber = "K-5.1.1 P"; //for Production
+       // public static string VersionNumber = "K-5.1.1 U"; //for UAT or DC
+     //   public static string VersionNumber = "K-5.1.1 Q"; //for QA
+         public static string VersionNumber = "K-5.1.1 P"; //for Production
 
         //WCF service methods
         public static string METHOD_PULLPATIENTSBYWARD = "PullpatientData_by_wardno";
@@ -68,7 +69,7 @@ namespace Sodexo_KKH.Helpers
 
         // End of WCF service...........................................................
 
-
+        public static mstr_fluid_master _selectedFluid { get; set; }
         public static string KEY_USER_FIRST_NAME { get; internal set; }
         public static string KEY_USER_LAST_NAME { get; internal set; }
 

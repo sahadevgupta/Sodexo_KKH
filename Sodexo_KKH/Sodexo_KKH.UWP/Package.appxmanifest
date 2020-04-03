@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="Production" Publisher="CN=Sodexo Services Asia Pte Ltd, O=Sodexo Services Asia Pte Ltd, L=Singapore, S=Singapore, C=SG" Version="5.1.15.0" />
+  <Identity Name="Production" Publisher="CN=Sodexo Services Asia Pte Ltd, O=Sodexo Services Asia Pte Ltd, L=Singapore, S=Singapore, C=SG" Version="5.1.29.0" />
   <mp:PhoneIdentity PhoneProductId="31e6402e-0407-4419-a6c3-7c6d18576017" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Sodexo_KKH_P</DisplayName>

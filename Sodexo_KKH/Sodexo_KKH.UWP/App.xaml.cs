@@ -51,7 +51,6 @@ namespace Sodexo_KKH.UWP
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
                
                 Rg.Plugins.Popup.Popup.Init();
-                Xamarin.Forms.Forms.SetFlags("SwipeView_Experimental");
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

@@ -148,7 +148,11 @@ namespace Sodexo_KKH.ViewModels
             {
                 var db = DependencyService.Get<IDBInterface>().GetConnection();
 
-                WardData = new List<mstr_ward_details>(db.Query<mstr_ward_details>("Select ID,ward_name From mstr_ward_details where ward_type_name not like '%staff%' and status_id ='1' order by ID"));
+               var tempData = new List<mstr_ward_details>(db.Query<mstr_ward_details>("Select ID,ward_name From mstr_ward_details where ward_type_name not like '%staff%' and status_id ='1' order by ID"));
+                tempData.Insert(0, new mstr_ward_details { ID = 0, ward_name = "All" });
+
+                WardData = new List<mstr_ward_details>(tempData);
+
                 SelectedWard = WardData.FirstOrDefault();
             }
             catch (Exception exp)
