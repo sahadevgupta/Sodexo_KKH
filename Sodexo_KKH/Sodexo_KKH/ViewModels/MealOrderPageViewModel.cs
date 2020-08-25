@@ -260,15 +260,17 @@ namespace Sodexo_KKH.ViewModels
 
         internal void ReloadMenuCategory()
         {
-            if (_lastElementSelectedFrame != null)
+            if (SelectedMenuCategory != null)
             {
-                VisualStateManager.GoToState(_lastElementSelectedFrame, "UnSelected");
-                VisualStateManager.GoToState(_lastElementSelectedImage, "UnSelected");
-                VisualStateManager.GoToState(_lastElementSelectedLabel, "UnSelected");
+                //VisualStateManager.GoToState(_lastElementSelectedFrame, "UnSelected");
+                //VisualStateManager.GoToState(_lastElementSelectedImage, "UnSelected");
+                //VisualStateManager.GoToState(_lastElementSelectedLabel, "UnSelected");
 
-                _lastElementSelectedFrame = null;
-                _lastElementSelectedImage = null;
-                _lastElementSelectedLabel = null;
+                //_lastElementSelectedFrame = null;
+                //_lastElementSelectedImage = null;
+                //_lastElementSelectedLabel = null; 
+                MenuCategories.First(x => x.ID == SelectedMenuCategory.ID).isSelected = false;
+             //   oldMenu.isSelected = false;
                 SelectedMenuCategory = null;
                 MenuItems = new ObservableCollection<MenuItemClass>();
                 Carts = new List<Cart>();
@@ -376,7 +378,7 @@ namespace Sodexo_KKH.ViewModels
                     var TACarts = Carts.Where(item => item.mealtimename.ToLower().Contains("Juice".ToLower()) || item.mealtimename.ToLower().Contains("dessert ".ToLower())).ToList();
                     if (!TACarts.Any() && SelectedMealOption.ID==0)
                     {
-                        await PageDialog.DisplayAlertAsync("Alert!!", "Please select any items from Juice, Dessert menu or select meal option.", "OK");
+                        await PageDialog.DisplayAlertAsync("Alert!!", "Please select any items from Juice or Dessert menu", "OK");
                         IsPageEnabled = false;
                         return;
                     }
@@ -599,23 +601,9 @@ namespace Sodexo_KKH.ViewModels
                 Name = "No"
             };
             Remarks.Insert(0, defaultRemark);
-
             SelectedRemark = Remarks.First();
 
-            if (SelectedTherapeutics.Any())
-            {
-                foreach (var therapeutic in SelectedTherapeutics)
-                {
-                    var theraCond = _theraConditionRepo.QueryTable().Where(x => x.selectedTherapeuticCodes == therapeutic.TH_code).FirstOrDefault();
-                    if (theraCond != null)
-                    {
-                        if (!string.IsNullOrEmpty(theraCond.StdRem))
-                            SetOrderRemark(theraCond.StdRem);
-
-                    }
-                }
-            }
-
+            setTherapeuticRemark();
 
             MstrMeals = new ObservableCollection<mstr_meal_time>(_mstrmealRepo.QueryTable().Where(x => x.status_id == 1).OrderBy(x => x.ID));
             //SelectedMealTime = MstrMeals[0];
@@ -670,7 +658,7 @@ namespace Sodexo_KKH.ViewModels
                     item.selcolor = "#FF2a295c";
 
                 }
-                
+
                 if (others.others_name == "Clear Feeds" && (ss.ToLower().Contains("entrée") || ss.ToLower().Contains("entree") || ss.ToLower().Contains("beverages") || ss.ToLower().Contains("dessert") || ss.ToLower().Contains("addon")))
                 {
                     item.CategoryVisibility = false;
@@ -698,10 +686,7 @@ namespace Sodexo_KKH.ViewModels
                 {
                     item.CategoryVisibility = false;
                 }
-                else
-                {
-                    item.CategoryVisibility = true;
-                }
+
 
 
                 //if (others.others_name == "Full Feeds" || others.others_name == "T&A" || others.others_name == "Clear Feeds")
@@ -718,6 +703,28 @@ namespace Sodexo_KKH.ViewModels
                 else
                     MenuCategories.Add(item);
             }
+
+        }
+
+        private void setTherapeuticRemark()
+        {
+            OrderRemarks = string.Empty;
+            if (SelectedTherapeutics.Any())
+            {
+                foreach (var therapeutic in SelectedTherapeutics)
+                {
+                    var theraCond = _theraConditionRepo.QueryTable().Where(x => x.selectedTherapeuticCodes == therapeutic.TH_code).FirstOrDefault();
+                    if (theraCond != null)
+                    {
+                        if (!string.IsNullOrEmpty(theraCond.StdRem))
+                            SetOrderRemark(theraCond.StdRem);
+
+                    }
+                }
+            }
+            else
+                OrderRemarks = string.Empty;
+
 
         }
 
@@ -845,6 +852,8 @@ namespace Sodexo_KKH.ViewModels
                     query = "Select * From mstr_menu_master where status_id=1 and menu_time_name like '%" + SelectedMealTime.meal_name + "%' and menu_days like '%" + selected_day + "%' and wardtypename like '%" + PatientInfo.wardtypename + "%'";
                 }
 
+               
+
                 if (isAlaCarte && isCutOffTime)
                 {
 
@@ -857,10 +866,11 @@ namespace Sodexo_KKH.ViewModels
                     
                     query += " and (" + thString + ")";
                 }
+                
 
                 if (Library.InfantDietEnable)
                 {
-                    query += "and is_InfantDiet order by id";
+                    query += "and is_InfantDiet";
                 }
 
               
@@ -884,14 +894,30 @@ namespace Sodexo_KKH.ViewModels
 
                 if (!MenuItems.Any() && others.others_name.Equals("DOC") && SelectedTherapeutics.Count > 0)
                 {
-                    var docQuery = "Select * From mstr_menu_master where status_id=1 and menu_time_name like '%" + SelectedMealTime.meal_name + "%' and menu_days like '%" + selected_day + "%' and wardtypename like '%" + PatientInfo.wardtypename + "%'  and (TH_CODE IS NULL OR TH_CODE = '')";
+                    string docQuery = string.Empty;
+                    if (SelectedCuisines.Count > 0)
+                    {
+                        docQuery = "Select * From mstr_menu_master where status_id=1 and menu_time_name like '%" + SelectedMealTime.meal_name + "%' and menu_days like '%" + selected_day + "%'  and wardtypename like '%" + PatientInfo.wardtypename + "%'  and (" + cuisinea + ") and (TH_CODE IS NULL OR TH_CODE = '')";
+                    }
+                    else
+                    {
+                        docQuery = "Select * From mstr_menu_master where status_id=1 and menu_time_name like '%" + SelectedMealTime.meal_name + "%' and menu_days like '%" + selected_day + "%' and wardtypename like '%" + PatientInfo.wardtypename + "%' and (TH_CODE IS NULL OR TH_CODE = '')";
+                    }
 
+
+                   // var docQuery = "Select * From mstr_menu_master where status_id=1 and menu_time_name like '%" + SelectedMealTime.meal_name + "%' and menu_days like '%" + selected_day + "%' and wardtypename like '%" + PatientInfo.wardtypename + "%'  and (TH_CODE IS NULL OR TH_CODE = '')";
+                                  
                     if (isAlaCarte && isCutOffTime)
                     {
 
                     }
                     else
-                        query += " and meal_class_ids like '%" + id + "%'";
+                        docQuery += " and meal_class_ids like '%" + id + "%'";
+
+
+                    docQuery += " order by id";
+
+
 
                     var data = db.Query<mstr_menu_master>(docQuery);
                     ConditionsFilterSetMenu(data, ingredients, allergies, diets, diet_code, thString, db, true, others.others_name);
@@ -974,7 +1000,7 @@ namespace Sodexo_KKH.ViewModels
 
                     }
                     else
-                        query += " and meal_class_name like '%" + MealClassName + "%'";
+                        docquery += " and meal_class_name like '%" + MealClassName + "%'";
 
                     docquery += " and (TH_CODE IS NULL OR TH_CODE = '') order by id";
                     queryData = db.Query<mstr_menu_item>(docquery);
@@ -1586,6 +1612,8 @@ namespace Sodexo_KKH.ViewModels
             base.OnNavigatedTo(parameters);
              if (parameters.ContainsKey("NewOrder"))
             {
+
+                setTherapeuticRemark();
                 SetCutOffTime(SelectedMealTime);
                 ReloadMenuCategory();
             }

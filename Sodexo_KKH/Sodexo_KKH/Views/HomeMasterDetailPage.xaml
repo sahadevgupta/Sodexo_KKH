@@ -228,6 +228,7 @@
                                             <Span Text="{Binding Source={x:Static staticfn:Library.VersionNumber},Mode=OneWay}"
                                                   FontSize="Subtitle"
                                                   TextColor="IndianRed"/>
+                                            <Span Text=" (41)"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                     

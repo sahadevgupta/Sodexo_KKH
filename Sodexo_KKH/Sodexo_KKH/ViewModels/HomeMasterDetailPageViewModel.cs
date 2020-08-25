@@ -10,6 +10,7 @@ using Sodexo_KKH.Models;
 using Sodexo_KKH.PopUpControl;
 using Sodexo_KKH.Repos;
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.Net.Http;
@@ -277,19 +278,57 @@ namespace Sodexo_KKH.ViewModels
                         {
                             isMstrNotificationAvailable = true;
                             var ui = new LoadingViewPopup();
+                            ui.logDeatils = new List<LogDetail>();
+                           
                             await navigation.PushPopupAsync(ui);
+
+                            
+                           
+                            await MasterSync.SyncMaster(ui);
 
                             int atime = Convert.ToInt32(Library.KEY_USER_adjusttime);
                             string tm = DateTime.Now.AddMinutes(-atime).ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
                             Library.last_mastersynctime = tm;
-                           
-                            await MasterSync.SyncMaster(ui);
-
-                            
 
                             MessagingCenter.Send<App, string>((App)Xamarin.Forms.Application.Current, "MasterSync", "Master");
-                            await PageDialog.DisplayAlertAsync("Alert!!", "Master data synced successfully.", "OK");
+
+                            //string msg = string.Empty;
+
+                            //for (int i = 0; i < ui.logDeatils.Count; i++)
+                            //{
+                            //    if (i == 0)
+                            //    {
+                            //        msg = $" <b> {ui.logDeatils[0].Name}</b> - Total Records: {ui.logDeatils[0].totalRecord} Success: {ui.logDeatils[0].SuccessCount} \n";
+                            //    }
+                            //    else
+                            //        msg += $" {ui.logDeatils[i].Name} - Total Records: {ui.logDeatils[i].totalRecord} Success: {ui.logDeatils[i].SuccessCount} \n";
+                            //}
+
+
+                            string msg = string.Empty;
+
+                            for (int i = 0; i < ui.logDeatils.Count; i++)
+                            {
+                                if (ui.logDeatils[i].Name.Length > 13)
+                                {
+                                    msg += $"{ui.logDeatils[i].Name.Substring(0, 11) + ".."}\tTotal Records:. {ui.logDeatils[i].totalRecord}\tSuccess Count:. {ui.logDeatils[i].SuccessCount}\n";
+                                }
+                                else
+                                {
+
+
+                                    for (int j = 0; j < 13 - ui.logDeatils[i].Name.Length; j++)
+                                    {
+                                        ui.logDeatils[i].Name += " ";
+                                    }
+
+                                    msg += $"{ui.logDeatils[i].Name}\tTotal Records:. {ui.logDeatils[i].totalRecord}\tSuccess Count:. {ui.logDeatils[i].SuccessCount}\n";
+                                }
+
+                            }
+
+                            await PageDialog.DisplayAlertAsync("Sync Status!!", msg, "OK");
                             await navigation.PopPopupAsync();
                             isMstrNotificationAvailable = false;
                            
@@ -307,22 +346,29 @@ namespace Sodexo_KKH.ViewModels
                         {
                             isMenuNotificationAvailable = true;
                            var ui = new LoadingViewPopup();
+                            ui.logDeatils = new List<LogDetail>();
                             await navigation.PushPopupAsync(ui);
+
+                            
+
+
+                            await MasterSync.SyncMenuMaster(ui);
 
                             int atime = Convert.ToInt32(Library.KEY_USER_adjusttime);
                             string tm = DateTime.Now.AddMinutes(-atime).ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
                             Library.last_mealssynctime = tm;
 
+                            string msg = string.Empty;
 
-                            await MasterSync.SyncMenuMaster(ui);
+                            for (int i = 0; i < ui.logDeatils.Count; i++)
+                            {
+                                
+                                    msg += $"{ui.logDeatils[i].Name}\tTotal Records:. {ui.logDeatils[i].totalRecord}\tSuccess Count:. {ui.logDeatils[i].SuccessCount}\n";
+                                
+                            }
 
-                            //await MasterSync.Sync_mstr_menu_master();
-                            //await MasterSync.Sync_mstr_menu_item();
-
-                            
-
-                            await PageDialog.DisplayAlertAsync("Alert!!", "Menu Items synced succeesfully.", "OK");
+                            await PageDialog.DisplayAlertAsync("Sync Status!!", msg, "OK");
                             await navigation.PopPopupAsync();
                             isMenuNotificationAvailable = false;
                            

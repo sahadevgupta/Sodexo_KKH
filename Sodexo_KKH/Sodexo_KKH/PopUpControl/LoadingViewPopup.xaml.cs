@@ -1,5 +1,7 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using Sodexo_KKH.Views;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,10 +25,30 @@ namespace Sodexo_KKH.PopUpControl
             
         }
 
+        
+
+        private List<LogDetail> _logDeatils;
+
+        public List<LogDetail> logDeatils
+        {
+            get { return _logDeatils; }
+            set
+            {
+                _logDeatils = value;
+            }
+        }
+
+
+        
+
 
         public LoadingViewPopup()
         {
             InitializeComponent();
+        }
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
         }
         protected override void OnAppearing()
         {
@@ -44,5 +66,12 @@ namespace Sodexo_KKH.PopUpControl
         {
             return false;
         }
+    }
+
+    public class LogDetail
+    {
+        public string Name { get; set; }
+        public int totalRecord { get; set; }
+        public int SuccessCount { get; set; }
     }
 }

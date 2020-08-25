@@ -15,6 +15,7 @@ namespace Sodexo_KKH.Helpers
     {
 
         public static LoadingViewPopup _loadingView { get; private set; }
+       
 
         public async static Task SyncMaster(LoadingViewPopup loadingView)
         {
@@ -47,11 +48,14 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_THERAPEUTICCONDITIONDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_therapeutic_condition> jarray = JsonConvert.DeserializeObject<List<mstr_therapeutic_condition>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_therapeutic_condition>();
@@ -62,6 +66,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Thera_Condition", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -145,11 +150,14 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYMEAL_OPTION + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_meal_option> jarray = JsonConvert.DeserializeObject<List<mstr_meal_option>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_meal_option>();
@@ -158,6 +166,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Meal_Option", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -169,11 +178,14 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_OTHERSMASTERDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_others_master> jarray = JsonConvert.DeserializeObject<List<mstr_others_master>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_others_master>();
@@ -182,6 +194,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Other_Mstr", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -193,11 +206,14 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_THERAPEUTICDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_therapeutic> jarray = JsonConvert.DeserializeObject<List<mstr_therapeutic>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_therapeutic>();
@@ -206,6 +222,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Therapeutic", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -218,12 +235,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_MENUITEMCATEGORYDETAILS + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_menu_item_category> jarray = JsonConvert.DeserializeObject<List<mstr_menu_item_category>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_menu_item_category>();
@@ -232,6 +252,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Items_Cat", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -271,12 +292,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_MEALTIMELIST);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_meal_time> jarray = JsonConvert.DeserializeObject<List<mstr_meal_time>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_meal_time>();
@@ -286,6 +310,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.Commit();
                    
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Meal_Time", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
 
 
@@ -302,11 +327,14 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYWARDDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 List<mstr_ward_details> jarray = JsonConvert.DeserializeObject<List<mstr_ward_details>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_ward_details>();
@@ -317,12 +345,26 @@ namespace Sodexo_KKH.Helpers
                         string cont_id = item.country_id.ToString();
                         string rgn_id = item.region_id.ToString();
                         string st_id = item.site_id.ToString();
+                        try
+                        {
+                            if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
+                                                         && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
+                            {
+                                dbConn.Insert(item);
+                                successCount++;
+                            }
+                                
+                        }
+                        catch (Exception)
+                        {
 
-                        if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
-                             && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
-                              dbConn.Insert(item);
+                            continue;
+                        }
+                        
                     }
                     dbConn.Commit();
+                    _loadingView.logDeatils.Add(new LogDetail { Name = "Ward_Details", totalRecord = totalCount, SuccessCount = successCount });
+
                     _loadingView.Progress = _loadingView.Progress + 0.056f;
                 };
             }
@@ -335,12 +377,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_CYCLEDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                
                 List<mstr_Cycledetails> jarray = JsonConvert.DeserializeObject<List<mstr_Cycledetails>>(await response.Content.ReadAsStringAsync());
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_Cycledetails>();
@@ -385,11 +430,22 @@ namespace Sodexo_KKH.Helpers
                             item.formattedfrom = formatedfrom;
                             item.todate = todate;
                             item.fromdate = fromdate;
-                            dbConn.Insert(item);
+                            try
+                            {
+                                dbConn.Insert(item);
+                                successCount++;
+                            }
+                            catch (Exception)
+                            {
+
+                                continue;
+                            }
+                            
                             //     dbhelper.Insert_INTO_mstr_Cycledetails(new mstr_Cycledetails(Convert.ToInt32(row["ID"].ToString()), row["cycle_name"].ToString(), row["cycle_description"].ToString(), row["cycle_type"].ToString(), row["fromdate"].ToString(), todate, row["sitecode"].ToString(), Convert.ToInt32(row["status_id"].ToString()), formattedto, formatedfrom, Convert.ToInt32(row["Cycle_id"].ToString())));
                         }
                     }
                     dbConn.Commit();
+                    _loadingView.logDeatils.Add(new LogDetail { Name = "Cycle_Details", totalRecord = totalCount, SuccessCount = successCount });
                     _loadingView.Progress = _loadingView.Progress + 0.056f;
                 };
               
@@ -403,12 +459,16 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYMEALTYPE + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_meal_type> jarray = JsonConvert.DeserializeObject<List<mstr_meal_type>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_meal_type>();
@@ -418,6 +478,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Meal_Type", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -430,12 +491,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETREMARKSDETAIL + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_remarks> jarray = JsonConvert.DeserializeObject<List<mstr_remarks>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_remarks>();
@@ -444,6 +508,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Remarks", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -455,20 +520,25 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_INGREDIENTLIST + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_ingredient> jarray = JsonConvert.DeserializeObject<List<mstr_ingredient>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_ingredient>();
                     dbConn.CreateTable<mstr_ingredient>();
                     dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
+                    successCount = jarray.Count;
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Mstr_Ingredients", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -480,13 +550,16 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETALLFLUIDCONSISTENCY + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_fluid_master> jarray = JsonConvert.DeserializeObject<List<mstr_fluid_master>>(await response.Content.ReadAsStringAsync());
-
+                totalCount= successCount = jarray.Count;
 
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
@@ -496,6 +569,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Fluid_Master", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -507,12 +581,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_GETALLDIETTEXTURE + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_diet_texture> jarray = JsonConvert.DeserializeObject<List<mstr_diet_texture>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = successCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_diet_texture>();
@@ -521,6 +598,7 @@ namespace Sodexo_KKH.Helpers
                     dbConn.InsertAll(jarray);
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Diet_Texture", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -532,20 +610,26 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYDIET_TYPE + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_diet_type> jarray = JsonConvert.DeserializeObject<List<mstr_diet_type>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_diet_type>();
                     dbConn.CreateTable<mstr_diet_type>();
                     dbConn.BeginTransaction();
                     dbConn.InsertAll(jarray);
+                    successCount = jarray.Count;
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Mstr_DietType", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -557,13 +641,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
-
+                int totalCount = 0; 
+                int successCount = 0;
+                
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYBEDDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_bed_details> jarray = JsonConvert.DeserializeObject<List<mstr_bed_details>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
 
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
@@ -583,17 +669,29 @@ namespace Sodexo_KKH.Helpers
                         if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
                             && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
                         {
-                            dbConn.Insert(item);
+                            try
+                            {
+                                dbConn.Insert(item);
+                                successCount++;
+                            }
+                            catch (Exception)
+                            {
+                                continue;
+                                
+                            }
+                            
                             // dbhelper.Insert_INTO_Mstr_bed_details(new mstr_bed_details(Convert.ToInt32(row["ID"].ToString()), row["bed_no"].ToString(), Convert.ToInt32(row["ward_id"].ToString()), Convert.ToInt32(row["bedclass_id"].ToString()), Convert.ToInt32(row["status_id"].ToString()), row["site_code"].ToString()));
 
                         }
                     }
                     dbConn.Commit();
+                    _loadingView.logDeatils.Add(new LogDetail { Name = "Bed_Details", totalRecord = totalCount, SuccessCount = successCount });
                     _loadingView.Progress = _loadingView.Progress + 0.056f;
                 }
             }
             catch (Exception)
             {
+
             }
         }
 
@@ -601,20 +699,25 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_ALLERGENTDIETLIST + "/" + Library.KEY_USER_ccode);
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_allergies_master> jarray = JsonConvert.DeserializeObject<List<mstr_allergies_master>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_allergies_master>();
                     dbConn.CreateTable<mstr_allergies_master>();
                     dbConn.BeginTransaction();
-                    dbConn.InsertAll(jarray);
+                    var a = dbConn.InsertAll(jarray);
+                    successCount = jarray.Count;
                     dbConn.Commit();
                 };
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Allergies_Mstr", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
@@ -626,11 +729,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_BEDMEALCLASSMAPPING + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 List<mstr_bed_meal_class_mapping> jarray = JsonConvert.DeserializeObject<List<mstr_bed_meal_class_mapping>>(await response.Content.ReadAsStringAsync());
+                totalCount = jarray.Count;
 
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
@@ -647,12 +754,23 @@ namespace Sodexo_KKH.Helpers
                         //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
                         if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
                             && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
-                        { 
-                            dbConn.Insert(item);
+                        {
+                            try
+                            {
+                                dbConn.Insert(item);
+                                successCount++;
+                            }
+                            catch (Exception)
+                            {
+
+                                continue;
+                            }
+                           
                             // dbhelper.Insert_INTO_mstr_bed_meal_class_mapping(new mstr_bed_meal_class_mapping(Convert.ToInt32(row["ID"].ToString()), Convert.ToInt32(row["bed_class_id"].ToString()), row["bed_class_Name"].ToString(), Convert.ToInt32(row["meal_class_id"].ToString()), row["meal_class_Name"].ToString(), false, Convert.ToInt32(row["status_id"].ToString()), 1));
                         }
                     }
                     dbConn.Commit();
+                    _loadingView.logDeatils.Add(new LogDetail { Name = "BedClassMapping", totalRecord= totalCount, SuccessCount= successCount });
                     _loadingView.Progress = _loadingView.Progress + 0.056f;
                 };
             }
@@ -665,12 +783,15 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_DISPLAYMEALCLASS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_mealclass> jarray = JsonConvert.DeserializeObject<List<mstr_mealclass>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_mealclass>();
@@ -684,18 +805,34 @@ namespace Sodexo_KKH.Helpers
 
                         // Filtering data based on
                         //                    if (country_id1 == cont_id && (region_id1 == nil || region_id1 == 0 || region_id1 == rgn_id) && (site_id1 == nil || site_id1 == 0 || site_id1 == st_id))
-                        if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
+                        try
+                        {
+                            if (Library.KEY_USER_ccode == cont_id && (Library.KEY_USER_regcode == "nil" || Convert.ToInt16(Library.KEY_USER_regcode) == 0 || Library.KEY_USER_regcode == rgn_id)
                             && (Library.KEY_USER_siteid == "nil" || Convert.ToInt32(Library.KEY_USER_siteid) == 0 || Library.KEY_USER_siteid == st_id))
-                            dbConn.Insert(item);
+                            {
+                                dbConn.Insert(item);
+                                successCount++;
+                            }
+                                
+                        }
+                        catch (Exception)
+                        {
+
+                            continue;
+                        }
+                        
                     }
                     dbConn.Commit();
                 }
+                _loadingView.logDeatils.Add(new LogDetail { Name = "Mstr_MealClass", totalRecord = totalCount, SuccessCount = successCount });
                 _loadingView.Progress = _loadingView.Progress + 0.056f;
             }
             catch (Exception)
             {
             }
         }
+
+        #region SyncMenuMaster
 
         internal static async Task SyncMenuMaster(LoadingViewPopup loadingView)
         {
@@ -710,20 +847,26 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 httpClient.Timeout = TimeSpan.FromMinutes(20);
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENUITEMDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_menu_item> jarray = JsonConvert.DeserializeObject<List<mstr_menu_item>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_menu_item>();
                     dbConn.CreateTable<mstr_menu_item>();
                     dbConn.BeginTransaction();
 
-                    dbConn.InsertAll(jarray);
+                   int count = dbConn.InsertAll(jarray);
+                    successCount = count;
+
+                    _loadingView.logDeatils.Add(new LogDetail { Name = "MenuItem", totalRecord = totalCount, SuccessCount = successCount });
                     _loadingView.Progress = _loadingView.Progress + 0.5f;
                     dbConn.Commit();
                     
@@ -738,20 +881,26 @@ namespace Sodexo_KKH.Helpers
         {
             try
             {
+                int totalCount = 0;
+                int successCount = 0;
+
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 httpClient.Timeout = TimeSpan.FromMinutes(20);
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENU_MASETER + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
                 List<mstr_menu_master> jarray = JsonConvert.DeserializeObject<List<mstr_menu_master>>(await response.Content.ReadAsStringAsync());
-
+                totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
                     dbConn.DropTable<mstr_menu_master>();
                     dbConn.CreateTable<mstr_menu_master>();
                     dbConn.BeginTransaction();
 
-                    dbConn.InsertAll(jarray);
+                    int count = dbConn.InsertAll(jarray);
+                    successCount = count;
+
+                    _loadingView.logDeatils.Add(new LogDetail { Name = "MenuMstr", totalRecord = totalCount, SuccessCount = successCount });
                     _loadingView.Progress = _loadingView.Progress + 0.5f;
                     dbConn.Commit();
                   
@@ -763,5 +912,7 @@ namespace Sodexo_KKH.Helpers
             {
             }
         }
+
+#endregion
     }
 }

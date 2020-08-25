@@ -82,6 +82,7 @@ namespace Sodexo_KKH.UWP.Services
         {
             var dialog = new MessageDialog(body, title);
             
+            
             // If you want to add custom buttons
             if (!string.IsNullOrEmpty(acceptbtn))
             {

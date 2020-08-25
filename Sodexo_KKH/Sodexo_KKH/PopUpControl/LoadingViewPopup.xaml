@@ -23,6 +23,10 @@
                    TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
             <UiTemplate:LoadingScreen x:Name="prog" LoadingText="Please wait while we sync all data. &#10;This might take some time..."/>
 
+          
+            
+            
+            
         </StackLayout>
 
     </Frame>
