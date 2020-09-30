@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sodexo_KKH", "Sodexo_KKH\Sodexo_KKH\Sodexo_KKH.csproj", "{5E40C0ED-0919-4ECE-AF7B-4BF5D3616E21}"
 EndProject
@@ -176,6 +176,7 @@ Global
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.AppStore|x64.ActiveCfg = AppStore|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.AppStore|x86.ActiveCfg = AppStore|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|Any CPU.Build.0 = Debug|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|ARM.ActiveCfg = Debug|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{1A92F3B6-0665-4306-8D93-FD7C17A7C55F}.Debug|iPhone.Build.0 = Debug|iPhone
@@ -229,6 +230,8 @@ Global
 		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.AppStore|x86.Build.0 = Release|x86
 		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.AppStore|x86.Deploy.0 = Release|x86
 		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.Debug|Any CPU.Build.0 = Debug|x86
+		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.Debug|ARM.ActiveCfg = Debug|ARM
 		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.Debug|ARM.Build.0 = Debug|ARM
 		{65BEEA84-9D4D-4D4D-9EFE-EFBFA1027623}.Debug|ARM.Deploy.0 = Debug|ARM

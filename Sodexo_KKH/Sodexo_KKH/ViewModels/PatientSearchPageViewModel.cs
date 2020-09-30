@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using DependencyService = Xamarin.Forms.DependencyService;
@@ -352,8 +353,19 @@ namespace Sodexo_KKH.ViewModels
                 try
                 {
                     HttpClient httpClient = new System.Net.Http.HttpClient();
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/Searchpatient/" + value + "/" + Library.KEY_USER_SiteCode);
-                    HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                    dynamic p = new JObject();
+                    p.Patient_Name = value;
+                    p.Site_Code = Library.KEY_USER_SiteCode;
+
+                    string stringPayload = JsonConvert.SerializeObject(p);
+
+                    var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await httpClient.PostAsync(Library.URL + "/Searchpatient", httpContent);
+
+                    // HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/Searchpatient/" + value + "/" + Library.KEY_USER_SiteCode);
+                   // HttpResponseMessage response = await httpClient.SendAsync(request);
 
                     var data = await response.Content.ReadAsStringAsync();
 

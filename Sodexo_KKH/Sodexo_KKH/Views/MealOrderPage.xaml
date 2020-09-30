@@ -104,10 +104,6 @@
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
                                     <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
-                                                 Value="T&amp;A">
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Picker" Binding="{Binding others.others_name}"
                                                  Value="NBM">
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>

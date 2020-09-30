@@ -282,9 +282,23 @@ namespace Sodexo_KKH.ViewModels
         public void FilterItemsOnMealTime(string mealname)
         {
             SelectedMealTime = MstrMeals.FirstOrDefault(x => x.meal_name == mealname);
+            SubsidizeFilteration();
             SetCutOffTime(SelectedMealTime);
         }
+        private void SubsidizeFilteration()
+        {
+            var DessertMenu = MenuCategories.Where(x => x.meal_item_name.ToLower().Contains("dessert".ToLower())).FirstOrDefault();
+            if (!isAlaCarte && SelectedMealTime.meal_name.ToLower().Contains("breakfast".ToLower()) && others.others_name.ToLower().Contains("DOC".ToLower()))
+            {
 
+                DessertMenu.CategoryVisibility = false;
+            }
+            else if (!isAlaCarte && others.others_name.ToLower().Contains("DOC".ToLower()))
+            {
+                DessertMenu.CategoryVisibility = true;
+            }
+
+        }
         internal async Task AddOrRemoveMenuItem(MenuItemClass obj)
         {
             try
@@ -671,6 +685,15 @@ namespace Sodexo_KKH.ViewModels
                 {
                     item.CategoryVisibility = false;
                 }
+                else if ((others.ID != 2 || others.ID == 2) && ss.ToLower().Contains("AddOn".ToLower()))
+                {
+                    if (SelectedTherapeutics.Count > 0 && others.ID == 2)
+                    {
+                        item.CategoryVisibility = true;
+                    }
+                    else
+                        item.CategoryVisibility = false;
+                }
                 //if ((others.others_name == "Clear Feeds" || others.others_name == "Full Feeds" || others.others_name == "T&A") && (ss.ToLower().Contains("entrée") || ss.ToLower().Contains("entree")))
                 //    item.CategoryVisibility = false;
                 //else if (others.others_name == "No Meal" || others.others_name == "NM")
@@ -992,7 +1015,7 @@ namespace Sodexo_KKH.ViewModels
                 List<mstr_menu_item> queryData = new List<mstr_menu_item>();
 
                 queryData = db.Query<mstr_menu_item>(query);
-                if (queryData.Count == 0 && others.others_name.Equals("DOC") && SelectedTherapeutics.Count > 0)
+                if (queryData.Count == 0 && others.others_name.Equals("DOC") && SelectedTherapeutics.Count > 0 && !(menuitem.meal_item_name.ToLower().Contains("AddOn".ToLower())))
                 {
                     var docquery = ConditionsFilterMenuItem(ingredients, allergies, menuitem.meal_item_name, SelectedMealTime.meal_name, halal, veg, diets, cuisinea);
                     if (isAlaCarte && isCutOffTime)
