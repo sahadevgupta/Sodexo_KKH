@@ -22,6 +22,7 @@
         public string ward_bed { get; set; }
         public string wardid { get; set; }
         public string Cut_Off_time { get; set; }
+        public string mealoptionid { get; set; }
 
         public mstr_meal_history()
         {

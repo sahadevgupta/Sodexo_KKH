@@ -65,6 +65,8 @@ namespace Sodexo_KKH.Models
         public string meal_type_name { get; set; }
         [JsonProperty("Meal_Type_Ids")]
         public string Meal_Type_Ids { get; set; }
+        [JsonProperty("isAfterCutOff")]
+        public bool isAfterCutOff { get; set; }
 
     }
 }

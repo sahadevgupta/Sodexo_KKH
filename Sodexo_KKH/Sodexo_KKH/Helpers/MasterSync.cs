@@ -837,8 +837,9 @@ namespace Sodexo_KKH.Helpers
         internal static async Task SyncMenuMaster(LoadingViewPopup loadingView)
         {
             _loadingView = loadingView;
-            await Sync_mstr_menu_item();
+           
             await Sync_mstr_menu_master();
+            await Sync_mstr_menu_item();
         }
 
 
@@ -852,10 +853,19 @@ namespace Sodexo_KKH.Helpers
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 httpClient.Timeout = TimeSpan.FromMinutes(20);
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENUITEMDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
-                HttpResponseMessage response = await httpClient.SendAsync(request);
+
+
+                string URL = Library.URL + "/" + Library.METHODE_NENUITEMDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0";
+                var uri = new Uri(URL);
+                var response = await httpClient.GetStringAsync(uri);
+
+                //  HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENUITEMDETAILS + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                // HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
-                List<mstr_menu_item> jarray = JsonConvert.DeserializeObject<List<mstr_menu_item>>(await response.Content.ReadAsStringAsync());
+                //List<mstr_menu_item> jarray = JsonConvert.DeserializeObject<List<mstr_menu_item>>(await response.Content.ReadAsStringAsync());
+
+                List<mstr_menu_item> jarray = JsonConvert.DeserializeObject<List<mstr_menu_item>>(response);
+
                 totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {
@@ -886,10 +896,18 @@ namespace Sodexo_KKH.Helpers
 
                 HttpClient httpClient = new System.Net.Http.HttpClient();
                 httpClient.Timeout = TimeSpan.FromMinutes(20);
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENU_MASETER + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
-                HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                string URL = Library.URL + "/" + Library.METHODE_MENU_MASETER + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0";
+                var uri = new Uri(URL);
+                var response = await httpClient.GetStringAsync(uri);
+
+
+                // HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_NENU_MASETER + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid + "/0");
+                //HttpResponseMessage response = await httpClient.SendAsync(request);
                 // jarray= await response.Content.ReadAsStringAsync();
-                List<mstr_menu_master> jarray = JsonConvert.DeserializeObject<List<mstr_menu_master>>(await response.Content.ReadAsStringAsync());
+                // List<mstr_menu_master> jarray = JsonConvert.DeserializeObject<List<mstr_menu_master>>(await response.Content.ReadAsStringAsync());
+
+                List<mstr_menu_master> jarray = JsonConvert.DeserializeObject<List<mstr_menu_master>>(response);
                 totalCount = jarray.Count;
                 using (var dbConn = DependencyService.Get<IDBInterface>().GetConnection())
                 {

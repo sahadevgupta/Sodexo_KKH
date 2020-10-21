@@ -1269,6 +1269,12 @@ namespace Sodexo_KKH.ViewModels
         {
             foreach (mstr_menu_master item in masters)
             {
+
+                if (isCutOffTime && item.isAfterCutOff)
+                {
+                    continue;
+                }
+
                 int isthere = 0;
                 int cntingredients = 0;
                 int cntallergies = 0;

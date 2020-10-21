@@ -524,7 +524,7 @@ namespace Sodexo_KKH.ViewModels
             }
             catch (Exception excp)
             {
-                //stop progessring
+                await PageDialog.DisplayAlertAsync("Alert!!", excp.Message, "OK");
                 IsPageEnabled = false;
                 // await Navigation.PushAsync(new PatientSearch());
 

@@ -51,7 +51,7 @@
 
 
 
-                <StackLayout Orientation="Horizontal" Padding="10" IsVisible="{Binding IsRolePickerVisible}" Margin="0,20,0,0">
+                <StackLayout Orientation="Horizontal" Padding="10" IsVisible="{Binding IsRolePickerVisible}" >
                     <Label FontSize="Medium"
                            FontFamily="{StaticResource SansationRegular}"
                            VerticalOptions="Center" 
@@ -61,13 +61,13 @@
                            HorizontalOptions="Center" Text="User-Role"/>
 
                     <Picker x:Name="RolePicker" WidthRequest="200" ItemsSource="{Binding RoleList}" 
-                            FontFamily="{StaticResource SansationRegular}"
+                            FontFamily="{StaticResource SansationRegular}" VerticalOptions="Center"
                             SelectedItem="{Binding SelectedRole}" />
 
                 </StackLayout>
 
 
-                <Grid Margin="0,20,0,0" Padding="10" RowSpacing="20">
+                <Grid  Padding="10" RowSpacing="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
@@ -156,7 +156,7 @@
                 </StackLayout>-->
 
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="2" Padding="10,0,10,0">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10" Padding="10,0,10,0">
                     <Button Text="SUBMIT"
                     BackgroundColor="{StaticResource My_Header_Color}"
                     CornerRadius="5"

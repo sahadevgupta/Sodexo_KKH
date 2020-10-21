@@ -197,12 +197,17 @@ namespace Sodexo_KKH.ViewModels
             {
                 mstr_meal_history meal = null;
                 ObservableCollection<mstr_meal_history> dataList = new ObservableCollection<mstr_meal_history>();
-                
-                HttpClient httpClient = new System.Net.Http.HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_SHOWPATIENTMEALDETAILSBYID + "/" + Convert.ToInt32(ID) + "/" + mealtype + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid);
-                HttpResponseMessage response = await httpClient.SendAsync(request);
 
-                var data = await response.Content.ReadAsStringAsync();
+                string URL = Library.URL + "/" + Library.METHODE_SHOWPATIENTMEALDETAILSBYID + "/" + Convert.ToInt32(ID) + "/" + mealtype + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid;
+                var uri = new Uri(URL);
+                HttpClient httpClient = new System.Net.Http.HttpClient();
+                // HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Library.URL + "/" + Library.METHODE_SHOWPATIENTMEALDETAILSBYID + "/" + Convert.ToInt32(ID) + "/" + mealtype + "/" + Library.KEY_USER_ccode + "/" + Library.KEY_USER_regcode + "/" + Library.KEY_USER_siteid);
+                // HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                // var data = await response.Content.ReadAsStringAsync();
+
+                var data = await httpClient.GetStringAsync(uri);
+
                 JArray jarray = JArray.Parse(data);
                 if (jarray.Count == 0)
                 {
@@ -217,15 +222,16 @@ namespace Sodexo_KKH.ViewModels
                     JObject row = JObject.Parse(jarray[i].ToString());
                     meal = new mstr_meal_history
                     {
-                        beveragesid = row["beveragesid"].ToString(),
-                        dessertid = row["dessertid"].ToString(),
-                        entreeid = row["entreeid"].ToString(),
-                        juiceid = row["juiceid"].ToString(),
+                        beveragesid = string.IsNullOrEmpty( row["beveragesid"].ToString())? "NA": row["beveragesid"].ToString(),
+                        dessertid = string.IsNullOrEmpty( row["dessertid"].ToString()) ? "NA" : row["dessertid"].ToString(),
+                        entreeid = string.IsNullOrEmpty(row["entreeid"].ToString()) ? "NA" : row["entreeid"].ToString(),
+                        juiceid = string.IsNullOrEmpty(row["juiceid"].ToString()) ? "NA" : row["juiceid"].ToString(),
                         orderdate = row["orderdate"].ToString(),
-                        remarkid = row["remarkid"].ToString(),
-                        soupid = row["soupid"].ToString(),
-                        status = row["status"].ToString(),
-                        addonid = row["addonid"].ToString()
+                        remarkid = string.IsNullOrEmpty(row["remarkid"].ToString()) ? "NA" : row["remarkid"].ToString(),
+                        soupid = string.IsNullOrEmpty(row["soupid"].ToString()) ? "NA" : row["soupid"].ToString(),
+                        status = string.IsNullOrEmpty(row["status"].ToString()) ? "NA" : row["status"].ToString(),
+                        addonid = string.IsNullOrEmpty(row["addonid"].ToString()) ? "NA" : row["addonid"].ToString(),
+                        mealoptionid = string.IsNullOrEmpty(row["mealoptionid"].ToString()) ? "NA" : row["mealoptionid"].ToString()
                     };
                     dataList.Add(meal);
 
